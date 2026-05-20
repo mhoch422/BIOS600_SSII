@@ -1,0 +1,287 @@
+---
+title: "Final Exam Review"
+author: "Your Name Here"
+date: today
+format: html
+---
+
+## Instructions
+
+This exercise uses NHANES (National Health and Nutrition Examination Survey) data to explore relationships between health variables. Complete all questions, showing your code, output, and interpretations where requested.
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+
+# Load required packages
+library(NHANES)
+library(tidyverse)
+library(car)
+library(GGally)
+library(tidyverse)
+library(broom)
+library(kableExtra)
+
+# Load and prepare data
+data(NHANES)
+
+# Create a clean subset for analysis
+nhanes_clean <- NHANES |>
+  filter(Age >= 18, Age <= 65) |>  # Adults only
+  select(Age, Gender, BMI, BPSysAve, BPDiaAve, 
+         DirectChol, TotChol, Diabetes, PhysActive) |>
+  na.omit() |>
+  distinct()
+
+# Preview data
+head(nhanes_clean)
+```
+
+
+## Exercise 1: Correlation Analysis 
+
+We want to explore the relationship between systolic blood pressure (BPSysAve) and age.
+
+### (a)
+
+Calculate the Pearson correlation coefficient between systolic blood pressure and age. Interpret the value including direction and strength.
+
+```{r}
+#| label: q1a
+cor_pearson <- cor(nhanes_clean$BPSysAve, 
+                   nhanes_clean$Age, 
+                   method = "pearson")
+cor_pearson
+```
+
+**Interpretation:** The Pearson correlation coefficient is `r round(cor_pearson, 3)`, indicating a moderate positive linear relationship between systolic blood pressure and age. As age increases, systolic blood pressure tends to increase. 
+
+### (b)
+
+Calculate the Spearman correlation coefficient for the same variables. How does it differ from the Pearson correlation? When might Spearman be preferred?
+
+```{r}
+#| label: q1b
+cor_spearman <- cor(nhanes_clean$BPSysAve, 
+                    nhanes_clean$Age, 
+                    method = "spearman")
+
+cor_spearman
+```
+
+**Interpretation:** The Spearman correlation coefficient is `r round(cor_spearman, 3)`, which is similar to the Pearson correlation. Spearman correlation measures monotonic (not necessarily linear) relationships and is based on ranks rather than raw values. It is preferred when: (1) the relationship is monotonic but not linear or (2) data contain outliers that would affect Pearson. In this case, both correlations are similar, suggesting the relationship is approximately linear.
+
+### (c)
+
+Create a scatterplot with a fitted line to visualize this relationship.
+
+```{r}
+#| label: q1c
+#| fig-width: 6
+#| fig-height: 4
+
+ggplot(nhanes_clean, aes(x = Age, y = BPSysAve)) +
+  geom_point(alpha = 0.3, size = 1) +
+  geom_smooth(method = "lm", color = "blue", se = TRUE) +
+  labs(title = "Relationship between Age and Systolic Blood Pressure",
+       x = "Age (years)",
+       y = "Systolic Blood Pressure (mmHg)") +
+  theme_minimal()
+```
+
+Slight positive trend, matches the correlations from (a) and (b). 
+
+## Exercise 2: Simple Linear Regression
+
+In this exercise, you will fit a simple linear regression model predicting systolic blood pressure from age.
+
+### (a)
+
+Write out the mathematical model for this regression, clearly defining all terms. (Use LaTeX here. Knowing how to write something in LaTeX won't be on the exam, but knowing how to write out a model in symbols will be.)
+
+$$\text{BPSysAve}_i = \beta_0 + \beta_1 \times \text{Age}_i + \epsilon_i, \quad i = 1, \ldots, n$$
+
+- $\text{BPSysAve}_i$ = systolic blood pressure for person $i$
+- $\beta_0$ = intercept (expected BP when age = 0)
+- $\beta_1$ = slope (change in BP per 1-year increase in age)
+- $\text{Age}_i$ = age for person $i$
+- $\epsilon_i$ = residual error for person $i$, assumed $\epsilon_i \sim N(0, \sigma^2)$ independently
+
+
+### (b)
+
+Fit the model in R and display the summary output using `tidy()` and `kable()`.
+
+```{r}
+#| label: q2b
+model1 <- lm(BPSysAve ~ Age, data = nhanes_clean)
+tidy(model1) |>
+  kable(digits = 3)
+```
+
+
+### (c)
+
+Interpret the slope coefficient. What does the p-value for age tell us? State the null and alternative hypotheses being tested.
+
+**Interpretation:** The slope coefficient for Age is `r round(coef(model1)[2], 3)`, meaning that for each additional year of age, systolic blood pressure increases by approximately `r round(coef(model1)[2], 3)` mmHg, on average.
+
+The p-value tests:
+- $H_0: \beta_1 = 0$ (no linear relationship between age and BP)
+- $H_A: \beta_1 \neq 0$ (there is a linear relationship)
+
+The p-value is < 0.001, so we reject the null hypothesis and conclude there is strong evidence of a linear relationship between age and systolic blood pressure. The test statistic follows a t-distribution with $n-2 = `r nrow(nhanes_clean) - 2`$ degrees of freedom.
+
+## Exercise 3: Model Assumptions 
+
+In the following exercise, we'll check all four assumptions of linear regression for the model from Question 2.
+
+### (a)
+
+Create diagnostic plots to check: (1) Linearity, (2) Normality of residuals, (3) Homoscedasticity, (4) Independence
+
+```{r}
+#| label: q3a
+model1_diag <- augment(model1)
+
+# 1. Residuals vs Fitted (Linearity + Homoscedasticity)
+p1 <- ggplot(model1_diag, aes(x = .fitted, y = .resid)) +
+  geom_point(alpha = 0.3) +
+  geom_hline(yintercept = 0, color = "red", linetype = "dashed") +
+  geom_smooth(se = FALSE, color = "blue") +
+  labs(title = "Residuals vs Fitted",
+       x = "Fitted values",
+       y = "Residuals") +
+  theme_minimal()
+
+# 2. Histogram of Residuals (Normality)
+p2 <- ggplot(model1_diag, aes(x = .resid)) +
+  geom_histogram(alpha = 0.3) +
+  labs(x = "Residuals") +
+  theme_minimal()
+
+p1
+p2
+```
+
+### (b)
+
+For each assumption, state whether it appears to be met or violated based on your plots. Explain your reasoning.
+
+**Assessment:**
+1. **Linearity:** The Residuals vs Fitted plot shows a relatively random scatter around zero with no clear pattern, suggesting the linearity assumption is reasonably met. The relationship between age and BP appears to be approximately linear.
+
+2. **Normality:** The histogram shows an approximately normal distribution with slight right skew. Overall, the normality assumption is reasonably satisfied for inference purposes.
+
+3. **Homoscedasticity (constant variance):** The fitted vs. residuals plot shows a relatively horizontal line with roughly equal spread of residuals across fitted values. There might be slightly more variance at higher fitted values, but the assumption appears adequately met.
+
+4. **Independence:** We cannot fully assess independence from these plots alone. However, there's no obvious pattern in the Residuals vs Fitted plot suggesting dependence. Since each observation is a different person and we've removed duplicates, independence is likely satisfied. If observations were collected over time or in clusters, we'd need to investigate further.
+
+
+## Exercise 4: Multiple Linear Regression
+
+In this question, we'll fit a multiple linear regression model predicting systolic blood pressure from age, BMI, and gender.
+
+### (a)
+
+Fit the model and display the estimated coefficients using `tidy()` and `kable()`. Round to 3 digits.
+
+```{r}
+#| label: q4a
+model2 <- lm(BPSysAve ~ Age + BMI + Gender, 
+             data = nhanes_clean)
+tidy(model2) |>
+  kable(digits = 3)
+```
+
+
+### (b)
+
+Interpret each coefficient in the model. How does the interpretation of the age coefficient differ from Question 3?
+
+**Age (`r round(coef(model2)[2], 3)`):** For each 1-unit increase in BMI, systolic BP increases by `r round(coef(model2)[2], 3)` mmHg, holding BMI and gender constant. The change is that this intepretation is holding BMI and gender constant - or could also say this is the difference adjusted for BMI and gender.
+
+**BMI (`r round(coef(model2)[3], 3)`):** For each 1-unit increase in BMI, systolic BP increases by `r round(coef(model2)[3], 3)` mmHg, holding age and gender constant.
+
+**Gender (`r round(coef(model2)[4], 3)`):** Males on average have a systolic BP that is `r round(coef(model2)[4], 3)` mmHg higher than females, holding age and BMI constant.
+
+
+### (c)
+
+What is the $R^2$ and adjusted $R^2$? Interpret the adjusted $R^2$. Why might we prefer adjusted $R^2$ versus regular $R^2$?
+
+```{r}
+rsq <- summary(model2)$r.squared
+adj_rsq <- summary(model2)$adj.r.squared
+
+cat("R-squared:", round(rsq, 4), "\n")
+cat("Adjusted R-squared:", round(adj_rsq, 4), "\n")
+```
+- 17.9% of the variation in systolic blood pressure is explained by age, BMI, and gender in our model.
+
+The adjusted $R^2$ adjusts for the number of predictors in the model, penalizing for adding variables that don't improve the model. It's useful for comparing models with different numbers of predictors. 
+
+### (d)
+
+What is the F-statistic testing? State the null and alternative hypotheses. Interpret the p-value.
+
+```{r}
+# Note this could be used as well to get r.squared and adj.r.squared
+glance(model2)
+```
+
+**Interpretation:** The global F-test tests:
+
+- $H_0$: All coefficients except the intercept are zero ($\beta_1 = \beta_2 = \beta_3 = 0$)
+- $H_A$: At least one coefficient is non-zero (at least one nonzero linear association between a predictor and the outcome.)
+
+The F-statistic follows an F-distribution.
+
+The p-value is < 0.001, so we reject the null hypothesis and conclude that our model with age, BMI, and gender provides significantly better predictions than a model with only an intercept. At least one predictor is significantly related to systolic BP.
+
+### (e)
+
+Predict the systolic blood pressure for a 45-year-old male with BMI of 28. (First create a new data frame, then use the `predict()` function.) Write a 1-sentence conclusion about the predicted value. 
+
+```{r}
+BPSysAve ~ Age + BMI + Gender
+new_obs <- data.frame(
+  Age = 45,
+  BMI  = 28,
+  Gender      = "male")
+
+# Predicted value with confidence interval
+predict(model2, newdata = new_obs)
+```
+We can calculate the predicted SBP as follows: 
+
+$\hat{\text{SBP}} = 90.456 + 0.331 \times 45 + 0.374 \times 28 + 6.664 \times 1$
+
+
+```{r}
+90.456+0.331*45 + 0.374*28 + 6.664
+```
+We'd expect the blood pressure to be around 122.48 mmHg.
+
+### (f) 
+
+You were concerned there might be differences in the association between BMI and systolic blood pressure by gender. Run the test with the interaction term for gender and BMI.  
+
+```{r}
+#| label: q5f
+model3 <- lm(BPSysAve ~ Age + BMI + Gender + BMI*Gender, 
+             data = nhanes_clean)
+tidy(model3) |>
+  kable(digits = 3)
+```
+
+i) Given the interaction term is in the model, what is the estimated change in systolic blood pressure corresponding to a 1 kg/m2 increase in BMI. **Note that the estimated change will depend on an individuals gender**
+
+So for a female (when gender = 0; which means reference group for gender), we expect a change in SBP of 0.4426 mmHg corresponding to a 1 kg/m2 increase in BMI, holding age constant
+
+We could also state that a 1 kg/m2 increase in BMI is associated with a 0.426 + (-1.44)*(Gender = male) mmHg increase in systolic blood pressure, holding age constant, so leave the increase in mmHg corresponding to a change in 1 kg/m2 in BMI as a function of Gender
+
+ii) Based on the results from this model do you think there is evidence of a difference in the association by gender (assume $\alpha=0.05$ Why or why not?
+
+With a p-value of 0.03, for the interaction term, at an alpha = 0.05, we reject the null hypothesis that the association between BMI and SBP does not differ by gender. 

@@ -1,0 +1,194 @@
+---
+title: "HW 6"
+format: html
+---
+
+Due Tuesday, March 24 at 11:59pm.
+
+## AI use
+
+Refer to the syllabus for our AI use policy. You will be asked to include any AI prompts used in this assignment at the end. 
+
+## Starting a new Quarto file
+
+For this assignment you will begin a new Quarto file. To do this, go to RStudio and click File > New File > Quarto Document. A pop-up will appear asking for a title, author, and format. You may leave these as the default options for now. Click OK and a new file will open. Update the YAML with your title, name, and date.
+
+## Data
+
+We’ll be revisiting the licorice example presented in HW 05. We’ll assume that we can treat pain score as a continuous numeric variable. The data are available with the following code:
+
+```{r echo = T, message = F}
+#| echo: true
+#| message: false
+library(tidyverse)
+# read in data
+licorice <- read.csv("data/licorice.csv")
+```
+
+Some relevant variables of interest are:
+
+- `preOp_sex`: Sex (0 = Male; 1 = Female)
+
+- `preOp_calcBMI`: Body mass index in kg/m2
+
+- `preOp_asa`: The American Society of Anesthesiology severity score (1 = healthy patient, 2 = mild systemic disease, 3 = severe systemic disease)
+
+- `treat`: Treatment given (0 = Sugar placebo; 1 = Licorice solution)
+
+- `pacu30min_throatPain`: Sore throat pain score 30 minutes after arrival in PACU (11-point scale: 0 = No pain; 10 = Worst pain)
+
+- `pacu90min_throatPain`: Sore throat pain score 90 minutes after arrival in PACU
+
+- `postOp4hour_throatPain`: Sore throat pain score 4 hours after surgery
+
+
+## Exercises
+
+In questions 1 - 2, use the `licorice` dataset. You may assume that the pain scores are continuous numeric variables for the purposes of this assignment.
+
+## Exercise 1
+
+a. Starting with the `licorice` dataset, use the `mutate` and `case_when` functions to create a binary variable (0/1) that corresponds to whether the patient experiences any throat pain 30 minutes after surgery (i.e., any non-zero pain score would be indicative of pain). Choose a sensible name for the new variable, and save the dataset which includes the new variable into a new dataset called `licorice_bin`. No need to print anything here, just show the code. (Hint: Refer back to Lab 3 for examples of `case_when`.)
+
+b. Use the `table()` function to create a new table (call it `pain_tab`) which tabulates your binary variable created in part (a) against the three pre-operative ASA categories, using your `licorice_bin` object from part (a). To do this, modify the starter code below. After creating the table, print out the table. You should fill in the `____` with your new variable name from part (a):
+
+```{r}
+#| eval: false
+pain_tab <- table(licorice_bin$_______, licorice_bin$preOp_asa) # create table
+pain_tab # print out your table
+```
+
+
+
+c. In general, what is the assumption of a chi-square test regarding expected cell counts? (Use the **more conservative** rule of thumb.)
+
+d. Based on your table you created in part (b), what is the expected count of having throat pain 30 minutes after surgery (i.e. those with a `1` in your newly created binary variable), given an ASA classification of `healthy`? What is the expected count of NOT having throat pain 30 minutes after surgery, given an ASA classification of `healthy`? Use R for your calculations. Are either of these expected counts less than 10?
+
+e. Conduct a Chi-square test on your `pain_tab` table to evaluate whether there is an association between whether the patient experiences throat pain 30 minutes after surgery (your newly created binary variable) and the ASA classification of the patient prior to surgery. 
+
+      i. State your null and alternative hypotheses in words. 
+      ii. Under the null hypothesis, state the distribution of your test statistic (e.g. Chi-squared with how many degrees of freedom?)
+      iii. Show R code with output for conducting the test. 
+      iv. State your p-value. Do we reject or fail to reject $H_0$?
+      v. Write a 1-sentence conclusion.
+
+f. State 1 reason why (in general) one might choose to use a Fisher Exact Test rather than a chi-square test.
+
+## Exercise 2
+
+For this exercise, use the original `licorice` dataset. 
+
+We'd like to comprehensively evaluate whether the mean throat pain score 30 minutes after surgery (`pacu30min_throatPain`) varies by ASA classification.
+
+a. What are the three assumptions of ANOVA?
+
+b. Create a boxplot of ASA classification (x-axis) by `pacu30min_throatPain` (y-axis). Suppress warnings with `#| warning: false`. Based on the boxplot, do the data seem to be normally distributed within each group?
+
+c. You decide to perform a Kruskal-Wallis test here. State the null and alternative hypotheses in words. 
+
+d. Use R to perform the Kruskal-Wallis test to evaluate whether the mean throat pain score 30 minutes after surgery varies by ASA classification. You should show code and output.
+
+e. State your p-value, whether you reject or fail to reject the null hypothesis, and state your conclusion.
+
+## Exercise 3
+
+In your own words, explain why it “makes sense” to evaluate equality of means across groups by examining different types of variances. (2-3 sentences)
+
+## Cereal
+
+The file `cereals.csv` contains data for 77 breakfast cereals in terms of their nutritional content per serving and other characteristics. The variables are:
+
+- `name`: name of the cereal
+
+- `mfr`: manufacturer (A: American Home Food Products, G: General Mills, K: Kellogg’s, N: Nabisco, P: Post, Q: Quaker Oats, and R: Ralston Purina)
+
+- `type`: cold vs. hot
+
+- `calories`, `protein`, `fat`, `sodium`, `fiber`, `carbo`, `sugars`, `potass`: the amount of each of these nutrients, per gram, per serving (sodium and potassium are measured in milligrams)
+
+- `shelf`: where the cereal was physically located (cereals on low aisles may be targeted toward children, for instance).
+
+For the purposes of this homework, you may assume that this is a random sample of cereal types. Download `cereal.csv` from the Canvas Assignment page. Save it in your `data` folder within your project folder. You may load the dataset with the code below: (Ensure that you suppress any warnings and messages.)
+
+```{r echo = T}
+#| message: false
+#| warning: false
+cereal <- read.csv("data/cereal.csv")
+```
+
+
+## Exercise 4
+
+For this exercise, we'll be investigating the research question: Is there evidence that there is a relationship between cereal manufacturer and where on the shelf their cereals are placed? 
+
+a. Use the following code to print the table of cereal placement versus manufacturer. (Yes, just copy and paste the code into your document.) 
+
+```{r}
+#| eval: false
+table(cereal$shelf, cereal$mfr)
+```
+
+In general, are cell counts lower or higher compared to ideal counts for a Chi-Square test?
+
+b. You decide to conduct a Fisher's Exact Test. State the null and alternative hypotheses in words. 
+
+c. Use R to conduct the test, displaying the code and output. Use $\alpha = 0.05$ To conduct this test, simply use `fisher.test(_____)`, and fill in the blank with the table code from part 4 (a). 
+
+d. State your p-value, whether you reject or fail to reject the null hypothesis, and state your conclusion.
+
+
+## Exercise 5
+
+Suppose you are interested in testing whether name brand cereals (Cheerios, Frosted Mini-Wheats, Lucky Charms, etc.) and their generic counterparts (Oat-ee-os, Frosted Wheat Squares, Charmed Marshmallows, etc.) have similar amounts of Vitamin D. How many total cereals would you need to test in order to detect a mean difference of 2 units (Vitamin D is literally measured in “international units”) between name brand and generic cereals (i.e. two groups) with 90% power at a 5% type 1 error rate if the standard deviation of this difference is 4 units? Show your code in R, assuming a two-sided test. State your conclusion in 1 sentence.
+
+## Exercise 6
+
+For this exercise, refer to the test outlined in Lecture 14 Slide 8:
+
+a. What is the name of this test?
+
+b. List the steps to conducting this test. 
+
+c. Which assumption does this test NOT require that the paired t-test does require?
+
+d. Does this test take into account the magnitude of the differences between paired values?
+
+
+
+## Exercise 7: AI Use
+
+Did you use AI for this assignment? (Refer to our AI policy in the syllabus.) If so, list all prompts used below and the corresponding questions. If not, answer "AI was not used on this assignment". 
+
+## Submission
+
+As you’ve seen previously, we can **Render** into an .html file that can be opened by any web browser. To export it as a .pdf, open the file in your web browser and then print to or save as a .pdf document. Contact your TAs in Ed Discussion if you need help! 
+
+You will submit the PDF documents for labs and homework to Gradescope as part of your final submission.
+
+To submit your assignment:
+
+- Access Gradescope through the menu on the BIOS 600 Canvas site.
+
+- Click on the assignment, and you’ll be prompted to submit it.
+
+- Mark the pages associated with each exercise. All of the pages of your lab should be associated with at least one question (i.e., should be “checked”).
+
+- Select the first page of your .PDF submission to be associated with the "Formatting" section.
+
+## Grading
+
+| Component | Points |
+|----------|--------|
+| Ex 1 | 8 |
+| Ex 2 | 6 |
+| Ex 3 | 1 |
+| Ex 4 | 3 |
+| Ex 5 | 2 |
+| Ex 6 | 2 |
+| Ex 7 | 1 |
+| Formatting | 3 |
+
+The “Formatting” grade is to assess the document format. This includes having a neatly organized document (no excessive output, warnings/messages when loading packages and/or data) with readable code and your name and the date updated in the YAML.
+
+
+

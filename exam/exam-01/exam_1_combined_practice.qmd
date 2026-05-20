@@ -1,0 +1,360 @@
+---
+title: "Exam 1 Combined Practice Problems"
+format: html
+---
+
+There will be three sections on Exam 01: Code, Conceptual (which will include some True/False), and Applied. Examples of each of these sections can be found below.
+
+### Code
+
+Dr. X is a clinician learning R in order to perform some statistical analysis on her dataset. You are a biostatistician also working on the project. She's begun to learn the basics but has some questions for you.
+
+## Q1
+
+What's the difference between `install.packages()` and `library()` ?
+
+## Q2
+
+Dr. X is tempted to simply Google some excel functions and analyze her data in excel, because R is difficult to learn. She wants to simply email her collaborators her final figures she creates from this process. Why is doing the analysis in excel problematic in terms of reproducibility? How can R help with reproducibility in Dr. X's analysis?
+
+\vskip 5cm
+
+## Q3
+
+In a Quarto document, what does \### in front of text do?
+
+\vskip 3cm
+
+## Q4
+
+In a code chunk within a Quarto document, what does \# in front of code do?
+
+\vskip 3cm
+
+## Q5
+
+Dr. X is ready to begin her analysis and attempts to load in the tidyverse package but is getting an error. Based on her code below, why is she getting an error and how should she fix it?
+
+```{r}
+#| eval: false
+install.packages("tidyverse"))
+```
+
+\vskip 3cm
+
+## Q6
+
+Dr. X figured out her error above. She is now doing some practice visualization on the CDC dataset (the same one we worked on in Lab 2). She has produced the following code:
+
+```{r}
+#| eval: false
+ggplot(data = cdc, mapping = aes(x = Exercise, 
+                                 y = Obesity, 
+                                 color = HDI, 
+                                 shape = HDI)) +
+geom_point()
+```
+
+What does `geom_point()` do? (i.e. what kind of plot will it produce?)
+
+\vskip 3cm
+
+## Q7
+
+Dr. X is producing a summary of some of the CDC variables below.
+
+```{r}
+#| eval: false
+cdc |>
+  summarize(avg_exercise = mean(Exercise, na.rm = T))
+```
+
+a.  What is the `summarize()` function doing?
+
+\vskip 3cm
+
+b.  What does `na.rm = T` mean?
+
+\vskip 3cm
+
+## Q8
+
+A new vaccine is tested, and researchers know that it successfully prevents infection in **80%** of people who receive it. Suppose 10 people are vaccinated. What R code could you use to calculate the probability that **exactly 7** of the 10 vaccinated individuals are protected from infection?
+
+```         
+A.  `dbinom(7, size = 10, prob = 0.4)`
+
+B. `dbinom(10, size = 7, prob = 0.8)`  
+
+C. `dbinom(7, size = 10, prob = 0.8)`  
+
+D. `ppois(7, lambda = 8)` 
+```
+
+Elena Epidata is an epidemiologist exploring health trends in the U.S. population. She is using a dataset similar to **NHANES**, which includes variables such as **age, BMI, blood pressure, and cholesterol** for a sample of adults. Elena is new to R and is practicing basic data exploration.
+
+## Q9
+
+Elena types the following code in R:
+
+```{r}
+#| echo: true
+#| eval: false
+library(tidyverse)
+nhanes <- read_csv("nhanes_sample.csv")
+View(nhanes)
+glimpse(nhanes)
+names(nhanes)
+```
+
+Which of the following statements are true about the outputs of these commands? Select all that apply.
+
+(A) `View()` opens a spreadsheet-style view of the dataset.
+(B) `glimpse()` prints a concise summary of the dataset to the console.
+(C) `names()` lists the names of the columns.
+(D) `View()` returns a vector of column names.
+
+## Q10
+
+Elena wants to examine a subset of the data. She types:
+
+```{r}
+#| echo: true
+#| eval: false
+nhanes_highbp <- nhanes |>
+  filter(age >= 50, sbp > 140)
+```
+
+a.  What subset of data has she created?
+
+\vskip 1cm
+
+b.  What does `|>` do?
+
+\vskip 1cm
+
+c.  Will anything be printed out by running this code?
+
+\vskip 1cm
+
+## Q11
+
+Elena wants to create a scatter plot of BMI vs. systolic blood pressure and color points by sex. She writes:
+
+```{r}
+#| echo: true
+#| eval: false
+ggplot(nhanes, aes(x = bmi, y = sbp, color = sex)) +
+  geom_point() +
+  labs(x = "BMI", y = "Systolic Blood Pressure (mmHg)")
+```
+
+Which of the following statements are true? Select all that apply.
+
+(A) `geom_point()` creates a scatter plot.
+(B) Points are colored based on BMI.
+(C) This code produces a boxplot of blood pressure.
+(D) The x-axis represents BMI.
+
+## Q12
+
+Elena wants to calculate the average BMI by `age_group`. This variable has 3 categories: `young`, `mid`, and `older`. She types:
+
+```{r}
+#| echo: true
+#| eval: false
+nhanes_summary <- nhanes |>
+  group_by(age_group) |>
+  summarize(mean_bmi = mean(bmi, na.rm = TRUE))
+```
+
+What does `nhanes_summary` contain?
+
+\vskip 3cm
+
+### Conceptual
+
+## Q13
+
+What's the difference between reproducibility and replicability?
+
+\vskip 3cm
+
+## Q14
+
+What is quota sampling? Would this type of sampling be more or less generalizable to the broader population compared to probability sampling?
+
+\vskip 3cm
+
+## Q15
+
+In class, we discussed the response to a COVID-19 seroprevalence paper, and how the investigators recruited their participants using Facebook. Describe why this method may have introduced a form of sampling bias.
+
+\vskip 3cm
+
+## Q16
+
+Consider the following research question:
+
+-   "Is the PCV13 vaccine effective against community acquired pneumonia in adults aged 65 or older?"
+
+What is the study population?
+
+\vskip 3cm
+
+### True/False
+
+Circle either True or False.
+
+## Q17
+
+The Poisson distribution is often used to model counts of rare events occurring independently in a fixed time or space interval.
+
+True
+
+False
+
+## Q18
+
+In a discrete probability distribution, all individual probabilities must be greater than 0.
+
+True
+
+False
+
+## Q19
+
+Bayes’ Rule allows you to compute the probability of an event given some observed evidence: P(A\|B) = \[P(B\|A) \* P(A)\] / P(B).
+
+True
+
+False
+
+## Q20
+
+A frequentist interprets probability as a personal degree of belief, while a Bayesian interprets probability as the long-run relative frequency of events.
+
+True
+
+False
+
+## Q21
+
+Events $A$ and $B$ are said to be independent when $P(A \cap B) = P(A) \cdot P(B)$.
+
+True
+
+False
+
+### Applied
+
+## Q22
+
+According to CDC growth charts, the mean systolic blood pressure for 60-year-old men is 135 mmHg, with a standard deviation of 20 mmHg. Suppose you are a 60-year-old man with a systolic blood pressure of 165 mmHg.
+
+a.  Write out how to calculate your Z-score (leave as an expression).
+
+\vskip 3cm
+
+b.  Why are z-scores helpful when comparing normally distributed variables with different means and variances?
+
+\vskip 3cm
+
+## Q23
+
+A new rapid test has been developed to detect **influenza infection**. A study compares the results of the rapid test against the gold standard laboratory PCR test. The results from 200 patients are shown below:
+
+|                         | PCR Positive | PCR Negative | Total |
+|-------------------------|--------------|--------------|-------|
+| **Rapid Test Positive** | 72           | 18           | 90    |
+| **Rapid Test Negative** | 8            | 102          | 110   |
+| **Total**               | 80           | 120          | 200   |
+
+a.  Calculate the **sensitivity** of the rapid test. (Leave as an expression.)
+
+\vskip 3cm
+
+b.  Calculate the **specificity** of the rapid test. (Leave as an expression.)
+
+\vskip 3cm
+
+c.  In one sentence, explain what specificity means in this context.
+
+\vskip 3cm
+
+## Q24
+
+Rapid antigen tests are commonly used to detect **COVID-19 infection**. Suppose a new rapid test is compared against the gold standard PCR test.
+
+For this question, focus on **asymptomatic adults**. About **5% of asymptomatic adults** truly have COVID-19 infection. The test has a **sensitivity of 90%** and a **specificity of 95%** for detecting infection in this population.
+
+a.  Suppose you administer the rapid test to someone who truly has COVID-19. What is the probability that the test will return a positive result? Circle one.
+
+<!-- -->
+
+(A) 5%\
+(B) 90%\
+(C) 10%\
+(D) 95%\
+(E) Not enough information to determine this probability
+
+<!-- -->
+
+b.  Suppose a randomly selected asymptomatic adult tests positive. Using Bayes' Rule, how could you **write out the probability that this person truly has COVID-19**?
+
+\vskip 5cm
+
+c.  A new rapid test has been developed to detect **hepatitis B infection**. A study compares the results of the rapid test against the gold standard laboratory test. The results from 200 patients are summarized below:
+
+|                         | Gold Standard Positive | Gold Standard Negative | Total |
+|-------------------|------------------|------------------|------------------|
+| **Rapid Test Positive** | 70                     | 25                     | 95    |
+| **Rapid Test Negative** | 10                     | 95                     | 105   |
+| **Total**               | 80                     | 120                    | 200   |
+
+**Question:**\
+Calculate the **sensitivity** of the rapid test. Leave your answer as a fraction.
+
+\vskip 3cm
+
+## Q25
+
+A researcher is studying the number of patients arriving at a hospital emergency room with asthma attacks during a 1-hour period. She proposes using a Poisson distribution to model the number of arrivals per hour.
+
+Describe how you would verify whether each of the assumptions for a Poisson distribution are satisfied in this context. (e.g. what would you need to know/verify for each assumption, specific to this context?)
+
+\vskip 3cm
+
+## Q26
+
+a.  An environmental agency classifies daily air quality in a city into three categories: Good, Moderate, and Unhealthy. The probabilities of each category on a randomly selected day are summarized in the table below:
+
+| Air Quality | Probability |
+|-------------|-------------|
+| Good        | 0.5         |
+| Moderate    | 0.3         |
+| Unhealthy   | 0.2         |
+
+State the Kolmogorov axioms. Are all axioms true for this example?
+
+\vskip 3cm
+
+b.  A public health researcher is studying the number of **asthma attacks requiring emergency care per day** in a mid-sized city. She models the number of attacks per day using a Poisson distribution with rate parameter $\lambda = 3$.
+
+Recall the Poisson PMF:
+
+$$P(X = k) = \frac{e^{-\lambda} \lambda^k}{k!}, \quad k = 0, 1, 2, \dots$$
+
+Write out, in terms of the Poisson PMF, the probability that on a randomly selected day there are **at least 2 asthma attacks**. You do not need to compute the numeric value.
+
+c.  Continuing part (b) above, Which of the following R commands correctly calculates the probability that on a randomly selected day there are **at least 2 asthma attacks**?
+
+<!-- -->
+
+(A) `1 - dbinom(0, lambda = 3) - dbinom(1, lambda = 3)`
+
+(B) `1 - dpois(0, lambda = 3) - dpois(1, lambda = 3)`
+
+(C) `dpois(2, lambda = 3)`
+
+(D) `1 - dpois(2, lambda = 3)`

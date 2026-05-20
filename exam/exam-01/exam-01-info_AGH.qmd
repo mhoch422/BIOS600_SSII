@@ -1,0 +1,31 @@
+---
+title: "Exam 01 Info"
+format: html
+---
+
+
+- Exam 01 will take place in-person on Tuesday, February 17, during class. This exam is an opportunity to demonstrate what you've learned in the course thus far.  
+
+- If your last name starts with A-K you will be in McGavran-Greenberg Hall 2301, if your last name starts with L-Z you will be in this classroom
+
+- The exam will be closed-book. 
+
+- You should bring something to write with. Nothing else is permitted (i.e. calculators, cheat sheets not permitted.)
+
+- Content covered: Lectures 1-7, Labs 1-3, HW 1-3. 
+
+## Types of questions
+
+- The questions may be a mix of multiple choice, true/false, or short answer. 
+
+- To prepare, review the definitions, concepts, and examples in the lectures. Review all lab assignments and homework assignments. 
+
+- There will be three sections: Code, Conceptual, and Applied. Examples of each of these sections will be posted on Tuesday, February 10th 
+
+## Resources for reviewing
+
+- A formula sheet (formulas you would be provided on the exam) will be posted 
+
+- A topics list will be posted 
+
+- I will prepare a set of review questions for us to complete in class on Thursday, February 12. We will go over these together and you will have access to the solutions after class. 

@@ -1,0 +1,264 @@
+---
+title: "In-Class Review Questions"
+subtitle: "Exam 02 Preparation"
+format: html
+---
+
+1.  How can the below code be improved according to good coding style?
+
+```{r}
+my_data <- data.frame(
+  id = 1:5,name = c("Alice", 'Bob', "Charlie", "David", "Eve"),
+  score=c(85,92,78,95,88)
+)
+```
+
+2.  How can the below code be improved according to good coding style?
+
+```{r}
+#| echo: true
+#| eval: false
+df <- data.frame(grp = c("A","A","B","B","C","C"),
+val=c(10,15,20,25,30,28))
+
+ggplot(df, aes(x = grp,y=val)) +
+  geom_boxplot()+geom_point(position = position_jitter(width = .1))
+
+meanvaluefromdataframe <- df |>
+  group_by(grp) |> summarise(m = mean(val))
+```
+
+3.  How can the below code be improved according to good coding style?
+
+```{r}
+#| echo: true
+#| eval: false
+ggplot(mtcars, aes(wt, mpg, colour=factor(      cyl), shape = factor(vs))) +
+       geom_point() +theme(legend.text = element_text(size = 8, colour = 'red'))
+  
+```
+
+4.  Suppose you have 100 samples of 100 observations each that are binary (0/1), each with probability of success $p=.3$. What does the Central Limit Theorem say about the distribution of sample averages? (In other words, what would a histogram of the sample averages look like? Centered around which value?) What if our observations were drawn from a continuous but skewed population distribution?
+
+5.  Researchers compare fasting glucose levels measured before and after a 12-week exercise program among the same participants.
+
+<!-- -->
+
+  a.  Which type of t-test should they use & why?
+
+  b.  Write the null hypothesis in words. What would the alternative for a two-sided test be? How about for a one-sided test?
+
+6.  A new rapid test for strep throat is being evaluated. Assume that $H_0$ is that the person truly doesn't have strep throat. What would a Type I error mean? What would a Type II error mean? What is a danger of a Type I error here? What is a danger of a Type II error here?
+
+7.  Explain how the t-distribution differs from the standard normal distribution. When would we use a t-distribution instead of Z?
+
+8.  Write the R code to find the following (on exams, you won't need to write code):
+
+<!-- -->
+
+  a.  The 95th percentile of a t(df = 12) distribution.
+
+  b.  The probability that a `t(df = 8)` random variable is greater than 2.1.
+
+  c.  The 90th percentile of a $N(\mu = 3, \sigma = 5)$ distribution.
+
+9.  What is the definition of a p-value?
+
+10.  Researchers are studying whether a new **herbal supplement** helps reduce recovery time after a mild viral infection compared to a placebo. Ten participants were randomly assigned to either the supplement group or the placebo group. After recovery, the number of **days until full recovery** was recorded:
+
+| Group      | Recovery Time (days) |
+|------------|----------------------|
+| Supplement | 4, 6, 5, 7, 6        |
+| Placebo    | 8, 9, 6, 10, 9       |
+
+Because the data are not normally distributed, the researchers decide to use a **Mann–Whitney U test**.
+
+a.  State the null and alternative hypotheses for a two-sided test in words.
+
+b.  Using R, we can calculate the test statistic with `wilcox.test`. See output below (**note you will not be expected to know this function for the exam, but you should know how to interpret p-value for these tests**):
+
+```{r}
+#| echo: true
+#| warning: false
+# Data
+supplement <- c(4, 6, 5, 7, 6)
+placebo <- c(8, 9, 6, 10, 9)
+
+# Mann–Whitney U test
+wilcox.test(supplement, placebo, alternative = "two.sided")
+```
+
+What is your conclusion, using $\alpha = .05$?
+
+c.  Suppose that instead we calculated a one-sided test. The new alternative would be the following:
+
+$H_A$: The supplement group has shorter recovery times than the placebo group.
+
+Suppose that we computed the test-statistic and got a p-value of .25. What is your conclusion at a 5% significance level?
+
+11.  Below are two power calculations. In which object (`p1` or `p2`) will the power be higher? Why?
+
+```{r}
+#| echo: true
+p1 <- power.t.test(n = 28,
+             delta = 1.5, 
+             sd = 2.3,
+             sig.level = 0.05,
+             type = "two.sample",
+             alternative = "two.sided")
+
+p2 <- power.t.test(n = 28,
+             delta = 1.5, 
+             sd = 5,
+             sig.level = 0.05,
+             type = "two.sample",
+             alternative = "two.sided")
+```
+
+12.  Explain two reasons why it's important to perform a power / sample size calculation during the design process of a study.
+
+13. Dr. Stats is studying whether average daily sugar intake differs between two groups of teenagers: those who regularly eat breakfast and those who skip breakfast. She loads her dataset and runs the following code in R:
+
+```{r}
+#| eval: false
+t.test(sugar ~ breakfast_group, data = teen_nutrition)
+```
+
+a. What is this code doing? Describe in 1–2 sentences what is being compared and the test is being performed.
+
+b. Specify the null and alternative hypothesis for this test in words and in symbols.
+
+c. Suppose Dr. Stats looks at histograms of sugar intake for each group and sees that the distributions are heavily skewed with strong outliers. She wants a test that does not assume normality. What non‑parametric test corresponds to the two‑sample t‑test in this situation?
+
+14. Research shows that frequent involuntary police stops are associated with chronic stress and elevated cortisol levels. The average cortisol level in US adults is μ = 15 μg/dL, with a known population standard deviation of $\sigma$ = 6 μg/dL. A public health researcher samples n = 50 adults from a neighborhood with documented high rates of police stops. The sample mean cortisol level is $\bar{X}$ = 22.8 μg/dL.
+
+a. Using the central limit theorem, write the formula for the test statistic
+$Z = \frac{\bar{X} - \mu}{SE}$ where $SE=\frac{\sigma}{\sqrt{n}}$ and substitute the given values into the expression. Leave as a fraction.
+
+b. If the computed z‑statistic is very large in magnitude (far from 0), what would this tell the researcher about cortisol levels in this community?
+
+c. State the null and alternative hypotheses in words and symbols for testing whether mean cortisol levels in this neighborhood differ from the national average
+
+d. If the population standard deviation $\sigma$ was unknown, what test would the researcher use instead of a z‑test?
+
+e. Based on the output below, what conclusion should the researcher draw at $\alpha$ = .05?
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+# Simulate data (not shown to students)
+set.seed(2026)
+cortisol <- rnorm(40, mean = 19.8, sd = 4)   # hidden from output
+
+# Run the one-sample t-test shown to students
+t_output <- t.test(cortisol, mu = 15)
+
+t_output
+```
+
+f. What is the distribution of our test statistical under the null hypothesis (include the name and the degrees of freedom, if applicable)
+
+f. Interpret the 95% confidence interval in the context of the study.
+
+g. Would the confidence interval be wider or smaller if you generated a 99% confidence interval?
+
+15. A researcher designing a two‑sample t‑test increases the sample size from n = 25 per group to n = 60 per group. How does this affect statistical power? 
+
+
+```{r}
+#| echo: false
+#| results: "hide"
+#| warning: false
+#| message: false
+library(tidyverse)
+
+set.seed(99)
+
+n <- 30
+
+egfr_data <- tibble(
+  zone = rep(c("Low exposure\n(<1 mile)", "Moderate exposure\n(1–3 miles)", "High exposure\n(>3 miles)"), each = n),
+  egfr = c(
+    rnorm(n, mean = 78, sd = 14),
+    rnorm(n, mean = 81, sd = 14),
+    rnorm(n, mean = 83, sd = 14)
+  )
+)
+
+egfr_data$zone <- factor(
+  egfr_data$zone,
+  levels = c("Low exposure\n(<1 mile)", "Moderate exposure\n(1–3 miles)", "High exposure\n(>3 miles)")
+)
+```
+
+16. Researchers are investigating whether residential proximity to a toxic waste site is associated with kidney function, measured by estimated glomerular filtration rate (eGFR, mL/min/1.73m²). Lower eGFR values indicate reduced kidney function. Adults were sampled from three distance zones from the nearest registered toxic waste site: **less than 1 mile**, **1–3 miles**, and **more than 3 miles** away.
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-width: 7
+#| fig-height: 4
+
+ggplot(egfr_data, aes(x = zone, y = egfr, fill = zone)) +
+  geom_boxplot(alpha = 0.7, outlier.shape = 16, outlier.size = 1.8) +
+  scale_fill_manual(values = c(
+    "Low exposure\n(<1 mile)"        = "#D85A30",
+    "Moderate exposure\n(1–3 miles)" = "#BA7517",
+    "High exposure\n(>3 miles)"      = "#1D9E75"
+  )) +
+  labs(
+    x = "Proximity zone",
+    y = "eGFR (mL/min/1.73m²)"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    legend.position = "none",
+    panel.grid.minor = element_blank()
+  )
+```
+
+a. Write the null and alternative hypotheses for this ANOVA in words.
+
+b. What does the F-statistic tell you about between-group versus within-group variation in this study? What does a small F-statistic close to 1 suggest?
+
+```{r}
+fit <- aov(egfr ~ zone, data = egfr_data)
+summary(fit)
+```
+
+c. Look at the ANOVA table above. Based on the ANOVA output, do you reject or fail to reject the null hypothesis at $\alpha = .05$? Justify your answer using the p-value from the table.
+
+d. A classmate says: *"The ANOVA wasn't significant, but I still want to run pairwise t-tests between all three zone pairs to see which ones differ."* Should you run pairwise comparisons here? Explain in 1-2 sentences why or why not.
+
+e. Suppose you decided to run pairwise comparisons anyway. There are three possible pairs. In 1–2 sentences, describe how you would adjust the significance rule to control the family-wise Type I error rate
+
+17. How does `st_read` differ from `read.csv`?
+
+## True/False
+
+18.  (True / False): The value returned by `qnorm(.95, mean = 0, sd = 1)` is larger than the value returned by `qnorm(.90, mean = 0, sd = 1)`
+
+19.  (True / False): Power is the probability of rejecting the null hypothesis when the null hypothesis is actually false.
+
+20.  (True / False): One assumption of an ANOVA is homoscedastic variance, i.e. that the within-group variance is the same for all groups.
+
+21. (True / False): A p-value is the probability that the null hypothesis is true.
+
+22.  (True/False): A Type I error occurs when we fail to reject the null hypothesis even though the alternative hypothesis is actually true
+
+23. (True / False): If we are using a significance level of $\alpha=0.05$ and our p‑value is 0.20, we would accept the null hypothesis
+
+24.  The value returned by `pnorm(.3, mean = 0, sd = 1)` is larger than the value returned by `pnorm(.1, mean = 0, sd = 1)`
+
+25. In a paired t-test, the two groups must be independent of each other.
+
+26. Holding all else constant, decreasing alpha generally increases power.
+
+27. A Fisher's exact test is preferred over a chi-square test when sample counts in each cell are $\geq 10$.
+
+28. Holding all else constant, a confidence interval using $\alpha = 0.05$ would be narrower compared to a confidence interval using $\alpha = 0.01$.
+
+29. (True / False): For three tests, to preserve an overall 0.05 Type I error rate, the Bonferroni correction would use $\alpha/6 = .00083$ as the significance level for each individual test. 

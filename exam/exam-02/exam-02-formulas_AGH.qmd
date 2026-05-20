@@ -1,0 +1,36 @@
+---
+title: "Exam 02 Formula Sheet"
+format: html
+---
+
+If needed, you would be provided any of the following formulas on the exam. 
+
+- **CLT**: Given $X \sim N(\mu, \sigma)$, $Z = \frac{\bar{X}-\mu}{\sigma / \sqrt{n}}$ follows $N(0,1)$. $Z$ is approximately normal if $X$ is not normal, as long as $n$ is large enough.
+
+- Standard format of a confidence interval: point estimate $\pm$ confidence multiplier $\times$ standard error.
+
+- The confidence multiplier $z^*_{\alpha/2}$ is the z-score that cuts off the upper 100% $\times \alpha/2$ of the distribution.
+
+- $\frac{\bar{X} - \mu_0}{s/\sqrt{n}} \sim t_{n-1}$, where $\mu_0$ is the mean under the null hypothesis.
+
+- When we do not know $\sigma$, we estimate it with $s$, and can use the following confidence interval: $\bar{X} \pm t^*_{n-1;1-\alpha/2}\frac{s}{\sqrt{n}}$
+
+- The two-sample t-test for independent samples is given by: 
+
+$$t = \frac{(\bar{x_1} - \bar{x_2}) - (\bar{\mu_1} - \bar{\mu_2})}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}$$
+
+- The $F$ statistic is given by $F = \frac{s^2_{between}}{s^2_{within}}$. (You need to know how to get the degrees of freedom!)
+
+- $\chi^2 = \sum_{i=1}^{r \times c}\frac{(O_i - E_i)^2}{E_i}$ and this has a $\chi^2_{(r-1) \times (c-1)}$ distribution under $H_0$.
+
+- In the Wilcoxon Rank Sum test, let $T$ be the smaller sum of (either positive or negative) ranks. Then $z_T = \frac{T - \frac{n(n+1)}{4}}{\sqrt{\frac{n(n+1)(2n+1)}{24}}}$ follows an approximately $N(0,1)$ distribution.
+
+- In the Mann-Whitney U-Test, $U_1 = R_1 - \frac{n_1(n_1+1)}{2}, \quad U_2 = R_2 - \frac{n_2(n_2+1)}{2}$ where $R_1$ and $R_2$ are the sums of ranks in groups 1 and 2, respectively, and $n_1$ and $n_2$ are group sample sizes.
+
+  - With sufficient sample sizes in each group, the sampling distribution of U is approximately normal with mean and standard deviation:
+
+$$\text{mean}_U = \frac{n_1 n_2}{2}, \quad \text{sd}_U = \sqrt{\frac{n_1 n_2 (n_1 + n_2 + 1)}{12}}$$
+
+- To calculate sample size given $\sigma$, $\alpha$, $\beta$, and $\mu_1-\mu_0$: 
+
+$$n = \left[\frac{\sigma(z^*_{1-\alpha/2} + z^*_{1-\beta})}{\mu_1-\mu_0}\right]^2$$

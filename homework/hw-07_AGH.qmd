@@ -1,0 +1,24 @@
+---
+title: "HW 7"
+format: html
+---
+
+Due: Thursday, April 16 at 11:59PM
+
+```{r}
+#| echo: true
+#| message: false
+#| warning: false
+library(tidyverse)
+```
+
+## Fitting linear models
+
+Read in the `cdc` data. 
+
+```{r}
+cdc <- read.csv("data/cdc.csv")
+```
+
+
+

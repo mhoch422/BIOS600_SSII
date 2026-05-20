@@ -1,0 +1,106 @@
+---
+title: "AE 05: Comparing two continuous variables"
+author: "Your Name Here"
+date: "Date Here"
+format: html
+---
+
+Due Friday, April 3.
+
+## Learning goals
+
+-   Use correlations to quantify linear association between two continuous variables.
+
+-   Use visualization to dig deeper and understand what linear correlation is and isn't.
+
+## Data: mtcars
+
+Load the data by running the code:
+
+```{r}
+#| warning: false
+#| message: false
+data(mtcars)
+library(tidyverse)
+library(ggcorrplot)
+
+```
+
+Let's take a quick look at the contents:
+
+```{r}
+?mtcars
+glimpse(mtcars)
+
+```
+
+Let's focus on a few variables:
+
+-   mpg: miles per gallon (fuel efficiency)
+
+-   cyl: number of cylinders (bigger/stronger engines often have more cylinders).
+
+-   disp: displacement (cubic in.). The volume of the engine's cylinders (bigger/stronger engines often have larger displacement)
+
+-   hp: horsepower, a measure of engine power, or the rate at which work is done.
+
+-   drat: rear axle ratio. Lower generally means better fuel economy (mpg), higher means more towing power.
+
+-   wt: weight of the car.
+
+-   qsec: Time to complete a quarter mile (i.e. speed of car in a drag race).
+
+Let's limit the data to just these variables, and then look again at the correlation plot (we saw the full correlation plot for all variables in lecture).
+
+```{r}
+data <- mtcars |>
+  select(mpg, cyl, disp, hp, drat, wt, qsec)
+
+corr <- round(cor(data), 1)
+ggcorrplot(corr)
+```
+
+The darker red colors are higher correlations (close to 1), the darker purple correlations are lower correlations (close to -1), and the paler colors are smaller correlations (closer to 0).
+
+Now, as an example, let's take one pair of variables and look at the linear correlation, as well as the scatter plot comparing the two values.
+
+```{r}
+cor(data$wt, data$mpg)
+plot(data$wt, data$mpg)
+```
+Looks quite straightforward--they are strongly negatively correlated, and show a clear linear relationship. And it makes intuitive sense, a heavier car is going to have lower mpg because there is more mass for the engine to move.
+
+## Exercise 1 - horsepower and quarter mile time
+
+a. Using code from above, find the correlation between horsepower and quarter mile time, then make a scatter plot with horsepower on the x-axis, and quarter-mile time on the y-axis.
+```{r}
+# Correlation and scatter plot
+
+# [type code here]
+```
+
+b. How would you interpret and explain the correlation and scatter plot you obtained?
+
+\[type response here\]
+
+## Exercise 2 — rear axle ratio and horsepower
+
+I don't really know what rear axle ratio means aside from what I found online, that lower generally means better fuel economy (mpg), and higher means more towing power. With that in mind, let's look at one association.
+
+a. Using code from above, find the correlation between rear axle ratio and horsepower. Then, make a scatter plot with horsepower on the x-axis, and rear axle ratio on the y-axis. Describe your findings from both the correlation, and graphical analysis.
+
+```{r}
+# Correlation and scatter plot
+
+# [type code here]
+```
+
+\[type response here\]
+
+b.  Based on the material in lecture, do you think the correlation coefficient is a good summary of the strength of relationship between these two variables? Why or why not?
+
+\[type response here\]
+
+## Submission
+
+Render to PDF and submit on Canvas \> Assignments.

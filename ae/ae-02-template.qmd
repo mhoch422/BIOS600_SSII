@@ -1,0 +1,149 @@
+---
+title: "AE 02: Central Limit Theorem"
+author: "Your Name Here"
+date: "Today's Date Here"
+format: html
+---
+
+## Setup
+
+Update your name and today's date in the YAML above.
+
+## Learning Goal
+
+Today you will explore the **Central Limit Theorem (CLT)**: 
+
+> The average of many independent samples tends to follow a **normal distribution**, even if the original data are not normal — as long as the sample size is large enough.
+
+You will run short simulations from different distributions and see how the **sampling distribution of the mean** behaves.  
+
+## Bernoulli Distribution (Treatment Response)
+
+Imagine a new treatment for a disease. Each patient either **responds (1)** or **does not respond (0)** to the treatment. Suppose the probability of response is 0.3.  
+
+### Exercise 1
+
+We want to simulate drawing samples of **30 patients at a time**, record the average response rate, and repeat this process **1000 times**. Then we’ll look at the histogram of these sample averages to see what shape it takes.  
+
+The following code simulates this situation.
+
+a. Run the following code. 
+
+```{r}
+#| label: ex-1a
+set.seed(123)
+
+# Parameters
+p <- 0.3     # probability of success
+n <- 30      # 30 patients at a time
+nsim <- 1000 # number of simulations
+
+# Simulate 1000 sample means
+means <- replicate(nsim, 
+                   mean(rbinom(n, size = 1, prob = p)))
+
+# Plot histogram of sample means
+hist(means, breaks = 30, 
+     col = "skyblue", 
+     main = "Sample Means (Bernoulli, p=0.3, n=30)",
+     xlab = "Sample Mean")
+```
+
+
+b. What do you notice about the shape of the histogram of sample means?
+
+[type response here]
+
+## Binomial Distribution (Number of Infected Patients)
+
+Suppose in a community, the number of patients infected in a given week follows a Binomial distribution with parameters $n=20$ and $p=0.1$ (i.e., 20 people at risk each week, 10% chance of infection per person).
+
+Here, we simulate 40 weeks of data (sample size = 40), each week producing a Binomial(20, 0.1) random number. We then calculate the average across those 40 weeks. This whole process is repeated 1000 times, and we examine the histogram of the averages.
+
+### Exercise 2
+
+a. Run the following code to produce the simulation and histogram of results. 
+
+```{r}
+#| label: ex-2a
+set.seed(123)
+
+# Parameters
+size <- 20   # 20 people at risk each week
+p <- 0.1     # probability of infection = 0.1
+n <- 40      # simulate 40 weeks of data
+nsim <- 1000 # do this simulation 1000 times
+
+# Simulate 1000 sample means
+means <- replicate(nsim, 
+                   mean(rbinom(n, size = size, prob = p)))
+
+# Plot histogram of sample means
+hist(means, breaks = 30, 
+     col = "lightgreen", 
+     main = "Sample Means (Binomial, size=20, p=0.1, n=40)",
+     xlab = "Sample Mean")
+```
+
+
+b. What do you notice about the shape of the histogram of sample means?
+    
+[type response here]
+
+## Poisson Distribution: (ER Visits)
+
+Suppose the number of asthma-related ER visits per day follows a Poisson distribution with average $\lambda = 2$. 
+
+Here, we simulate 50 days of ER visits at a time (sample size = 50), calculate the mean number of visits within those 50 days, and then repeat this 1000 times. Finally, we look at the histogram of sample means to see how it compares to a bell curve.
+
+### Exercise 3
+
+a. Run the following code to produce the simulation and histogram of results. 
+
+```{r}
+#| label: ex-3a
+set.seed(123)
+
+# Parameters
+lambda <- 2  # Poisson rate
+n <- 50      # sample size
+nsim <- 1000 # number of simulations
+
+# Simulate 1000 sample means
+means <- replicate(nsim, 
+                   mean(rpois(n, lambda = lambda)))
+
+# Plot histogram of sample means
+hist(means, breaks = 30, 
+     col = "pink", 
+     main = "Sample Means (Poisson, λ=2, n=50)",
+     xlab = "Sample Mean")
+
+```
+
+
+b. Does the histogram resemble a bell curve?
+
+[type response here]
+
+c. Use the code chunk below to repeat the above simulation and produce a new histogram, **making one small change**: change `n <- 50` to `n <- 100`. Run the code.
+
+```{r}
+#| label: ex-3c
+
+```
+
+
+d. How does the histogram in part (c) compare to the one in part (b)? Why does this occur?
+
+[type response here]
+
+## Takeaway
+
+Across different distributions (Bernoulli, Binomial, Poisson), when we look at the distribution of sample means for reasonably large sample sizes, the shape becomes approximately normal.
+
+This is the Central Limit Theorem in action!
+
+## Submission
+
+Render to PDF and submit on Canvas > Assignments. 

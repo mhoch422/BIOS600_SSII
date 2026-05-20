@@ -1,0 +1,147 @@
+---
+title: "Solutions: Practice Problems on Collinearity and Logistic Regression"
+format: html
+---
+
+Some of these problems are meant to be fairly difficult--the purpose is to get you to think carefully about the concepts we've covered in class, and give you a better understanding of those underlying concepts, in order to be better prepared for the final.
+
+Since some of these are a bit challenging, you are encouraged to discuss these problems in small groups.
+
+## Exercise 1: Multicollinearity and linear regression
+
+A (fictional) study examined the association between three air pollutants, Pollutant1, Pollutant2, and Pollutant3, and prevalence of asthma within counties in a fictional U.S. state. The pollutant variables are the average concentrations in parts per billion (ppb) measured at monitoring sites within that county. Prevalence of asthma is the % of the county's population diagnosed with asthma; it's treated as normally distributed. The sample comprised 100 counties in this state. Assume hypothesis tests are conducted with significance level $\alpha=.05.$
+
+```{r}
+#| echo: false
+
+load("collinear_logistic_practice_data.Rdata")
+fit <- lm(asthma ~ ., data=df)
+summary(fit)
+
+```
+
+### (a)
+
+What are the results of the hypothesis tests for the significance of each pollutant? Interpret these results in the context of the study.
+
+<span style="color:blue;">Each of the hypothesis tests for individual pollutants' association with asthma prevalence, holding the other pollutant levels constant, have a p-value greater than 0.05. So for each of these tests, we would fail to reject the null hypothesis that the air concentration of that pollutant in ppb is associated with asthma prevalence (%), holding the other pollutant levels constant.</span>
+
+### (b)
+
+Write the null and alternative hypotheses for the F-test for overall model significance. Write these hypotheses both in symbols, and in words in the context of the study.
+
+<span style="color:blue;">Symbols: $H_0: \beta_1=\beta_2=\beta_3=0. H_1:$ At least one of $\beta_j, j=1,2,3$ is not equal to 0. Words: The null hypothesis is that none of the pollutant concentrations (ppb) is associated with asthma prevalence (%). The alternative hypothesis is that at least one of the pollutant concentrations (ppb) is associated with asthma prevalence (%). </span>
+
+### (c)
+
+What is the result of the overall F-test for the linear regression model? Interpret this result in the context of the study.
+
+<span style="color:blue;"> The overall F test results are displayed at the bottom of thee R output summarizing the linear model results, and have a p-value < 0.001, so we reject $H_0$ and conclude that there is evidence that at least one of the pollutant concentrations (ppb) is associated with asthma prevalence (%).</span>
+
+### (d)
+
+Do these results show indication of possible multicollinearity affecting this model? Why or why not?
+
+<span style="color:blue;">Yes, one of the typical indications of multicollinearity is that the individual tests are not significant, but the joint test is significant. This occurs because multicollinearity makes it difficult for the linear model to determine, statistically, which predictor variables are individually associated with the response (hence no significant individual associations), but it is still possible to see that at least one of them is associated with the response (joint significance found in the F-test). </span>
+
+### (e)
+
+The researchers decide to check for multicollinearity as follows:
+
+```{r}
+library(car)
+vif(fit)
+
+```
+
+What did the researchers do? Explain in 1 sentence. What do the results indicate about multicollinearity affecting this model?
+
+<span style="color:blue;">The researchers computed the VIF values (variable inflation factor) which checks for multicollinearity. Above 5 or 10 can be considered problematic levels of multicollinearity so it seems to confirm that it is present here.</span>
+
+## Exercise 2: Conceptual
+
+Assume the outcome variable $Y$ takes values either $0$ or $1$.
+
+### (a)
+
+If our outcome variable $Y$ takes values $0$ or $1$, what would we assume its distribution is?
+
+<span style="color:blue;">Bernoulli, or equivalently, binomial with the number of trials equal to 1.</span>
+
+### (b)
+
+We usually want to create a regression model to estimate $P(Y_i=1)$ based on the value of the predictors for observation $i$. Thinking back to the properties of the distribution you said in question (a), what is another name for this quantity? In other words, how else can we think of $P(Y_i=1)$?
+
+<span style="color:blue;">We want to estimate $P(Y_i=1)$ which in the Bernoulli model we can write as $p_i$, the parameter for the Bernoulli distribution (for a regression model, the parameter is indexed by $_i$ because the probability that $Y_i=1$ depends on the predictor values for that predictor so is different for different observations). The $Bern(p_i)$ distribution's expected value is $p_i$.</span>
+
+### (c)
+
+Based on your answer to part (c), how is this similar to the linear regression model with a normally-distributed outcome?
+
+
+<span style="color:blue;"> In linear regression where we assume $Y_i$ is normal, we estimate the expected value of $Y_i$ given the covariate values, because one way of writing the linear regression assumptions is that $Y_i\sim N(\beta_0 + \beta_1x_{i1} + ... + \beta_px_{ip}, \sigma^2)$. So in both cases, we are trying to estimate the expected value of the outcome based on the predictor values for that observation.</span>
+
+### (d)
+
+Why would or wouldn't you want to use a linear regression model for this situation?
+
+<span style="color:blue;"> The linear regression model assumes a normally distributed outcome, which our outcome variable is not. A normally distributed outcome variable can (hypothetically) take any real number as a value, while our outcome variable must be 0 or 1. So our assumption of normality is incorrect. More concretely, assuming a linear model for the expected value of the outcome, as a function of predictors, can lead to estimated probabilities less than 0 or greater than 1, which are not possible. For these reasons we would not want to use a linear regression model.</span>
+
+### (e)
+
+What is the logistic function? Why do we use it in logistic regression?
+
+<span style="color:blue;"> The logistic or logit function is $logit(p)=\log\left(\frac{p}{1-p}\right)$. We use it in logistic regression because it ensures the values of $p$ are always within $[0,1]$.</span>
+
+## Exercise 3: Logistic Regression
+
+A (fictional) study examined the association between age (years) and region of residence in the U.S. with diagnosis of a particular condition. They used four regions of the continental U.S., values 1-4.
+
+```{r}
+#| echo:  true
+
+fit.glm <- glm(condition ~ ., family="binomial", data=df2)
+summary(fit.glm)
+
+```
+
+### (a)
+
+What is the reference category for the region variable?
+
+<span style="color:blue;">Category 1 is the reference category, which we can see because it's not included as a dummy variable in the R summary output.</span>
+
+### (b)
+
+Write the model used.
+
+<span style="color:blue;"> Let $p_i$ be $P(Y_i=1)$, the probability that individual $i$ is diagnosed with the condition. Then the model is $logit(p_i)=\beta_0 + \beta_1 age_i + \beta_2(Region_i=2) + \beta_3(Region_i=3) + \beta_4(Region_i=4)$, where $Region_i$ can take the values 1, 2, 3, 4 depending on the residence of observation $i$.</span>
+
+### (c)
+
+Conduct a hypothesis test for the association between age and diagnosis probability of the condition, at level $\alpha=.05$. Follow the steps:
+
+1.  Write the null and alternative hypotheses, in words **and** symbols.
+2.  Compare the p-value to $\alpha$.
+3.  Draw and state your conclusion in the context of the study.
+
+<span style="color:blue;">
+1. $H_0$: Age (years) is not associated with diagnosis probability, holding region of residence constant. In symbols, $H_0: \beta_1=0$. $H_1$: Age (years) is associated with diagnosis probability, holding region of residence constant. In symbols, $H_1$: $\beta_1\neq 0$. </span>
+
+### (d)
+
+Interpret the coefficient for the age variable in the context of the study.
+
+<span style="color:blue;">For every increase in age by one year, the odds of diagnosis changes by a factor of $\exp(\hat{\beta}_1)= \exp(-0.8636).</span>
+
+### (e)
+
+Interpret the coefficient for region category 4 in the context of the study.
+
+<span style="color:blue;">Individuals residing in region 4 have odds of diagnosis equal to $\exp(\hat{\beta}_4)$ times the odds of diagnosis of an individual residing in region 1.</span>
+
+### (f)
+
+Based on the sign (positive/negative) of $\hat{\beta}_1$, is increased age associated with increased or decreased probability of diagnosis?
+
+<span style="color:blue;">The sign of the coefficient is negative, meaning that as age increases, the odds of diagnosis decrease, and therefore as age increases, probability of diagnosis also decreases.</span>

@@ -1,0 +1,105 @@
+---
+title: "HW 03"
+subtitle: "Lectures 06-07"
+format: html
+---
+
+Due: Thursday, February 12, at 11:59pm
+
+## Starting a new Quarto file
+
+For this assignment you will begin a new Quarto file. To do this, go to RStudio and click File > New File > Quarto Document. A pop-up will appear asking for a title, author, and format. You may leave these as the default options for now. Click OK and a new file will open. Update the YAML with your title, name, and date.
+
+## Exercise 1
+
+Determine which probability distribution would be most appropriate for modeling the quantity of interest: Bernoulli, Binomial, Normal, or Poisson. No explanation is required (note, it may be the case that not all assumptions are satisfied for your distribution of choice; that’s ok - for here, choose the most appropriate choice).
+
+-   
+
+    (A) The mean proportion of people who are left-handed
+
+-   
+
+    (B) The number of students in a classroom who have diabetes
+
+-   
+
+    (C) How many previous heart attacks a patient has had in the past decade
+
+-   
+
+    (D) The number of flights taken by a person in a year
+
+-   
+
+    (E) The average weight of newborn infants
+
+-   
+
+    (F) Whether a patient develops lung cancer during their life given that they are a smoker
+    
+
+## Exercise 2
+
+Air pollution may cause lung deficiencies and development of diseases such as emphysema or COPD. A researcher is interested in the effect of air pollution on mice, and conducts an experiment whereby the researcher exposes mice to high levels of air exhaust for six hours a day for three weeks, and at the end of the three week period, evaluate whether the mice have developed deficiencies in lung function. In a sample of the mice used, 25 out of 100 developed such deficiencies. The researcher is interested in the number of mice that must be sampled before he obtains ten abnormal mice for use in further studies and proposes using a binomial distribution to model this quantity. Evaluate whether the assumptions for a binomial distribution are satisfied.
+
+
+## Exercise 3
+
+Vaccination is one of the most effective public health tools ever created to control the spread of infectious, communicable diseases, but unfortunately recently there has been some pushback from the public against mandatory childhood vaccinations. Due to vaccine hesitancy, formerly well-controlled diseases such as measles have made a comeback in certain communities due to lack of vaccination and herd immunity. A researcher is interested in the number of children who develop measles across various school districts in the United States and proposes using a Poisson distribution to model this quantity. Evaluate whether the assumptions for a Poisson distribution are satisfied.
+
+
+## Exercise 4
+
+A team of scientific researchers in Antarctica is investigating the number of eggs laid in a given season to Adelie penguin breeding pairs. In their initial survey of 100 randomly chosen breeding pairs, they found a mean of 2 eggs (standard deviation 0.3 eggs). Explain why it would or would not be appropriate to use a Poisson distribution to model this quantity.
+
+## Exercise 5
+
+Blood cholesterol is often used as a marker for cardiovascular disease risk.  
+Suppose the distribution of total cholesterol levels in adults is approximately normal with:  
+
+- Mean ($\mu$) = 200 mg/dL  
+- Standard deviation ($\sigma$) = 30 mg/dL  
+
+A patient’s cholesterol level is measured at **260 mg/dL**.  
+
+  a. Calculate the **z-score** for this patient’s cholesterol value. Use R for your computation and show your code.  
+  
+  b. Interpret the z-score: how many standard deviations above or below the mean is this value?  
+
+  c. Based on the z-score, would you consider this value to be **unusually high**?  
+   *(Hint: Recall that values more than ~2 standard deviations from the mean are often considered unusual.)*
+
+
+## Submission
+
+As you’ve seen previously, we can **Render** into an .html file that can be opened by any web browser. To export it as a .pdf, open the file in your web browser and then print to or save as a .pdf document. Contact your TAs in Ed Discussion if you need help! 
+
+You will submit the PDF documents for labs and homework to Gradescope as part of your final submission.
+
+To submit your assignment:
+
+- Access Gradescope through the menu on the BIOS 600 Canvas site.
+
+- Click on the assignment, and you’ll be prompted to submit it.
+
+- Mark the pages associated with each exercise. All of the pages of your lab should be associated with at least one question (i.e., should be “checked”).
+
+- Select the first page of your .PDF submission to be associated with the "Formatting" section.
+
+## Grading
+
+| Component | Points |
+|----------|--------|
+| Ex 1 | 6 |
+| Ex 2 | 3 |
+| Ex 3 | 3 |
+| Ex 4 | 2 |
+| Ex 5 | 3 |
+| Formatting | 3 |
+
+The “Formatting” grade is to assess the document format. This includes having a neatly organized document (no excessive output, warnings/messages when loading packages and/or data) with readable code and your name and the date updated in the YAML.
+
+
+
+

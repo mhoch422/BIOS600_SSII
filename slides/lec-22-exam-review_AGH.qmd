@@ -1,0 +1,63 @@
+---
+title: "Lecture 22: Final Exam Review"
+subtitle: "BIOS 600 - Spring 2026"
+institute: "UNC - Chapel Hill"
+logo: "images/logo_600.png"
+format:
+  revealjs:
+    css: reveal-custom.css
+execute:
+  freeze: auto
+---
+
+## Announcements
+
+- Please fill out course evaluations
+
+- Evaluations are due **April 28 at 11:59pm**.
+
+- If at least 85% of students fill out the course evaluations, everyone in the class will receive an extra 1/2 point on the final exam score. 
+
+- AE #6 is due this Sunday **April 26**
+
+## Final Exam Info
+
+- Final Exam is **Tuesday, May 5, 8am-11am**
+  - Will be in this room **and** McGavern 2301. 
+
+- Final Exam will be similar length to previous exams
+
+- No formulas needed and so no formula sheet provided
+
+## Final Exam Info
+
+- Focus on material since Exam 02
+
+- Final Topics, Final Info and Practice Problems posted on Canvas 
+
+## Application Exercise
+
+:::callout-tip
+## Exam Review
+
+Head to Canvas and download the template for Exam Review. This application exercise will serve as review for final exam material. 
+
+Select groups should put their solutions on [these Google Slides](https://docs.google.com/presentation/d/18sEurrIUaDs9Vg-r_fsVYMe97XeiztLVfhriIq4lp7Q/edit?usp=sharing) and be ready to present later in class. 
+:::
+
+## Class recap
+
+Hopefully, BIOS 600 has helped you
+
+- choose which statistical test to use and when
+
+- learn how to apply descriptive techniques used to commonly summarize public health data
+
+- learn how to apply common statistical methods for inference in a reproducible way using R!
+
+## Thank you!
+
+- Thank you all for a wonderful semester. I have enjoyed having each of you in class!
+
+- Stay in touch! 
+

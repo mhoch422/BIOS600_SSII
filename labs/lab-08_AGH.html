@@ -1,0 +1,860 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lab 8: Multiple Regression</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="lab-08_AGH_files/libs/clipboard/clipboard.min.js"></script>
+<script src="lab-08_AGH_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="lab-08_AGH_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="lab-08_AGH_files/libs/quarto-html/popper.min.js"></script>
+<script src="lab-08_AGH_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="lab-08_AGH_files/libs/quarto-html/anchor.min.js"></script>
+<link href="lab-08_AGH_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="lab-08_AGH_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="lab-08_AGH_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="lab-08_AGH_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="lab-08_AGH_files/libs/bootstrap/bootstrap-efbb37e9afcc02144ebbc7afd12a776f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lab 8: Multiple Regression</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Due: Friday, Apr 17, 2026 at 11:59PM</p>
+<section id="set-up" class="level2">
+<h2 class="anchored" data-anchor-id="set-up">Set up</h2>
+<ol type="1">
+<li><p><strong>Open your RStudio project</strong> by going to File &gt; Open Project. Select your BIOS 600 folder. (If you see a blue cube with your project name at the top right of your RStudio window, you’re good to go - you are already in your project folder.)</p></li>
+<li><p>To begin, start a new Quarto file. Change the title to Lab 8. Keep the output as html.</p></li>
+<li><p>“Save As” into your class project folder with a new name: “<code>lab-08.qmd</code>”.</p></li>
+<li><p>Update your name and date in the YAML.</p></li>
+<li><p>Render your document to make sure your YAML is rendering correctly.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Data download
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Download <code>cdc.csv</code> and <code>beijing.csv</code> and save into your Data folder within your BIOS 600 Project folder.</p>
+</div>
+</div>
+</section>
+<section id="loading-libraries" class="level2">
+<h2 class="anchored" data-anchor-id="loading-libraries">Loading libraries</h2>
+<p>Below you’ll find the packages needed for today’s lab. You may need to use <code>install.packages</code> first.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="fitting-linear-models" class="level2">
+<h2 class="anchored" data-anchor-id="fitting-linear-models">Fitting linear models</h2>
+<p>In R, we use the <code>lm()</code> function to fit linear models. It is often useful to save the “model object” as a separate object in order to use it for downstream analyses. In general, the syntax is</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(outcome <span class="sc">~</span> predictor1 <span class="sc">+</span> predictor2 <span class="sc">+</span> ..., <span class="at">data =</span> dataset)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Let’s read in the <code>cdc</code> data.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cdc <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/cdc.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Reminder</strong>: The variables in the cdc dataset are as follows:</p>
+<ul>
+<li><p><code>State</code>, the name of the state</p></li>
+<li><p><code>Region</code>, the US Census region that each state belongs to</p></li>
+<li><p><code>HDI</code>, the Human Development Index of each state in 2017, categorized into whether they are among the top ten, the bottom ten, or the middle</p></li>
+<li><p><code>InfantMortalityRate</code>: infant mortality rate per 100,000</p></li>
+<li><p><code>CVDeathRate</code>: death rate per 100,000 due to cardiovasulcar causes</p></li>
+<li><p><code>DrugDeathRate</code>: death rate per 100,000 due to drug-related causes (ODs, etc.)</p></li>
+<li><p><code>MotorDeathRate</code>: death rate per 100,000 due to motor vehicle-related causes</p></li>
+<li><p><code>CancerDeathRate</code>: death rate per 100,000 due to cancer</p></li>
+<li><p><code>Obesity</code>: % of adults who are obese</p></li>
+<li><p><code>Smoking</code>: % of adults who smoked at least one cigarette in the past month</p></li>
+<li><p><code>Exercise</code>: % of adults who participated in at least 2.5 hours of aerobic activity per week</p></li>
+<li><p><code>Seatbelt</code>: % of adults to regularly wear their seat belt</p></li>
+<li><p><code>FluVaccination</code>: % of adults who received a flu vaccine</p></li>
+<li><p><code>ChildVaccination</code>: % of children who aged 19-35 months who have received the DTaP, polio, MMR, Hib, hepatitis B, varicella and PCV vaccines</p></li>
+<li><p><code>Under18</code>: % of residents under age 18</p></li>
+<li><p><code>Over65</code>: % of residents over age 65</p></li>
+</ul>
+<p>Now let’s fit a linear model using the CDC data, where our response variable is obesity percentage and the three predictor variables are adequate exercise percentage, smoking percentage, and HDI category, and suppose we want to save it as the object <code>mod1</code>. We would use the following code:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Obesity <span class="sc">~</span> Exercise <span class="sc">+</span> Smoking <span class="sc">+</span> HDI, <span class="at">data =</span> cdc)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="model-estimates" class="level2">
+<h2 class="anchored" data-anchor-id="model-estimates">Model estimates</h2>
+<p>First, let’s take a look at the model output with the <code>tidy</code> function. This function is applied to a linear model object such as the mod1 object we saved earlier:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(mod1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 5
+  term        estimate std.error statistic  p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)   37.6      3.57      10.5   9.66e-14
+2 Exercise      -0.281    0.0539    -5.22  4.46e- 6
+3 Smoking        0.431    0.0922     4.68  2.68e- 5
+4 HDIMiddle     -0.724    0.794     -0.912 3.67e- 1
+5 HDITop ten    -2.78     1.00      -2.77  8.07e- 3</code></pre>
+</div>
+</div>
+<p>We see that the output provides columns containing our coefficient estimates, their standard errors, the t-statistic corresponding to each, and the p-value.</p>
+<p>Note that R automatically recognized <code>HDI</code> as a categorical variable since its values are character strings, and created the appropriate dummy variables (treating the first category in alphabetical order as the baseline value). If you have a categorical variable that takes on numerical values, you can use the <code>as.factor</code> function in the model call to convert a variable into a categorical variable (which R will create dummy variables from). For instance:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(outcome <span class="sc">+</span> predictor1 <span class="sc">+</span> <span class="fu">as.factor</span>(predictor2) <span class="sc">+</span> ..., <span class="at">data =</span> dataset)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>As well, we can get model-specific values such as the <span class="math inline">\(R^2\)</span>, adjusted <span class="math inline">\(R^2\)</span>, the F-statistic (and corresponding p-value), and some other statistics by using the <code>glance</code> function applied to our model object. Note that the <code>df</code> given in the table is the numerator degrees of freedom for the overall F test.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(mod1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 12
+  r.squared adj.r.squared sigma statistic  p.value    df logLik   AIC   BIC
+      &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1     0.805         0.787  1.67      46.3 2.11e-15     4  -94.1  200.  212.
+# ℹ 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;</code></pre>
+</div>
+</div>
+</section>
+<section id="evaluating-residuals" class="level2">
+<h2 class="anchored" data-anchor-id="evaluating-residuals">Evaluating residuals</h2>
+<p>The <code>augment()</code> function from the <code>broom</code> package gives us some additional information relating to our linear model. Of primary interest are the fitted values and the residuals for each observation. The fitted values are the predicted response values given the values for our explanatory variables, and the residuals are the difference between the actual response data points and their fitted (predicted) values from the model.</p>
+<p>Let’s apply the augment function to the mod1 object we created earlier, and save it as a new dataframe, <code>mod1_res</code> (which contains the residuals):</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mod1_res <span class="ot">&lt;-</span> <span class="fu">augment</span>(mod1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The variables <code>.fitted</code> and <code>.resid</code> (note the period) variables from this dataframe are what we will be using to evaluate some model assumptions. For instance, we could evaluate the normality of the residuals by plotting a histogram, or evaluate linearity/homogeneity of variances by plotting a scatterplot of the fitted values vs.&nbsp;the residuals.</p>
+<p>For instance, we can create a ggplot histogram of the .resid to get a histogram of the residuals:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mod1_res, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> .resid)) <span class="sc">+</span> </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Residuals"</span>, <span class="at">y =</span> <span class="st">"Count"</span>,</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Residuals are slightly right-skewed"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lab-08_AGH_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Or a scatterplot of the fitted values vs.&nbsp;the residuals (the residual plot):</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> mod1_res, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> .fitted, <span class="at">y =</span> .resid)) <span class="sc">+</span> </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Fitted values"</span>, <span class="at">y =</span> <span class="st">"Residuals"</span>,</span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Residual plot shows no clear pattern"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lab-08_AGH_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="predicting-new-values" class="level2">
+<h2 class="anchored" data-anchor-id="predicting-new-values">Predicting new values</h2>
+<p>We can use our fitted values from our model to predict a new Obesity percent, given certain values of our predictors.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>new_obs <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">Exercise =</span> <span class="dv">45</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">Smoking  =</span> <span class="dv">18</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">HDI      =</span> <span class="st">"Top ten"</span>)</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Predicted value with confidence interval</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(mod1, <span class="at">newdata =</span> new_obs, </span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">interval =</span> <span class="st">"confidence"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       fit     lwr      upr
+1 29.95768 28.5452 31.37017</code></pre>
+</div>
+</div>
+<p><strong>Conclusion</strong>: Given a region with <code>Exercise</code> = 45%, <code>Smoking</code> = 18%, and given the region is in the Top ten HDI category, our model predicts an Obesity percentage of 29.957%.</p>
+</section>
+<section id="interactions" class="level2">
+<h2 class="anchored" data-anchor-id="interactions">Interactions</h2>
+<p>Interactions in models are made by simplifying multiplying two variables of interest together. As an example:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>mod_int <span class="ot">&lt;-</span> <span class="fu">lm</span>(outcome <span class="sc">~</span> var1 <span class="sc">+</span> var2 <span class="sc">+</span> var1 <span class="sc">*</span> var2, <span class="at">data =</span> dataset)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Note the <code>var1*var2</code> term in the model above.</p>
+</section>
+<section id="exercise-1" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-1">Exercise 1</h2>
+<p>Using the <code>cdc</code> dataset, consider the following model:</p>
+<p><span class="math display">\[Obesity_i = \beta_0 + \beta_1Exercise_i + \beta_2Smoking_i + \beta_3(HDI == Middle)_i + \beta_4 (HDI == Top ten)_i + \epsilon_i\]</span></p>
+<ol type="a">
+<li><p>Fit the model using <code>lm()</code>. Display the table of estimated regression coefficients using <code>tidy()</code> and <code>kable()</code>, rounding to 3 digits.</p></li>
+<li><p>What is the interpretation of <span class="math inline">\(\hat \beta_2\)</span>?</p></li>
+<li><p>What is the interpretation of <span class="math inline">\(\hat \beta_4\)</span>?</p></li>
+</ol>
+</section>
+<section id="atmospheric-pm2.5" class="level2">
+<h2 class="anchored" data-anchor-id="atmospheric-pm2.5">Atmospheric PM2.5</h2>
+<p>Atmospheric PM2.5 is fine particulate matter that has a diameter of less than 2.5 micrometers, and is one of the major air pollutants in the atmosphere. Such particles penetrate deep into the lungs due to their small size, and are associated with cardiovascular disease and other adverse health outcomes. Thus, higher PM2.5 levels imply lower air quality.</p>
+<p>Scientists are interested in evaluating whether atmospheric PM2.5 levels can be predicted by weather patterns. Hourly data of PM2.5 readings from 2013-2017 were captured at a weather station at Nongzhanguan in Chaoyang District, Beijing. A modified subset of 1500 of these observations is given in the <code>beijing</code> dataset, which has been adapted from data provided by Dr.&nbsp;Songxi Chen at Peking University (Proc. Roy. Soc. A: 473(2205): 2017.0457 ).</p>
+<p>Of interest are the following variables:</p>
+<ul>
+<li><code>PM2.5</code>: PM10 levels in micrograms per cubic meter</li>
+<li><code>TEMP</code>: temperature in degrees Celsius</li>
+<li><code>PRES</code>: barometric pressure in in hPa</li>
+<li><code>DEWP</code>: dew point in degrees Celsius</li>
+<li><code>RAIN</code>: hourly precipitation levels in mm</li>
+<li><code>wd</code>: wind direction (eight compass points)</li>
+</ul>
+<p>You may read in the data with the following code.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>beijing <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="at">file =</span> <span class="st">"data/beijing.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="exercise-2" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-2">Exercise 2</h2>
+<p>Suppose we are interested in fitting a linear model that predicts PM2.5 levels based on the temperature, pressure, dew point, precipitation, and wind direction.</p>
+<ol type="a">
+<li><p>Using the <code>beijing.csv</code> dataset, run the model using <code>lm()</code>. Save it as a model object (choose a sensible name for the model object, like <code>fit1</code> or <code>mod1</code>, etc.) You may have to write your model on multiple lines for it to fit on the page – please check before submitting!</p></li>
+<li><p>Use the <code>augment()</code> function to produce a new data frame which contains <code>.fitted</code> and <code>.resid</code>.</p></li>
+<li><p>Based on the data frame created in part (b), create a visualization of the fitted values vs.&nbsp;the residuals using <code>ggplot()</code>.</p></li>
+<li><p>Based on the plot from part (c), comment on the following: Does the equal variance assumption seem to be satisfied? Does the linearity assumption seem to be satisfied?</p></li>
+<li><p>Based on the data frame created in part (b), produce a histogram of the residuals using <code>ggplot()</code>. Does the normality assumption seem to be satisfied?</p></li>
+</ol>
+</section>
+<section id="exercise-3" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-3">Exercise 3</h2>
+<p>Based on the model fit in Exercise 2, what PM2.5 level would you predict for a day with temperature of 11 degrees C, pressure of 1040 hPa, dew point of 5 degrees C, with no rain and wind coming from the south? To do this, create a new data frame with the given predictor values, and then use the <code>predict</code> function.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Hint
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To see how the dataset specifies wind direction (i.e.&nbsp;the character names of the different levels), use the following code:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(beijing<span class="sc">$</span>wd)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-4" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-4">Exercise 4</h2>
+<p>Based on the model fit in Exercise 2, provide the coefficient estimates and a 1-sentence conclusion for the following values: the intercept, the slope corresponding to <code>TEMP</code>, and the slope corresponding to <code>wdSW</code>.</p>
+</section>
+<section id="exercise-5" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-5">Exercise 5</h2>
+<p>Regardless of whether the assumptions in Exercise 2 are satisfied, we’d like to comprehensively evaluate the following question: is there sufficient evidence that there is a relationship between barometric pressure and PM2.5 levels, while adjusting for temperature, dew point, rain, and wind direction? To do so, do the following:</p>
+<ol type="a">
+<li><p>State your null and alternative hypotheses in words or symbols.</p></li>
+<li><p>State the test statistic’s distribution under the null hypothesis (include name of distribution and degrees of freedom).</p></li>
+<li><p>State your p-value and a 1-sentence conclusion. Assume <span class="math inline">\(\alpha = 0.05\)</span>.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Note</strong>: the t statistic for a single predictor in a multiple regression model follows a <span class="math inline">\(t\)</span>-distribution with <span class="math inline">\(𝑛−𝑘\)</span> degrees of freedom, where <span class="math inline">\(n\)</span> is the number of observations, and <span class="math inline">\(k\)</span> is the number of parameters being estimated (including the intercept).</p>
+</div>
+</div>
+</section>
+<section id="exercise-6" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-6">Exercise 6</h2>
+<p>Given the model in Exercise 2:</p>
+<ol type="a">
+<li><p>What would be the expected difference in PM2.5 levels given a one degree increase in dewpoint? (1-sentence)</p></li>
+<li><p>Compute the adjusted <span class="math inline">\(R^2\)</span> value from the model in Exercise 2 using <code>glance()</code>. Provide a 1-sentence interpretation of the adjusted <span class="math inline">\(R^2\)</span> value.</p></li>
+</ol>
+</section>
+<section id="ai-attestation" class="level2">
+<h2 class="anchored" data-anchor-id="ai-attestation">AI Attestation</h2>
+<p>Was AI used on this assignment? If so, describe your prompts below. If not, simply state “AI was not used on this assignment.”</p>
+</section>
+<section id="submission" class="level2">
+<h2 class="anchored" data-anchor-id="submission">Submission</h2>
+<p>As you’ve seen previously, we can <strong>Render</strong> the template into an .html file that can be opened by any web browser. To export it as a .pdf, open the file in your web browser and then print to or save as a .pdf document. Your TAs will show you how if you need help! (There is a way to directly knit to a .pdf file, but it’s quite a bit more involved.)</p>
+<p>You will submit the PDF documents for labs and homework to Gradescope as part of your final submission.</p>
+<p>To submit your assignment:</p>
+<ul>
+<li><p>Access Gradescope through the menu on the BIOS 600 Canvas site.</p></li>
+<li><p>Click on the assignment, and you’ll be prompted to submit it.</p></li>
+<li><p>Mark the pages associated with each exercise. All of the pages of your lab should be associated with at least one question (i.e., should be “checked”).</p></li>
+<li><p>Select the first page of your .PDF submission to be associated with the “Formatting” section.</p></li>
+</ul>
+</section>
+<section id="grading" class="level2">
+<h2 class="anchored" data-anchor-id="grading">Grading</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Component</th>
+<th>Points</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Ex 1</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<td>Ex 2</td>
+<td>7</td>
+</tr>
+<tr class="odd">
+<td>Ex 3</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>Ex 4</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>Ex 5</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>Ex 6</td>
+<td>2</td>
+</tr>
+<tr class="odd">
+<td>AI Attestation</td>
+<td>1</td>
+</tr>
+<tr class="even">
+<td>Formatting</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p>The “Formatting” grade is to assess the document format. This includes having a neatly organized document (no excessive output, warnings/messages when loading packages and/or data) with readable code and your name and the date updated in the YAML.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

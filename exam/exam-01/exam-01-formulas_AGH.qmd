@@ -1,0 +1,34 @@
+---
+title: "Exam 01 Formula Sheet"
+format: html
+---
+
+If needed, you would be provided any of the following formulas on the exam. 
+
+- Sample standard deviation: $s = \sqrt{\frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{x})^2}$
+
+- Sample variance: $s^2 = \frac{1}{n-1} \sum_{i=1}^n(x_i - \bar{x})^2$
+
+-   **Chebyshev's inequality** tells us the proportion of values in the range "average $\pm$ $k$ SDs" is at least $1-\frac{1}{k^2}$
+
+-   **Inclusion-Exclusion**: $P(A \cup B) = P(A) + P(B) - P(A \cap B)$
+
+-   **Complement of union**: $(A\cup B)^C = A^C \cap B^C$
+
+-   **Complement of intersection**: $(A\cap B)^C = A^C \cup B^C$
+
+-  Conditional probability: $P(A|B) = \frac{P(A\cap B)}{P(B)}$
+
+- Law of total probability: $P(A) = P(A \cap B_1) + P(A \cap B_2) + \cdots + P(A \cap B_k)$
+
+- If $X$ has a binomial distribution, then $P(X=k) = {n \choose k}p^k (1-p)^{n-k}$
+
+- If $X$ has a Poisson distribution, then $P(X=k) = \frac{\lambda^k e^{-\lambda}}{k!}$
+
+- Given $n$ and parameter values, write out the expression for expectation and variance of Bernoulli, Binomial, and Poisson random variables. (Formulas for each given.)
+
+-  For $Z \sim Bern(p)$, $E(Z) = p$ and $Var(Z) = p(1-p)$
+
+-   For $Z \sim Binom(n, p)$, $E(Z) = np$ and $Var(Z) = np(1-p)$
+
+-   For $Z \sim Pois(\lambda)$, $E(Z) = Var(Z) = \lambda$

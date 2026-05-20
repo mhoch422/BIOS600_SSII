@@ -1,0 +1,529 @@
+---
+title: "Lecture 18: Multiple Linear Regression"
+subtitle: "BIOS 600 - Spring 2026"
+institute: "UNC - Chapel Hill"
+logo: "images/logo_600.png"
+format:
+  revealjs:
+    css: reveal-custom.css
+execute:
+  freeze: auto
+---
+
+## Announcements
+
+- Lab 7 due **Friday, April 10th**
+
+- No HW #7
+
+- **Final lab** - Lab 8 - will be next week
+
+- Practice problems for exam will be posted week of April 20th
+
+- Exams will be passed back on Tuesday
+
+## Reading
+
+-   P&G: Chapter 19
+
+-   OI: 9.1 and 9.3
+
+## Computational setup
+
+```{r}
+#| echo: true
+#| message: false
+#| warning: false
+library(tidyverse)
+library(tidymodels)
+library(kableExtra)
+```
+
+## Review: Assumptions of linear regression {.smaller}
+
+::: callout-tip
+
+## Review 
+
+1.  Independent observations
+
+2.  Linear relationship between predictor and response
+
+3.  Conditional on predictor(s), the response follows a normal distribution (normally distributed residuals)
+
+4.  Equal variances (homogeneity of variance in the residuals)
+
+:::
+
+- How can we check the assumptions to ensure they are met? 
+
+- We can do so by "**running regression diagnostics**" - which means checking the assumptions within our regression model. 
+
+## Regression diagnostics: independence {.smaller}
+
+We just have to think through this one, unfortunately.
+
+- The **independence assumption** means that each observation provides *unique information* — no observation should influence another.
+
+- In other words, the residuals (errors) should not be correlated with each other.
+
+::: callout-tip
+
+## Common violations of independence
+- Repeated measurements on the same subject over time  
+  (e.g., daily blood pressure readings for the same patient)
+  
+- Clustered or grouped data  
+  (e.g., patients within the same hospital, students within a classroom)
+  
+- Time-series data  
+  (e.g., monthly pollution levels, daily step counts)
+
+:::
+
+## Regression diagnostics: equal variance; linearity
+
+-   To check equal variances and linearity, we can use a plot of the residuals $\hat ϵ_i$ by the predicted (or fitted) values $\hat y_i$.
+
+-   We expect to see evenly-spaced dots along the y axis (equal variances), with symmetrically distributed observations around the y axis (linearity). Patterns or trends are evidence something is wrong. (Drawing on next slide.)
+
+## Regression diagnostics: equal variances
+
+```{r}
+#| echo: false
+#| eval: true
+library(ggplot2)
+set.seed(42)
+
+n <- 100
+fitted_vals <- seq(1, 10, length.out = n)
+
+# --- Plot 1: Non-equal variance (funnel shape) ---
+residuals_hetero <- rnorm(n, mean = 0, sd = 0.3 * fitted_vals)
+
+df_hetero <- data.frame(fitted = fitted_vals, residuals = residuals_hetero)
+
+df_hetero |> ggplot(aes(x = fitted, y = residuals)) +
+  geom_point(shape = 16, alpha = 0.6, size = 3) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "darkred") +
+  geom_vline(xintercept = mean(fitted_vals), color = "darkred", linewidth = 1) +
+  labs(x = expression(hat(y)[i] ~ "(Fitted)"),
+    y = expression(hat(epsilon)[i] ~ "(Residuals)")
+  ) +
+  theme_minimal()
+```
+## Regression diagnostics: equal variances
+```{r}
+
+# --- Plot 2: Violates linearity (curved/quadratic pattern) ---
+residuals_nonlinear <- -1.5 * (fitted_vals - 5.5)^2 + 10 + rnorm(n, sd = 5)
+residuals_nonlinear <- residuals_nonlinear - mean(residuals_nonlinear)
+
+df_nonlinear <- data.frame(fitted = fitted_vals, residuals = residuals_nonlinear)
+
+df_nonlinear |> ggplot(aes(x = fitted, y = residuals)) +
+  geom_point(shape = 16, alpha = 0.6, size = 3) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "darkred") +
+  labs(
+    x = expression(hat(y)[i] ~ "(Fitted)"),
+    y = expression(hat(epsilon)[i] ~ "(Residuals)")
+  ) +
+  theme_minimal()
+```
+
+## Regression diagnostic: equal variances
+
+```{r}
+#| echo: false
+#| eval: true
+# --- Plot 3: Equal variance (looks good!) ---
+residuals_homo <- rnorm(n, mean = 0, sd = 1.5)
+
+df_homo <- data.frame(fitted = fitted_vals, residuals = residuals_homo)
+
+df_homo |> ggplot(aes(x = fitted, y = residuals)) +
+  geom_point(shape = 16, alpha = 0.6, size = 3) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "darkred") +
+  labs(
+    x = expression(hat(y)[i] ~ "(Fitted)"),
+    y = expression(hat(epsilon)[i] ~ "(Residuals)")
+  ) +
+  theme_minimal()
+```
+## Regression diagnostics: normality of errors
+
+-   Use a histogram of the residuals to check normality. There are more advanced methods and plots, but we won't talk about them here
+
+## Checking assumptions for our model...
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+cdc <- read.csv("https://karamccor.github.io/b6002/labs/data/cdc_cleaned.csv")
+```
+
+```{r echo = T}
+fit <- lm(Obesity ~ Exercise, data = cdc)
+plot(fit$fitted.values, fit$residuals)
+abline(h = 0,lty = 2)
+```
+
+## Checking assumptions for our model...
+
+```{r}
+#| echo: true
+# check normality of residuals
+hist(fit$residuals)
+```
+
+## Back to Lab 02 {.smaller}
+
+In Lab 2 we examined the regression of obesity percentage on adequate exercise percentage.
+
+```{r}
+cdc %>%
+  ggplot(aes(x = Obesity, y = Exercise)) +
+  geom_point() +
+  theme_bw()
+```
+
+Do we think this is the only factor that can help us predict obesity percentage?
+
+## Multiple regression {.smaller}
+
+-   The multiple regression model extends the simple linear regression model by incorporating more than one explanatory variable.
+
+-   The assumptions are similar to those of the simple linear regression model. This type of model is often called a **multivariable** (**not multivariate**) model.
+
+Multiple regression is often used to control for confounders or predictors that explain variability in the response:
+
+-   Knowing a state has above average exercise percentage might tell you something about the obesity percentage
+
+-   If you also knew that state's HDI category, you might be able to do even better!
+
+## Multiple regression
+
+-   Importantly, accounting for multiple predictors allows us to address potential confounding.
+
+-   We are looking at relationships while **holding others constant** - for instance, we know that exercise percentage and HDI category might be correlated. Perhaps any associations between obesity and exercise percentage we see are actually driven by HDI category.
+
+## Multiple regression
+
+-   By fitting a multiple linear regression model, we can look at associations between obesity and exercise percentage **while holding HDI constant** (that is, at each possible value of HDI, what is the "remaining relationship" between exercise and obesity percentage?).
+
+-   Similarly, we can also look at associations between HDI and obesity **while holding exercise constant** (that is, at each possible value of exercise %, what is the "remaining relationship" between HDI and obesity percentage?).
+
+## Multiple regression {.smaller}
+
+The model is given by
+
+::: poll
+$$y_i = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \cdots + \beta_p x_{pi} + \epsilon_i$$
+:::
+
+-   $p$ is the total number of predictor or explanatory variables
+
+-   $y_i$ is the outcome (dependent variable) of interest
+
+-   $\beta_0$ is the intercept parameter
+
+-   $\beta_1, \beta_2, \cdots, \beta_p$ are the slope parameters
+
+-   $x_{1i}, x_{2i}, \cdots, x_{pi}$ are predictor variables
+
+-   $\epsilon_i$ is the error (like the $\beta$s, it is not observed)
+
+Assumptions are essentially the same as in simple linear regression.
+
+## Multiple regression
+
+Consider the model
+
+::: poll
+$$Obesity_i = \beta_0 + \beta_1 Exercise_i + \beta_2 Smoking_i + \epsilon_i$$
+:::
+
+::: callout-tip
+
+## Parameter Meaning
+What might the parameters $\beta_0$, $\beta_1$, and $\beta_2$ represent?
+
+:::
+
+## Multiple regression {.smaller}
+
+```{r echo = T}
+model <- lm(Obesity ~ Exercise + Smoking, data = cdc)
+summary(model)
+```
+
+
+## Multiple regression: kable
+
+```{r}
+#| echo: true
+tidy(model) |>
+  kable(digits = 3)
+```
+
+How might we interpret these parameter estimates? (watch out for the scale!)
+
+## Interpretation
+
+-   **Interpreting $\hat{\beta_1}$**: For every one percent increase of adults who participated in at least 2.5 hours of aerobic activity per week, we expect the percent of adults who are obese to decrease by .308 of a percentage point on average, **holding Smoking constant**.
+
+::: callout-tip
+
+## Your turn
+
+Use the interpretation above to write out an interpretation of $\hat{\beta_2}$. Recall that the `Smoking` variable is defined as percent of adults in region who smoked at least one cigarette in the past month.
+
+:::
+
+
+## Hypotheses of interest {.smaller}
+
+Hypotheses of interest may include hypotheses for single parameters:
+
+-   For instance, $H_0:β_1=0$ vs. $H_1:β_1≠0$. In our previous model, this would test whether there is a linear association between exercise % and obesity %, **while controlling for smoking %**
+
+This is tested using a t-test with $n−k$ degrees of freedom, where $n$ is the number of observations in the model and $k$ is the number of estimated model parameters (including the intercept and all slope terms).
+
+
+
+## Hypotheses of interest
+
+::: {.callout-tip appearance="simple"}
+Say we were to test this hypothesis for our model. What might we conclude?
+:::
+
+```{r}
+tidy(model) |>
+  kable(digits = 3)
+```
+
+In this case, the p-value was lower than the pre-specified significance cut-off. There is sufficient evidence to suggest that, **controlling for smoking %**, there is a non-zero linear association between exercise % and obesity % by state.
+
+## Hypotheses of interest
+
+We might also test multiple parameters at once (for instance, all the slopes):
+
+-   $H_0: \beta_1 = \beta_2 = 0$ vs. $H_1:$ at least one of the $\beta_k$ is not 0. (variable has a linear association with exercise %)
+
+This is given by an F test (much like ANOVA!) with numerator df equal to the number of parameters being tested (here, the number of slopes, i.e. 2) and denominator df equal to $n−k$ (number of observations minus number of estimated model parameters, *including* the intercept).
+
+::: {.callout-tip appearance="simple"}
+What might we conclude for the overall F test for our model, assuming $\alpha = 0.05$?
+:::
+
+## F-test {.smaller}
+
+This information is given in the original `summary(model)`:
+
+\footnotesize
+
+```{r}
+summary(model)
+```
+
+## Hypotheses of interest
+
+**Conclusion**: In this case, the p-value (4.572e-15) was lower than the pre-specified significance cut-off. There is sufficient evidence to suggest that at least one predictor (Exercise and/or Smoking) has a non-zero linear association with obesity %.
+
+## Pause for a photo!
+
+## Example: Is SBP associated with cognitive scores
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(tidymodels)
+library(knitr)
+library(ppcor)
+# Simulate data
+set.seed(7)
+n <- 100
+
+age <- round(rnorm(n, mean = 50, sd = 12))
+sbp <- round(105 + 0.65 * (age - 50) + rnorm(n, 0, 9))
+cog <- round(82 + 0.40 * (age - 50) + 0.00 * (sbp - 130) + rnorm(n, 0, 7))
+
+study <- data.frame(id = 1:n, age, sbp, cog)
+```
+
+- Let's go back to our example to test if higher SBP is associated with lower cognitive scores
+
+## Example: Is SBP associated with cognitive scores?
+
+::: {.callout-tip}
+##  In small groups
+Do both parameter estimates ($\hat{\beta}_0$, $\hat{\beta}_1$)make sense to interpret here? If so, how would you interpret each one?
+:::
+
+```{r}
+study_sbp <- lm(cog ~ sbp, 
+                   data = study)
+tidy(study_sbp) |>
+  kable(digits = 3)
+```
+
+## Example: Confounding
+
+- From our earlier findings, age was associated with both exposure and outcome
+
+```{r}
+cor(study[, c("sbp", "cog", "age")])
+```
+## Example: Confounding
+
+::: {.callout-tip}
+##  In small groups
+Now that we're controlling for age, how does your interpretation of $\hat{\beta}_{1}$ change?
+:::
+
+```{r}
+study_age <- lm(cog ~ sbp + age, 
+                   data = study)
+tidy(study_age) |>
+  kable(digits = 3)
+```
+
+
+## Multiple Regression in Real Life
+
+::: callout-tip
+
+Based on [this paper](https://bmcmedinformdecismak.biomedcentral.com/articles/10.1186/s12911-022-01884-9?utm_source=chatgpt.com), answer the following questions:
+
+1. In 1-2 sentences, describe the goal of this study/analysis.
+
+2. What was the outcome variable?
+
+3. How many independent variables did they use in their multiple regression model?
+
+4. In Table 4, what was the F-value and p-value? What is your conclusion?
+
+5. Which four predictor variables most significantly influenced the outcome?
+
+:::
+
+
+## Confidence intervals
+
+For individual predictors, we can also use the standard error estimate to construct confidence intervals. These intervals are constructed using a critical value from a t distribution:
+
+::: poll
+$$(\hat \beta_k - t^*_{1-\alpha/2; n-k} \times SE(\hat \beta_k), \hat \beta_k + t^*_{1-\alpha/2; n-k} \times SE(\hat \beta_k))$$
+:::
+
+For instance, $SE (\hat \beta_1)=0.06$. Thus, we have that a 95% confidence interval for $β_1$ is (-0.43, -0.19). If we were to interpret this interval, it would have to be conditionally on the other variables in the model.
+
+## R-squared {.smaller}
+
+-   In our model, $R^2=0.7546$, suggesting that about 75% of the variability in obesity percentage can be explained by our model.
+
+-   However, $R^2$ can never decrease when variables are added to a model, even if they are useless.
+
+-   Thus, we can use **adjusted** $R^2 \leq R^2$, where the adjustment is made to account for the number of predictors.
+
+-   The **adjusted** $R^2$ incorporates a penalty for each additional variable in a model, so that the adjusted $R^2$ will go down if a new variable does not improve prediction much, and it will go up if the new variable does improve prediction, conditional on the other variables already in the model.
+
+-   With that said, $R^2$ or adj. $R^2$ should never be used as the only reasons to select variables for your model - you must rely on scientific knowledge and context!
+
+## Categorical predictors {.smaller}
+
+-   We often have categorical predictors in modeling settings (for instance, here we have HDI). However, it might not make sense to think about a "one unit increase" in a categorical variable (how would that even work?)
+
+-   In regression settings, we can account for categorical variables by creating **dummy variables**, which are indicator variables for certain conditions happening. For instance, there are three categories of HDI in the dataset: bottom ten, middle, and top ten.
+
+-   When considering categorical variables, one variable is taken to be the **baseline** or **reference** value. All other categories will be compared to it.
+
+## Categorical predictors
+
+Suppose the "top ten" category is taken to be the referent value. Then we can create two dummy variables:
+
+-   HDI == Middle: 1 if this condition is true; 0 otherwise
+
+-   HDI == Bottom Ten: 1 if this condition is true; 0 otherwise
+
+## Interpretation of dummy variables {.smaller}
+
+Consider the model
+
+::: poll
+$$Obesity_i = \beta_0 + \beta_1(HDI == Middle)_i + $$
+
+$$ \beta_2(HDI == BottomTen)_i + \epsilon_i$$
+:::
+
+The parameter interpretations are below.
+
+-   $\beta_0$ represents the expected obesity percentage for a state with 0 for the two dummy variables. That is, in the top ten HDI
+
+-   $\beta_1$ represents the expected difference in obesity percentage for a state in the middle HDI category, **compared to the top ten**
+
+-   $\beta_2$ represents the expected difference in obesity percentage for a state in the bottom ten HDI category, **compared to the top ten**
+
+Note that we had to estimate *multiple* "slopes" for this one variable - one corresponding to each non-reference level.
+
+## Interpretation of dummy variables
+
+```{r echo = T}
+fit2 <- lm(Obesity ~ HDI, data = cdc)
+tidy(fit2) |>
+  kable(digits = 3)
+```
+
+How would you interpret the estimates?
+
+## Changing the reference level
+
+- Wait a minute! R automatically assigned the lowest level of HDI as the reference level. Let's see how we can change the reference level:
+
+```{r, echo=TRUE}
+cdc_new <- cdc |>
+  mutate(HDI_relevel = fct_relevel(HDI, "Top ten"))
+```
+
+- This reorders the factor levels so that "`Top ten`" becomes the first (reference) level. 
+
+- Now, when we run the regression, the model will automatically use `Top ten` as the baseline. 
+
+## Re-running the model
+
+```{r}
+fit2_relevel <- lm(Obesity ~ HDI_relevel, 
+                   data = cdc_new)
+tidy(fit2_relevel) |>
+  kable(digits = 3)
+```
+
+
+## Interpretation of dummy variables
+
+```{r echo = T}
+fit3 <- lm(Obesity ~ Exercise + HDI_relevel, 
+           data = cdc_new)
+tidy(fit3) |>
+  kable(digits = 3)
+```
+
+How would you interpret these estimates?
+
+## Recap
+
+- How to check regression diagnostics
+
+- How to interpret model coefficients in a multiple regression model
+
+- Interpreting results of an overall F-test in a multiple regression model
+
+- Adjusted $R^2$ vs. $R^2$
+
+- Interpreting coefficient estimates for categorical predictors
+
+## Next time
+
+- Interactions, collinearity
+
+- Logistic regression (if time)

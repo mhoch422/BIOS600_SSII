@@ -1,0 +1,450 @@
+---
+title: "Practice Problems"
+format: html
+---
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tidyverse)
+library(tidymodels)
+library(kableExtra)
+
+set.seed(123)
+
+n <- 100
+
+#
+# Simulating Linear Regression 
+#
+
+# Latent pollution source
+latent <- rnorm(n, mean = 50, sd = 10)
+
+# Highly collinear pollutants
+Pollutant1 <- latent + rnorm(n, sd = 1)
+Pollutant2 <- latent + rnorm(n, sd = 1)
+Pollutant3 <- latent + rnorm(n, sd = 1)
+
+# Outcome depends on the shared signal
+asthma <- 5 + 0.12 * latent + rnorm(n, sd = 2)
+
+df <- data.frame(
+  asthma,
+  Pollutant1,
+  Pollutant2,
+  Pollutant3
+)
+
+# Simulating Logistic Regression 
+set.seed(123)
+
+n <- 400
+
+# Continuous predictors
+age <- runif(n, min = 20, max = 80)     # Age in years
+BMI <- rnorm(n, mean = 27, sd = 4)      # BMI (kg/m^2)
+
+# Categorical predictor: Region (1 = reference)
+Region <- factor(
+  sample(1:4, n, replace = TRUE),
+  levels = c(1, 2, 3, 4)
+)
+
+# Linear predictor (log-odds)
+lp <- -6 +
+  (-0.03 * age) +                 # Age main effect (negative)
+  (0.12 * BMI) +                  # BMI main effect (positive)
+  (0.004 * age * BMI) +           # Age × BMI interaction
+  (0.5 * (Region == 2)) +
+  (0.3 * (Region == 3)) +
+  (0.8 * (Region == 4))
+
+# Convert to probabilities
+p <- plogis(lp)
+
+# Binary outcome
+condition <- rbinom(n, size = 1, prob = p)
+
+# Final dataset
+df2 <- data.frame(
+  condition,
+  age,
+  BMI,
+  Region
+)
+```
+
+## Exercise 1: Multicollinearity and linear regression
+
+A (fictional) study examined the association between three air pollutants, Pollutant1, Pollutant2, and Pollutant3, and prevalence of asthma within counties in a fictional U.S. state. The pollutant variables are the average concentrations in parts per billion (ppb) measured at monitoring sites within that county. Prevalence of asthma is the % of the county's population diagnosed with asthma; it's treated as normally distributed. The sample comprised 100 counties in this state. Assume hypothesis tests are conducted with significance level $\alpha=.05.$
+
+```{r}
+#| echo: false
+fit <- lm(asthma ~ ., data = df)
+tidy(fit) |>
+  kable()
+```
+
+### (a)
+
+Write out the model that has been fit in symbols below (i.e. $Asthma_{i} = ...$)
+
+### (b)
+
+What are the results of the hypothesis tests for the significance of each pollutant? Interpret these results in the context of the study.
+
+### (c)
+
+Write the null and alternative hypotheses for the F-test for overall model significance. Write these hypotheses both in symbols, and in words in the context of the study.
+
+### (d)
+
+What is the result of the overall F-test for the linear regression model (see below)? Interpret this result in the context of the study.
+
+```{r}
+glance(fit)
+```
+
+### (e)
+
+Interpret the $R^{2}$ value and briefly explain what it suggests about the adequacy of the model.
+
+### (f)
+
+The researchers decide to check for multicollinearity as follows:
+
+```{r}
+#| message: false
+#| warning: false
+library(car)
+vif(fit)
+```
+
+What did the researchers do? Explain in 1 sentence. What do the results indicate about multicollinearity affecting this model?
+
+## Exercise 2: Conceptual
+
+Assume the outcome variable $Y$ takes values either $0$ or $1$.
+
+### (a)
+
+If our outcome variable $Y_{i}$ takes values $0$ or $1$, for a single observation what would we assume its distribution is?
+
+### (b)
+
+Why would or wouldn't you want to use a linear regression model for this situation?
+
+### (c) 
+
+What function of $Y_{i}$ are we modelling when we use logistic regression? 
+
+### (d)
+
+How does interpretation of our parameter estimates (e.g. $\beta_1$) change when considering logistic vs. linear regression? 
+
+## Exercise 3: Logistic Regression
+
+A (fictional) study examined the association between age (years) and region of residence in the U.S. with diagnosis of a particular condition. They used four regions of the continental U.S., values 1-4.
+
+```{r}
+#| echo:  true
+fit.glm <- glm(condition ~ age + Region, family = binomial, data = df2)
+tidy(fit.glm) |>
+  kable()
+```
+
+### (a)
+
+What is the reference category for the region variable?
+
+### (b)
+
+Write the model used.
+
+### (c)
+
+Conduct a hypothesis test for the association between age and diagnosis of the condition, at level $\alpha=.05$. Follow the steps:
+
+1.  Write the null and alternative hypotheses, in words **and** symbols.
+2.  Compare the p-value to $\alpha$.
+3.  Draw and state your conclusion in the context of the study.
+
+### (d)
+
+Interpret the coefficient for the age variable in the context of the study.
+
+### (e)
+
+Interpret the coefficient for region category 4 in the context of the study.
+
+### (f)
+
+Based on the sign (positive/negative) of $\hat{\beta}_1$, is increased age associated with increased or decreased probability of diagnosis?
+
+### (g)
+
+Suppose the researchers suspect that the association between age and prevalence of this condition depends on BMI. They fit the following model. 
+
+**Note there was a typo here in the initial part of the question - this has since been update**
+
+i) Given the interaction term is in the model, how do you interpret the coefficient for age? 
+
+ii) How do you interpret the p-value for the coefficient for the interaction term? 
+
+```{r}
+fit.glm2 <- glm(
+  condition ~ age + BMI + age * BMI + Region,
+  family = binomial,
+  data = df2
+)
+
+tidy(fit.glm2) |>
+  kable()
+```
+
+## Exercise 4: Model Diagnostics
+
+```{r}
+#| echo: false
+set.seed(123)
+
+n <- 300
+x <- seq(0, 10, length.out = n)
+
+simulate_and_plot <- function(type, scenario_title) {
+
+
+  if (type == "nonlinear_threshold") {
+    y <- 2 + 0.5*x +
+      ifelse(x > 5, 2, 0) +  # jump / threshold effect
+      rnorm(n, 0, 1)
+  }
+
+  
+  if (type == "nonlinear_log") {
+    y <- 2 + 0.5*log(x + 1) +
+      rnorm(n, 0, 1)
+  }
+
+  
+  if (type == "nonlinear_nonnormal") {
+    y <- 2 + 0.5*x +
+      sin(x) +              # nonlinearity
+      rexp(n, 1) - 1        # right‑skewed errors
+  }
+
+  
+  if (type == "ideal") {
+    y <- 2 + 0.5*x + rnorm(n, 0, 1)
+  }
+
+  if (type == "nonlinear") {
+    y <- 2 + 0.5*x + 0.3*(x - 5)^2 + rnorm(n, 0, 1)
+  }
+
+  if (type == "heteroskedastic") {
+    y <- 2 + 0.5*x + rnorm(n, 0, 0.3 + 0.25*x)
+  }
+
+  if (type == "nonnormal") {
+    y <- 2 + 0.5*x + rexp(n, 1) - 1
+  }
+
+  if (type == "all") {
+    y <- 2 + 0.5*x +
+      sin(x) +                    # smooth nonlinear pattern
+      rexp(n, rate = 0.5 + 0.2*x) # skewed + heteroskedastic
+  }
+
+  
+  
+  if (type == "nonlinear_nonnormal") {
+    y <- 2 + 0.5*x +
+      0.3*(x - 5)^2 +       # nonlinearity
+      rexp(n, 1) - 1       # non-normal (right-skewed) errors
+  }
+
+
+  fit <- lm(y ~ x)
+
+  par(
+    mfrow = c(1, 2),
+    mar  = c(4, 4, 1, 1),
+    oma  = c(0, 0, 2, 0)
+  )
+
+  ## Panel 1: Residuals vs fitted (with linearity check)
+  plot(
+    fitted(fit), resid(fit),
+    xlab = "Fitted values",
+    ylab = "Residuals",
+    pch  = 19,
+    col  = rgb(0, 0, 0, 0.5)
+  )
+  abline(h = 0, lty = 2)
+  lines(lowess(fitted(fit), resid(fit)), col = "red", lwd = 2)
+
+  ## Panel 2: Histogram of residuals
+  hist(
+    resid(fit),
+    breaks      = 25,
+    xlab        = "Residuals",
+    col         = "grey85",
+    border      = "white"
+  )
+  curve(
+    dnorm(x, mean(resid(fit)), sd(resid(fit))),
+    add = TRUE, lwd = 2
+  )
+
+  ## Scenario title across both panels
+  mtext(
+    scenario_title,
+    side  = 3,
+    line  = 1,
+    outer = TRUE,
+    cex   = 1.1
+  )
+}
+```
+
+Below are diagnostic plots for assessing assumptions of linear regression for a model. Describe which, if any of the assumptions you would consider might be violated based on these plots
+
+a) Scenario 1
+
+```{r}
+#| echo: false
+simulate_and_plot("nonlinear_threshold", "Scenario 1")
+```
+
+b) Scenario 2
+
+```{r}
+#| echo: false
+simulate_and_plot("nonlinear_nonnormal","Scenario 2")
+```
+
+c) Scenario 3
+```{r}
+#| echo: false
+simulate_and_plot("heteroskedastic","Scenario 3")
+```
+
+d) Scenario 4
+
+```{r}
+#| echo: false
+simulate_and_plot("ideal","Scenario 4")
+```
+
+e) Scenario 5
+
+```{r}
+#| echo: false
+simulate_and_plot("all","Scenario 5")
+```
+
+## Exercise 5: Correlations 
+
+a) Describe the direction and strength of the correlation between X and Y in the plot below. Would you expect the Pearson correlation coefficient to be close to 0, close to 1, or somewhere in between?
+
+```{r}
+#| echo: false
+set.seed(123)
+n <- 200
+
+## Scenario A: Strong positive correlation
+x <- rnorm(n)
+y <- x + rnorm(n, sd = 0.2)
+plot(x, y, main = "Exercise 5a", pch = 19)
+```
+
+b) Describe the direction and strength of the correlation. Would the correlation coefficient be positive or negative?
+
+```{r}
+#| echo: false
+x <- rnorm(n)
+y <- 0.3*x + rnorm(n, sd = 1)
+plot(x, y,  main = "Exercise 5b", pch = 19)
+```
+
+c) Is the association between X and Y strong or weak? Would the correlation coefficient be close to 0, close to 1, or close to −1?
+
+```{r}
+#| echo: false
+## Scenario C: Strong negative correlation
+x <- rnorm(n)
+y <- -x + rnorm(n, sd = 0.2)
+plot(x, y,  main = "Exercise 5c", pch = 19)
+```
+
+d) Would you expect the Pearson correlation coefficient to be close to 0, close to 1, or close to −1? Does a correlation near 0 imply there is no relationship between X and Y? Explain briefly.
+
+```{r}
+#| echo: false
+## Scenario D: No association (cor ≈ 0)
+x <- rnorm(n)
+y <- rnorm(n)
+plot(x, y,   main = "Exercise 5d", pch = 19)
+```
+
+e) What value would you expect the correlation coefficient to be close to? How would you describe the relationship between X and Y?
+
+```{r}
+#| echo: false
+## Scenario E: Perfect correlation
+x <- seq(-3, 3, length.out = n)
+y <- x
+plot(x, y,  main = "Exercise 5e", pch = 19)
+```
+
+f) A public health researcher studies the relationship between daily physical activity (minutes per day) and body mass index (BMI) in a community sample and finds that the Pearson correlation coefficient is exactly zero. What does this result tell the researcher about the linear association between physical activity and BMI? Describe a situation in which Spearman correlation would be more appropriate than Pearson correlation for summarizing the association between these two variables. Briefly explain your reasoning.
+
+g) A public health researcher examines the association between neighborhood air pollution levels ($PM_{2.5}$ concentration) and lung function (measured by FEV₁) and finds no evidence of a correlation between the two variables based on the Pearson correlation coefficient. However, after controlling for smoking intensity (e.g., pack‑years), the researcher finds that the partial correlation between air pollution and lung function is substantially larger.
+What does this suggest about the role of smoking intensity in the relationship between air pollution and lung function? Briefly explain how it is possible for the partial correlation to be larger than the unadjusted correlation.
+
+## Exercise 6: R Functions and What They Do
+
+For each item in **Column A**, select the the **single best matching description** from **Column B**. Each description should be used exactly once. 
+
+<div style="display: flex; gap: 3em; margin-top: 1.5em;">
+
+<!-- Column A -->
+<div style="width: 45%;">
+
+### **Column A: R Functions**
+
+1. `cor()`  
+2. `pcor.test()`  
+3. `ggpairs()`  
+4. `lm()`  
+5. `glm(family = "binomial")`  
+6. `predict()`  
+7. `vif()`  
+8. `tidy()`  
+9. `glance()`  
+10. `augment()`
+
+</div>
+
+<!-- Column B (MIXED ORDER) -->
+<div style="width: 55%;">
+
+### **Column B: Descriptions**
+
+A. Returns a compact summary of overall model fit statistics (e.g., \(R^2\), F-statistic).  
+B. Computes variance inflation factors to assess multicollinearity among predictors.  
+C. Computes a numerical measure of linear association between two numeric variables.  
+D. Fits a regression model for a binary outcome using a logit link function.  
+E. Converts model output into a tidy data frame with one row per model coefficient.  
+F. Generates fitted values or predictions for new or existing observations based on a fitted model.  
+G. Produces a graphical display showing pairwise relationships among multiple variables.  
+H. Fits a linear regression model
+I. Tests the association between two variables while controlling for one or more additional variables.  
+J. Adds fitted values and residuals to the original dataset for diagnostic purposes.
+
+</div>
+
+</div>

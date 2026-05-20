@@ -1,0 +1,554 @@
+---
+title: "Practice Problems"
+format: html
+---
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+library(tidyverse)
+library(tidymodels)
+library(kableExtra)
+
+set.seed(123)
+
+n <- 100
+
+#
+# Simulating Linear Regression 
+#
+
+# Latent pollution source
+latent <- rnorm(n, mean = 50, sd = 10)
+
+# Highly collinear pollutants
+Pollutant1 <- latent + rnorm(n, sd = 1)
+Pollutant2 <- latent + rnorm(n, sd = 1)
+Pollutant3 <- latent + rnorm(n, sd = 1)
+
+# Outcome depends on the shared signal
+asthma <- 5 + 0.12 * latent + rnorm(n, sd = 2)
+
+df <- data.frame(
+  asthma,
+  Pollutant1,
+  Pollutant2,
+  Pollutant3
+)
+
+# Simulating Logistic Regression 
+set.seed(123)
+
+n <- 400
+
+# Continuous predictors
+age <- runif(n, min = 20, max = 80)     # Age in years
+BMI <- rnorm(n, mean = 27, sd = 4)      # BMI (kg/m^2)
+
+# Categorical predictor: Region (1 = reference)
+Region <- factor(
+  sample(1:4, n, replace = TRUE),
+  levels = c(1, 2, 3, 4)
+)
+
+# Linear predictor (log-odds)
+lp <- -6 +
+  (-0.03 * age) +                 # Age main effect (negative)
+  (0.12 * BMI) +                  # BMI main effect (positive)
+  (0.004 * age * BMI) +           # Age × BMI interaction
+  (0.5 * (Region == 2)) +
+  (0.3 * (Region == 3)) +
+  (0.8 * (Region == 4))
+
+# Convert to probabilities
+p <- plogis(lp)
+
+# Binary outcome
+condition <- rbinom(n, size = 1, prob = p)
+
+# Final dataset
+df2 <- data.frame(
+  condition,
+  age,
+  BMI,
+  Region
+)
+```
+
+## Exercise 1: Multicollinearity and linear regression
+
+A (fictional) study examined the association between three air pollutants, Pollutant1, Pollutant2, and Pollutant3, and prevalence of asthma within counties in a fictional U.S. state. The pollutant variables are the average concentrations in parts per billion (ppb) measured at monitoring sites within that county. Prevalence of asthma is the % of the county's population diagnosed with asthma; it's treated as normally distributed. The sample comprised 100 counties in this state. Assume hypothesis tests are conducted with significance level $\alpha=.05.$
+
+```{r}
+#| echo: false
+fit <- lm(asthma ~ ., data = df)
+tidy(fit) |>
+  kable()
+```
+
+### (a)
+
+Write out the model that has been fit in symbols below (i.e. $Asthma_{i} = ...$)
+
+<span style="color:blue;"> $Asthma_{i} = \beta_{0}+\beta_{1}Pollutant1_{i}+\beta_{2}Pollutant2_{i}+\beta_{3}Pollutant3_{i}+\epsilon_{i}$  </span>
+
+### (b)
+
+What are the results of the hypothesis tests for the significance of each pollutant? Interpret these results in the context of the study.
+
+<span style="color:blue;">Each of the hypothesis tests for individual pollutants' association with asthma prevalence, holding the other pollutant levels constant, have a p-value greater than 0.05. So for each of these tests, we would fail to reject the null hypothesis that the air concentration of that pollutant in ppb is associated with asthma prevalence (%), holding the other pollutant levels constant.</span>
+
+### (c)
+
+Write the null and alternative hypotheses for the F-test for overall model significance. Write these hypotheses both in symbols, and in words in the context of the study.
+
+<span style="color:blue;">Symbols: $H_0: \beta_1=\beta_2=\beta_3=0. H_1:$ At least one of $\beta_j, j=1,2,3$ is not equal to 0. 
+
+Words: The null hypothesis is that none of the pollutant concentrations (ppb) is associated with asthma prevalence (%). The alternative hypothesis is that at least one of the pollutant concentrations (ppb) is associated with asthma prevalence (%). </span>
+
+### (d)
+
+What is the result of the overall F-test for the linear regression model (see below), assume $\alpha=0.05$? Interpret this result in the context of the study.
+
+```{r}
+glance(fit)
+```
+
+<span style="color:blue;"> The overall F test results has a p-value of 0.00626, which is less than $0.05$, so we reject $H_0$ and conclude that there is evidence that at least one of the pollutant concentrations (ppb) is associated with asthma prevalence (%).</span>
+
+### (e)
+
+Interpret the $R^{2}$ value and briefly explain what it suggests about the adequacy of the model.
+
+<span style="color:blue;"> Predictors explain about 12% of the variability in the model (or 12% of the variability in asthma prevalence). This relatively low value suggests that, while the predictors are related to asthma prevalence, the model leaves most of the variability unexplained and therefore has limited explanatory power. </span>
+
+### (f)
+
+The researchers decide to check for multicollinearity as follows:
+
+```{r}
+#| message: false
+#| warning: false
+library(car)
+vif(fit)
+```
+
+What did the researchers do? Explain in 1 sentence. What do the results indicate about multicollinearity affecting this model?
+
+<span style="color:blue;">The researchers computed the VIF values (variable inflation factor) which checks for multicollinearity. Above 5 or 10 can be considered problematic levels of multicollinearity so it seems to confirm that it is present here.</span>
+
+## Exercise 2: Conceptual
+
+Assume the outcome variable $Y$ takes values either $0$ or $1$.
+
+### (a)
+
+If our outcome variable $Y_{i}$ takes values $0$ or $1$, for a single observation what would we assume its distribution is?
+
+<span style="color:blue;">Since we are talking about a single observation, it is Bernoulli, or equivalently, if we were talking about multiple observations (each with probability $p$) this would be binomial with the number of trials equal to the number of observations.</span>
+
+### (b)
+
+Why would or wouldn't you want to use a linear regression model for this situation?
+
+<span style="color:blue;"> The linear regression model assumes a normally distributed outcome, which our outcome variable is not. A normally distributed outcome variable can (hypothetically) take any real number as a value, while our outcome variable must be 0 or 1. So our assumption of normality is incorrect. More concretely, assuming a linear model for the expected value of the outcome, as a function of predictors, can lead to estimated probabilities less than 0 or greater than 1, which are not possible. For these reasons we would not want to use a linear regression model.</span>
+
+### (c) 
+
+What function of $Y_{i}$ are we modelling when we use logistic regression? 
+
+<span style="color:blue;"> Instead of modeling $Y_{i}=\beta_{0}+\beta_{1}X_1 . . . $ we model $logit(Pr(Y_{i}=1))=\beta_{0}+\beta_{1}X_1 . . . $. The logistic or logit function is $logit(p)=\log\left(\frac{p}{1-p}\right)$. We use it in logistic regression because it ensures the values of $p$ are always within $[0,1]$.</span>
+
+### (d)
+
+How does interpretation of our parameter estimates (e.g. $\beta_1$) change when considering logistic vs. linear regression? 
+
+<span style="color:blue;"> 
+
+Linear Regression - Continuous Predictors: $\beta_{1}$ represents the expected change in the mean outcome for a one‑unit increase in the predictor, holding other variables constant.
+Logistic Regression - Continuous Predictors: $\beta_{1}$ represents the change in the log-odds of the outcome for a one‑unit increase in the predictor, holding other variables constant. We often use exp($\beta_{1}$) as an estimate for the odds ratio for a one-unit increase in the predictor
+
+Linear Regression - Categorical Predictors: $\beta_{1}$ represents the difference in mean outcome between a given category and the reference group, holding other variables constant.
+Logistic Regression - Categorical Predictors: $\beta_{1}$ represents the difference in log-odds of the outcome between a given category and the reference group, holding other variables constant. Equivalently, exp($\beta_{1}$) is the odds ratio comparing that category to the reference group.
+</span>
+
+## Exercise 3: Logistic Regression
+
+A (fictional) study examined the association between age (years) and region of residence in the U.S. with diagnosis of a particular condition. They used four regions of the continental U.S., values 1-4.
+
+```{r}
+#| echo:  true
+fit.glm <- glm(condition ~ age + Region, family = binomial, data = df2)
+tidy(fit.glm) |>
+  kable()
+```
+
+### (a)
+
+What is the reference category for the region variable?
+
+<span style="color:blue;">Category 1 is the reference category, which we can see because it's not included as a dummy variable in the R summary output.</span>
+
+### (b)
+
+Write the model used.
+
+<span style="color:blue;"> Let $p_i$ be $P(Y_i=1)$, the probability that individual $i$ is diagnosed with the condition. Then the model is $logit(p_i)=\beta_0 + \beta_1 age_i + \beta_2(Region_i=2) + \beta_3(Region_i=3) + \beta_4(Region_i=4)$, where $Region_i$ can take the values 1, 2, 3, 4 depending on the residence of observation $i$.</span>
+
+### (c)
+
+Conduct a hypothesis test for the association between age and diagnosis of the condition, at level $\alpha=.05$. Follow the steps:
+
+1.  Write the null and alternative hypotheses, in words **and** symbols.
+2.  Compare the p-value to $\alpha$.
+3.  Draw and state your conclusion in the context of the study.
+
+<span style="color:blue;">
+$H_0$: Age (years) is not associated with diagnosis probability, holding region of residence constant. In symbols, $H_0: \beta_1=0$. 
+
+$H_A$: Age (years) is associated with diagnosis probability, holding region of residence constant. In symbols, $H_A$: $\beta_1\neq 0$. </span>
+
+### (d)
+
+Interpret the coefficient for the age variable in the context of the study.
+
+<span style="color:blue;">For every increase in age by one year, the odds of diagnosis changes by a factor of $\exp(\hat{\beta}_1)= \exp(0.0610685)$.</span>
+
+### (e)
+
+Interpret the coefficient for region category 4 in the context of the study.
+
+<span style="color:blue;">Individuals residing in region 4 have odds of diagnosis equal to $\exp(\hat{\beta}_4)=exp(0.7701685)$ times the odds of diagnosis of an individual residing in region 1.</span>
+
+### (f)
+
+Based on the sign (positive/negative) of $\hat{\beta}_1$, is increased age associated with increased or decreased probability of diagnosis?
+
+<span style="color:blue;">The sign of the coefficient is positive, meaning that as age increases, the odds of diagnosis increase, and therefore as age increases, probability of diagnosis also increases.</span>
+
+### (g)
+
+Suppose the researchers suspect that the association between age and prevalence of this condition depends on BMI. They fit the following model.  
+
+i) Given the interaction term is in the model, how do you interpret the coefficient for age? 
+
+<span style="color:blue;"> The coefficient for age represents the log odds associated with a 1 year increase in age **when BMI = 0**, holding all other variables constant. </span>
+
+ii) How do you interpret the p-value for the coefficient for the interaction term? 
+
+<span style="color:blue;"> Assuming $\alpha=0.05$, given the p-value is 0.018 which is less than 0.05 we reject the null hypothesis that the association between age and this condition do not differ by BMI. We therefore have evidence to suggest the association between age and this condition differs by BMI.  </span>
+
+```{r}
+fit.glm2 <- glm(
+  condition ~ age + BMI + age * BMI + Region,
+  family = binomial,
+  data = df2
+)
+
+tidy(fit.glm2) |>
+  kable()
+```
+
+## Exercise 4: Model Diagnostics
+
+```{r}
+#| echo: false
+set.seed(123)
+
+n <- 300
+x <- seq(0, 10, length.out = n)
+
+simulate_and_plot <- function(type, scenario_title) {
+
+
+  if (type == "nonlinear_threshold") {
+    y <- 2 + 0.5*x +
+      ifelse(x > 5, 2, 0) +  # jump / threshold effect
+      rnorm(n, 0, 1)
+  }
+
+  
+  if (type == "nonlinear_log") {
+    y <- 2 + 0.5*log(x + 1) +
+      rnorm(n, 0, 1)
+  }
+
+  
+  if (type == "nonlinear_nonnormal") {
+    y <- 2 + 0.5*x +
+      sin(x) +              # nonlinearity
+      rexp(n, 1) - 1        # right‑skewed errors
+  }
+
+  
+  if (type == "ideal") {
+    y <- 2 + 0.5*x + rnorm(n, 0, 1)
+  }
+
+  if (type == "nonlinear") {
+    y <- 2 + 0.5*x + 0.3*(x - 5)^2 + rnorm(n, 0, 1)
+  }
+
+  if (type == "heteroskedastic") {
+    y <- 2 + 0.5*x + rnorm(n, 0, 0.3 + 0.25*x)
+  }
+
+  if (type == "nonnormal") {
+    y <- 2 + 0.5*x + rexp(n, 1) - 1
+  }
+
+  if (type == "all") {
+    y <- 2 + 0.5*x +
+      sin(x) +                    # smooth nonlinear pattern
+      rexp(n, rate = 0.5 + 0.2*x) # skewed + heteroskedastic
+  }
+
+  
+  
+  if (type == "nonlinear_nonnormal") {
+    y <- 2 + 0.5*x +
+      0.3*(x - 5)^2 +       # nonlinearity
+      rexp(n, 1) - 1       # non-normal (right-skewed) errors
+  }
+
+
+  fit <- lm(y ~ x)
+
+  par(
+    mfrow = c(1, 2),
+    mar  = c(4, 4, 1, 1),
+    oma  = c(0, 0, 2, 0)
+  )
+
+  ## Panel 1: Residuals vs fitted (with linearity check)
+  plot(
+    fitted(fit), resid(fit),
+    xlab = "Fitted values",
+    ylab = "Residuals",
+    pch  = 19,
+    col  = rgb(0, 0, 0, 0.5)
+  )
+  abline(h = 0, lty = 2)
+  lines(lowess(fitted(fit), resid(fit)), col = "red", lwd = 2)
+
+  ## Panel 2: Histogram of residuals
+  hist(
+    resid(fit),
+    breaks      = 25,
+    xlab        = "Residuals",
+    col         = "grey85",
+    border      = "white"
+  )
+  curve(
+    dnorm(x, mean(resid(fit)), sd(resid(fit))),
+    add = TRUE, lwd = 2
+  )
+
+  ## Scenario title across both panels
+  mtext(
+    scenario_title,
+    side  = 3,
+    line  = 1,
+    outer = TRUE,
+    cex   = 1.1
+  )
+}
+```
+
+Below are diagnostic plots for assessing assumptions of linear regression for a model. Describe which, if any of the assumptions you would consider might be violated based on these plots
+
+a) Scenario 1
+
+```{r}
+#| echo: false
+simulate_and_plot("nonlinear_threshold", "Scenario 1")
+```
+
+<span style="color:blue;">  Some potential violations of linearity, as the line appears to jump up and down. Not as much evidence of violations for heteroskedascity (non-constant variance) and normality.</span>
+
+b) Scenario 2
+
+```{r}
+#| echo: false
+simulate_and_plot("nonlinear_nonnormal","Scenario 2")
+```
+
+<span style="color:blue;">  Violations of linearity and normality. </span>
+
+
+c) Scenario 3
+```{r}
+#| echo: false
+simulate_and_plot("heteroskedastic","Scenario 3")
+```
+
+<span style="color:blue;">  Violations of heteroskedascity (non-constant variance) </span>
+
+d) Scenario 4
+
+```{r}
+#| echo: false
+simulate_and_plot("ideal","Scenario 4")
+```
+
+<span style="color:blue;">  Most assumptions seem to be met </span>
+
+e) Scenario 5
+
+```{r}
+#| echo: false
+simulate_and_plot("all","Scenario 5")
+```
+
+<span style="color:blue;">  Violations of linearity and normality and potentially heteroskedascity (non-constant variance) </span>
+
+## Exercise 5: Correlations 
+
+a) Describe the direction and strength of the correlation between X and Y in the plot below. Would you expect the Pearson correlation coefficient to be close to 0, close to 1, or somewhere in between?
+
+<span style="color:blue;"> Strong positive correlation, correlation coefficient would be close to 1 </span>
+
+```{r}
+#| echo: false
+set.seed(123)
+n <- 200
+
+## Scenario A: Strong positive correlation
+x <- rnorm(n)
+y <- x + rnorm(n, sd = 0.2)
+plot(x, y, main = "Exercise 5a", pch = 19)
+```
+
+b) Describe the direction and strength of the correlation. Would the correlation coefficient be positive or negative?
+
+<span style="color:blue;"> Moderate positive correlation, correlation coefficient would be positive </span>
+
+```{r}
+#| echo: false
+x <- rnorm(n)
+y <- 0.3*x + rnorm(n, sd = 1)
+plot(x, y,  main = "Exercise 5b", pch = 19)
+```
+
+c) Is the association between X and Y strong or weak? Would the correlation coefficient be close to 0, close to 1, or close to −1?
+
+<span style="color:blue;"> Strong linear association between X and Y, correlation coefficient would be close to -1 </span>
+
+```{r}
+#| echo: false
+## Scenario C: Strong negative correlation
+x <- rnorm(n)
+y <- -x + rnorm(n, sd = 0.2)
+plot(x, y,  main = "Exercise 5c", pch = 19)
+```
+
+d) Would you expect the Pearson correlation coefficient to be close to 0, close to 1, or close to −1? Does a correlation near 0 imply there is no relationship between X and Y? Explain briefly.
+
+<span style="color:blue;"> Close to 0, not a lot of linear association between X and Y. A correlation near 0 does not imply there is no relationship between X and Y, only that there is not a linear association between X and Y. </span>
+
+```{r}
+#| echo: false
+## Scenario D: No association (cor ≈ 0)
+x <- rnorm(n)
+y <- rnorm(n)
+plot(x, y,   main = "Exercise 5d", pch = 19)
+```
+
+e) What value would you expect the correlation coefficient to be close to? How would you describe the relationship between X and Y?
+
+<span style="color:blue;"> Almost exactly 1- X and Y seem to be almost perfectly correlated. </span>
+
+```{r}
+#| echo: false
+## Scenario E: Perfect correlation
+x <- seq(-3, 3, length.out = n)
+y <- x
+plot(x, y,  main = "Exercise 5e", pch = 19)
+```
+
+f) A public health researcher studies the relationship between daily physical activity (minutes per day) and body mass index (BMI) in a community sample and finds that the Pearson correlation coefficient is exactly zero. What does this result tell the researcher about the linear association between physical activity and BMI? Describe a situation in which Spearman correlation would be more appropriate than Pearson correlation for summarizing the association between these two variables. Briefly explain your reasoning.
+
+<span style="color:blue;"> A Pearson correlation coefficient of exactly zero indicates that there is no evidence of a linear association between daily physical activity and BMI in the sample. In other words, as physical activity increases or decreases, there is no evidence of a straight‑line relationship with BMI. This does not imply that the two variables are unrelated—only that they are not linearly related.  Spearman correlation would be more appropriate if the relationship between physical activity and BMI is monotonic but non‑linear (e.g., BMI decreases rapidly at low levels of activity and then levels off), or if the data contain outliers or skewed distributions. Spearman correlation is based on ranks rather than raw values, making it less sensitive to nonlinearity and outliers than Pearson correlation. </span>
+
+g) A public health researcher examines the association between neighborhood air pollution levels ($PM_{2.5}$ concentration) and lung function (measured by FEV₁) and finds no evidence of a correlation between the two variables based on the Pearson correlation coefficient. However, after controlling for smoking intensity (e.g., pack‑years), the researcher finds that the partial correlation between air pollution and lung function is substantially larger.
+What does this suggest about the role of smoking intensity in the relationship between air pollution and lung function? Briefly explain how it is possible for the partial correlation to be larger than the unadjusted correlation.
+
+<span style="color:blue;"> The fact that the partial correlation is substantially larger after controlling for smoking intensity suggests that smoking intensity is a confounder in the relationship between air pollution and lung function. Smoking is related to both higher $PM_{2.5}$ exposure (e.g., through residential or behavioral patterns) and poorer lung function, and its presence was masking the association between air pollution and FEV₁ in the unadjusted analysis. It is possible for the partial correlation to be larger than the unadjusted (Pearson) correlation because adjusting for smoking removes variation in lung function that is attributable to smoking rather than air pollution. Once this shared variation is accounted for, the remaining association between $PM_{2.5}$ and FEV₁ can become stronger and more apparent. </span>
+
+## Exercise 6: R Functions and What They Do
+
+For each item in **Column A**, select the the **single best matching description** from **Column B**. Each description should be used exactly once. 
+
+<div style="display: flex; gap: 3em; margin-top: 1.5em;">
+
+<!-- Column A -->
+<div style="width: 45%;">
+
+### **Column A: R Functions**
+
+1. `cor()`  
+2. `pcor.test()`  
+3. `ggpairs()`  
+4. `lm()`  
+5. `glm(family = "binomial")`  
+6. `predict()`  
+7. `vif()`  
+8. `tidy()`  
+9. `glance()`  
+10. `augment()`
+
+</div>
+
+<!-- Column B (MIXED ORDER) -->
+<div style="width: 55%;">
+
+### **Column B: Descriptions**
+
+A. Returns a compact summary of overall model fit statistics (e.g., \(R^2\), F-statistic).  
+B. Computes variance inflation factors to assess multicollinearity among predictors.  
+C. Computes a numerical measure of linear association between two numeric variables.  
+D. Fits a regression model for a binary outcome using a logit link function.  
+E. Converts model output into a tidy data frame with one row per model coefficient.  
+F. Generates fitted values or predictions for new or existing observations based on a fitted model.  
+G. Produces a graphical display showing pairwise relationships among multiple variables.  
+H. Fits a linear regression model
+I. Tests the association between two variables while controlling for one or more additional variables.  
+J. Adds fitted values and residuals to the original dataset for diagnostic purposes.
+
+</div>
+
+</div>
+
+
+
+1. <span style="color:blue;"> **`cor()`** → **C**   
+   Computes a numerical measure of linear association between two numeric variables.</span>
+
+2. <span style="color:blue;">**`pcor.test()`** → **I**  
+   Tests the association between two variables while controlling for one or more additional variables.</span>
+
+3. <span style="color:blue;">**`ggpairs()`** → **G**  
+   Produces a graphical display showing pairwise relationships among multiple variables.</span>
+
+4. <span style="color:blue;">**`lm()`** → **H**  
+   Fits a linear regression model.</span>
+
+5. <span style="color:blue;">**`glm(family = "binomial")`** → **D**  
+   Fits a regression model for a binary outcome using a logit link function.</span>
+
+6. <span style="color:blue;"> **`predict()`** → **F**  
+   Generates fitted values or predictions for new or existing observations based on a fitted model.</span>
+
+7. <span style="color:blue;"> **`vif()`** → **B**  
+   Computes variance inflation factors to assess multicollinearity among predictors.</span>
+
+8. <span style="color:blue;"> **`tidy()`** → **E**  
+   Converts model output into a tidy data frame with one row per model coefficient.</span>
+
+9. <span style="color:blue;">**`glance()`** → **A**  
+   Returns a compact summary of overall model fit statistics (e.g., R², F‑statistic).</span>
+
+10. <span style="color:blue;"> **`augment()`** → **J**  
+    Adds fitted values and residuals to the original dataset for diagnostic purposes.</span>
+

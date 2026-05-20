@@ -1,0 +1,656 @@
+---
+title: "Lecture 13: Proportions and Categorical data"
+subtitle: "BIOS 600 - Spring 2026"
+institute: "UNC - Chapel Hill"
+logo: "images/logo_600.png"
+format:
+  revealjs:
+    css: reveal-custom.css
+execute:
+  freeze: auto
+---
+
+## Announcements
+
+- HW 5 due **today** at 11:59 pm
+
+- Lab 6 due **Friday** at 11:59 pm
+
+- HW 6 will be assigned after class today
+
+## Announcements
+
+- I have extended due dates for exam corrections to March 13
+
+- If you need more time please reach out **ahead** of March 13
+
+## Announcements
+
+- I will be **out of the office** all of next week (March 9-13)
+
+- I will **not** have office hours but will be available by email but slower to respond than normal 
+
+- Molly will be continuing our lectures 
+
+- We will be wrapping up material covered in Exam 2 the week after spring break
+
+## Overview
+
+- Reviewed AE 03 from last time
+
+- Bonferroni correction
+
+- Chi-square test and example
+
+- Fisher exact test and example
+
+## Very optional reading
+
+-   P&G Chapters 14, 15
+
+-   OI: Sections 5.2, 5.3, 6.1, 6.2, 6.4
+
+```{r, echo=FALSE}
+library(tidyverse)
+set.seed(2025)
+
+n <- 30
+
+bp_data <- data.frame(
+  group = rep(c("Placebo", "HerbalTea", "Mindfulness"), each = n),
+  reduction = c(
+    rnorm(n, mean = 2, sd = 5),   # Placebo: mean reduction ~2 mmHg
+    rnorm(n, mean = 5, sd = 5),   # Herbal Tea: mean reduction ~5 mmHg
+    rnorm(n, mean = 7, sd = 5)    # Mindfulness: mean reduction ~7 mmHg
+  )
+)
+```
+
+
+## AE 03 
+
+```{r, eval=FALSE, echo=TRUE}
+ggplot(bp_data, 
+       aes(x = group, y = reduction, fill = group)) +
+  geom_boxplot(alpha = 0.7) +
+  labs(title = "Systolic BP Reduction by Intervention",
+       x = "Intervention",
+       y = "Reduction in systolic BP (mmHg)") +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+## AE 03 
+
+```{r}
+ggplot(bp_data, 
+       aes(x = group, y = reduction, fill = group)) +
+  geom_boxplot(alpha = 0.7) +
+  labs(title = "Systolic BP Reduction by Intervention",
+       x = "Intervention",
+       y = "Reduction in systolic BP (mmHg)") +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+## AE 03
+
+
+```{r}
+#| echo: true
+anova_model <- aov(reduction ~ group, data = bp_data)
+summary(anova_model)
+```
+
+What did we conclude at $\alpha = 0.05$?
+
+## Bonferroni correction
+
+-   As we showed earlier, conducting multiple tests on a data set increases the **family-wise error rate** - the probability of making at least one Type I error (false positive) when performing multiple, simultaneous hypothesis tests
+
+-   One very conservative way to ensure this is not the case is to simply divide $\alpha$ by the number of tests to be done and to use that as the significance level.
+
+-   This procedure is called the **Bonferroni correction**.
+
+## Bonferroni correction
+
+-   For example: for two tests, to preserve an overall 0.05 type I error rate, the Bonferroni correction would use $\alpha/2=0.025$ as the significance level for each individual test instead of 0.05.
+
+-   Bonferroni is a conservative correction, making it harder to reject the null hypothesis, but it is a safe bet in controlling the Type I error rate.
+
+## Pets and stress: group differences
+
+-   We can compare the groups using a Bonferroni correction (here we have three tests, so the significance level for each test is $\alpha/3$).
+
+-   The raw (uncorrected) p-values for the t-test comparing friend vs. pet was $<0.0001$; for friend vs. neither was 0.021, and for pet vs. neither was 0.009.
+
+## In small groups!!
+
+::: {.callout-tip appearance="simple"}
+
+## Let's say I wanted to compare HbA1c scores across individuals with 4 different categories, so I have 6 comparisons of insurance groups with $\alpha=0.05$
+
+  - Private Insurance vs. Medicaid - 0.098
+  - Private Insurance vs. Medicare - 0.018
+  - Private Insurance vs. Uninsured - 0.00002
+  - Medicaid vs. Medicare - 0.427
+  - Medicaid vs. Uninsured - 0.038
+  - Medicare vs. Uninsured - 0.004
+
+
+What significance level would I use for each pairwise test? 
+
+What would I conclude?
+
+:::
+
+## What if the outcome is categorical? {.smaller}
+
+So far, we’ve focused on comparing **means** of **continuous** outcomes between groups
+
+**Examples**: mean heart rate, mean BMI
+
+But sometimes the outcome we want to compare is **categorical** (yes/no or categories)
+
+**Examples**: smoker vs. non-smoker, disease vs. no disease
+
+
+Instead of comparing **means**, we compare **proportions** (or **counts**) across groups.
+
+::: {.callout-tip title="Think"}
+Does the distribution of categories differ across groups?
+:::
+
+## Example association questions
+
+- Is the **# of cigarettes smoked a day** associated with **lung cancer**
+
+- Is **smoking status** associated with **lung cancer**?
+
+- Is **hrs of exercise per week** associated with **heart disease**?  
+
+- Is **exercise category (low / moderate / high)** associated with **heart disease**?
+
+
+## Motivation: Comparisons of Interest
+
+| Predictor Type      | Outcome Type           | Common Tests / Topics                             | 
+|----------------------|------------------------|---------------------------------------------------|
+| Categorical          | Categorical            | Fisher’s exact test, $\chi^2$ test                      |
+| Categorical          | Continuous             | t-tests, ANOVA    |
+
+::: {.callout-note}
+Same big question, different summary:
+
+- Continuous outcome → compare **means**
+- Categorical outcome → compare **proportions** (or **counts**)
+:::
+
+
+## Pneumococcal disease
+
+The World Health Organization estimates that in developing countries 814,000 children under the age of five die annually from invasive pneumococcal disease (IPD), with an estimated 1.6 million deaths affecting all ages globally.
+
+Several recent studies have identified associations between pneumococcal serotypes (species variations) and patient outcomes from IPD. We consider data from a study of pneumococcal serotypes and mortality (Inverarity et al. (2011)).
+
+## Pneumococcal disease
+
+```{r}
+# Load necessary packages
+library(knitr)
+library(kableExtra)
+
+# Example data
+data <- data.frame(
+  Serotype = c("Serotype 10", "Serotype 31", "Total"),
+  Alive = c(37, 24, 61),
+  Dead = c(7, 10, 17),
+  Total = c(44, 34, 78)
+)
+
+```
+
+| Serotype     | Alive | Dead | Total |
+|--------------|--------|------|--------|
+| Serotype 10  | 37     | 7    | 44     |
+| Serotype 31  | 24     | 10   | 34     |
+| Total        | 61     | 17   | 78     |
+
+
+
+Is there an association between serotype and mortality?
+
+## Chi-square tests {.smaller}
+
+$H_0$: There is no association between serotype and mortality
+
+$H_1$: There is an association between serotype and mortality
+
+Under $H_0$, we have independence between serotype and mortality, implying that joint probabilities should be equal to products of marginal distributions:
+
+```{r}
+# Example data
+data <- data.frame(
+  Serotype = c("Serotype 10", "Serotype 31", "Total"),
+  Alive = c("?", "?", 61),
+  Dead = c("?", "?", 17),
+  Total = c(44, 34, 78)
+)
+
+
+```
+
+| Serotype     | Alive | Dead | Total |
+|---------------|--------|------|--------|
+| Serotype 10   | ?      | ?    | 44     |
+| Serotype 31   | ?      | ?    | 34     |
+| Total         | 61     | 17   | 78     |
+
+
+
+
+What counts might we expect under $H_0$?
+
+
+## Intuition: Joint and Marginal Probabilities {.smaller}
+
+- Suppose we look at two variables: **Serotype** and **Mortality** (Alive or Dead).
+
+- The **joint probability** describes the probability of being in *both* categories (e.g., “Serotype 10 **and** Alive”).
+
+- The **marginal probabilities** describe totals across one variable:
+  - P(Serotype 10) = proportion of all patients with Serotype 10  
+  - P(Alive) = proportion of all patients who survived
+
+::: columns
+::: column
+#### Marginal totals
+| Serotype | Total |
+|-----------|--------|
+| 10 | 44 |
+| 31 | 34 |
+| **Total** | **78** |
+:::
+
+::: column
+#### Marginal totals
+| Outcome | Total |
+|----------|--------|
+| Alive | 61 |
+| Dead | 17 |
+| **Total** | **78** |
+:::
+:::
+
+## What would happen if these two variables were independent? {.smaller}
+
+- Under the **null hypothesis of independence**, the chance of being both “Serotype 10” **and** “Alive” should just be:
+
+$$
+P(\text{Serotype 10 and Alive}) = P(\text{Serotype 10}) \times P(\text{Alive})
+$$
+
+- We can multiply these probabilities by the total number of observations to find the **expected counts**.
+
+
+## What would happen if these two variables were independent? {.smaller}
+
+For example:
+
+$$
+E_{10,Alive} = P(\text{Serotype 10}) \times P(\text{Alive}) \times N
+$$
+
+- Using our totals:
+
+$$
+P(\text{Serotype 10}) = \frac{44}{78}, \quad P(\text{Alive}) = \frac{61}{78}, \quad N = 78
+$$
+
+## Compute expected count under independence {.smaller}
+
+```{r}
+#| echo: true
+# Compute expected count under independence
+expected_10_alive <- (44/78) * (61/78) * 78
+expected_10_alive
+```
+
+- We can repeat this for each cell to find what we'd expect if serotype and mortality were truly unrelated. 
+
+- The chi-square test then measures how far our observed counts deviate from these expected counts.
+
+$$\chi^2 = \sum\frac{(O-E)^2}{E}$$
+
+## Intuition
+
+- If observed counts are **close** to what we'd expect under independence, $\chi^2$ will be small, then we'd fail to reject $H_0$. 
+
+- If they're **far** from expected, $\chi^2$ will be large, which might lead to evidence of an association. 
+
+
+## Visualizing Observed vs Expected Counts
+
+Let's visualize how the **observed** counts compare to the **expected** counts under independence. 
+
+```{r}
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+# Observed data
+obs_data <- data.frame(
+  Serotype = c("Serotype 10", "Serotype 31"),
+  Alive = c(37, 24),
+  Dead = c(7, 10)
+)
+
+# Reshape to long format
+obs_long <- obs_data %>%
+  pivot_longer(cols = Alive:Dead, names_to = "Outcome", values_to = "Observed")
+
+# Compute expected counts under independence
+total_alive <- sum(obs_data$Alive)
+total_dead <- sum(obs_data$Dead)
+total_serotype <- rowSums(obs_data[, 2:3])
+N <- sum(total_serotype)
+
+expected_alive <- (total_serotype / N) * total_alive
+expected_dead <- (total_serotype / N) * total_dead
+
+exp_data <- data.frame(
+  Serotype = obs_data$Serotype,
+  Alive = expected_alive,
+  Dead = expected_dead
+) %>%
+  pivot_longer(cols = Alive:Dead, names_to = "Outcome", values_to = "Expected")
+
+# Combine observed and expected
+plot_data <- obs_long %>%
+  left_join(exp_data, by = c("Serotype", "Outcome")) %>%
+  pivot_longer(cols = c(Observed, Expected), names_to = "Type", values_to = "Count")
+
+# Plot observed vs expected
+ggplot(plot_data, aes(x = Outcome, y = Count, fill = Type)) +
+  geom_col(position = "dodge") +
+  facet_wrap(~Serotype) +
+  scale_fill_manual(values = c("Observed" = "skyblue", "Expected" = "lightcoral")) +
+  theme_minimal(base_size = 14) +
+  labs(
+    title = "Observed vs Expected Counts by Serotype",
+    y = "Count",
+    x = "Outcome",
+    fill = ""
+  )
+```
+
+## Visualizing Observed vs Expected Counts
+
+What if we do not assume independence?
+
+
+## Chi-square tests
+
+The **chi-square test** compares the observed frequencies in each cell to the expected count under $H_0$; if the total differences are large enough, we reject $H_0$:
+
+$$\chi^2 = \sum_{i=1}^{r \times c}\frac{(O_i - E_i)^2}{E_i}$$
+
+which has a $\chi^2_{(r - 1) \times (c-1)}$ distribution, with $r$ = Number of rows, $c$ = number of columns, under $H_0$.
+
+
+## Chi-square tests
+
+```{r echo = T}
+data <- matrix(c(37, 7, 24, 10), 
+               byrow = T, nrow = 2)
+data
+chisq.test(data)
+```
+
+What might we conclude at $\alpha = .05$?
+
+## Conclusion
+
+-   **Conclusion**: Since the p-value is greater than 0.05, we fail to reject the null hypothesis. There is not enough evidence to conclude that survival differs between Serotype 10 and Serotype 31. 
+
+## An equivalent hypothesis
+
+Under $H_{0}$ There is no association between serotype and mortality, we have independence between serotype and mortality.
+
+If two variables are **independent**:
+
+$$P(A|B) = P(A)$$
+
+Under $H_{0}$, serotype and death are **independent** which means:
+
+$$P(\text{death}|S_{10}) = P(\text{death}|S_{31}) = P(\text{death})$$
+
+## Pneumococcal disease
+
+| Serotype     | Alive | Dead | Total |
+|--------------|------|------|------|
+| Serotype 10  | 37   | 7    | 44   |
+| Serotype 31  | 24   | 10   | 34   |
+| Total        | 61   | 17   | 78   |
+
+Is the **proportion who die** different between serotypes?
+
+  - $P(\text{death}|S_{10}) = 7/44 = 0.16$
+  - $P(\text{death}|S_{31}) = 10/34 = 0.29$
+
+## Fisher's exact test 
+
+- The chi-square test relies on asymptotic results (i.e. large sample size), which might not be appropriate if we have small cell counts (common rules of thumb are \>5 or \>10 observed in each cell). 
+
+
+## Fisher's exact test {.smaller}
+
+- **Fisher's exact test** tests the same hypotheses at Chi-squared tests **but** calculates an exact p-value under a specific distributional assumption.
+
+
+
+| Serotype     | Alive | Dead | Total |
+|--------------|--------|------|--------|
+| Serotype 10  | 37     | 7    | 44     |
+| Serotype 31  | 24     | 10   | 34     |
+| Total        | 61     | 17   | 78     |
+
+
+
+
+
+## Fisher's exact test
+
+Fisher's exact test relies on the **hypergeometric distribution** (don't worry about this, seriously).
+
+| Serotype     | Alive | Dead | Total       |
+|---------------|--------|------|-------------|
+| Serotype 10   | a      | c    | a + c       |
+| Serotype 31   | b      | d    | b + d       |
+| Total         | a + b  | c + d| a + b + c + d |
+
+
+
+
+
+Conditionally on the margins (assumed fixed), then each of the individual cells is distributed according to the hypergeometric distribution. We can thus calculate the exact probabilities of obtaining specific *tables*.
+
+## Fisher's exact test
+
+Observed data:
+
+| Serotype     | Alive | Dead | Total |
+|--------------|--------|------|--------|
+| Serotype 10  | 37     | 7    | 44     |
+| Serotype 31  | 24     | 10   | 34     |
+| Total        | 61     | 17   | 78     |
+
+
+
+We could use the hypergeometric distribution to calculate the probability of seeing this table, assuming 61 total alive patients, 17 dead, and 44 and 34 infections of serotypes 10 and 31, respectively (lots of factorials, so you could imagine it wasn't fun before modern computers).
+
+## Fisher's exact test
+
+Another "possible" table:
+
+| Serotype     | Alive | Dead | Total |
+|--------------|--------|------|--------|
+| Serotype 10  | 36     | 8    | 44     |
+| Serotype 31  | 25     | 9    | 34     |
+| Total        | 61     | 17   | 78     |
+
+
+
+
+
+- Here we've displayed another table with the **same margins**, but with some slightly different potential cell counts. 
+
+- Again we could use the hypergeometric distribution to calculate the probability of observing the cell counts conditionally on fixed margins.
+
+## Fisher's exact test
+
+Fisher's exact test relies on constructing *all possible* contingency tables with the same margins, and then summing up probabilities of all tables as extreme or more extreme than the observed data.
+
+::: {.callout-tip appearance="simple"}
+## Question
+
+What might "more extreme" mean in the context of contingency tables?
+:::
+
+## Fisher's exact test
+
+$H_0$: The proportion of deaths is the same for Serotype 10 and Serotype 31 (no association between serotype and outcome). 
+
+$H_A$: The proportion of deaths differs between serotypes (there *is* an association)
+
+```{r echo = T}
+data <- matrix(c(37, 7, 24, 10), byrow = T, nrow = 2)
+data
+```
+
+## Conducting the Fisher's Exact test
+
+```{r}
+#| echo: true
+fisher.test(data)
+```
+
+
+- What might we conclude at $\alpha = 0.05$?
+
+## Conclusion
+
+- The Fisher’s Exact Test yielded a p-value of 0.17, which is greater than the conventional significance level of 0.05. Therefore, we fail to reject the null hypothesis.
+
+- There is no statistically significant evidence of an association between serotype and survival status in this sample.
+
+## Odds ratios 
+
+-   If the probability of an event happening is $p$
+
+-   The odds of an event happening are $\frac{p}{1-p}$
+
+-   For a fair coin flip
+    - $P(heads)=0.5$ 
+    - Odds of heads = $\frac{0.5}{1-0.5}$ = 1
+    - Heads is equally likely as not-heads (tails)
+
+## Odds ratios 
+
+-   For a scenario where 20 people have a disease and 80 people do not
+    - $P(disease)=\frac{20}{100}=0.2$ 
+    - Odds of having disease = $\frac{.2}{1-0.2}=\frac{0.2}{0.8}=\frac{1}{4}$ = 0.25
+    - Disease occurs 1 time for every 4 times it does not occur
+    
+## Odds ratios 
+
+| Serotype     | Alive | Dead | Total |
+|--------------|--------|------|--------|
+| Serotype 10  | 37     | 7    | 44     |
+| Serotype 31  | 24     | 10   | 34     |
+| Total        | 61     | 17   | 78     |
+
+-   Odds of death among serotype 10 patient = $\frac{P(death | S_{10})}{P(alive | S_{10})}$
+
+-   Odds of death among serotype 10 patients = $\frac{7/44}{37/44} = 7/37$
+
+## Odds ratios 
+
+| Serotype     | Alive | Dead | Total |
+|--------------|--------|------|--------|
+| Serotype 10  | 37     | 7    | 44     |
+| Serotype 31  | 24     | 10   | 34     |
+| Total        | 61     | 17   | 78     |
+
+-   Odds of death among serotype 31 patient = $\frac{P(death | S_{31})}{P(alive | S_{31})}$
+
+-   Odds of death among serotype 31 patients = $\frac{10/34}{24/34} = 10/24$
+
+
+## Odds ratios 
+
+-   Odds of death among serotype 10 patients = $\frac{7/44}{37/44} = 7/37$
+
+-   Odds of death among serotype 31 patients = $\frac{10/34}{24/34} = 10/24$
+
+-   **Odds ratio** of death comparing 31 to 10 is thus $\frac{10/24}{7/37} \approx 2.2$
+
+-   The odds of death in the serotype 31 group are about 2.2 times the odds of death in the serotype 10 group
+
+## r by c tables
+
+| Serotype     | Alive | Dead | Total |
+|---------------|-------|------|-------|
+| Serotype 10   | 37    | 7    | 44    |
+| Serotype 15   | 60    | 12   | 72    |
+| Serotype 20   | 97    | 9    | 106   |
+| Serotype 31   | 24    | 10   | 34    |
+| **Total**     | **218** | **38** | **256** |
+
+
+We can also extend the chi-square test and Fisher's exact test to more general contingency tables (although the notion of an odds ratio no longer makes sense here).
+
+## Winter Olympics training
+
+Suppose we were interested in whether a particular training regimen was associated with "success" as measured by whether an athlete qualified for being on the US Winter Olympic Team for giant slalom.
+
+## Winter Olympics training
+
+|                 | Qualified | Did Not Qualify |
+|-----------------|-----------|-----------------|
+| **New Regimen** | 129       | 97              |
+| **Old Regimen** | 112       | 114             |
+
+
+
+```{r}
+#| echo: false
+data <- matrix(c(129, 97, 112, 114), byrow = T, nrow = 2)
+chisq.test(data)
+```
+
+::: callout-tip
+
+## Practice
+
+Write out the code to 1) construct the data matrix and 2) to conduct a chi square test in R. What might we conclude using alpha = .05? 
+
+:::
+
+## Practice
+
+## Overview
+
+- Reviewed AE 03 from last time.
+
+- Bonferroni correction
+
+- Chi-square test and example
+
+- Fisher exact test and example (use if sample sizes aren't large enough)
+
+## Next Class
+
+- Tuesday's class: Non-Parametric Methods
+
+- Reminder: Dr. Howard will be absent next week **but** Molly will be teaching next week

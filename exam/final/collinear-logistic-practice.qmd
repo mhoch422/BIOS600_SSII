@@ -1,0 +1,113 @@
+---
+title: "Practice Problems on Collinearity and Logistic Regression"
+format: html
+---
+
+Some of these problems are meant to be fairly difficult--the purpose is to get you to think carefully about the concepts we've covered in class, and give you a better understanding of those underlying concepts, in order to be better prepared for the final.
+
+Since some of these are a bit challenging, you are encouraged to discuss these problems in small groups.
+
+## Exercise 1: Multicollinearity and linear regression
+
+A (fictional) study examined the association between three air pollutants, Pollutant1, Pollutant2, and Pollutant3, and prevalence of asthma within counties in a fictional U.S. state. The pollutant variables are the average concentrations in parts per billion (ppb) measured at monitoring sites within that county. Prevalence of asthma is the % of the county's population diagnosed with asthma; it's treated as normally distributed. The sample comprised 100 counties in this state. Assume hypothesis tests are conducted with significance level $\alpha=.05.$
+
+```{r}
+#| echo: false
+
+load("collinear_logistic_practice_data.Rdata")
+fit <- lm(asthma ~ ., data=df)
+summary(fit)
+
+```
+
+### (a)
+
+What are the results of the hypothesis tests for the significance of each pollutant? Interpret these results in the context of the study.
+
+### (b)
+
+Write the null and alternative hypotheses for the F-test for overall model significance. Write these hypotheses both in symbols, and in words in the context of the study.
+
+### (c)
+
+What is the result of the overall F-test for the linear regression model? Interpret this result in the context of the study.
+
+### (d)
+
+Do these results show indication of possible multicollinearity affecting this model? Why or why not?
+
+### (e)
+
+The researchers decide to check for multicollinearity as follows:
+
+```{r}
+library(car)
+vif(fit)
+
+```
+
+What did the researchers do? Explain in 1 sentence. What do the results indicate about multicollinearity affecting this model?
+
+## Exercise 2: Conceptual
+
+Assume the outcome variable $Y$ takes values either $0$ or $1$.
+
+### (a)
+
+If our outcome variable $Y$ takes values $0$ or $1$, what would we assume its distribution is?
+
+### (b)
+
+We usually want to create a regression model to estimate $P(Y_i=1)$ based on the value of the predictors for observation $i$. Thinking back to the properties of the distribution you said in question (a), what is another name for this quantity? In other words, how else can we think of $P(Y_i=1)$?
+
+### (c)
+
+Based on your answer to part (c), how is this similar to the linear regression model with a normally-distributed outcome?
+
+### (d)
+
+Why would or wouldn't you want to use a linear regression model for this situation?
+
+### (e)
+
+What is the logistic function? Why do we use it in logistic regression?
+
+## Exercise 3: Logistic Regression
+
+A (fictional) study examined the association between age (years) and region of residence in the U.S. with diagnosis of a particular condition. They used four regions of the continental U.S., values 1-4.
+
+```{r}
+#| echo:  true
+
+fit.glm <- glm(condition ~ ., family="binomial", data=df2)
+summary(fit.glm)
+
+```
+
+### (a)
+
+What is the reference category for the region variable?
+
+### (b)
+
+Write the model used.
+
+### (c)
+
+Conduct a hypothesis test for the association between age and diagnosis of the condition, at level $\alpha=.05$. Follow the steps:
+
+1.  Write the null and alternative hypotheses, in words **and** symbols.
+2.  Compare the p-value to $\alpha$.
+3.  Draw and state your conclusion in the context of the study.
+
+### (d)
+
+Interpret the coefficient for the age variable in the context of the study.
+
+### (e)
+
+Interpret the coefficient for region category 4 in the context of the study.
+
+### (f)
+
+Based on the sign (positive/negative) of $\hat{\beta}_1$, is increased age associated with increased or decreased probability of diagnosis?

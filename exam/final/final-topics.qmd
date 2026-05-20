@@ -1,0 +1,89 @@
+---
+title: "Final Exam: Topics"
+format: html
+---
+
+## Material covered
+
+- Lectures 16-21, Labs 7-8, AE 5-6
+
+- No formula sheet will be provided; all questions can be answered without one.
+
+## Coding
+
+- `ggcorrplot()`, `cor()`, `pcor.test()`
+
+- `ggpairs()`
+
+- How to subset columns/rows using brackets: i.e. `iris[,1:4]`
+
+- `facet_wrap()`
+
+- `+ geom_smooth(method = "lm")`
+
+- `tidy()` and `kable()`
+
+- `vif()`
+
+- What does "tidy format" mean for a dataset?
+
+- `glance()` and `augment()`
+
+- What does the double colon specify? (e.g. `dplyr::select()`) 
+
+- `lm()`. How to fit a linear regression model?
+
+- `glm()`. How to fit a logistic regression model?
+
+- `predict()`
+
+-  Differences in code for how to fit and predict outcomes for a linear vs. logistic regression model 
+
+
+## Conceptual and Applied
+
+- Knowing common tests or models given the type of predictor and type of outcome ('When to choose what method' at the beginning of Lec 21). 
+
+- Is correlation between X with Y the same as correlation between Y and X? What about the linear regression of Y on X versus the linear regression of X on Y? 
+- Correlation coefficient $\rho$: what type of relationship does it describe? Know the range and how to interpret positive/negative/zero values. Which statistic can we use to estimate $\rho$? (How to do this in `R`?)
+  - Spearman vs. Pearson
+
+- Partial correlation. What is being tested? 
+
+- What is the takeaway of Anscombe's quartet?
+
+- Confounding definition
+
+- What is a regression line? What are residuals? What is error? 
+
+- Know how to write out a linear model for a particular study, indexed by observation $i = 1, \ldots, n$.Be able to define all terms in the model. 
+
+- Interpreting coefficients from simple and multiple linear regression models. What's the difference between simple vs. multiple linear regression?
+
+- Model assumptions of linear regression: be able to describe, and also how to check each one in R
+
+- In regression output, what are the individual coefficient statistics and p-values telling us? Which hypothesis test is being conducted for each p-value? Be able to write out the null and alternative hypotheses in symbols and in words. 
+
+  - For the global F-test, how would you interpret a p-value from the overall test? Be able to write out the null and alternative hypotheses in symbols and in words. 
+
+- $R^2$ and Adjusted $R^2$: definitions and how to interpret. What's the difference between them? 
+
+- How to predict a new value based on estimated coefficients from a regression model? (e.g. writing out an expression)
+
+- How to construct a confidence interval for $\hat\beta_k$?
+
+- How does R treat categorical variables in a regression model? Know how to interpret a dummy variable from a regression model.
+
+- Interaction models: How to fit in R? How to interpret a main effect when an interaction effect is present in the model?
+
+- Multicollinearity: definition & how to detect (e.g. VIF)
+
+- How does logistic regression differ from linear regression? 
+
+- In logistic regression, how do you interpret the estimated coefficients in terms of odds? How do you predict log-odds for a new observation given the estimated model coefficients?
+
+- How do you interpret the p-value for a single interaction term (like examples from Lecture 19)
+
+- How to predict a new value based on estimated coefficients from a logistic regression model? (e.g. writing out an expression) What does this value represent for this individual? 
+
+

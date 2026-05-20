@@ -1,0 +1,452 @@
+---
+title: "Lecture 20: Logistic regression"
+subtitle: "BIOS 600 - Spring 2026"
+institute: "UNC - Chapel Hill"
+logo: "images/logo_600.png"
+format:
+  revealjs:
+    css: reveal-custom.css
+execute:
+  freeze: auto
+---
+
+## Announcements
+
+- Lab 8 due this **Friday at 11:59pm**. 
+
+- Exam Corrections due **Friday 4/24 at 11:59pm** on Canvas.
+
+- Note, there will be no exam corrections for final exam
+
+## Overview
+
+- Review of Linear Regression 
+
+- Logistic regression
+
+- Interpreting estimated coefficients from a logistic regression model
+
+## Computational setup
+
+```{r}
+#| echo: true
+#| message: false
+#| warning: false
+library(tidyverse)
+library(tidymodels)
+library(kableExtra)
+library(MASS)
+library(randomForestSRC) # for pbc data
+data(pbc, package = "randomForestSRC")
+```
+
+## Very optional reading
+
+-   P&G Chapter 20
+
+-   OI: Section 9.5
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+cdc <- read.csv("https://karamccor.github.io/b6002/labs/data/cdc_cleaned.csv")
+```
+
+## Review of Linear Regression 
+
+```{r}
+#| echo: true
+fit_int <- lm(Obesity ~ Exercise + 
+                Smoking + 
+                Exercise*Smoking, 
+                   data = cdc)
+tidy(fit_int) |>
+  kable(digits = 3)
+```
+
+## Review of Linear Regression 
+
+- Based on this p-value, at $\alpha=0.05$, I do not have evidence to suggest there are differences in the association between obesity and exercise based on smoking
+
+- Often, based on non-significant p-values, people remove the interaction term and refit the model 
+
+## Review of Linear Regression 
+
+```{r}
+#| echo: true
+fit_int <- lm(Obesity ~ Exercise + 
+                Smoking, 
+                   data = cdc)
+tidy(fit_int) |>
+  kable(digits = 3)
+```
+
+## Should you remove it?
+
+### Let’s say you’re analyzing a randomized trial  
+  - Preventive therapy for cardiovascular disease  
+  - You included a **treatment × sex** interaction term
+  - P-value for the interaction term was 0.83
+
+## Would you remove it? 
+
+- If you want to know *does this therapy benefit men and women similarly?*
+
+- If you want to know *how does this treatment reduce CVD risk?*
+  
+- If you know of or suspect strong sex differences in disease mechanisms or treatment pathways?
+
+- If you know the study is underpowered to detect interactions?
+
+- Is this one of many potential effect modifiers? 
+
+## You could. . .  
+
+- Drop interaction term and report overall effect
+- Keep interaction and present estimates
+  - Primary analysis only
+  - Supplementary analysis only
+    
+- **No single answer applies to all scenarios**
+
+## Multiple Regression in Real Life
+
+::: callout-tip
+
+Based on [this paper](https://bmcmedinformdecismak.biomedcentral.com/articles/10.1186/s12911-022-01884-9?utm_source=chatgpt.com), answer the following questions:
+
+1. In 1-2 sentences, describe the goal of this study/analysis.
+
+2. What was the outcome variable?
+
+3. How many independent variables did they use in their multiple regression model?
+
+4. In Table 4, what was the F-value and p-value? What is your conclusion?
+
+5. Which four predictor variables most significantly influenced the outcome?
+
+:::
+
+#  Logistic regression
+
+## Models for binary outcomes
+
+```{r message = F, warning = F}
+library(tidyverse)
+```
+
+-   Suppose we have a binary outcome variable (e.g., $Y = 1$ if a condition is satisfied and 0 otherwise), and potentially multiple predictors on a variety of scales.
+
+::: {.callout-tip appearance="simple"}
+What distribution does our outcome have?
+:::
+
+## Models for binary outcomes
+
+-   Suppose we want to model $P(Y=1)$, the success probability. One strategy might be to simply fit a linear regression model to the probabilities:
+
+$$P(Y_i = 1) = \beta_0 + \beta_1 x_{i1} + \cdots + \beta_p x_{ip} + \epsilon_i$$
+
+::: {.callout-tip appearance="simple"}
+Is this a reasonable approach? Why or why not?
+:::
+
+## Primary biliary cirrhosis {.smaller}
+
+The Mayo Clinic conducted a trial for primary biliary cirrhosis, comparing the drug D-penicillamine vs. placebo. Patients were followed for a specified duration, and their status at the end of follow-up (whether they died) was recorded. Researchers are interested in predicting whether a patient died based on the following variables:
+
+-   `ascites`: whether the patient had ascites (abnormal fluid buildup in the abdomen) (1 = yes, 0 = no)
+
+-   `bili`: serum bilirubin in mg/dL (higher values may indicate liver damage/disease)
+
+-   `stage`: histologic stage of disease (ordinal categorical variable with stages 1, 2, 3, and 4)
+
+## What can go wrong?
+
+Suppose we fit the following model:
+
+$$P(Y_i = 1) = \beta_0 + \beta_1 asc_i + \beta_2 bili_i + \beta_3 s2_i + \beta_4 s3_i + \beta_5 s4_i + \epsilon_i$$
+
+where $Y=1$ if a patient died during the study follow-up.
+
+::: {.callout-tip appearance="simple"}
+What can go wrong?
+:::
+
+## What could go wrong? {.smaller}
+
+- We *can* technically fit the model:
+```{r}
+#| echo: true
+model <- lm(status ~ ascites + bili + as.factor(stage), 
+            data = pbc)
+tidy(model) |>
+  kable(digits = 3)
+```
+
+- However, let's check the fitted vs. residuals plot.
+
+## What could go wrong?
+
+```{r}
+ggplot(model, aes(x = .fitted, y = .resid)) +
+  geom_point() +
+  geom_hline(yintercept = 0, col = "red") +
+  labs(xlab = "Fitted", 
+       ylab = "Residuals")
+```
+
+## From probabilities to log odds
+
+-   Suppose the probability of an event is $p$.
+
+-   Then the **odds** that the event occurs is $\frac{p}{1-p}$
+
+-   Taking the natural log of the odds, we have the **logit** of $p$ (also known as the **log-odds**):
+
+::: poll
+$$logit(p) = \text{log} \left(\frac{p}{1-p}\right)$$
+:::
+
+-   Although $p$ is constrained to lie between 0 and 1, the logit of $p$ can be anything from $-\infty$ to $\infty$.
+
+## Logistic regression model
+
+Let's create a linear model for the log-odds:
+
+::: poll
+$$logit(p_i) = \text{log} \left(\frac{p_i}{1-p_i}\right) = \beta_0 + 
+\beta_1 x_{i1} + \cdots + \beta_p x_{ip}$$
+:::
+
+- This is the **logistic regression** model. 
+
+- In this model, it's ok that we could get any potential value for the logit of $p$  (can range from $-\infty$ to $+ \infty$). 
+
+- Once we get our $\hat\beta$ estimates, we can always back-transform to get a valid probability between 0 and 1.
+
+## Interpreting parameters
+
+-   Suppose that X is a binary (0/1) variable (e.g., X = 1 for smoker and 0 for non-smoker). In this case, we interpret $\text{exp}(\beta_1)$ as the **odds ratio** (OR) of the response for the two possible levels of X.
+
+-   For X on a continuous scale, $\text{exp}(\beta_1)$ is interpreted as the odds ratio of the response comparing two values of X one unit apart.
+
+## Back to PBC {.smaller}
+
+```{r}
+#| echo: true
+fit2 <- glm(status ~ ascites + bili + as.factor(stage), 
+            data = pbc, 
+            family = "binomial")
+tidy(fit2) |>
+  kable(digits = 3)
+```
+
+## Interpretations
+
+-   $\hat\beta_{\text{ascites}}$: The estimate for ascites was 2.87. Thus, the odds ratio for dying is exp(2.87), or approx. 17.6. Patients with ascites have 17.6 times the odds of dying compared to patients that do not, holding all other variables constant.
+
+- $\hat\beta_{\text{bili}}$: The estimate for bilirubin was 0.31. Thus, the odds ratio for dying for a patient with 1 additional mg/dL serum bilirubin compared to another is exp(0.31) ≈ 1.36, holding all other variables constant.
+
+## Interpretations
+
+-   $\hat\beta_{\text{stage 3}}$: The baseline stage was 1. The estimate corresponding to stage 3 was 1.72. Thus, patients in stage 3 have approximately 5.58 times the odds of dying compared to patients with the baseline stage, holding all other variables constant.
+
+::: callout-tip
+## Your turn
+
+What is the interpretation for $\hat\beta_{\text{stage 4}}$
+
+:::
+
+## Interpreting parameters
+
+-   Why is this the interpretation for continuous variables?
+
+-   Typically we interpret *functions* of parameters in logistic regression rather than the parameters themselves. 
+
+## Interpreting parameters {.smaller}
+
+-   For a model $logit(p_i) = β_0+β_1X_i$
+
+-   The log odds of response for X = 1 is given by $β_0+β_1$
+
+-   The log odds of response for X = 0 is $β_0$.
+
+-   So the odds ratio of response comparing X = 1 to X = 0 is given by:
+
+$$\frac{\text{exp}(\beta_0 + \beta_1)}{\text{exp}(\beta_0)} = \text{exp}(\beta_1)$$
+
+-   In a multiple logistic regression model, this has to be interpreted conditionally on values of other variables in the model (i.e., controlling for them).
+
+## What does this mean?
+
+- $\beta_1=0$
+  - **exp(0) = 1**
+  - Odds Ratio = $\text{exp}(\beta_1)=\text{exp}(0) = 1$
+  - **No evidence of an association**
+
+## What does this mean?
+
+- $\beta_1 \lt 0$
+  - Odds Ratio = $\text{exp}(\beta_1) \lt \text{exp}(0) = 1$
+  - Odds Ratio < 1
+  - Continuous: A 1‑unit **increase** in the predictor is associated with **lower odds** of the outcome
+  - Categorical: Group has **lower odds** of the outcome than the reference group
+
+## What does this mean? 
+
+- $\beta_1 \gt 0$
+  - Odds Ratio = $\text{exp}(\beta_1) \gt \text{exp}(0) = 1$
+  - Odds Ratio > 1
+  - Continuous: A 1‑unit **increase** in the predictor is associated with **higher odds** of the outcome
+  - Categorical: This group has **higher odds** of the outcome than the reference group
+
+## What does this mean? 
+
+- Negative $\beta$ → Odds Ratio < 1
+- Positive $\beta$ → Odds Ratio > 1
+- $\beta$ = 0 → Odds Ratio = 1
+
+- **Testing if $\beta=0$ is equivalent to testing if the odds ratio = 1**
+
+## Logistic regression model {.smaller}
+
+::: poll
+$$logit(p_i) = \text{log} \left(\frac{p_i}{1-p_i}\right) = \beta_0 + 
+\beta_1 x_{i1} + \cdots + \beta_p x_{ip}$$
+:::
+
+- Like with linear regression, we can use the estimated coefficients ($\hat{\beta}$) to make predictions for each individual 
+
+- For logistic regression, we predict $logit(p_i)= \text{log} \left(\frac{p_i}{1-p_i}\right)$
+
+$$logit(\hat{p}_i) = \text{log} \left(\frac{\hat{p}_i}{1-\hat{p}_i}\right) = \hat{\beta_0} + 
+\hat{\beta_1} x_{i1} + \cdots + \hat{\beta_p} x_{ip}$$
+
+## Logistic regression model {.smaller}
+
+- If $p=0.5$ then $\frac{p_i}{1-p_i}=1$
+  - $logit(p_i)=\text{log} \left(\frac{p_i}{1-p_i}\right)=log(1)=0$
+  - Logit of 0 represents probability of 0.5
+
+- If $p>0.5$ then $\frac{p_i}{1-p_i}>1$ and $logit(p_i) > 0$
+  - Positive logits represent probabilities above one-half
+  
+- If $p<0.5$ then $\frac{p_i}{1-p_i}<1$ and $logit(p_i) < 0$
+  - Negative logits represent probabilities less than one-half
+  
+## Interpreting parameters {.smaller}
+
+- Another *function* of the parameters, we might be interested in is the probability. 
+- For the simple model
+
+::: poll
+$$\text{log} \left(\frac{p_i}{1-p_i}\right) = \beta_0 + 
+\beta_1 x_{i}$$
+:::
+
+then the probability that $Y = 1$ when $X = 0$ is $\frac{\text{exp}(\beta_0)}{1 + \text{exp}(\beta_0)}$
+
+- How did we get this?
+
+::: callout-warning
+
+
+If you're curious how to convert logit to probability, see next slide. Prepare for math ahead! (This won't be on the exam!)
+
+:::
+
+## Solving logistic model for $p_i$ {.smaller}
+
+\footnotesize
+
+$$\text{log} \left(\frac{p_i}{1-p_i}\right) = \beta_0 + 
+\beta_1 x_{i}$$
+
+$$\left(\frac{p_i}{1-p_i}\right) = \text{exp}(\beta_0 + 
+\beta_1 x_{i})$$
+
+$$p_i = (1-p_i)\text{exp}(\beta_0 + 
+\beta_1 x_{i})$$
+
+$$p_i = \text{exp}(\beta_0 + 
+\beta_1 x_{i}) - p_i \text{exp}(\beta_0 + 
+\beta_1 x_{i}) $$
+
+$$p_i + p_i \text{exp}(\beta_0 + 
+\beta_1 x_{i})  = \text{exp}(\beta_0 + 
+\beta_1 x_{i}) $$
+
+$$p_i(1 + \text{exp}(\beta_0 + 
+\beta_1 x_{i}))  = \text{exp}(\beta_0 + 
+\beta_1 x_{i}) $$
+
+$$p_i = \frac{\text{exp}(\beta_0 + 
+\beta_1 x_{i})}{1 + \text{exp}(\beta_0 + 
+\beta_1 x_{i}) } $$
+
+## Back to PBC {.smaller}
+
+Remember, we are interested in the probability that a patient died during follow-up (a "success”). We are predicting the log-odds of this event happening.
+
+
+
+## Predicted probabilities {.smaller}
+
+-   There is a one-to-one-relationship between $p$ and $logit(p)$. So, if we predict the log-odds, we can back-transform to get back to a predicted probability.
+
+-   For instance, suppose a patient does not have ascites, has a bilirubin level of 5 mg/dL, and is a stage 2 patient. Their predicted log-odds are:
+
+$$−3.14+0.31×5+1.25=−0.34$$
+
+Thus, their predicted probability of dying is
+
+$$\frac{\text{exp}(-0.34)}{1+\text{exp}(-0.34)} = 0.42$$
+
+
+## On your own
+
+::: {.callout-tip appearance="simple"}
+What is the predicted probability of dying for a patient with ascites, a bilirubin level of 3 mg/dL, and stage 3?
+:::
+
+## Hypothesis tests in logistic regression
+
+Generally, we wish to know whether the OR = 1 or equivalently, whether the logit of $p$ (a $\beta$ coefficient) = 0. To test
+
+$$H_0: \beta_k = 0$$
+
+$$H_1: \beta_k \neq 0$$
+
+we can compare the ratio of a parameter estimate to its standard error using the standard normal distribution (reason we use Z instead of t is a bit technical).
+
+## Confidence intervals
+
+CIs for associations on the **logit scale** are given by
+
+::: poll
+$$\hat \beta_j \pm z^*_{1-\alpha/2} \times \widehat {SE} (\hat\beta_j)$$
+:::
+
+These are typically translated into confidence intervals in **odds scale** by exponentiating the lower and upper limits.
+
+$$[\text{exp}(\hat \beta_j - z^*_{1-\alpha/2} \times \widehat {SE} (\hat\beta_j)), \text{exp}(\hat \beta_j + z^*_{1-\alpha/2} \times \widehat {SE} (\hat\beta_j))]$$
+
+## Confidence intervals
+
+- For the variable ascites - whether the patient had ascites (1 = yes, 0 = no) - from R output for the logistic regression model, we note $\hat{\beta}=2.868$ and the stadard error of $\hat{\beta}$ is 1.067
+
+- We are 95% confident that the true difference in the log‑odds of the outcome comparing patients with ascites to those without ascites lies within the following interval, holding the other variables in the model constant: $$\hat \beta_j \pm z^*_{1-\alpha/2} \times \widehat {SE} (\hat\beta_j)$$
+
+## Confidence intervals
+
+- For the variable ascites - whether the patient had ascites (1 = yes, 0 = no) - from R output for the logistic regression model, we note $\hat{\beta}=2.868$ and the stadard error of $\hat{\beta}$ is 1.067
+
+- We are 95% confident that the true odds ratio comparing patients with ascites to those without ascites lies within the following interval, holding the other variables in the model constant: $$[\text{exp}(\hat \beta_j - z^*_{1-\alpha/2} \times \widehat {SE} (\hat\beta_j)), \text{exp}(\hat \beta_j + z^*_{1-\alpha/2} \times \widehat {SE} (\hat\beta_j))]$$
+
+
+## Next class
+
+- Application Exercise, bring your computer!

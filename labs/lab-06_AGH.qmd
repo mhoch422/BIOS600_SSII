@@ -1,0 +1,242 @@
+---
+title: "Lab 6: Code Style"
+format: html
+---
+
+Due Friday, March 6 at 11:59pm.
+
+## Today's lab
+
+Today's lab will focus on writing well-formatted and well-styled code.
+
+Note: While we typically allow AI use for coding help, this assignment is particularly geared towards learning proper coding style yourself. Thus, **AI use is not permitted on this assignment**.
+
+## Why do we care?
+
+To quote Hadley Wickham,
+
+-   Good coding style is like correct punctuation: you can manage without it, butitsuremakesthingseasiertoread.
+
+Many of the conventions used here are made in order to increase readability of your code both for yourself and others. Additionally, keeping a consistent style throughout your code helps readability and makes it easier on you – once you’ve gotten accustomed to appropriate style choices, there are fewer decisions to make when writing code.
+
+## Naming things
+
+-   Use only lowercase letters, numbers (if needed), and underscores (`_`).
+
+-   Underscores should be reserved for separating words within a name.
+
+-   Variable names should be nouns and function names should be verbs.
+
+-   Try your best to have concise and meaningful names (hard, at times!)
+
+-   Where possible, avoid re-using names of common functions and variables in R.
+
+## Spacing
+
+-   Always put a space after a comma, and never before (just like in English).
+
+-   Do not put spaces immediately inside or outside parentheses or brackets.
+
+-   `==`, `+`, `-`, `*`, `/`, `~`, and `<-` should be surrounded by spaces.
+
+-   `!`, `$`, `?`, `:`, and \^ should NOT be surrounded by spaces.
+
+-   Extra spaces is ok if it improves alignment of functions. For instance:
+
+```{r echo = T, eval = F}
+# Good
+height <- (feet * 12) + inches
+mean(x, na.rm = TRUE)
+
+sqrt(x^2 + y^2)
+df$z
+x <- 1:10
+
+# Bad
+height<-feet*12+inches
+mean( x , na.rm=TRUE)
+
+sqrt(x ^ 2 + y ^ 2)
+df $ z
+x <- 1 : 10
+```
+
+## Quotes
+
+Use `" "`, not `' '`, for quoting text. The only exception is when the text already contains double quotes and no single quotes.
+
+```{r echo = T, eval = F}
+ggplot(diamonds, mapping = aes(x = price)) +
+  geom_histogram() +
+  labs(title = "Shine bright like a diamond", # Good
+       x = "Diamond prices",                  # Good
+       y = 'Frequency')                       # Bad
+```
+
+## Curly braces
+
+Curly braces help define R code hierarchy, for instance in defining functions and if-else statements. A few rules should be kept in mind when using curly braces:
+
+-   `{` should be the last character on the line. Related code (e.g., an if clause, a function declaration, a trailing comma, etc.) must be on the same line as the opening brace.
+
+-   The contents should be indented by two spaces.
+
+-   `}` should be the first character on the line.
+
+Note: We have not talked about functions like the one below, so don't worry if they seem confusing. We will give a high-level overview, but no need to get bogged down with the function content. The purpose of this example is just to see proper curly brace alignment.
+
+```{r echo = T, eval = F}
+# Good
+if (y < 0 && debug) {
+  message("y is negative")
+}
+
+if (y == 0) {
+  if (x > 0) {
+    log(x)
+  } else {
+    message("x is negative or zero")
+  }
+} else {
+  y^x
+}
+
+# Bad
+if (y < 0 && debug) {
+message("Y is negative")
+}
+
+if (y == 0)
+{
+    if (x > 0) {
+      log(x)
+    } else {
+  message("x is negative or zero")
+    }
+} else { y ^ x }
+```
+
+## Long lines
+
+Try to keep your code and narratives to 80 characters per line, which fits comfortably on a printed page with reasonably sized font. In order to get a guide at the 80-character limit, you may go to the following menu in your R menu bar:
+
+Tools \> Global Options \> Code \> Display (tab) \> Show margin at 80 characters.
+
+## Pipes for `dplyr`
+
+-   Pipes should always have spaces before it.
+
+-   Pipes should always be followed by a new line.
+
+-   After the first step, each line should be indented by two spaces.
+
+```{r echo = T, eval = F}
+# Good
+iris |>
+  group_by(Species) |>
+  summarize_if(is.numeric, mean) |>
+  ungroup() |>
+  gather(measure, value, -Species) |>
+  arrange(value)
+
+
+# Bad
+iris |> group_by(Species) |> summarize_all(mean) |>
+ungroup |> gather(measure, value, -Species) |>
+arrange(value)
+```
+
+## Layering in `ggplot2`
+
+-   `+` for new layers should always have spaces before it.
+
+-   `+` should always be followed by a new line.
+
+-   After the first step, each line should be indented by two spaces.
+
+## Long lines
+
+If arguments to a function don’t all fit on a single line (for instance, when creating axis labels and titles), put each argument on its own line and indent to line up with the hierarchy.
+
+```{r echo = T, eval = F}
+# Good
+ggplot(aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point() +
+  labs(
+    x = "Sepal width, in cm",
+    y = "Sepal length, in cm",
+    title = "Sepal length vs. width of irises"
+  ) 
+
+# Bad
+ggplot(aes(x = Sepal.Width, y = Sepal.Length, color = Species)) +
+  geom_point() +
+  labs(x = "Sepal width, in cm", y = "Sepal length, in cm", title = "Sepal length vs. width of irises") 
+```
+
+
+## Your turn!
+
+In each of the exercises in the lab template, fix each code and/or narrative example given in the template to conform to good R style guidelines as denoted above. 
+
+**Do not actually run the code. You will get an error if you try to run the code, as objects are not defined.**
+
+For each exercise, you should check the following, if applicable:
+
+- Naming things - do names follow good naming convention?
+
+- Spacing
+
+- Quotes
+
+- Curly braces
+
+- Long lines
+
+- Pipes for `dplyr`
+
+- Layering in `ggplot`
+
+- Long lines
+
+The examples have been pre-loaded in the templates for your convenience. The template is available in the Canvas assignment page.
+
+It is not important for you to understand what the code does. Do not evaluate any of the code (i.e., keep `#| eval: FALSE` in the R chunks).
+
+## Acknowledgements
+
+Today’s guide follows the tidyverse style guide by Hadley Wickham and extensively quotes his guide. Credit should be due exclusively to him for the guidelines and examples.
+
+A more complete version of the style guide may be found [here](https://style.tidyverse.org/).
+
+
+## Submission
+
+As you’ve seen previously, we can **Render** the template into an .html file that can be opened by any web browser. To export it as a .pdf, open the file in your web browser and then print to or save as a .pdf document. Your TAs will show you how if you need help! (There is a way to directly knit to a .pdf file, but it’s quite a bit more involved.)
+
+You will submit the PDF documents for labs and homework to Gradescope as part of your final submission.
+
+To submit your assignment:
+
+- Access Gradescope through the menu on the BIOS 600 Canvas site.
+
+- Click on the assignment, and you’ll be prompted to submit it.
+
+- Mark the pages associated with each exercise. All of the pages of your lab should be associated with at least one question (i.e., should be “checked”).
+
+- Select the first page of your .PDF submission to be associated with the “Formatting” section.
+
+
+## Grading
+
+| Component | Points |
+|----------|--------|
+| Ex 1 | 4 |
+| Ex 2 | 4 |
+| Ex 3 | 4 |
+| Ex 4 | 4 |
+| Ex 5 | 4 |
+| AI Attestation| 1 |
+| Formatting | 3 |
+
+The “Formatting” grade is to assess the document format. This includes having a neatly organized document (no excessive output, warnings/messages when loading packages and/or data) with readable code and your name and the date updated in the YAML.

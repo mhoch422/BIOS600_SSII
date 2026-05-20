@@ -1,0 +1,157 @@
+---
+title: "Exam 1 Combined Practice Problems Solutions"
+format: html
+---
+
+### Code
+
+## Q1
+
+`install.packages()` is when you need to install a package on your computer. You only need to do this one time per machine. In contrast, `library()` simply loads the package into your current workspace. You would include `library()` in your Quarto document, but not `install.packages()`.
+
+## Q2
+
+If she completes her analysis in excel and simply shares her results, there will not be a record of the steps she took to complete her analysis. In this way, it will be difficult (perhaps impossible) to reproduce her analysis. Using R and typing code into a document (such as Quarto), we can keep a record of all steps taken in the analysis, improving the possibility of reproducing the results.
+
+## Q3
+
+`###` in front of text makes a header.
+
+## Q4
+
+`#` in front of code creates a comment. This tells R not to run this line of code.
+
+## Q5
+
+There is an extra parentheses at the end of her code. This is causing an error. To fix it, she should delete this parentheses.
+
+## Q6
+
+`geom_point()` produces a scatterplot.
+
+## Q7
+
+a.  `summarize()` is creating a new variable called `avg_exercise` representing the mean of the `Exercise` variable within the dataset.
+
+b.  `na.rm = T` is telling R to remove any `NA` values within the `Exercise` variable.
+
+## Q8
+
+Correct answer: C
+
+## Q9
+
+A, B, C are correct.
+
+## Q10
+
+a.  those with age at least 50 and sbp greater than 140 mmHg.
+
+b.  pipes the dataset into the filter command
+
+c.  No. She is creating a new dataset but hasn't asked anything to be printed.
+
+## Q11
+
+A and D are correct.
+
+## Q12
+
+One row per age_group.
+
+A column mean_bmi containing the mean BMI for each sex, with NAs removed.
+
+### Conceptual
+
+## Q13
+
+Reproducibility: taking original data and code to reproduce all numerical findings. Replicability: being able to independently repeat an entire study without use of original data.
+
+## Q14
+
+Quota sampling is sampling until you have reached a particular number of participants. This type of sampling is not as generalizable as a probability sampling scheme.
+
+## Q15
+
+In the COVID-19 seroprevalence paper, the recruitment strategy followed a "snowball" sampling scheme via Facebook ads. This may have introduced sampling bias because it may have attracted people concerned about COVID-19 or those who thought they were already exposed. This may have led to an overestimation of seroprevalence, and it could have been made worse since these individuals may have recruited others in their network.
+
+## Q16
+
+Population: Adults aged 65 or older.
+
+## Q17
+
+True
+
+## Q18
+
+False - some probabilities could be zero.
+
+## Q19
+
+True
+
+## Q20
+
+False
+
+## Q21
+
+True
+
+### Applied
+
+## Q22
+
+a.  z-score = (165-135)/20
+
+b.  Since different variables follow different normal distributions (i.e. with different means and variances), it's helpful to standardize in order to create a unitless measure of the number of standard deviations away from the mean. This way, we can more easily see how extreme a particular value is.
+
+## Q23
+
+a.  Sensitivity is the probability the rapid test is positive given disease is present. Sensitivity = $\frac{72}{72 + 8} = \frac{72}{80}$
+
+b.  Specificity is the probability the rapid test is negative given disease is absent. $\text{Specificity} = P(\text{Test –} \mid \text{Disease –}) = \frac{\text{True Negatives}}{\text{True Negatives + False Positives}} = \frac{102}{102 + 18} = \frac{102}{120}$
+
+c.  In this context, specificity means: Among patients who truly **do not** have influenza (PCR negative), the rapid test **correctly identifies** about 85% as negative.
+
+
+## Q24
+
+a.  **(B).** The probability that the test is positive given that the person truly has COVID-19 is just the **sensitivity**, 90% (0.9).
+
+b.  $P(\text{Infected} \mid \text{Test +}) = \frac{P(\text{Test +} \mid \text{Infected}) \times P(\text{Infected})}{P(\text{Test +})}$
+
+c.  From the table:
+
+-   Test positive & disease positive = 70
+
+-   Disease positive total = 80
+
+$\text{Sensitivity} = \frac{70}{80}$
+
+## Q25
+
+1.  **Events occur independently** – Each patient’s arrival is assumed independent of others.
+
+    -   In practice, independence may be reasonable, unless e.g., an asthma trigger affects multiple people simultaneously.
+
+2.  **The average rate** $\lambda$ is constant – The expected number of arrivals per hour does not change significantly over time.
+
+3.  **Events occur singly** – Only one event occurs at a particular instant.
+
+4.  **Number of events in non-overlapping intervals is independent** – The number of arrivals in one hour is independent of arrivals in another hour.
+
+## Q26
+
+a.  All probabilities are between 0 and 1.
+
+The sum of probabilities for all outcomes is 1.
+
+The probability of the union of disjoint events equals the sum of their probabilities.
+
+b.  $P(X \ge 2) = 1 - P(X < 2) = 1 - P(X = 0) - P(X = 1)$
+
+$P(X \ge 2) = 1 - \frac{e^{-3} 3^0}{0!} - \frac{e^{-3} 3^1}{1!}$
+
+c.  Answer is (B): `1 - dpois(0, lambda = 3) - dpois(1, lambda = 3)` note this is the same as `1 - ppois(1, lambda = 3)` since when we use ppois, vs dpois, this captures cumulative probability so the probability of X$\lteq$ 1. But since we did not go over the difference between ppois or pbinom in class, I will only give you functions with dbinom or dpois - you are welcome though to use both

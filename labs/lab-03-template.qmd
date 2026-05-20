@@ -1,0 +1,120 @@
+---
+title: "Lab 03: Wrangling data with tidyverse"
+author: "Your Name Here"
+date: "Today's Date Here"
+format: html
+---
+
+```{r }
+#| label: setup
+#| message: false
+#| warning: false
+
+library(tidyverse)
+
+ncbikecrash <- read_csv("https://karamccor.github.io/b6002/labs/data/bikecrash.csv")
+```
+
+### Exercise 1
+
+#### (a)
+
+```{r ex-1}
+#| label: ex-1a
+#| eval: false
+
+# run this code
+ncbikecrash |> 
+  filter(development == "Residential") |>
+  filter(driver_age_group == "0-19")
+```
+
+[type response here]
+
+#### (b)
+
+```{r}
+#| label: ex-1b
+
+# edit code below: replace blank with Residential, then run code
+
+ncbikecrash |> 
+  filter(development == "______") |>
+  count(driver_age_group)
+```
+
+### Exercise 2
+
+```{r }
+#| label: ex-2
+
+# edit code: replace blank with driver estimated speed variable
+ncbikecrash |> 
+  count(____________) |>
+  arrange(n)
+```
+
+### Exercise 3
+
+
+```{r }
+#| label: ex-3
+
+# type code here
+```
+
+### Exercise 4
+
+```{r }
+#| label: ex-4
+
+# type code here
+```
+
+### Exercise 5
+
+```{r}
+#| label: ex-5a
+
+# type code here
+```
+
+
+```{r}
+#| label: ex-5b
+
+# type code here
+```
+
+### Exercise 6
+
+```{r }
+#| label: ex-6
+
+# type code here
+```
+
+### Exercise 7
+
+```{r}
+#| label: ex-7
+#| warning: false
+
+# type code here
+```
+
+[write response here]
+
+```{r}
+#| label: ex-7b
+#| warning: false
+ggplot(ncbikecrash, mapping = aes(x = rural_urban, 
+                                  y = driver_age, 
+                                  fill = weather)) +
+  geom_boxplot()
+```
+
+
+[write response here]
+
+**Submission:** Remember to render your lab into an .html file and then save it as a .pdf in a web browser. You must turn in a .pdf file corresponding to the Quarto template to Gradescope in order to receive credit for the labs and homework assignments. You must assign each problem to a page in your PDF. Assign the Formatting portion to your page 1. Ensure all code is visible by indenting after commas as needed.  

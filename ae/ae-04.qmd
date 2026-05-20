@@ -1,0 +1,61 @@
+---
+title: "AE 04: Power and Sample Size Calculations"
+author: "Your Name Here"
+date: "Date Here"
+format: html
+---
+
+## Learning goals
+
+- Use `power.t.test()` to compute **power** for a two-sample t-test.  
+
+- Use `power.t.test()` to compute **required sample size** per group for a desired power.  
+
+- Interpret the results in biomedical / environmental contexts.
+
+
+## Exercise 1 — Air Pollution
+
+A city would like to implement an intervention to reduce fine particulate matter (PM$_{2.5}$) near a busy roadway. They are currently designing their study and plan to apply for grant funding. From earlier monitoring, the standard deviation of hourly PM$_{2.5}$ (in $\mu$g/$m^3$) at monitoring sites is about 8 $\mu$g/$m^3$.  
+Researchers plan a study with two independent groups (intervention vs control) with 25 monitoring sites in each group.  They hope to detect a mean reduction of 5 $\mu$g/$m^3$. .
+
+a. Using a two-sided test with $\alpha = 0.05$, compute the *power* of the study (per-group `n = 25`) to detect a 5 $\mu$g/$m^3$ difference. Include a 1-sentence conclusion with your answer. 
+
+```{r}
+# Power calculation (two-sample t-test)
+
+# [type code here]
+```
+
+[type response here]
+
+b. Do you think this grant would get funded as it currently stands? Why or why not? If not, what's one thing the city could do to increase the power of their study?
+
+[type response here]
+
+## Exercise 2: Lowering LDL Cholesterol
+
+A clinical trial is planned to test a new lifestyle program intended to lower LDL cholesterol. Pilot data suggest the standard deviation of LDL in the target population is 12 mg/dL, and a clinically important difference is 4 mg/dL.
+
+Researchers want 90% power to detect this difference using a two-sided two-sample t-test with $\alpha = 0.05$.
+
+a. Compute the required sample size per group. 
+
+```{r}
+# [type code here]
+```
+
+[type response here]
+
+b. Suppose you expect 10% loss to follow up in the study. In this case, we can calculate an inflated per-group enrollment by dividing the sample size you calculated in part (a) by 1-.10 = .90. What is the inflated per-group enrollment, based on the original sample size you calculated in part (a)? (If you get a decimal, round up here as well to get your final answer.) Use R for your calculation.
+
+```{r}
+# [type code here]
+```
+
+[type response here]
+
+## Submission
+
+Render to PDF and submit on Canvas > Assignments. 
+

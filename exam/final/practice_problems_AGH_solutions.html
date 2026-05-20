@@ -1,0 +1,1058 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Practice Problems</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="practice_problems_AGH_solutions_files/libs/clipboard/clipboard.min.js"></script>
+<script src="practice_problems_AGH_solutions_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="practice_problems_AGH_solutions_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="practice_problems_AGH_solutions_files/libs/quarto-html/popper.min.js"></script>
+<script src="practice_problems_AGH_solutions_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="practice_problems_AGH_solutions_files/libs/quarto-html/anchor.min.js"></script>
+<link href="practice_problems_AGH_solutions_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="practice_problems_AGH_solutions_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="practice_problems_AGH_solutions_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="practice_problems_AGH_solutions_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="practice_problems_AGH_solutions_files/libs/bootstrap/bootstrap-efbb37e9afcc02144ebbc7afd12a776f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Practice Problems</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="exercise-1-multicollinearity-and-linear-regression" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-1-multicollinearity-and-linear-regression">Exercise 1: Multicollinearity and linear regression</h2>
+<p>A (fictional) study examined the association between three air pollutants, Pollutant1, Pollutant2, and Pollutant3, and prevalence of asthma within counties in a fictional U.S. state. The pollutant variables are the average concentrations in parts per billion (ppb) measured at monitoring sites within that county. Prevalence of asthma is the % of the county’s population diagnosed with asthma; it’s treated as normally distributed. The sample comprised 100 counties in this state. Assume hypothesis tests are conducted with significance level <span class="math inline">\(\alpha=.05.\)</span></p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">7.3639127</td>
+<td style="text-align: right;">1.1334468</td>
+<td style="text-align: right;">6.4969197</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pollutant1</td>
+<td style="text-align: right;">-0.1182973</td>
+<td style="text-align: right;">0.1715004</td>
+<td style="text-align: right;">-0.6897783</td>
+<td style="text-align: right;">0.4919977</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Pollutant2</td>
+<td style="text-align: right;">0.0873557</td>
+<td style="text-align: right;">0.1664747</td>
+<td style="text-align: right;">0.5247384</td>
+<td style="text-align: right;">0.6009747</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pollutant3</td>
+<td style="text-align: right;">0.1082822</td>
+<td style="text-align: right;">0.1590986</td>
+<td style="text-align: right;">0.6805982</td>
+<td style="text-align: right;">0.4977640</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<section id="a" class="level3">
+<h3 class="anchored" data-anchor-id="a">(a)</h3>
+<p>Write out the model that has been fit in symbols below (i.e.&nbsp;<span class="math inline">\(Asthma_{i} = ...\)</span>)</p>
+<p><span style="color:blue;"> <span class="math inline">\(Asthma_{i} = \beta_{0}+\beta_{1}Pollutant1_{i}+\beta_{2}Pollutant2_{i}+\beta_{3}Pollutant3_{i}+\epsilon_{i}\)</span> </span></p>
+</section>
+<section id="b" class="level3">
+<h3 class="anchored" data-anchor-id="b">(b)</h3>
+<p>What are the results of the hypothesis tests for the significance of each pollutant? Interpret these results in the context of the study.</p>
+<p><span style="color:blue;">Each of the hypothesis tests for individual pollutants’ association with asthma prevalence, holding the other pollutant levels constant, have a p-value greater than 0.05. So for each of these tests, we would fail to reject the null hypothesis that the air concentration of that pollutant in ppb is associated with asthma prevalence (%), holding the other pollutant levels constant.</span></p>
+</section>
+<section id="c" class="level3">
+<h3 class="anchored" data-anchor-id="c">(c)</h3>
+<p>Write the null and alternative hypotheses for the F-test for overall model significance. Write these hypotheses both in symbols, and in words in the context of the study.</p>
+<p><span style="color:blue;">Symbols: <span class="math inline">\(H_0: \beta_1=\beta_2=\beta_3=0. H_1:\)</span> At least one of <span class="math inline">\(\beta_j, j=1,2,3\)</span> is not equal to 0.</span></p>
+<p>Words: The null hypothesis is that none of the pollutant concentrations (ppb) is associated with asthma prevalence (%). The alternative hypothesis is that at least one of the pollutant concentrations (ppb) is associated with asthma prevalence (%). </p>
+</section>
+<section id="d" class="level3">
+<h3 class="anchored" data-anchor-id="d">(d)</h3>
+<p>What is the result of the overall F-test for the linear regression model (see below), assume <span class="math inline">\(\alpha=0.05\)</span>? Interpret this result in the context of the study.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glance</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 12
+  r.squared adj.r.squared sigma statistic p.value    df logLik   AIC   BIC
+      &lt;dbl&gt;         &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1     0.120        0.0927  1.97      4.37 0.00626     3  -208.  425.  438.
+# ℹ 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;</code></pre>
+</div>
+</div>
+<p><span style="color:blue;"> The overall F test results has a p-value of 0.00626, which is less than <span class="math inline">\(0.05\)</span>, so we reject <span class="math inline">\(H_0\)</span> and conclude that there is evidence that at least one of the pollutant concentrations (ppb) is associated with asthma prevalence (%).</span></p>
+</section>
+<section id="e" class="level3">
+<h3 class="anchored" data-anchor-id="e">(e)</h3>
+<p>Interpret the <span class="math inline">\(R^{2}\)</span> value and briefly explain what it suggests about the adequacy of the model.</p>
+<p><span style="color:blue;"> Predictors explain about 12% of the variability in the model (or 12% of the variability in asthma prevalence). This relatively low value suggests that, while the predictors are related to asthma prevalence, the model leaves most of the variability unexplained and therefore has limited explanatory power. </span></p>
+</section>
+<section id="f" class="level3">
+<h3 class="anchored" data-anchor-id="f">(f)</h3>
+<p>The researchers decide to check for multicollinearity as follows:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">vif</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Pollutant1 Pollutant2 Pollutant3 
+  62.52846   57.92934   53.92988 </code></pre>
+</div>
+</div>
+<p>What did the researchers do? Explain in 1 sentence. What do the results indicate about multicollinearity affecting this model?</p>
+<p><span style="color:blue;">The researchers computed the VIF values (variable inflation factor) which checks for multicollinearity. Above 5 or 10 can be considered problematic levels of multicollinearity so it seems to confirm that it is present here.</span></p>
+</section>
+</section>
+<section id="exercise-2-conceptual" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-2-conceptual">Exercise 2: Conceptual</h2>
+<p>Assume the outcome variable <span class="math inline">\(Y\)</span> takes values either <span class="math inline">\(0\)</span> or <span class="math inline">\(1\)</span>.</p>
+<section id="a-1" class="level3">
+<h3 class="anchored" data-anchor-id="a-1">(a)</h3>
+<p>If our outcome variable <span class="math inline">\(Y_{i}\)</span> takes values <span class="math inline">\(0\)</span> or <span class="math inline">\(1\)</span>, for a single observation what would we assume its distribution is?</p>
+<p><span style="color:blue;">Since we are talking about a single observation, it is Bernoulli, or equivalently, if we were talking about multiple observations (each with probability <span class="math inline">\(p\)</span>) this would be binomial with the number of trials equal to the number of observations.</span></p>
+</section>
+<section id="b-1" class="level3">
+<h3 class="anchored" data-anchor-id="b-1">(b)</h3>
+<p>Why would or wouldn’t you want to use a linear regression model for this situation?</p>
+<p><span style="color:blue;"> The linear regression model assumes a normally distributed outcome, which our outcome variable is not. A normally distributed outcome variable can (hypothetically) take any real number as a value, while our outcome variable must be 0 or 1. So our assumption of normality is incorrect. More concretely, assuming a linear model for the expected value of the outcome, as a function of predictors, can lead to estimated probabilities less than 0 or greater than 1, which are not possible. For these reasons we would not want to use a linear regression model.</span></p>
+</section>
+<section id="c-1" class="level3">
+<h3 class="anchored" data-anchor-id="c-1">(c)</h3>
+<p>What function of <span class="math inline">\(Y_{i}\)</span> are we modelling when we use logistic regression?</p>
+<p><span style="color:blue;"> Instead of modeling $Y_{i}=<em>{0}+</em>{1}X_1 . . . $ we model $logit(Pr(Y_{i}=1))=<em>{0}+</em>{1}X_1 . . . $. The logistic or logit function is <span class="math inline">\(logit(p)=\log\left(\frac{p}{1-p}\right)\)</span>. We use it in logistic regression because it ensures the values of <span class="math inline">\(p\)</span> are always within <span class="math inline">\([0,1]\)</span>.</span></p>
+</section>
+<section id="d-1" class="level3">
+<h3 class="anchored" data-anchor-id="d-1">(d)</h3>
+<p>How does interpretation of our parameter estimates (e.g.&nbsp;<span class="math inline">\(\beta_1\)</span>) change when considering logistic vs.&nbsp;linear regression?</p>
+<p><span style="color:blue;"></span></p>
+<p>Linear Regression - Continuous Predictors: <span class="math inline">\(\beta_{1}\)</span> represents the expected change in the mean outcome for a one‑unit increase in the predictor, holding other variables constant. Logistic Regression - Continuous Predictors: <span class="math inline">\(\beta_{1}\)</span> represents the change in the log-odds of the outcome for a one‑unit increase in the predictor, holding other variables constant. We often use exp(<span class="math inline">\(\beta_{1}\)</span>) as an estimate for the odds ratio for a one-unit increase in the predictor</p>
+<p>Linear Regression - Categorical Predictors: <span class="math inline">\(\beta_{1}\)</span> represents the difference in mean outcome between a given category and the reference group, holding other variables constant. Logistic Regression - Categorical Predictors: <span class="math inline">\(\beta_{1}\)</span> represents the difference in log-odds of the outcome between a given category and the reference group, holding other variables constant. Equivalently, exp(<span class="math inline">\(\beta_{1}\)</span>) is the odds ratio comparing that category to the reference group. </p>
+</section>
+</section>
+<section id="exercise-3-logistic-regression" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-3-logistic-regression">Exercise 3: Logistic Regression</h2>
+<p>A (fictional) study examined the association between age (years) and region of residence in the U.S. with diagnosis of a particular condition. They used four regions of the continental U.S., values 1-4.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>fit.glm <span class="ot">&lt;-</span> <span class="fu">glm</span>(condition <span class="sc">~</span> age <span class="sc">+</span> Region, <span class="at">family =</span> binomial, <span class="at">data =</span> df2)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(fit.glm) <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-2.2314637</td>
+<td style="text-align: right;">0.4409363</td>
+<td style="text-align: right;">-5.060739</td>
+<td style="text-align: right;">0.0000004</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">age</td>
+<td style="text-align: right;">0.0610685</td>
+<td style="text-align: right;">0.0085308</td>
+<td style="text-align: right;">7.158578</td>
+<td style="text-align: right;">0.0000000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Region2</td>
+<td style="text-align: right;">0.4699388</td>
+<td style="text-align: right;">0.3340108</td>
+<td style="text-align: right;">1.406957</td>
+<td style="text-align: right;">0.1594402</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Region3</td>
+<td style="text-align: right;">0.4505735</td>
+<td style="text-align: right;">0.3364697</td>
+<td style="text-align: right;">1.339121</td>
+<td style="text-align: right;">0.1805314</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Region4</td>
+<td style="text-align: right;">0.7701685</td>
+<td style="text-align: right;">0.3550337</td>
+<td style="text-align: right;">2.169283</td>
+<td style="text-align: right;">0.0300612</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<section id="a-2" class="level3">
+<h3 class="anchored" data-anchor-id="a-2">(a)</h3>
+<p>What is the reference category for the region variable?</p>
+<p><span style="color:blue;">Category 1 is the reference category, which we can see because it’s not included as a dummy variable in the R summary output.</span></p>
+</section>
+<section id="b-2" class="level3">
+<h3 class="anchored" data-anchor-id="b-2">(b)</h3>
+<p>Write the model used.</p>
+<p><span style="color:blue;"> Let <span class="math inline">\(p_i\)</span> be <span class="math inline">\(P(Y_i=1)\)</span>, the probability that individual <span class="math inline">\(i\)</span> is diagnosed with the condition. Then the model is <span class="math inline">\(logit(p_i)=\beta_0 + \beta_1 age_i + \beta_2(Region_i=2) + \beta_3(Region_i=3) + \beta_4(Region_i=4)\)</span>, where <span class="math inline">\(Region_i\)</span> can take the values 1, 2, 3, 4 depending on the residence of observation <span class="math inline">\(i\)</span>.</span></p>
+</section>
+<section id="c-2" class="level3">
+<h3 class="anchored" data-anchor-id="c-2">(c)</h3>
+<p>Conduct a hypothesis test for the association between age and diagnosis of the condition, at level <span class="math inline">\(\alpha=.05\)</span>. Follow the steps:</p>
+<ol type="1">
+<li>Write the null and alternative hypotheses, in words <strong>and</strong> symbols.</li>
+<li>Compare the p-value to <span class="math inline">\(\alpha\)</span>.</li>
+<li>Draw and state your conclusion in the context of the study.</li>
+</ol>
+<p><span style="color:blue;"> <span class="math inline">\(H_0\)</span>: Age (years) is not associated with diagnosis probability, holding region of residence constant. In symbols, <span class="math inline">\(H_0: \beta_1=0\)</span>.</span></p>
+<p><span class="math inline">\(H_A\)</span>: Age (years) is associated with diagnosis probability, holding region of residence constant. In symbols, <span class="math inline">\(H_A\)</span>: <span class="math inline">\(\beta_1\neq 0\)</span>. </p>
+</section>
+<section id="d-2" class="level3">
+<h3 class="anchored" data-anchor-id="d-2">(d)</h3>
+<p>Interpret the coefficient for the age variable in the context of the study.</p>
+<p><span style="color:blue;">For every increase in age by one year, the odds of diagnosis changes by a factor of <span class="math inline">\(\exp(\hat{\beta}_1)= \exp(0.0610685)\)</span>.</span></p>
+</section>
+<section id="e-1" class="level3">
+<h3 class="anchored" data-anchor-id="e-1">(e)</h3>
+<p>Interpret the coefficient for region category 4 in the context of the study.</p>
+<p><span style="color:blue;">Individuals residing in region 4 have odds of diagnosis equal to <span class="math inline">\(\exp(\hat{\beta}_4)=exp(0.7701685)\)</span> times the odds of diagnosis of an individual residing in region 1.</span></p>
+</section>
+<section id="f-1" class="level3">
+<h3 class="anchored" data-anchor-id="f-1">(f)</h3>
+<p>Based on the sign (positive/negative) of <span class="math inline">\(\hat{\beta}_1\)</span>, is increased age associated with increased or decreased probability of diagnosis?</p>
+<p><span style="color:blue;">The sign of the coefficient is positive, meaning that as age increases, the odds of diagnosis increase, and therefore as age increases, probability of diagnosis also increases.</span></p>
+</section>
+<section id="g" class="level3">
+<h3 class="anchored" data-anchor-id="g">(g)</h3>
+<p>Suppose the researchers suspect that the association between age and prevalence of this condition depends on BMI. They fit the following model.</p>
+<ol type="i">
+<li>Given the interaction term is in the model, how do you interpret the coefficient for age?</li>
+</ol>
+<p><span style="color:blue;"> The coefficient for age represents the log odds associated with a 1 year increase in age <strong>when BMI = 0</strong>, holding all other variables constant. </span></p>
+<ol start="2" type="i">
+<li>How do you interpret the p-value for the coefficient for the interaction term?</li>
+</ol>
+<p><span style="color:blue;"> Assuming <span class="math inline">\(\alpha=0.05\)</span>, given the p-value is 0.018 which is less than 0.05 we reject the null hypothesis that the association between age and this condition do not differ by BMI. We therefore have evidence to suggest the association between age and this condition differs by BMI. </span></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fit.glm2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  condition <span class="sc">~</span> age <span class="sc">+</span> BMI <span class="sc">+</span> age <span class="sc">*</span> BMI <span class="sc">+</span> Region,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">family =</span> binomial,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">data =</span> df2</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(fit.glm2) <span class="sc">|&gt;</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-3.1485524</td>
+<td style="text-align: right;">2.7834083</td>
+<td style="text-align: right;">-1.1311860</td>
+<td style="text-align: right;">0.2579768</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">age</td>
+<td style="text-align: right;">-0.0693549</td>
+<td style="text-align: right;">0.0590109</td>
+<td style="text-align: right;">-1.1752897</td>
+<td style="text-align: right;">0.2398788</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">BMI</td>
+<td style="text-align: right;">0.0072106</td>
+<td style="text-align: right;">0.1059317</td>
+<td style="text-align: right;">0.0680686</td>
+<td style="text-align: right;">0.9457310</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Region2</td>
+<td style="text-align: right;">0.6299155</td>
+<td style="text-align: right;">0.3643356</td>
+<td style="text-align: right;">1.7289428</td>
+<td style="text-align: right;">0.0838193</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Region3</td>
+<td style="text-align: right;">0.5457417</td>
+<td style="text-align: right;">0.3690384</td>
+<td style="text-align: right;">1.4788209</td>
+<td style="text-align: right;">0.1391882</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Region4</td>
+<td style="text-align: right;">0.8284514</td>
+<td style="text-align: right;">0.3872593</td>
+<td style="text-align: right;">2.1392680</td>
+<td style="text-align: right;">0.0324140</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">age:BMI</td>
+<td style="text-align: right;">0.0055405</td>
+<td style="text-align: right;">0.0023506</td>
+<td style="text-align: right;">2.3570612</td>
+<td style="text-align: right;">0.0184202</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</section>
+<section id="exercise-4-model-diagnostics" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-4-model-diagnostics">Exercise 4: Model Diagnostics</h2>
+<p>Below are diagnostic plots for assessing assumptions of linear regression for a model. Describe which, if any of the assumptions you would consider might be violated based on these plots</p>
+<ol type="a">
+<li>Scenario 1</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="practice_problems_AGH_solutions_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><span style="color:blue;"> Some potential violations of linearity, as the line appears to jump up and down. Not as much evidence of violations for heteroskedascity (non-constant variance) and normality.</span></p>
+<ol start="2" type="a">
+<li>Scenario 2</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="practice_problems_AGH_solutions_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><span style="color:blue;"> Violations of linearity and normality. </span></p>
+<ol start="3" type="a">
+<li>Scenario 3</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="practice_problems_AGH_solutions_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><span style="color:blue;"> Violations of heteroskedascity (non-constant variance) </span></p>
+<ol start="4" type="a">
+<li>Scenario 4</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="practice_problems_AGH_solutions_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><span style="color:blue;"> Most assumptions seem to be met </span></p>
+<ol start="5" type="a">
+<li>Scenario 5</li>
+</ol>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="practice_problems_AGH_solutions_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><span style="color:blue;"> Violations of linearity and normality and potentially heteroskedascity (non-constant variance) </span></p>
+</section>
+<section id="exercise-5-correlations" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-5-correlations">Exercise 5: Correlations</h2>
+<ol type="a">
+<li>Describe the direction and strength of the correlation between X and Y in the plot below. Would you expect the Pearson correlation coefficient to be close to 0, close to 1, or somewhere in between?</li>
+</ol>
+<p><span style="color:blue;"> Strong positive correlation, correlation coefficient would be close to 1 </span></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="practice_problems_AGH_solutions_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="2" type="a">
+<li>Describe the direction and strength of the correlation. Would the correlation coefficient be positive or negative?</li>
+</ol>
+<p><span style="color:blue;"> Moderate positive correlation, correlation coefficient would be positive </span></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="practice_problems_AGH_solutions_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="3" type="a">
+<li>Is the association between X and Y strong or weak? Would the correlation coefficient be close to 0, close to 1, or close to −1?</li>
+</ol>
+<p><span style="color:blue;"> Strong linear association between X and Y, correlation coefficient would be close to -1 </span></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="practice_problems_AGH_solutions_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="4" type="a">
+<li>Would you expect the Pearson correlation coefficient to be close to 0, close to 1, or close to −1? Does a correlation near 0 imply there is no relationship between X and Y? Explain briefly.</li>
+</ol>
+<p><span style="color:blue;"> Close to 0, not a lot of linear association between X and Y. A correlation near 0 does not imply there is no relationship between X and Y, only that there is not a linear association between X and Y. </span></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="practice_problems_AGH_solutions_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="5" type="a">
+<li>What value would you expect the correlation coefficient to be close to? How would you describe the relationship between X and Y?</li>
+</ol>
+<p><span style="color:blue;"> Almost exactly 1- X and Y seem to be almost perfectly correlated. </span></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="practice_problems_AGH_solutions_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ol start="6" type="a">
+<li>A public health researcher studies the relationship between daily physical activity (minutes per day) and body mass index (BMI) in a community sample and finds that the Pearson correlation coefficient is exactly zero. What does this result tell the researcher about the linear association between physical activity and BMI? Describe a situation in which Spearman correlation would be more appropriate than Pearson correlation for summarizing the association between these two variables. Briefly explain your reasoning.</li>
+</ol>
+<p><span style="color:blue;"> A Pearson correlation coefficient of exactly zero indicates that there is no evidence of a linear association between daily physical activity and BMI in the sample. In other words, as physical activity increases or decreases, there is no evidence of a straight‑line relationship with BMI. This does not imply that the two variables are unrelated—only that they are not linearly related. Spearman correlation would be more appropriate if the relationship between physical activity and BMI is monotonic but non‑linear (e.g., BMI decreases rapidly at low levels of activity and then levels off), or if the data contain outliers or skewed distributions. Spearman correlation is based on ranks rather than raw values, making it less sensitive to nonlinearity and outliers than Pearson correlation. </span></p>
+<ol start="7" type="a">
+<li>A public health researcher examines the association between neighborhood air pollution levels (<span class="math inline">\(PM_{2.5}\)</span> concentration) and lung function (measured by FEV₁) and finds no evidence of a correlation between the two variables based on the Pearson correlation coefficient. However, after controlling for smoking intensity (e.g., pack‑years), the researcher finds that the partial correlation between air pollution and lung function is substantially larger. What does this suggest about the role of smoking intensity in the relationship between air pollution and lung function? Briefly explain how it is possible for the partial correlation to be larger than the unadjusted correlation.</li>
+</ol>
+<p><span style="color:blue;"> The fact that the partial correlation is substantially larger after controlling for smoking intensity suggests that smoking intensity is a confounder in the relationship between air pollution and lung function. Smoking is related to both higher <span class="math inline">\(PM_{2.5}\)</span> exposure (e.g., through residential or behavioral patterns) and poorer lung function, and its presence was masking the association between air pollution and FEV₁ in the unadjusted analysis. It is possible for the partial correlation to be larger than the unadjusted (Pearson) correlation because adjusting for smoking removes variation in lung function that is attributable to smoking rather than air pollution. Once this shared variation is accounted for, the remaining association between <span class="math inline">\(PM_{2.5}\)</span> and FEV₁ can become stronger and more apparent. </span></p>
+</section>
+<section id="exercise-6-r-functions-and-what-they-do" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-6-r-functions-and-what-they-do">Exercise 6: R Functions and What They Do</h2>
+<p>For each item in <strong>Column A</strong>, select the the <strong>single best matching description</strong> from <strong>Column B</strong>. Each description should be used exactly once.</p>
+<div style="display: flex; gap: 3em; margin-top: 1.5em;">
+<!-- Column A -->
+<section id="column-a-r-functions" class="level3" style="width: 45%;">
+<h3 class="anchored" data-anchor-id="column-a-r-functions"><strong>Column A: R Functions</strong></h3>
+<ol type="1">
+<li><code>cor()</code><br>
+</li>
+<li><code>pcor.test()</code><br>
+</li>
+<li><code>ggpairs()</code><br>
+</li>
+<li><code>lm()</code><br>
+</li>
+<li><code>glm(family = "binomial")</code><br>
+</li>
+<li><code>predict()</code><br>
+</li>
+<li><code>vif()</code><br>
+</li>
+<li><code>tidy()</code><br>
+</li>
+<li><code>glance()</code><br>
+</li>
+<li><code>augment()</code></li>
+</ol>
+</section>
+<!-- Column B (MIXED ORDER) -->
+<section id="column-b-descriptions" class="level3" style="width: 55%;">
+<h3 class="anchored" data-anchor-id="column-b-descriptions"><strong>Column B: Descriptions</strong></h3>
+<p>A. Returns a compact summary of overall model fit statistics (e.g., (R^2), F-statistic).<br>
+B. Computes variance inflation factors to assess multicollinearity among predictors.<br>
+C. Computes a numerical measure of linear association between two numeric variables.<br>
+D. Fits a regression model for a binary outcome using a logit link function.<br>
+E. Converts model output into a tidy data frame with one row per model coefficient.<br>
+F. Generates fitted values or predictions for new or existing observations based on a fitted model.<br>
+G. Produces a graphical display showing pairwise relationships among multiple variables.<br>
+H. Fits a linear regression model I. Tests the association between two variables while controlling for one or more additional variables.<br>
+J. Adds fitted values and residuals to the original dataset for diagnostic purposes.</p>
+</section>
+</div>
+<ol type="1">
+<li><p><span style="color:blue;"> <strong><code>cor()</code></strong> → <strong>C</strong><br>
+Computes a numerical measure of linear association between two numeric variables.</span></p></li>
+<li><p><span style="color:blue;"><strong><code>pcor.test()</code></strong> → <strong>I</strong><br>
+Tests the association between two variables while controlling for one or more additional variables.</span></p></li>
+<li><p><span style="color:blue;"><strong><code>ggpairs()</code></strong> → <strong>G</strong><br>
+Produces a graphical display showing pairwise relationships among multiple variables.</span></p></li>
+<li><p><span style="color:blue;"><strong><code>lm()</code></strong> → <strong>H</strong><br>
+Fits a linear regression model.</span></p></li>
+<li><p><span style="color:blue;"><strong><code>glm(family = "binomial")</code></strong> → <strong>D</strong><br>
+Fits a regression model for a binary outcome using a logit link function.</span></p></li>
+<li><p><span style="color:blue;"> <strong><code>predict()</code></strong> → <strong>F</strong><br>
+Generates fitted values or predictions for new or existing observations based on a fitted model.</span></p></li>
+<li><p><span style="color:blue;"> <strong><code>vif()</code></strong> → <strong>B</strong><br>
+Computes variance inflation factors to assess multicollinearity among predictors.</span></p></li>
+<li><p><span style="color:blue;"> <strong><code>tidy()</code></strong> → <strong>E</strong><br>
+Converts model output into a tidy data frame with one row per model coefficient.</span></p></li>
+<li><p><span style="color:blue;"><strong><code>glance()</code></strong> → <strong>A</strong><br>
+Returns a compact summary of overall model fit statistics (e.g., R², F‑statistic).</span></p></li>
+<li><p><span style="color:blue;"> <strong><code>augment()</code></strong> → <strong>J</strong><br>
+Adds fitted values and residuals to the original dataset for diagnostic purposes.</span></p></li>
+</ol>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

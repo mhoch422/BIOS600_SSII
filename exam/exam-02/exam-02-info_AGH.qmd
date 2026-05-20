@@ -1,0 +1,32 @@
+---
+title: "Exam 02 Info"
+format: html
+---
+
+- Exam 02 will take place in-person on Tuesday, March 31, during class (8:00 AM - 9:15 AM). This exam is an opportunity to demonstrate what you've learned in the course, primarily on content **since the last exam** (but not completely excluding material you learned previously - it's difficult to completely separate out certain topics as they build on each other).  
+
+- If your last name starts with A-K you will be in McGavran-Greenberg Hall 2301, if your last name starts with L-Z you will be in this classroom (same rooms as last exam)
+
+- The exam will be closed-book. 
+
+- You should bring something to write with. Nothing else is permitted (i.e. calculators not permitted, cheat sheets not permitted.)
+
+- Content covered: Lectures 8-15, Labs 4-6, HW 4-5, AE 2-4. 
+
+## Types of questions
+
+- The questions may be a mix of multiple choice, true/false, or short answer (same format as Exam 01. 
+
+- To prepare, review the definitions, concepts, and examples in the lectures. Review all lab assignments, homework assignments, and AEs listed above. With each question, ask yourself "Why?" Why does this matter? Why might this concept be helpful when doing biostatistics in the real world? Can I explain this question to someone else who does not have statistics experience?
+
+- There will be three sections: Code, Applied, and Conceptual.
+
+## Resources for reviewing
+
+- A formula sheet (formulas **you will** be provided on the exam) has been posted
+
+- A topics list is available as `exam-02-topics`.
+
+- I will prepare a set of review questions for us to complete in class on Thursday March 26. We will go over these together and you will have access to the solutions after class. 
+
+- I will post additional problems to work this week for you to try on your own

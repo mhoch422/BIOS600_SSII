@@ -1,0 +1,54 @@
+---
+title: "Application Exercise: Practice with Binomial and Poisson"
+author: "Your Name Here"
+date: "Today's Date Here"
+format: html
+---
+
+## Setup
+
+Update your name and today's date in the YAML above.
+
+## A Clinical Trial: Binomial Example
+
+Suppose 5 people receive a new vaccine. From clinical trial data, the probability that any individual experiences a mild side effect (e.g., sore arm, mild fever) is 0.2.\
+Let $X$ be the number of people (out of 5) who experience a mild side effect.\
+Then $X \sim \text{Binomial}(n=5, p=0.2)$.
+
+### Exercise 1
+
+What is the probability that exactly 2 out of 5 people experience a mild side effect? Use the `dbinom` function to compute your answer and provide a 1-sentence conclusion.
+
+```{r}
+# type code here
+```
+
+\[type response here\]
+
+## Exercise 2
+
+What is the probability that at least 1 out of 5 people experiences a mild side effect? (Hint: Use the complement rule: $P(X \geq 1)=1−P(X=0)$). Use the `dbinom` function to compute your answer and provide a 1-sentence conclusion.
+
+```{r}
+# type code here
+```
+
+\[type response here\]
+
+## Hospital Visits: Poisson Example
+
+Suppose that in a hospital emergency department, the average number of asthma-related visits per hour is 3. Let $Y$ be the number of asthma visits in one hour. Then $Y \sim Poisson(\lambda=3)$
+
+### Exercise 3
+
+What is the probability that in a given hour, exactly 5 asthma patients arrive? Use the `dpois` function to compute your answer and provide a 1-sentence conclusion.
+
+```{r}
+# type code here
+```
+
+\[type response here\]
+
+## Submission
+
+Render to PDF and submit on Canvas \> Assignments.

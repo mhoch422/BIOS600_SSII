@@ -1,0 +1,10 @@
+"2009 Race","Non-Hispanic White","Non-Hispanic Black","American Indian/Alaskan Native","Asian/Pacific Islander","Hispanic","Other","Unknown","Missing Value","2019 Total"
+"Non-Hispanic White",3356,0,0,0,0,0,0,0,3356
+"Non-Hispanic Black",0,521,0,0,0,0,0,0,521
+"American Indian/Alaskan Native",0,0,34,0,0,0,0,0,34
+"Asian/Pacific Islander",0,0,0,427,0,0,0,0,427
+"Hispanic",0,0,0,0,164,0,0,0,164
+"Other",0,0,0,0,0,105,0,0,105
+"Unknown",0,0,0,0,0,0,10,0,10
+"Missing Value",0,0,0,0,0,0,0,0,0
+"2009 Total",3356,521,34,427,164,105,10,0,4617

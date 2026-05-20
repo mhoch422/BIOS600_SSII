@@ -1,0 +1,475 @@
+---
+title: "LTA analysis"
+author: "Annie Green Howard"
+format: html
+---
+
+```{r}
+#| include: false
+#| warning: false
+#| message: false
+library(tidyverse)
+library(writexl)
+library(slca)
+library(LCPA)
+```
+
+## Reading in dataset 
+
+Reading in the combined years datasets
+
+```{r}
+combine_yrs <- read.table("Original Data/lca_combined_years.dat", header = TRUE, sep = ",", skip = 2) 
+
+#Changing all values of -9999 to missing
+combine_yrs[combine_yrs==-9999] <- NA
+```
+
+## Adding in variable names to file
+
+There appear to be a total of   16,947 observations with 78 variables. 
+
+It's not completely clear in the published paper there were 8,702 individuals in 2009 and 7,929 in 2019 - for a total sample size of 16,631 - but this doesn't seem to allow me to link the same individuals over time. 
+
+```{r}
+vars <- c("white", "black", "american_native", "asian_or_pi", "hispanicrace", "other_race", "age",
+          "obstetrics", "patient_care_hours", "prenatal", "group_fam", "group_int", "group_obgyn",
+          "group_ped", "group_ger", "ruca_urban", "ruca_lrural", "ruca_srural", "hpsa_not", "hpsa_full",
+          "hpsa_part", "adi_state", "setting_amb", "setting_hosp", "setting_medsch", "setting_nurs",
+          "setting_other", "setting_solo", "setting_missing", "female", "gen_x", "gen_y", "gen_boom_lead",
+          "gen_boom_trail", "gen_ww2", "race_unknown", "school_img", "school_in_state", "school_out_hbcu",
+          "school_out_nonhbcu", "zadi_state", "zhours", "practice_yrs", "_0to5", "_6to10", "_11to20",
+          "_21to30", "_31more", "fwhite", "fblack", "fan", "fasian", "fhispanic", "fother", "funknown",
+          "mwhite", "mblack", "man", "masian", "mhispanic", "mother", "munknown", "fgen_y", "fgen_x", "fgen_boom_lead",
+          "fgen_boom_trail", "fgen_ww2", "mgen_y", "mgen_x", "mgen_boom_lead", "mgen_boom_trail",
+          "mgen_ww2", "age35below", "age36to45", "age46to55", "age56to65", "age66over", "group")
+
+names(combine_yrs) <- vars
+
+#Now checking and listing all variables
+write_xlsx(data.frame(vars), "vars.xlsx")
+```
+
+## Recreating descriptive tables
+
+We could potentially assume group is year given group = 1 for 7,929 individuals, which matches the sample size in published paper for 2019. However, there are a total of 9,018 with a value of group = 0 - which is larger than the 8,702 individuals in the descriptive table for 2009. 
+
+```{r}
+table(combine_yrs$group)
+```
+Now can we create the variables for other setttings
+
+## Looking at the 2009 dataset and getting it to be similar to 2019 dataset
+
+The 2009 dataset does include closer to the true number, including 8,699 individuals. Same sample size for both 1.24.23 version and the v2 version. These datasets both include indexno variable. We cannot seem to get to exactly 8,702 individuals, in Table 1 in published paper, was there exclusion criteria we care about there where we might also want to include them in the descriptive table for LTA work?
+
+```{r}
+#Reading in the version 2 datasets for 2009 but this seems to be an older version, dated 11/22/2023
+lca_pcp_2009v2      <- read.table("Original Data/lca_pcp_2009v2.dat", header = TRUE, sep = ",", skip = 2) 
+#Changing all values of -9999 to missing
+lca_pcp_2009v2[lca_pcp_2009v2==-9999] <- NA
+
+#Reading in the datasets for 2009 and 2019 as of 1.24.23
+lca_pcp_2009_12423  <- read.table("Original Data/lca_pcp_2009_1.24.23.dat", header = TRUE, sep = ",", skip = 2) 
+#Changing all values of -9999 to missing
+lca_pcp_2009_12423[lca_pcp_2009_12423==-9999] <- NA
+
+vars_2009 <- c("indexno","white", "black", "american_native", "asian_or_pi", "hispanicrace", "other_race", "age",
+          "obstetrics", "patient_care_hours", "prenatal", "group_fam", "group_int", "group_obgyn",
+          "group_ped", "group_ger", "ruca_urban", "ruca_lrural", "ruca_srural", "hpsa_not", "hpsa_full",
+          "hpsa_part", "adi_state", "setting_amb", "setting_hosp", "setting_medsch", "setting_nurs",
+          "setting_other", "setting_solo", "setting_missing", "female", "gen_x", "gen_y", "gen_boom_lead",
+          "gen_boom_trail", "gen_ww2", "race_unknown", "school_img", "school_in_state", "school_out_hbcu",
+          "school_out_nonhbcu", "zadi_state", "zhours", "practice_yrs", "_0to5", "_6to10", "_11to20",
+          "_21to30", "_31more", "fwhite", "fblack", "fan", "fasian", "fhispanic", "fother", "funknown",
+          "mwhite", "mblack", "man", "masian", "mhispanic", "mother", "munknown", "fgen_y", "fgen_x", "fgen_boom_lead",
+          "fgen_boom_trail", "fgen_ww2", "mgen_y", "mgen_x", "mgen_boom_lead", "mgen_boom_trail",
+          "mgen_ww2", "age35below", "age36to45", "age46to55", "age56to65", "age66over", "group")
+
+names(lca_pcp_2009_12423) <- vars_2009
+```
+
+Now we need to format the variables to be categorical variables 
+
+```{r}
+lca_pcp_2009_12423 <- lca_pcp_2009_12423 %>%
+  mutate(specialty = case_when(
+    group_fam   == 1 ~ "Family Medicine",
+    group_int   == 1 ~ "General Internal Medicine",
+    group_obgyn == 1 ~ "General Obstetrics and Gynecology",
+    group_ped   == 1 ~ "General Pediatrics",
+    group_ger   == 1 ~ "Geriatrics",
+    TRUE             ~ "Missing"
+  ),
+  employment_setting = case_when(
+    setting_amb   == 1 ~ "Ambulatory Care",
+    setting_hosp  == 1 ~ "Hospital",
+    setting_medsch == 1 ~ "Medical School/Parent University",
+    setting_nurs  == 1 ~ "Nursing Home/Extended Care",
+    setting_other == 1 ~ "Other", 
+    setting_solo == 1 ~ "Solo practioner",
+    setting_missing == 1 ~ "Missing",
+    TRUE             ~ "Missing Value"
+  ),
+  urban_rural = case_when(
+    ruca_urban  == 1 ~ "Urban",
+    ruca_lrural == 1 ~ "Large Rural",
+    ruca_srural == 1 ~ "Small Rural",
+    TRUE             ~ "Missing"
+  ),
+  race_ethnicity = case_when(
+    white == 1           ~ "Non-Hispanic White",
+    black == 1           ~ "Non-Hispanic Black",
+    american_native == 1 ~ "American Indian/Alaskan Native",
+    asian_or_pi == 1     ~ "Asian/Pacific Islander",
+    hispanicrace == 1    ~ "Hispanic",
+    other_race == 1      ~ "Other",
+    race_unknown == 1    ~ "Unknown",
+    TRUE                 ~ "Missing"
+  ),
+  generational = case_when(
+    gen_x          == 1 ~ "Gen X (1965-1980)",
+    gen_y          == 1 ~ "Gen Y (1981-2000)",
+    gen_boom_lead  == 1 ~ "Baby Boomer, Leading Edge (1946-1954)",
+    gen_boom_trail == 1 ~ "Baby Boomer, Trailing Edge (1955-1964)",
+    gen_ww2        == 1 ~ "WWII (1928-1945)",
+    TRUE                ~ "Missing"
+  ))
+```
+
+**Specialty**
+
+We do note that 3 individuals, out of the 8,699 are missing specialty. Although none are mentioned in Table 1 as missing specialty.
+
+```{r}
+table(lca_pcp_2009_12423$specialty)
+```
+**Employment Setting**
+
+We do have 550 individuals missing employment setting which aligns with Table 1, where we see some degree of missingness for employment setting
+
+```{r}
+table(lca_pcp_2009_12423$employment_setting)
+```
+
+**Practice Characteristics**
+
+While other variables are mututally exclusive providing routine obstetric care and providing routine prenatal care appear to be not mutually exclusive.
+
+```{r}
+table(lca_pcp_2009_12423$prenatal,lca_pcp_2009_12423$obstetrics)
+```
+**Average patient-care hours per week**
+
+Check on number of missing values for average patient-care hours per week - we have a total of 626 individuals missing.
+
+```{r}
+sum(is.na(lca_pcp_2009_12423$patient_care_hours))
+```
+
+Looking at descriptive statistics by patient care
+
+```{r}
+#Mean for patient care hours
+mean(lca_pcp_2009_12423$patient_care_hours, na.rm=TRUE)
+#Mean for Standardized values of Y2009_patient_care_hours
+mean(lca_pcp_2009_12423$zhours, na.rm=TRUE)
+```
+**Urban/rural status**
+
+```{r}
+table(lca_pcp_2009_12423$urban_rural)
+```
+**Female**
+
+```{r}
+table(lca_pcp_2009_12423$female)
+```
+**Racial/ethnic identity**
+
+Race/ethnicity does appear to be already classified as mutually exclusive
+
+```{r}
+table(lca_pcp_2009_12423$white,lca_pcp_2009_12423$hispanicrace)
+```
+It does appear that while Hispanic might not 
+```{r}
+table(lca_pcp_2009_12423$white,lca_pcp_2009_12423$black)
+```
+```{r}
+table(lca_pcp_2009_12423$race_ethnicity)
+```
+**Generational Cohort**
+
+```{r}
+table(lca_pcp_2009_12423$generational) 
+```
+**Average years of practice**
+
+There does appear to be 18 individuals missing practice years
+
+```{r}
+sum(is.na(lca_pcp_2009_12423$practice_yrs))
+```
+Now looking at average years of practice among those with non-missing values
+
+```{r}
+mean(lca_pcp_2009_12423$practice_yrs, na.rm = TRUE)
+```
+
+**Average age**
+
+No individuals missing values for age
+
+```{r}
+sum(is.na(lca_pcp_2009_12423$age))
+```
+Now looking at average years of practice among those with non-missing values
+
+```{r}
+mean(lca_pcp_2009_12423$age, na.rm = TRUE)
+```
+**Medical school**
+
+Seem we consider IMG medical school vs. other 
+
+```{r}
+table(lca_pcp_2009_12423$school_img)
+```
+## Looking at the 2019 dataset
+
+Note that the variables in the 2009 dataset are the exact same variables in the 2019 dataset. 
+
+There are a total of 7,926 individuals in the 2019 dataset. 
+
+```{r}
+lca_pcp2019_12423   <- read.table("Original Data/lca_pcp2019_1.24.23.dat", header = TRUE, sep = ",", skip = 2) 
+#Changing all values of -9999 to missing
+lca_pcp2019_12423[lca_pcp2019_12423==-9999] <- NA
+
+names(lca_pcp2019_12423) <- vars_2009
+```
+
+Now we need to format the variables to be categorical variables 
+
+```{r}
+lca_pcp2019_12423 <- lca_pcp2019_12423 %>%
+  mutate(specialty = case_when(
+    group_fam   == 1 ~ "Family Medicine",
+    group_int   == 1 ~ "General Internal Medicine",
+    group_obgyn == 1 ~ "General Obstetrics and Gynecology",
+    group_ped   == 1 ~ "General Pediatrics",
+    group_ger   == 1 ~ "Geriatrics",
+    TRUE             ~ "Missing"
+  ),
+  employment_setting = case_when(
+    setting_amb   == 1 ~ "Ambulatory Care",
+    setting_hosp  == 1 ~ "Hospital",
+    setting_medsch == 1 ~ "Medical School/Parent University",
+    setting_nurs  == 1 ~ "Nursing Home/Extended Care",
+    setting_other == 1 ~ "Other", 
+    setting_solo == 1 ~ "Solo practioner",
+    setting_missing == 1 ~ "Missing",
+    TRUE             ~ "Missing Value"
+  ),
+  urban_rural = case_when(
+    ruca_urban  == 1 ~ "Urban",
+    ruca_lrural == 1 ~ "Large Rural",
+    ruca_srural == 1 ~ "Small Rural",
+    TRUE             ~ "Missing"
+  ),
+  race_ethnicity = case_when(
+    white == 1           ~ "Non-Hispanic White",
+    black == 1           ~ "Non-Hispanic Black",
+    american_native == 1 ~ "American Indian/Alaskan Native",
+    asian_or_pi == 1     ~ "Asian/Pacific Islander",
+    hispanicrace == 1    ~ "Hispanic",
+    other_race == 1      ~ "Other",
+    race_unknown == 1    ~ "Unknown",
+    TRUE                 ~ "Missing"
+  ),
+  generational = case_when(
+    gen_x          == 1 ~ "Gen X (1965-1980)",
+    gen_y          == 1 ~ "Gen Y (1981-2000)",
+    gen_boom_lead  == 1 ~ "Baby Boomer, Leading Edge (1946-1954)",
+    gen_boom_trail == 1 ~ "Baby Boomer, Trailing Edge (1955-1964)",
+    gen_ww2        == 1 ~ "WWII (1928-1945)",
+    TRUE                ~ "Missing"
+  ))
+```
+
+**Specialty**
+
+We do have no individuals missing specialty in 2019, which aligns with descriptive table.
+
+```{r}
+table(lca_pcp2019_12423$specialty)
+```
+**Employment Setting**
+
+We do have 572 individuals missing employment setting which aligns with Table 1, where we see some degree of missingness for employment setting
+
+```{r}
+table(lca_pcp2019_12423$employment_setting)
+```
+
+**Practice Characteristics**
+
+While other variables are mutually exclusive providing routine obstetric care and providing routine prenatal care appear to be not mutually exclusive.
+
+```{r}
+table(lca_pcp2019_12423$prenatal,lca_pcp2019_12423$obstetrics)
+```
+**Average patient-care hours per week**
+
+Check on number of missing values for average patient-care hours per week - we have a total of 698 individuals missing.
+
+```{r}
+sum(is.na(lca_pcp2019_12423$patient_care_hours))
+```
+
+Looking at descriptive statistics by patient care
+
+```{r}
+#Mean for patient care hours
+mean(lca_pcp2019_12423$patient_care_hours, na.rm=TRUE)
+#Mean for Standardized values of Y2009_patient_care_hours
+mean(lca_pcp2019_12423$zhours, na.rm=TRUE)
+```
+**Urban/rural status**
+
+We do have 11 individuals missing Urban/Rural in 2019
+
+```{r}
+table(lca_pcp2019_12423$urban_rural)
+```
+**Female**
+
+```{r}
+table(lca_pcp2019_12423$female)
+```
+**Racial/ethnic identity**
+
+Can't seem to identify the 3 individuals missing - unless they are captured within the 267 unknown? 
+
+```{r}
+table(lca_pcp2019_12423$race_ethnicity)
+```
+
+**Generational Cohort**
+
+```{r}
+table(lca_pcp2019_12423$generational) 
+```
+**Average years of practice**
+
+There does appear to be 4 individuals missing practice years
+
+```{r}
+sum(is.na(lca_pcp2019_12423$practice_yrs))
+```
+
+Now looking at average years of practice among those with non-missing values
+
+```{r}
+mean(lca_pcp2019_12423$practice_yrs, na.rm = TRUE)
+```
+
+**Average age**
+
+No individuals missing values for age
+
+```{r}
+sum(is.na(lca_pcp2019_12423$age))
+```
+
+Now looking at average years of practice among those with non-missing values
+
+```{r}
+mean(lca_pcp2019_12423$age, na.rm = TRUE)
+```
+
+**Medical school**
+
+Seem we consider IMG medical school vs. other 
+
+```{r}
+table(lca_pcp2019_12423$school_img)
+```
+
+## Creating combined datasets
+
+Changing variable names to _2009 or _2019 depending on what dataset they are from 
+
+```{r}
+colnames(lca_pcp_2009_12423) <- ifelse(colnames(lca_pcp_2009_12423) == "indexno", "indexno", paste0(colnames(lca_pcp_2009_12423), "_2009"))
+colnames(lca_pcp2019_12423)  <- ifelse(colnames(lca_pcp2019_12423) == "indexno", "indexno", paste0(colnames(lca_pcp2019_12423), "_2019"))
+```
+
+Now merging the dataset keeping only individuals in both datasets
+
+```{r}
+merged_lta <- merge(lca_pcp_2009_12423, lca_pcp2019_12423, by = "indexno")
+```
+
+This results in a total of 4,614 individuals. Could we look at descriptive statistics for combinations of variables across time
+
+In particular we are not sure about specialty, given questions have changed over time so this shifted broad patterns of what specialties show up. Not necessarily a change of practice, but a change in how they reported their practice.
+
+```{r}
+table(merged_lta$specialty_2009,merged_lta$specialty_2019)
+```
+## Now running LCA among these individuals
+
+Note packages such as **slca** and **LCPA** in R might be appropriate in these cases. 
+
+Here we are holding the item response probabilites stable over time
+
+```{r}
+model1 <- 
+    slca(l_09[4] ~ group_fam_2009 + group_int_2009 + group_obgyn_2009 
+     + group_ped_2009 + group_ger_2009 + setting_amb_2009 + setting_hosp_2009 + setting_medsch_2009
+     + setting_nurs_2009 + setting_solo_2009 + setting_other_2009 
+     + obstetrics_2009 + prenatal_2009 + ruca_urban_2009 + ruca_lrural_2009 + ruca_srural_2009,
+    l_19[4] ~ group_fam_2019 + group_int_2019 + group_obgyn_2019 
+     + group_ped_2019 + group_ger_2019 + setting_amb_2019 + setting_hosp_2019 + setting_medsch_2019
+     + setting_nurs_2019 + setting_solo_2019 + setting_other_2019 
+     + obstetrics_2019 + prenatal_2019 + ruca_urban_2019 + ruca_lrural_2019 + ruca_srural_2019, 
+    l_09 ~ l_19, constraints = c("l_09", "l_19")) %>%
+  estimate(data = merged_lta, control=list(em.total=1e-6))
+summary(model1)
+param(model1)
+```
+
+## Now not holding constnat 
+
+
+Here we are holding the item response probabilites stable over time
+
+```{r}
+model3 <- 
+    slca(l_09[4] ~ group_fam_2009 + group_int_2009 + group_obgyn_2009 
+     + group_ped_2009 + group_ger_2009 + setting_amb_2009 + setting_hosp_2009 + setting_medsch_2009
+     + setting_nurs_2009 + setting_solo_2009 + setting_other_2009 
+     + obstetrics_2009 + prenatal_2009 + ruca_urban_2009 + ruca_lrural_2009 + ruca_srural_2009,
+    l_19[4] ~ group_fam_2019 + group_int_2019 + group_obgyn_2019 
+     + group_ped_2019 + group_ger_2019 + setting_amb_2019 + setting_hosp_2019 + setting_medsch_2019
+     + setting_nurs_2019 + setting_solo_2019 + setting_other_2019 
+     + obstetrics_2019 + prenatal_2019 + ruca_urban_2019 + ruca_lrural_2019 + ruca_srural_2019, 
+    l_09 ~ l_19) %>%
+  estimate(data = merged_lta, control=list(em.total=1e-6))
+summary(model3)
+param(model3)
+```
+
+## Now tyring to handle categories
+
+```{r}
+model2 <- 
+    slca(l_09[4] ~ specialty_2009 + employment_setting_2009 + obstetrics_2009 + prenatal_2009 + urban_rural_2009,
+         l_19[4] ~  specialty_2019 + employment_setting_2019 + obstetrics_2019 + prenatal_2019 + urban_rural_2019,
+         l_09 ~ l_19, constraints = c("l_09", "l_19")) %>%
+  estimate(data = merged_lta, control=list(em.total=1e-6))
+summary(model2)
+param(model2)
+```

@@ -1,0 +1,402 @@
+---
+title: "Figures and Tables for LTA"
+author: "Annie Green Howard"
+date: today
+format: pdf
+---
+
+```{r, message=FALSE, warning=FALSE}
+
+library(ggplot2)
+library(RColorBrewer)
+library(scales)
+
+library(dplyr)
+library(tidyr)
+library(stringr)
+
+
+setwd("C:\\Users\\aghoward\\OneDrive - University of North Carolina at Chapel Hill\\UNC\\LCA")
+```
+
+## Formatting Data
+
+```{r}
+df <- read_csv("param_best_model_model_output_for_plot.csv")
+
+
+df_long <- df %>%
+  pivot_longer(
+    cols = starts_with("Class"),
+    names_to = c("Class", "Year"),
+    names_pattern = "Class(\\d+)_(\\d+)",
+    values_to = "prob"
+  ) %>%
+  mutate(
+    Class = factor(paste0("Class ", Class)),
+    Year  = factor(Year)
+  )
+
+
+df_long <- df_long %>%
+  mutate(
+    # order legend by variable first, then by category *within* variable
+    categories = fct_reorder(
+      categories,
+      as.numeric(factor(variable)),
+      .fun = mean
+    )
+  )
+
+
+library(RColorBrewer)
+
+n_cats <- nlevels(df_long$categories)
+
+pal <- colorRampPalette(
+  c(brewer.pal(8, "Set1"),
+    brewer.pal(8, "Set2"),
+    brewer.pal(8, "Set3"))
+)(n_cats)
+
+p <- ggplot(df_long,
+       aes(x = Class, y = prob, fill = categories)) +
+  geom_col(width = 0.8, color = "grey30", linewidth = 0.2) +
+  facet_grid(variable ~ Year) +
+  scale_fill_manual(values = pal) +
+  labs(
+    x = "Class",
+    y = "Response Probabilities",
+    fill = "Variables"
+  ) +
+  theme_minimal()
+
+
+ggsave(
+  filename = "stacked_response_probabilities_by_class.png",
+  plot = p,
+  width = 12,
+  height = 8,
+  dpi = 300
+)
+
+p
+```
+```{r}
+lca_descript <- read_csv("data_set_with_classes.csv")
+```
+
+
+## Now generating talbe for 2009
+
+```{r}
+library(dplyr)
+library(tidyr)
+library(stringr)
+
+summary_table_2009 <- lca_descript %>%
+  # keep ID, class, and only 2009 variables
+  select(indexno, class_09_ml, ends_with("_2009")) %>%
+  
+  pivot_longer(
+    cols = -c(indexno, class_09_ml),
+    names_to = "variable",
+    values_to = "value"
+  ) %>%
+  
+  mutate(
+    base_var = str_remove(variable, "_2009")
+  ) %>%
+  
+  # identify binary vs continuous variables
+  group_by(base_var) %>%
+  mutate(
+    is_binary = all(na.omit(value) %in% c(0, 1))
+  ) %>%
+  ungroup() %>%
+  
+  # summarize within 2009 latent class
+  group_by(base_var, is_binary, class_09_ml) %>%
+  summarise(
+    mean = mean(value, na.rm = TRUE),
+    sd   = sd(value, na.rm = TRUE),
+    n1   = sum(value == 1, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  
+  # format values for table display
+  mutate(
+    value_display = if_else(
+      is_binary,
+      paste0(
+        round(mean * 100), "% (N = ", n1, ")"
+      ),
+      paste0(
+        round(mean, 1),
+        " (",
+        round(sd, 1),
+        ")"
+      )
+    ),
+    class_09_ml = paste0("Class ", class_09_ml)
+  ) %>%
+  
+  select(base_var, class_09_ml, value_display) %>%
+  
+  pivot_wider(
+    names_from  = class_09_ml,
+    values_from = value_display
+  ) %>%
+  
+  arrange(base_var)
+
+summary_table_2009
+
+```
+
+## Output summary table 
+
+```{r}
+write.csv(
+  summary_table_2009,
+  file = "lca_2009_summary.csv",
+  row.names = FALSE
+)
+```
+
+## Now doing N's
+
+```{r}
+table(lca_descript$class_09_ml)
+```
+
+## Talbe for 2019
+
+```{r}
+library(dplyr)
+library(tidyr)
+library(stringr)
+
+summary_table_2019 <- {
+
+  ## ---- 1. Build the main summary table (2019 only) ----
+  main_table <- lca_descript %>%
+    select(indexno, class_19_ml, ends_with("_2019")) %>%
+    
+    pivot_longer(
+      cols = -c(indexno, class_19_ml),
+      names_to = "variable",
+      values_to = "value"
+    ) %>%
+    
+    mutate(
+      base_var = str_remove(variable, "_2019")
+    ) %>%
+    
+    group_by(base_var) %>%
+    mutate(
+      is_binary = all(na.omit(value) %in% c(0, 1))
+    ) %>%
+    ungroup() %>%
+    
+    group_by(base_var, is_binary, class_19_ml) %>%
+    summarise(
+      mean = mean(value, na.rm = TRUE),
+      sd   = sd(value, na.rm = TRUE),
+      n1   = sum(value == 1, na.rm = TRUE),
+      .groups = "drop"
+    ) %>%
+    
+    mutate(
+      value_display = if_else(
+        is_binary,
+        paste0(round(mean * 100), "% (N = ", n1, ")"),
+        paste0(round(mean, 1), " (", round(sd, 1), ")")
+      ),
+      class_19_ml = paste0("Class ", class_19_ml)
+    ) %>%
+    
+    select(base_var, class_19_ml, value_display) %>%
+    
+    pivot_wider(
+      names_from  = class_19_ml,
+      values_from = value_display
+    ) %>%
+    
+    arrange(base_var)
+
+  ## ---- 2. Create Total N row ----
+  n_row <- lca_descript %>%
+    filter(!is.na(class_19_ml)) %>%
+    count(class_19_ml) %>%
+    mutate(
+      class_19_ml = paste0("Class ", class_19_ml),
+      value_display = paste0("N = ", n)
+    ) %>%
+    select(class_19_ml, value_display) %>%
+    pivot_wider(
+      names_from  = class_19_ml,
+      values_from = value_display
+    ) %>%
+    mutate(base_var = "Total N") %>%
+    select(base_var, everything())
+
+  ## ---- 3. Bind N row to top ----
+  bind_rows(n_row, main_table)
+}
+
+summary_table_2019
+```
+
+## Output summary table 
+
+```{r}
+write.csv(
+  summary_table_2019,
+  file = "lca_2019_summary.csv",
+  row.names = FALSE
+)
+```
+
+## Now doing N's
+
+```{r}
+table(lca_descript$class_19_ml)
+```
+
+## Now transition plot
+```{r}
+class_labels <- c(
+  "1" = "Class 1 – Rural PCPs",
+  "2" = "Class 2 – Ob-gyns",
+  "3" = "Class 3 – Urban ambulatory care PCPs",
+  "4" = "Class 4 – Urban non-ambulatory care PCPs"
+)
+```
+
+Now table
+
+```{r}
+# --- Restrict to individuals observed in both years ---
+lca_class_combine <- lca_descript %>%
+  filter(!is.na(class_09_ml), !is.na(class_19_ml)) %>%
+  mutate(
+    class_09_label = factor(
+      as.character(class_09_ml),
+      levels = names(class_labels),
+      labels = class_labels
+    ),
+    class_19_label = factor(
+      as.character(class_19_ml),
+      levels = names(class_labels),
+      labels = class_labels
+    )
+  )
+
+# --- Create transition table ---
+tab_class <- table(
+  lca_class_combine$class_09_label,
+  lca_class_combine$class_19_label
+)
+
+# --- Add row and column totals ---
+tab_class_with_margins <- addmargins(tab_class)
+
+# --- Convert to data frame and label totals ---
+tab_class_df <- as.data.frame.matrix(tab_class_with_margins) %>%
+  rownames_to_column(var = "2009 Class")
+
+names(tab_class_df)[ncol(tab_class_df)] <- "2019 Total"
+
+tab_class_df$`2009 Class` <- ifelse(
+  tab_class_df$`2009 Class` == "Sum",
+  "2009 Total",
+  tab_class_df$`2009 Class`
+)
+
+# --- Write to CSV ---
+write.csv(
+  tab_class_df,
+  file = "class_transition_table_2009_2019.csv",
+  row.names = FALSE
+)
+```
+
+
+```{r}
+# --- Prepare Sankey data ---
+sankey_class <- lca_descript %>%
+  filter(!is.na(class_09_ml), !is.na(class_19_ml)) %>%
+  mutate(
+    class_09_label = factor(
+      as.character(class_09_ml),
+      levels = names(class_labels),
+      labels = class_labels
+    ),
+    class_19_label = factor(
+      as.character(class_19_ml),
+      levels = names(class_labels),
+      labels = class_labels
+    )
+  ) %>%
+  count(class_09_label, class_19_label, name = "n")
+
+# --- Sankey plot ---
+p_class <- suppressWarnings(
+  ggplot(
+    sankey_class,
+    aes(
+      axis1 = class_09_label,
+      axis2 = class_19_label,
+      y     = n
+    )
+  ) +
+    geom_alluvium(
+      aes(fill = class_09_label),
+      width = 1/12,
+      alpha = 0.85
+    ) +
+    geom_stratum(
+      width = 1/12,
+      fill  = "grey90",
+      color = "black"
+    ) +
+    geom_text(
+      stat = "stratum",
+      aes(label = str_wrap(after_stat(stratum), 30)),
+      size = 3.2,
+      lineheight = 0.9,
+      color = "black"
+    ) +
+    scale_x_discrete(
+      limits = c("2009 Class", "2019 Class"),
+      expand = c(0.15, 0.25)
+    ) +
+    coord_cartesian(clip = "off") +
+    labs(
+      title    = "Latent Class Transitions from 2009 to 2019",
+      subtitle = "Restricted to physicians observed in both years",
+      y        = "Number of Physicians",
+      x        = NULL,
+      fill     = "2009 Class"
+    ) +
+    theme_minimal() +
+    theme(
+      legend.position     = "right",
+      panel.grid.major.x = element_blank(),
+      panel.grid.minor   = element_blank(),
+      plot.margin        = margin(t = 10, r = 90, b = 10, l = 90)
+    )
+)
+
+# --- Save to PNG ---
+ggsave(
+  filename = "class_sankey_2009_2019.png",
+  plot     = p_class,
+  width    = 11,
+  height   = 6.5,
+  dpi      = 300,
+  bg       = "white"
+)
+```
+

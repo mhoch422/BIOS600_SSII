@@ -1,0 +1,90 @@
+---
+title: "Topics List: Exam 2, Spring 2026"
+format: 
+  html:
+    embed-resources: false
+---
+
+## Material covered
+
+-   Lectures 8-15, HW 4-6, Labs 4-6, AE 2-4
+
+## Coding
+
+-   `pnorm()` and `qnorm()` and `pt()` and `qt()`
+
+-   `slice()` and `names()` and `getwd()` and `summarize()`
+
+-   `mutate()` to create new variables, `select()` to select variables, and `arrange()` to arrange
+
+-   Review using `ggplot()` to create various visualizations, such as boxplots, histograms, scatterplots etc. Also `geom_sf()` for maps.
+
+-   What is the `sf` package used for? When would you use it?
+
+-   `st_read()`
+
+-   What are some examples of metadata?
+
+-   Be able to read/understand code using R functions for ANOVA, t-tests, power: `aov()`, `t.test()`, `power.t.test`, `summary()` (used as `summary(aov(y~group))`).
+
+-   Be able to recognize good and bad coding style in example code, and be able to suggest a correction. Topics include: proper spacing, curly braces, long lines, pipes, layering in `ggplot2()`
+
+## Conceptual and Applied
+
+-   What's the basic idea behind the Central Limit Theorem (CLT)? Why does it matter?
+
+-   Be able to find approximate distribution (based on CLT) of sample averages given a population mean and standard deviation. (IQ example in Lecture 8)
+
+-   What is the rule of thumb (sample size) where CLT kicks in?
+
+-   What is a confidence interval? What is the basic form of a confidence interval?
+
+-   What is a confidence multiplier? How to find confidence multiplier in R using `qnorm()`?
+
+-   What is a margin of error?
+
+-   How do you correctly interpret a confidence interval? Why **can't** we say "There's a 95% chance that..."? Know how to interpret a confidence interval, (asthma and SBP examples in Lecture 9).
+
+-   How does the t distribution relate to the normal distribution? How are they different? Why would we use the t-distribution instead of the Z?
+
+-   How many parameters does the t-distribution have?
+
+-   Know how to find the cumulative probability and quantiles from a t-distribution using `qt()` and `pt()`.
+
+-   What is p-hacking?
+
+-   Basic steps to hypothesis testing framework
+
+-   Know how to write null and alternative hypotheses in words and symbols
+
+-   Definition of a p-value
+
+-   Interpret `t.test` output in R
+
+-   **Definitions of Type 1 and Type 2 errors**. Name each type of error for a given context (e.g. pregnancy test or HIV test, identify which type of error might be more severe and you would therefore want to minimize)
+
+-   Dangers of using a one-sided test
+
+-   Independent sample t-test vs. paired/matched t-test
+
+-   When would you use a pooled variance estimate vs. a Satterthwaite approximation?
+
+-   What type of research question can you answer with an ANOVA? State null and alternative hypotheses, and assumptions of ANOVA.
+
+-   What is the issue of "multiple comparisons"? Why do we want to avoid them? What is a Bonferroni correction?
+
+-   What is the basic idea of an F-test in ANOVA? (What is it testing?) How do you get the numerator and denominator degrees of freedom? Be able to interpret R output from doing an F-test (pet data example in Lecture 12).
+
+-   What is a chi-square test for independence of two categorical variables? State null and alternative hypotheses and assumptions. What are the degrees of freedom? What are "expected" vs. "observed" counts?
+
+-   When would we use a Fisher exact test instead of a chi-square test?
+
+-   At a high level, what is the advantage of nonparametric hypothesis testing vs. parametric testing?
+
+-   What are the nonparametric alternatives to paired t-test, independent samples t-test, ANOVA?
+
+-   What's the definition of power?
+
+-   When we vary sample size, variance, alpha, and minimum detectable difference, how is power affected?
+
+-   How to use `power.t.test()` to calculate sample size and power.

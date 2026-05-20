@@ -1,0 +1,474 @@
+---
+title: "Lecture 9: Confidence Intervals"
+subtitle: "BIOS 600 - Spring 2026"
+institute: "UNC - Chapel Hill"
+logo: "images/logo_600.png"
+format:
+  revealjs:
+    css: reveal-custom.css
+execute:
+  freeze: auto
+---
+
+## Announcements
+
+- Reminder **new** tutoring office hours Monday (in-person) and Thursday (by zoom) from 3:30-5, in addition to tutoring office hours on Wednesday and Friday
+
+- Molly's office hours on Friday are still from 1-3 PM but **have shifted to a new location** McGavern Greenberg 3101A!  
+
+## Announcements
+ 
+- If you have not turned in AE #2 from last week please do so by **this** Friday at 11:59 pm
+
+- HW 4 will be assigned later today and will be due next **Thursday February 26 at 11:59pm**.
+
+## Overview
+
+- Confidence intervals: what are they, and how do we interpret them?
+
+- `qnorm()` and `pnorm()`: useful functions in R and how to use them
+
+- Using a t-distribution vs. a z-distribution to create confidence intervals
+
+## Readings
+
+-   P & G: Chapter 9
+
+-   OpenIntro: No corresponding section.
+
+
+
+## What is a confidence interval, anyway?
+
+-   A **confidence interval** gives a range of values that is intended to cover the parameter of interest to a certain degree of "confidence"
+
+-   Confidence interval = **point estimate** $\pm$ **margin of error**
+
+## How do you interpret a confidence interval? {.smaller}
+
+![](images/lec-9/asthma.png){width="200"}
+
+-   Researchers conducted a clinical trial of a drug intended for severe asthma patients. Their primary endpoint was evaluating whether the **mean rate** of asthma exacerbation over 48 weeks was different between placebo and treatment arms.
+
+-   Above is the 95% confidence interval for the mean rate among the placebo patients.
+
+-   How do you interpret this interval? (more on this very soon!)
+
+## Two-sided confidence intervals
+
+-   For now, let's assume that we know $\sigma$, the population standard deviation (this rarely ever happens)
+
+-   Recall from last lecture: Given a random variable $X$ with mean $\mu$ and standard deviation $\sigma$, the CLT tells us that
+
+$$Z = \frac{\bar X - \mu}{\sigma / \sqrt{n}}$$
+
+where $Z$ has a standard normal distribution if $X$ is normal, and $Z$ is approximately normal if $X$ is not normal, but $n$ is large enough.
+
+-   Recall: rule of thumb?
+
+## Deriving the two-sided interval
+
+-   For a standard normal random variable, 95% of the observations lie between -1.96 and 1.96 for $Z \sim N(0,1)$, so
+
+$$0.95 = P(-1.96 \leq Z \leq 1.96)$$
+
+- [Drawing:]
+
+
+
+
+## Deriving the two-sided interval
+
+-   So, a 95% CI is given by
+
+$$(\bar X - 1.96 \frac{\sigma}{\sqrt n}, \bar X + 1.96 \frac{\sigma}{\sqrt n})$$
+
+
+Generic form of confidence interval:
+
+Point estimate $\pm$ **confidence multiplier** $\times$ standard error
+
+-   The confidence multiplier $\times$ standard error is known as the **margin of error**
+
+## Finding confidence multiplier in R {.smaller}
+
+Example: Suppose we specify $\alpha = 0.05$, or a 5% significance level. 
+
+- Since 95% of the area under the curve is contained within [-1.96, 1.96], we have 2.5% of the area to the right of 1.96 and 2.5% of the area to the left of -1.96. **Remember normal distribution is symmetrical**
+
+- If we are interested in a 95% CI, and we split that 5% across both tails, we are interested in the 1-$\alpha/2 = 97.5$ percentile. 
+
+- We can find the 97.5 percentile of the standard normal distribution in R with the `qnorm()` function:
+
+```{r}
+#| echo: true
+qnorm(.975, mean = 0, sd = 1)
+```
+
+
+## What is `qnorm` doing in words? {.smaller}
+
+- In words: `qnorm(p, mean, sd)` is finding the quantile of the normal distribution distribution corresponding to $(p \times 100)\%$ of the area under the curve falling to the left of this value, assuming a normal distribution with `mean` and `sd`. 
+
+::: callout-tip
+
+## Example
+
+What quantile of the normal distribution corresponds to 50% of the area under the curve?
+
+```{r}
+#| echo: true
+qnorm(.5, mean = 0, sd = 1)
+```
+
+Answer: 0
+:::
+
+## Alternatively in R
+
+- Note that we can also pre-define $\alpha$ in R (helpful for reproducibility!)
+
+```{r}
+#| echo: true
+alpha <- 0.05
+qnorm(1-(alpha/2), mean = 0, sd = 1)
+```
+## Other coverage probabilities {.smaller}
+
+
+$$\textrm{Point estimate} \pm \underbrace{\textrm{confidence multiplier} \times \textrm{standard error}}_{\text{Margin of error}}$$
+
+
+-   Although 95% CIs are the most common, we can easily generate intervals with other coverage probabilities by adjusting the confidence multiplier
+
+## Other coverage probabilities
+
+-   The **confidence multiplier**, $z^*_{1-\alpha/2}$, is the z-score that cuts off the upper 100% $\times \alpha/2$ of the distribution (the $1-\alpha/2$ percentile)
+
+## Other coverage probabilities
+
+-   Suppose we want a 10% significance level. Then $\alpha$ = 0.1.
+
+- Then we have a $1-\alpha/2 = 0.95$.
+
+- So, $z^*$ is the 95$^\text{th}$ quantile of the standard normal distribution (calculated using software packages)
+
+```{r}
+#| echo: true
+qnorm(.95, mean = 0, sd = 1)
+```
+
+## Other coverage probabilities
+
+- So if I want a 10% significance level
+
+$$(\bar X - 1.64 \frac{\sigma}{\sqrt n}, \bar X + 1.64 \frac{\sigma}{\sqrt n})$$
+
+## Another useful R function
+
+- The function `pnorm(p, mean, sd)` gives the probability underneath the curve, to the left of the value `p`. 
+
+- Examples:
+
+```{r}
+#| echo: true
+pnorm(1.96, mean = 0, sd = 1)
+```
+
+```{r}
+#| echo: true
+pnorm(3, mean = 0, sd = 1)
+```
+
+
+## Your turn
+
+::: callout-tip
+
+## Question
+
+What will the following code return?
+
+```{r}
+#| echo: true
+#| eval: false
+pnorm(0, mean = 0, sd = 1)
+```
+
+:::
+
+
+
+-   Compromising on confidence level to obtain narrower CIs is... highly frowned upon
+
+## Other coverage probabilities
+
+- If I collect PM2.5 concentration across 100 cities, and get an average PM2.5 across these cities of 11.8 $\mu g/m^3$ and I know $\sigma=3.5$ $\mu g/m^3$ 
+
+- A 95% CI: 
+$$(11.8 - 1.96 \frac{3.5}{\sqrt{100}}, 11.8 + 1.96 \frac{3.5}{\sqrt{100}})=(11.11, 12.49)$$
+- A 90% CI: 
+$$(11.8 - 1.64 \frac{3.5}{\sqrt{100}}, 11.8 + 1.64 \frac{3.5}{\sqrt{100}})=(11.23, 12.37)$$
+
+
+## Remember the help function
+
+- Type in `?qnorm` in your console to find out more info about these functions! 
+
+## CI interpretation {.smaller}
+
+- So, how do we interpret a 95% confidence interval?
+
+::: poll
+$$(\bar X - 1.96 \frac{\sigma}{\sqrt n}, \bar X + 1.96 \frac{\sigma}{\sqrt n})$$
+:::
+
+-   Suppose we select $M$ different random samples from the population of size $n$, and use them to calculate $M$ different 95% CIs in the same way as above.
+
+-   Approximately 95% of these intervals would cover the true $\mu$ and 5% do not
+
+-   **Correct Interpretation**: "If we were to repeat the study many times, constructing a 95% confidence interval each time in the same way, then about 95% of those intervals would contain the true population parameter."
+
+- [Interactive CI Applet](https://www.stapplet.com/confint.html)
+
+## CI interpretation
+
+- **Another correct (more succinct) interpretation**: We are 95% confident that the true mean lies within $(\bar X - 1.96 \frac{\sigma}{\sqrt n}, \bar X + 1.96 \frac{\sigma}{\sqrt n})$.
+
+- Note there is a big difference between "95% confident" and "95% probability". 
+
+## Your turn
+
+::: {.callout-tip}
+
+Pick a partner. 
+
+Click on the applet from 2 slides ago.
+
+Each person should pick a number of confidence intervals to generate (over 50), then explain to their partner 1) how many of of their CIs generated contained the true parameter, and 2) how this relates to the idea of confidence.
+
+:::
+
+
+
+## How do you interpret a confidence interval? {.smaller}
+
+![](images/lec-9/asthma.png){width="200"}
+
+::: {.callout-tip}
+How would you interpret this confidence interval?
+:::
+
+## Another Example
+
+A study estimates the mean systolic blood pressure of adults with diabetes as 132 mmHg, with a 95% confidence interval of [128, 136]
+
+::: {.callout-tip}
+How would you interpret this confidence interval?
+:::
+
+
+## CI interpretation
+
+Is this interpretation correct?
+
+"There is a 95% chance that the true mean SBP lies in the interval"
+
+This is **incorrect**! 
+
+
+-   **Important**: we **do not know** whether any particular interval is in the 95% of them that cover the mean or the 5% that don't
+
+-   Since $\mu$ is a parameter, it's either in our confidence interval or not
+
+## CI interpretation
+
+-  Let' say I **know** 54\% of the population of NC is going to vote for Candidate A, and two polls of 400 individuals are done. One poll estimates 50\% with a 95% CI of (0.45, 0.55) and a second poll estimates 60\% with a 95% CI of (0.55, 0.65)
+
+- The **true proportion** voting for Candidate A does not change it is either included or not included in each interval - there isn't a chance of this being in either interval
+
+- But. . . if I did this poll many many times, constructing a 95% confidence interval each time in the same way, then about 95% of those intervals would contain the true proportion of the population voting for candidate A
+
+## When can we use this CI?
+
+::: poll
+$$(\bar X - z^* \frac{\sigma}{\sqrt n}, \bar X + z^* \frac{\sigma}{\sqrt n})$$
+:::
+
+Remember, this is only ok to use when $\sigma$ is known, and:
+
+-   $X$ is normal
+-   $X$ is non-normal, but $n$ is sufficiently large
+
+
+
+## What can we do if $\sigma$ isn't known?
+
+::: columns
+::: {.column width="40%"}
+![](images/lec-9/will.jpg)
+:::
+
+::: {.column width="60%"}
+-   As a Guiness brewery employee, William Sealy Gossett published a paper on the $t$ distribution, which became known as Student's $t$ (the brewery didn't allow him to use his own name)
+
+-   A. Student. *The probable error of a mean* (1908)
+:::
+:::
+
+## Student's $t$ distribution {.smaller}
+
+::: columns
+::: {.column width="40%"}
+-   Gosset used his new distribution to determine how large a sample should be for testing beer
+
+-   The $t$ distribution is appropriate for constructing a confidence interval for the mean when $\sigma$ is unknown
+:::
+
+::: {.column width="60%"}
+```{r}
+#| fig-height: 9
+
+# Set up the x-axis values
+x <- seq(-4, 4, length = 1000)
+
+# Compute the densities for the t-distributions
+y_t1 <- dt(x, df = 1)
+y_t3 <- dt(x, df = 3)
+y_t10 <- dt(x, df = 10)
+y_t30 <- dt(x, df = 30)
+
+# Compute the density for the standard normal distribution
+y_norm <- dnorm(x, mean = 0, sd = 1)
+
+# Plot the density for t-distribution with 1 degree of freedom
+plot(x, y_t1, type = "l", col = "red", lwd = 2, ylim = c(0, 0.4),
+     main = "Comparison of t-Distributions",
+     xlab = "x value", ylab = "Density")
+
+# Add the density for t-distribution with 3 degrees of freedom
+lines(x, y_t3, col = "blue", lwd = 2)
+
+# Add the density for t-distribution with 10 degrees of freedom
+lines(x, y_t10, col = "green", lwd = 2)
+
+# Add the density for t-distribution with 30 degrees of freedom
+lines(x, y_t30, col = "yellow", lwd = 2)
+
+# Add the density for the standard normal distribution
+lines(x, y_norm, col = "black", lwd = 2, lty = 2)
+
+# Add a legend
+legend("topright", legend = c("t df=1", "t df=3", "t df=10", "t df=30", "Normal (0,1)"),
+       col = c("red", "blue", "green", "yellow", "black"), lwd = 2, lty = c(1, 1, 1, 1, 2))
+
+```
+:::
+:::
+
+## Student's $t$ distribution {.smaller}
+
+::: columns
+::: {.column width="40%"}
+-   The $t$ distribution looks like the normal distribution except it has thicker tails, leading to wider CIs
+
+-   This is due to the uncertainty involved in estimating $\sigma$ by using $s$ (the standard deviation of the sample)
+
+-   As the sample size increases, $s$ is a better and better estimate of $\sigma$, and so the $t$ distribution looks more and more like the normal distribution
+:::
+
+::: {.column width="60%"}
+```{r}
+#| fig-height: 9
+
+# Set up the x-axis values
+x <- seq(-4, 4, length = 1000)
+
+# Compute the densities for the t-distributions
+y_t1 <- dt(x, df = 1)
+y_t3 <- dt(x, df = 3)
+y_t10 <- dt(x, df = 10)
+y_t30 <- dt(x, df = 30)
+
+# Compute the density for the standard normal distribution
+y_norm <- dnorm(x, mean = 0, sd = 1)
+
+# Plot the density for t-distribution with 1 degree of freedom
+plot(x, y_t1, type = "l", col = "red", lwd = 2, ylim = c(0, 0.4),
+     main = "Comparison of t-Distributions",
+     xlab = "x value", ylab = "Density")
+
+# Add the density for t-distribution with 3 degrees of freedom
+lines(x, y_t3, col = "blue", lwd = 2)
+
+# Add the density for t-distribution with 10 degrees of freedom
+lines(x, y_t10, col = "green", lwd = 2)
+
+# Add the density for t-distribution with 30 degrees of freedom
+lines(x, y_t30, col = "yellow", lwd = 2)
+
+# Add the density for the standard normal distribution
+lines(x, y_norm, col = "black", lwd = 2, lty = 2)
+
+# Add a legend
+legend("topright", legend = c("t df=1", "t df=3", "t df=10", "t df=30", "Normal (0,1)"),
+       col = c("red", "blue", "green", "yellow", "black"), lwd = 2, lty = c(1, 1, 1, 1, 2))
+
+```
+:::
+:::
+
+## Degrees of freedom {.smaller}
+
+-   The **degrees of freedom** of a $t$ distribution tells us how much information is "available" for estimating $\sigma$ using $s$. The random variable
+
+::: poll
+$$t = \frac{\bar X - \mu}{s/ \sqrt{n}}$$
+:::
+
+has a $t$ distribution with $n-1$ degrees of freedom ($df$), which we denote by $t_{n-1}$ (we lose one $df$ by estimating the sample mean using $\bar X$).
+
+-   The $t$ distribution only has one parameter ($df$)
+
+-   How does this compare to the standard normal distribution?
+
+## Two-sided interval with unknown $\sigma$
+
+-   When we do not know $\sigma$ (which is pretty much always), we can use the following interval:
+
+::: poll
+$$(\bar X - t^*_{n-1; 1-\alpha/2} \frac{s}{\sqrt n}, \bar X + t^*_{n-1; 1-\alpha/2} \frac{s}{\sqrt n})$$
+:::
+
+
+-   In practice, if $\sigma$ is unknown, we use the t-distribution no matter the sample size. 
+
+- For very large $n$, the difference between t and z disappears, so either works — but conventionally we stick with t.
+
+## Two-sided interval with unknown $\sigma$
+
+-  For n = 20 and $\alpha=0.05$, $t^*_{n-1; 1-\alpha/2}=t^*_{19; 1-\alpha/2}=2.09$
+
+$$(\bar X - 2.09 \frac{s}{\sqrt n}, \bar X + 2.09 \frac{s}{\sqrt n})$$
+
+-  How does this compare to confidence multiplier of $z^*_{1-\alpha/2}$?
+
+## What about one-sided intervals? {.smaller}
+
+-   The symmetric two-sided confidence intervals we have dealt with so far give the shortest intervals with the desired coverage probability (for symmetric distributions)
+
+-   Occasionally, we may only want an upper limit or a lower limit for the population mean, for instance in a non-inferiority clinical trial for a generic drug (we don't expect the generic drug to work better, but we do expect it to be "not worse")
+
+-   We won't focus on these in this class. 
+
+## Recap
+
+- Confidence intervals: what are they, and how do we interpret them?
+
+- `qnorm()` and `pnorm()`
+
+- Using a t-distribution vs. a z-distribution to create confidence intervals
+
+## Next Class
+
+- Hypothesis testing

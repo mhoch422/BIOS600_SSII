@@ -1,0 +1,208 @@
+---
+title: "HW 5"
+format: html
+---
+
+Due: Thursday, March 5, 11:59pm.
+
+## AI use
+
+Refer to the syllabus for our AI use policy. You will be asked to include any AI prompts used in this assignment at the end. 
+
+## Starting a new Quarto file
+
+For this assignment you will begin a new Quarto file. To do this, go to RStudio and click File > New File > Quarto Document. A pop-up will appear asking for a title, author, and format. You may leave these as the default options for now. Click OK and a new file will open. Update the YAML with your title, name, and date.
+
+
+## Exercises
+
+In Exercise 1, you will be asked questions about a hypothesis test that you have not seen before (and likely won’t ever see). **These questions are intended to assess whether you are familiar with the hypothesis testing process itself** and underlying philosophical details. Only use the information provided below, and assume that required assumptions are satisfied.
+
+### The Anderson-Darling test
+
+The one-sample Anderson-Darling (AD) test can be used to test whether a sample comes from a specific target probability distribution based looking at a function of the empirical distribution function (EDF) of the observed data. The null and alternative hypotheses are given by
+
+- $H_0$: the sample is consistent with a population that has the target distribution of interest
+
+- $H_A$: the sample is NOT consistent with a population that has the target distribution of interest
+
+If, in our observed data, the difference between the EDF and the target distribution is “large enough,” then we reject the null hypothesis in favor of the alternative.
+
+**Suppose we conducted a one-sample AD test against some target distribution at the $\alpha$= 0.10 level and obtained a p-value of 0.24.**
+
+## Exercise 1
+
+For each of the following, answer whether the statement is True or False. If True, you may simply state "True" and no explanation is needed. If the statement is False, additionally provide a 1-sentence explanation as to why it is false. 
+
+a. TRUE/FALSE: Finding a very large p-value from the Anderson- Darling test gives us strong evidence that the sample is consistent with a population with the target distribution of interest. 
+
+b. TRUE/FALSE: If we instead found a p-value smaller than our pre-specified $\alpha$, then there would be enough evidence for us to conclude that the observed EDF is NOT consistent with a population with the target distribution of interest. 
+
+c. TRUE/FALSE: Given the p-value of 0.24, the probability that we have made the correct decision is greater than 0.90. 
+
+d. TRUE/FALSE: Given the p-value of 0.24, the probability that the sample is consistent with a population that has the target distribution of interest is 0.24. 
+
+
+
+## Sore Throat Data: Implementing t-tests in R
+
+Today’s data are made available by the Lerner Research Institute and Dr. Amy S. Nowacki of the Cleveland Clinic. This dataset is representative of a study by Ruetzler et al. (2013) that examined the effect of licorice gargles on postextubation sore throat.
+
+Postoperative sore throat is an annoying complication of intubation after surgery, particularly with double-lumen tubes, which are of a wider gauge. Reutzler et al. (2013) performed an experimental study among patients having elective surgery who required intubation with a double-lumen tube. Prior to anesthesia, patients were randomly assigned to gargle either a licorice-based solution or sugar water. Sore throat was evaluated 30 minutes, 90 minutes, and 4 hours after conclusion of the surgery, evaluated using an 11-point Likert scale (0 = no pain, 10 = worst pain).
+
+Let’s assume that we can treat this pain score as a continuous numeric variable.
+
+First, load the tidyverse.
+
+```{r}
+#| echo: true
+#| message: false
+#| warning: false
+library(tidyverse)
+```
+
+Download `licorice.csv` from the Canvas assignment page. Copy the data into your project data folder. Ensure you are in your project folder in RStudio (check for the blue box in the upper right corner with the project folder name visible.) 
+
+Then, read in the data the following code:
+
+```{r}
+#| echo: true
+#| message: false
+#| warning: false
+licorice <- read.csv("data/licorice.csv")
+```
+
+::: callout-tip
+
+## Need help reading in your data?
+
+If you're having trouble reading in your data, it may be a file path issue. Try typing `getwd()` in the console and make sure you are in your project directory. Make sure the data is in your data folder and that you are reading it in exactly as it's named. Contact the teaching team or post in Ed Discussion if you need assistance.
+
+:::
+
+::: callout-tip
+
+
+Remember to suppress warnings and messages when 1) loading packages and/or 2) reading in data using Quarto options `#| message: false` and `#| warning: false`.
+
+Render your document now to check!
+
+:::
+
+Some relevant variables of interest are:
+
+-   `preOp_sex`: Sex (0 = Male; 1 = Female)
+
+-   `preOp_calcBMI`: Body mass index in kg/m2
+
+-   `treat`: Treatment given (0 = Sugar placebo; 1 = Licorice solution)
+
+-   `pacu30min_throatPain`: Sore throat pain score 30 minutes after arrival in PACU (11-point scale: 0 = No pain; 10 = Worst pain)
+
+-   `postOp4hour_throatPain`: Sore throat pain score 4 hours after surgery (11-point scale: 0 = No pain; 10 = worst pain)
+
+
+Questions 2-5 use the `licorice` dataset above. You may assume that the pain scores are continuous numeric variables for the purposes of this assignment.
+
+
+## Exercise 2
+
+Among patients who received the placebo sugar solution, we'd like to test the hypothesis that the mean throat pain score 30 minutes after surgery is not equal to 1. Use $\alpha$ = .05. To do this, follow the steps below:
+
+
+a. Write out the null and alternative hypotheses **in words**.
+
+b. Write out the null and alternative hypotheses **in symbols**. (Use LaTex.)
+
+::: callout-tip
+
+The null hypothesis is provided for you. Write the following in your Quarto document: `$H_0: \mu = 1$`. 
+:::
+
+Now write out the alternative hypothesis on your own.
+
+c. Under the null hypothesis, what distribution does our test statistic follow? Include degrees of freedom. (LaTex is optional for this part.)
+
+d. Create a new dataset called `licorice_s` from the original `licorice` dataset, **filtering** to only those in the placebo/sugar group. (Nothing needs to be printed here. Just show the code.)
+
+e. With your new dataset (`licorice_s`), test the hypothesis that the mean throat pain score 30 minutes after surgery is not equal to 1. Use $\alpha = 0.05$. 
+
+f. What is your conclusion based on part (e)?
+
+
+## Exercise 3
+
+Now we'd like to compare the two treatment groups, assessing the hypothesis that the mean throat pain score 30 minutes after surgery was different between them. Follow the steps below to conduct the test:
+
+a. Write out the null and alternative hypotheses **in words**.
+
+b. Write out the null and alternative hypotheses **in symbols**. (Use LaTex.) 
+
+::: callout-tip
+
+The null hypothesis is provided for you. Write the following in your Quarto document: `$H_0: \mu_L = \mu_S$`. $L$ and $S$ denote licorice and sugar, respectively.
+:::
+
+Now write out the alternative hypothesis on your own.
+
+c. With the `licorice` dataset, test the hypothesis that the mean throat pain score between treatment and placebo groups 30 minutes after surgery are not equal. Use $\alpha = 0.05$. Assume unequal variances. 
+
+d. What is your conclusion based on part (c)?
+
+
+## Exercise 4
+
+
+Suppose we are interested in testing whether the difference in mean throat pain scores 4 hours after surgery differs between the two treatment groups.
+
+a. Write out the null and alternative hypotheses **in words**.
+
+b. With the `licorice` dataset, use `t.test` to test the hypothesis that the mean throat pain score between treatment and placebo groups 4 hours after surgery are not equal. Use $\alpha = 0.01$. Assume unequal variances. (Simply show code and display output.)
+
+c. What is the p-value reported from part (b)?
+
+d. Part of a `t.test` output is a confidence interval of the average difference in measurements. If a confidence interval contains zero, we fail to reject the null hypothesis. If a confidence interval does not contain zero, then we reject the null hypothesis. 
+
+Based on the t.test output in part (b), what is the 99% confidence interval for the mean difference in throat pain levels between the two treatment groups? (Round to three decimals when reporting.) Does this confidence interval include zero? Based on this, would we reject or fail to reject $H_0$ in this case, and does your answer agree or disagree with the p-value in part (c)?
+
+
+
+
+## Exercise 5
+
+Based on your analyses in Exercises 2-4, do you think that licorice gargle prior to surgery is effective in reducing post-intubation sore throat? Explain your answer in 3-4 sentences.
+
+## Exercise 6: AI Use
+
+Did you use AI for this assignment? (Refer to our AI policy in the syllabus.) If so, list all prompts used below and the corresponding questions. If not, answer "AI was not used on this assignment". 
+
+## Submission
+
+As you’ve seen previously, we can **Render** into an .html file that can be opened by any web browser. To export it as a .pdf, open the file in your web browser and then print to or save as a .pdf document. Contact your TAs in Ed Discussion if you need help! 
+
+You will submit the PDF documents for labs and homework to Gradescope as part of your final submission.
+
+To submit your assignment:
+
+- Access Gradescope through the menu on the BIOS 600 Canvas site.
+
+- Click on the assignment, and you’ll be prompted to submit it.
+
+- Mark the pages associated with each exercise. All of the pages of your lab should be associated with at least one question (i.e., should be “checked”).
+
+- Select the first page of your .PDF submission to be associated with the "Formatting" section.
+
+## Grading
+
+| Component | Points |
+|----------|--------|
+| Ex 1 | 4 |
+| Ex 2 | 6 |
+| Ex 3 | 4 |
+| Ex 4 | 4 |
+| Ex 5 | 2 |
+| Ex 6 | 1 |
+| Formatting | 3 |
+
+The “Formatting” grade is to assess the document format. This includes having a neatly organized document (no excessive output, warnings/messages when loading packages and/or data) with readable code and your name and the date updated in the YAML.
+

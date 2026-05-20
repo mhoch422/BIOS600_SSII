@@ -1,0 +1,61 @@
+---
+title: "ae-04-solution"
+format: pdf
+---
+
+## Learning goals
+
+- Use `power.t.test()` to compute **power** for a two-sample t-test.  
+
+- Use `power.t.test()` to compute **required sample size** per group for a desired power.  
+
+- Interpret the results in biomedical / environmental contexts.
+
+
+## Exercise 1 — Air Pollution
+
+A city would like to implement an intervention to reduce fine particulate matter (PM$_{2.5}$) near a busy roadway. They are currently designing their study and plan to apply for grant funding. From earlier monitoring, the standard deviation of hourly PM$_{2.5}$ (in $\mu$g/$m^3$) at monitoring sites is about 8 $\mu$g/$m^3$.  
+Researchers plan a study with two independent groups (intervention vs control) with 25 monitoring sites in each group.  They hope to detect a mean reduction of 5 $\mu$g/$m^3$. .
+
+a. Using a two-sided test with $\alpha = 0.05$, compute the *power* of the study (per-group `n = 25`) to detect a 5 $\mu$g/$m^3$ difference. Include a 1-sentence conclusion with your answer. 
+
+```{r}
+# Power calculation (two-sample t-test)
+power.t.test(n = 25,        # sample size per group
+             delta = 5,     # expected difference in means (µg/m^3)
+             sd = 8,        # population SD (µg/m^3)
+             sig.level = 0.05,
+             type = "two.sample",
+             alternative = "two.sided")
+```
+
+**Solution**: With 25 sites per group, the study has only ~58% chance of detecting a true 5 $\mu$g/$m^3$ reduction (if it truly exists). That is below the conventional 80% target — the study is underpowered for this effect size.
+
+b. Do you think this grant would get funded as it currently stands?
+
+## Exercise 2: Lowering LDL Cholesterol
+
+A clinical trial is planned to test a new lifestyle program intended to lower LDL cholesterol. Pilot data suggest the standard deviation of LDL in the target population is 12 mg/dL, and a clinically important difference is 4 mg/dL.
+
+Researchers want 90% power to detect this difference using a two-sided two-sample t-test with $\alpha = 0.05$.
+
+a. Compute the required sample size per group. 
+
+```{r}
+power.t.test(power = 0.90, # desired power
+             delta = 4, # difference to detect (mg/dL)
+             sd = 12, # population SD (mg/dL)
+             sig.level = 0.05,
+             type = "two.sample",
+             alternative = "two.sided")
+```
+
+**Solution**: We need 143 participants per group. 
+
+b. Suppose you expect 10% loss to follow up in the study. In this case, we can calculate an inflated per-group enrollment by dividing the sample size you calculated in part (a) by 1-.10 = .90. What is the inflated per-group enrollment, based on the original sample size you calculated in part (a)? (If you get a decimal, round up here as well to get your final answer.)
+
+```{r}
+143/(1-.10)
+```
+
+We need 159 per group to account for loss-to follow-up.

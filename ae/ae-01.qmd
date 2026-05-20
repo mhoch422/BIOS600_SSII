@@ -1,0 +1,32 @@
+---
+title: "Participation: Binomial and Poisson in a Biomedical Setting"
+subtitle: "Solution"
+format: pdf
+---
+
+## Clinical Trial Example
+
+Suppose 5 people receive a new vaccine. From clinical trial data, the probability that any individual experiences a mild side effect (e.g., sore arm, mild fever) is 0.2.  
+Let $X$ be the number of people (out of 5) who experience a mild side effect.  
+Then $X \sim \text{Binomial}(n=5, p=0.2)$.
+
+### Exercise 1
+
+What is the probability that exactly 2 out of 5 people experience a mild side effect? Use the `dbinom` function.
+
+```{r}
+dbinom(2,size=5,prob=0.2)
+```
+
+## Exercise 2
+
+What is the probability that at least 1 out of 5 people experiences a mild side effect?
+(Hint: Use the complement rule: $P(X \geq 1)=1−P(X=0)$
+
+```{r}
+
+```
+
+
+
+

@@ -1,0 +1,81 @@
+---
+title: "AE 03"
+format: html
+---
+
+```{r}
+#| warning: false
+#| message: false
+library(tidyverse)
+```
+
+## ANOVA Activity: Do holistic remedies lower systolic blood pressure?
+
+A researcher tests whether three different interventions produce different **reductions in systolic blood pressure (mmHg)** after 8 weeks:
+
+- **Placebo** (control tea)  
+- **Herbal Tea** (a marketed calming herbal blend)  
+- **Mindfulness** (guided mindfulness practice)
+
+You will simulate data, visualize group differences, run an ANOVA, and interpret the results.
+
+## Exercise 1: Simulate the data
+
+We simulate 30 participants per group. The numbers are set so the placebo group has a small mean reduction, Herbal Tea a moderate reduction, and Mindfulness a larger reduction.
+
+Run the following code to simulate the data. 
+
+```{r}
+set.seed(2025)
+
+n <- 30
+
+bp_data <- data.frame(
+  group = rep(c("Placebo", "HerbalTea", "Mindfulness"), each = n),
+  reduction = c(
+    rnorm(n, mean = 2, sd = 5),   # Placebo: mean reduction ~2 mmHg
+    rnorm(n, mean = 5, sd = 5),   # Herbal Tea: mean reduction ~5 mmHg
+    rnorm(n, mean = 7, sd = 5)    # Mindfulness: mean reduction ~7 mmHg
+  )
+)
+
+head(bp_data)
+```
+
+## Exercise 2: Visualize the data
+
+Use the following code to create a boxplot of reduction by group. What pattern(s) do you notice?
+
+```{r}
+ggplot(bp_data, 
+       aes(x = group, y = reduction, fill = group)) +
+  geom_boxplot(alpha = 0.7) +
+  labs(title = "Systolic BP Reduction by Intervention",
+       x = "Intervention",
+       y = "Reduction in systolic BP (mmHg)") +
+  theme_minimal() +
+  theme(legend.position = "none")
+```
+
+[type response here]
+
+## Exercise 3: Run the ANOVA
+
+We test:
+
+$H_0$: mean reduction is the same in all groups
+
+$H_A$: at least one group is different
+
+Assume a significance level of $\alpha = 0.05$. Run an ANOVA using the syntax in the slides, printing out your output. 
+
+```{r}
+# type code here
+```
+
+## Exercise 4: Conclusion
+
+Based on your ANOVA result, what is your p-value? Do we reject or fail to reject $H_0$? What is your conclusion statement?
+
+
+

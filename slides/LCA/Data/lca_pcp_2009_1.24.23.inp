@@ -1,0 +1,103 @@
+Title: 
+  Stata2Mplus conversion for lca_pcp_2009_1.24.23.dta
+  List of variables converted shown below
+
+  indexno : 
+  group : 
+  group_fam : 
+  group_int : 
+  group_obgyn : 
+  group_ped : 
+  group_ger : 
+  ruca_urban : 
+  ruca_lrural : 
+  ruca_srural : 
+  hpsa_not : 
+  hpsa_full : 
+  hpsa_part : 
+  adi_state : 
+  zadi_state : Standardized values of adi_state
+  setting_amb : 
+  setting_hosp : 
+  setting_medsch : 
+  setting_nurs : 
+  setting_other : 
+  setting_solo : 
+  setting_missing : 
+  obstetrics : 
+  prenatal : 
+  patient_care_hours : 
+  zhours : Standardized values of Y2009_patient_care_hours
+  female : 
+  gen_y : 
+  gen_x : 
+  gen_boom_lead : 
+  gen_boom_trail : 
+  gen_ww2 : 
+  fgen_y : 
+  fgen_x : 
+  fgen_boom_lead : 
+  fgen_boom_trail : 
+  fgen_ww2 : 
+  mgen_y : 
+  mgen_x : 
+  mgen_boom_lead : 
+  mgen_boom_trail : 
+  mgen_ww2 : 
+  white : 
+  black : 
+  american_native : 
+  asian_or_pi : 
+  hispanicrace : 
+  other_race : 
+  race_unknown : 
+  fwhite : 
+  fblack : 
+  fan : 
+  fasian : 
+  fhispanic : 
+  fother : 
+  funknown : 
+  mwhite : 
+  mblack : 
+  man : 
+  masian : 
+  mhispanic : 
+  mother : 
+  munknown : 
+  school_img : 
+  school_in_state : 
+  school_out_hbcu : 
+  school_out_nonhbcu : 
+  practice_yrs : 
+  _0to5 : 
+  _6to10 : 
+  _11to20 : 
+  _21to30 : 
+  _31more : 
+  age35below : 
+  age36to45 : 
+  age46to55 : 
+  age56to65 : 
+  age66over : 
+  age36to45 : 
+  age : 
+ 
+Data:
+  File is lca_pcp_2009_1.24.23.dat ;
+Variable:
+  Names are 
+     indexno white black american_native asian_or_pi hispanicrace other_race
+     age obstetrics patient_care_hours prenatal group_fam group_int group_obgyn
+     group_ped group_ger ruca_urban ruca_lrural ruca_srural hpsa_not hpsa_full
+     hpsa_part adi_state setting_amb setting_hosp setting_medsch setting_nurs
+     setting_other setting_solo setting_missing female gen_x gen_y gen_boom_lead
+     gen_boom_trail gen_ww2 race_unknown school_img school_in_state school_out_hbcu
+     school_out_nonhbcu zadi_state zhours practice_yrs _0to5 _6to10 _11to20
+     _21to30 _31more fwhite fblack fan fasian fhispanic fother funknown
+     mwhite mblack man masian mhispanic mother munknown fgen_y fgen_x fgen_boom_lead
+     fgen_boom_trail fgen_ww2 mgen_y mgen_x mgen_boom_lead mgen_boom_trail
+     mgen_ww2 age35below age36to45 age46to55 age56to65 age66over group;
+  Missing are all (-9999) ; 
+Analysis: 
+  Type = basic ;

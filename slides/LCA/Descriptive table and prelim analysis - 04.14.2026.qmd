@@ -1,0 +1,297 @@
+---
+title: "LTA analysis - Descriptive Stats"
+author: "Annie Green Howard"
+date: today
+format: pdf
+---
+
+```{r}
+#| include: false
+#| warning: false
+#| message: false
+library(tidyverse)
+library(writexl)
+library(slca)
+library(LCPA)
+library(openxlsx)
+options(scipen = 999)
+
+todd_dir <- "Z:\\LTA project\\Data\\"
+```
+
+## Reading in dataset from 2009
+
+2009 dataset now includes a total of 8,702 observations (matching analytic dataset in published paper) and includes a total of 79 variables - including indexno
+
+```{r}
+lca_pcp_2009 <- read.table(
+  file.path(todd_dir, "lca_pcp_2009_1.24.23.dat"),
+  sep = ",",
+  header = FALSE,
+  fill = TRUE,
+  comment.char = "",
+  quote = ""
+)
+
+#Changing all values of -9999 to missing
+lca_pcp_2009[lca_pcp_2009==-9999] <- NA
+```
+
+
+```{r}
+#| include: false
+#| warning: false
+#| message: false
+vars_2009 <- c("indexno","white", "black", "american_native", "asian_or_pi", "hispanicrace", "other_race", "age",
+          "obstetrics", "patient_care_hours", "prenatal", "group_fam", "group_int", "group_obgyn",
+          "group_ped", "group_ger", "ruca_urban", "ruca_lrural", "ruca_srural", "hpsa_not", "hpsa_full",
+          "hpsa_part", "adi_state", "setting_amb", "setting_hosp", "setting_medsch", "setting_nurs",
+          "setting_other", "setting_solo", "setting_missing", "female", "gen_x", "gen_y", "gen_boom_lead",
+          "gen_boom_trail", "gen_ww2", "race_unknown", "school_img", "school_in_state", "school_out_hbcu",
+          "school_out_nonhbcu", "zadi_state", "zhours", "practice_yrs", "_0to5", "_6to10", "_11to20",
+          "_21to30", "_31more", "fwhite", "fblack", "fan", "fasian", "fhispanic", "fother", "funknown",
+          "mwhite", "mblack", "man", "masian", "mhispanic", "mother", "munknown", "fgen_y", "fgen_x", "fgen_boom_lead",
+          "fgen_boom_trail", "fgen_ww2", "mgen_y", "mgen_x", "mgen_boom_lead", "mgen_boom_trail",
+          "mgen_ww2", "age35below", "age36to45", "age46to55", "age56to65", "age66over", "group")
+
+names(lca_pcp_2009) <- vars_2009
+```
+
+## Reading in dataset from 2019 
+
+2019 dataset now includes a total of 7,929 observations (matching analytic dataset in published paper) and includes a total of 79 variables - including indexno
+
+```{r}
+lca_pcp_2019 <- read.table(
+  file.path(todd_dir, "lca_pcp2019_1.24.23.dat"),
+  sep = ",",
+  header = FALSE,
+  fill = TRUE,
+  comment.char = "",
+  quote = ""
+)
+
+#Changing all values of -9999 to missing
+lca_pcp_2019[lca_pcp_2019==-9999] <- NA
+
+names(lca_pcp_2019) <- vars_2009
+```
+
+## Reformatting variables for descriptive tables
+
+Now we need to format the variables to be categorical variables in the 2009 dataset
+
+```{r}
+lca_pcp_2009 <- lca_pcp_2009 %>%
+  mutate(specialty = case_when(
+    group_fam   == 1 ~ "Family Medicine",
+    group_int   == 1 ~ "General Internal Medicine",
+    group_obgyn == 1 ~ "General Obstetrics and Gynecology",
+    group_ped   == 1 ~ "General Pediatrics",
+    group_ger   == 1 ~ "Geriatrics",
+    TRUE             ~ "Missing"
+  ),
+  employment_setting = case_when(
+    setting_amb   == 1 ~ "Ambulatory Care",
+    setting_hosp  == 1 ~ "Hospital",
+    setting_medsch == 1 ~ "Medical School/Parent University",
+    setting_nurs  == 1 ~ "Nursing Home/Extended Care",
+    setting_other == 1 ~ "Other", 
+    setting_solo == 1 ~ "Solo practioner",
+    setting_missing == 1 ~ "Missing",
+    TRUE             ~ "Missing Value"
+  ),
+  urban_rural = case_when(
+    ruca_urban  == 1 ~ "Urban",
+    ruca_lrural == 1 ~ "Large Rural",
+    ruca_srural == 1 ~ "Small Rural",
+    TRUE             ~ "Missing"
+  ),
+  race_ethnicity = case_when(
+    white == 1           ~ "Non-Hispanic White",
+    black == 1           ~ "Non-Hispanic Black",
+    american_native == 1 ~ "American Indian/Alaskan Native",
+    asian_or_pi == 1     ~ "Asian/Pacific Islander",
+    hispanicrace == 1    ~ "Hispanic",
+    other_race == 1      ~ "Other",
+    race_unknown == 1    ~ "Unknown",
+    TRUE                 ~ "Missing"
+  ),
+  generational = case_when(
+    gen_x          == 1 ~ "Gen X (1965-1980)",
+    gen_y          == 1 ~ "Gen Y (1981-2000)",
+    gen_boom_lead  == 1 ~ "Baby Boomer, Leading Edge (1946-1954)",
+    gen_boom_trail == 1 ~ "Baby Boomer, Trailing Edge (1955-1964)",
+    gen_ww2        == 1 ~ "WWII (1928-1945)",
+    TRUE                ~ "Missing"
+  ))
+```
+
+Now we need to format the variables to be categorical variables 
+
+```{r}
+lca_pcp_2019 <- lca_pcp_2019 %>%
+  mutate(specialty = case_when(
+    group_fam   == 1 ~ "Family Medicine",
+    group_int   == 1 ~ "General Internal Medicine",
+    group_obgyn == 1 ~ "General Obstetrics and Gynecology",
+    group_ped   == 1 ~ "General Pediatrics",
+    group_ger   == 1 ~ "Geriatrics",
+    TRUE             ~ "Missing"
+  ),
+  employment_setting = case_when(
+    setting_amb   == 1 ~ "Ambulatory Care",
+    setting_hosp  == 1 ~ "Hospital",
+    setting_medsch == 1 ~ "Medical School/Parent University",
+    setting_nurs  == 1 ~ "Nursing Home/Extended Care",
+    setting_other == 1 ~ "Other", 
+    setting_solo == 1 ~ "Solo practioner",
+    setting_missing == 1 ~ "Missing",
+    TRUE             ~ "Missing Value"
+  ),
+  urban_rural = case_when(
+    ruca_urban  == 1 ~ "Urban",
+    ruca_lrural == 1 ~ "Large Rural",
+    ruca_srural == 1 ~ "Small Rural",
+    TRUE             ~ "Missing"
+  ),
+  race_ethnicity = case_when(
+    white == 1           ~ "Non-Hispanic White",
+    black == 1           ~ "Non-Hispanic Black",
+    american_native == 1 ~ "American Indian/Alaskan Native",
+    asian_or_pi == 1     ~ "Asian/Pacific Islander",
+    hispanicrace == 1    ~ "Hispanic",
+    other_race == 1      ~ "Other",
+    race_unknown == 1    ~ "Unknown",
+    TRUE                 ~ "Missing"
+  ),
+  generational = case_when(
+    gen_x          == 1 ~ "Gen X (1965-1980)",
+    gen_y          == 1 ~ "Gen Y (1981-2000)",
+    gen_boom_lead  == 1 ~ "Baby Boomer, Leading Edge (1946-1954)",
+    gen_boom_trail == 1 ~ "Baby Boomer, Trailing Edge (1955-1964)",
+    gen_ww2        == 1 ~ "WWII (1928-1945)",
+    TRUE                ~ "Missing"
+  ))
+```
+
+## Creating merged dataset 
+
+First we want to rename all variables, except indexno - our ID - with subscript denoting year. Also adding an indicator variable to denote whether the indexno is in 2009 and/or in 2019. 
+
+```{r}
+lca_pcp_2009_renamed <- lca_pcp_2009 %>%
+  rename_with(~ paste0(.x, "_2009"), -indexno, -in_2009) %>%
+  mutate(in_2009 = 1L) 
+
+lca_pcp_2019_renamed <- lca_pcp_2019 %>%
+  rename_with(~ paste0(.x, "_2019"), -indexno, -in_2019) %>%
+  mutate(in_2019 = 1L) 
+```
+
+Now merging dataset - including all indexno in **either** 2009 and/or 2019
+
+```{r}
+lca_pcp_merged <- lca_pcp_2009_renamed %>%
+  full_join(lca_pcp_2019_renamed, by = "indexno") %>%
+  mutate(
+    in_2009 = coalesce(in_2009, 0L),
+    in_2019 = coalesce(in_2019, 0L)
+  )
+```
+
+## Now looking at descriptive statistics
+
+```{r}
+table(lca_pcp_merged$in_2009, lca_pcp_merged$in_2019)
+```
+
+```{r}
+summary_table <- lca_pcp_merged %>%
+  select(indexno, in_2009, in_2019, all_of(num_vars)) %>%
+  pivot_longer(
+    cols = all_of(num_vars),
+    names_to = "variable",
+    values_to = "value"
+  ) %>%
+  mutate(
+    year = case_when(
+      str_ends(variable, "_2009") ~ "2009",
+      str_ends(variable, "_2019") ~ "2019"
+    ),
+    base_var = str_remove(variable, "_2009|_2019")
+  ) %>%
+  group_by(base_var) %>%
+  mutate(
+    is_binary = all(na.omit(value) %in% c(0, 1))
+  ) %>%
+  ungroup() %>%
+  mutate(
+    group = case_when(
+      in_2009 == 1 & in_2019 == 0 & year == "2009" ~ "2009_only",
+      in_2009 == 1 & in_2019 == 1 & year == "2009" ~ "both_2009",
+      in_2009 == 1 & in_2019 == 1 & year == "2019" ~ "both_2019",
+      in_2009 == 0 & in_2019 == 1 & year == "2019" ~ "2019_only",
+      TRUE ~ NA_character_
+    )
+  ) %>%
+  filter(!is.na(group)) %>%
+  group_by(base_var, is_binary, group) %>%
+  summarise(
+    mean = mean(value, na.rm = TRUE),
+    sd   = sd(value, na.rm = TRUE),
+    n1   = sum(value == 1, na.rm = TRUE),
+    .groups = "drop"
+  ) %>%
+  mutate(
+    value_display = if_else(
+      is_binary,
+      paste0(
+        round(mean * 100), "% (N = ", n1, ")"
+      ),
+      paste0(
+        round(mean, 1),
+        " (",
+        round(sd, 1),
+        ")"
+      )
+    )
+  ) %>%
+  select(base_var, group, value_display) %>%
+  pivot_wider(
+    names_from = group,
+    values_from = value_display
+  ) %>%
+  arrange(base_var)
+
+summary_table
+```
+
+Formatting this table so this can be output - including column sample sizes
+
+```{r}
+n_2009_only <- sum(lca_pcp_merged$in_2009 == 1 & lca_pcp_merged$in_2019 == 0)
+n_both      <- sum(lca_pcp_merged$in_2009 == 1 & lca_pcp_merged$in_2019 == 1)
+n_2019_only <- sum(lca_pcp_merged$in_2009 == 0 & lca_pcp_merged$in_2019 == 1)
+
+summary_table_n <- summary_table
+
+colnames(summary_table_n) <- c(
+  "Variable",
+  paste0("2009 only (N = ", n_2009_only, ")"),
+  paste0("Both years – 2009 (N = ", n_both, ")"),
+  paste0("Both years – 2019 (N = ", n_both, ")"),
+  paste0("2019 only (N = ", n_2019_only, ")")
+)
+```
+
+## Output summary table 
+
+```{r}
+write.csv(
+  summary_table_n,
+  file = "lca_pcp_summary_table_041423.csv",
+  row.names = FALSE
+)
+```
+

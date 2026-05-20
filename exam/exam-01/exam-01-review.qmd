@@ -1,0 +1,201 @@
+---
+title: "Exam Review"
+date: "September 18, 2025"
+format: pdf
+---
+
+# Applied
+
+## Q1
+
+Rapid antigen tests are commonly used to detect **COVID-19 infection**. Suppose a new rapid test is compared against the gold standard PCR test.  
+
+For this question, focus on **asymptomatic adults**. About **5% of asymptomatic adults** truly have COVID-19 infection. The test has a **sensitivity of 90%** and a **specificity of 95%** for detecting infection in this population.
+
+
+a. Suppose you administer the rapid test to someone who truly has COVID-19. What is the probability that the test will return a positive result? Circle one.
+
+(A) 5%  
+(B) 90%  
+(C) 10%  
+(D) 95%  
+(E) Not enough information to determine this probability  
+
+
+
+b. Suppose a randomly selected asymptomatic adult tests positive. Using Bayes' Rule, how could you **write out the probability that this person truly has COVID-19**?
+
+\vskip 5cm
+
+c. A new rapid test has been developed to detect **hepatitis B infection**. A study compares the results of the rapid test against the gold standard laboratory test. The results from 200 patients are summarized below:
+
+|                       | Gold Standard Positive | Gold Standard Negative | Total |
+|-----------------------|----------------------|----------------------|-------|
+| **Rapid Test Positive** | 70                   | 25                   | 95    |
+| **Rapid Test Negative** | 10                   | 95                   | 105   |
+| **Total**             | 80                   | 120                  | 200   |
+
+**Question:**  
+Calculate the **sensitivity** of the rapid test. Leave your answer as a fraction.
+
+## Q2
+
+A researcher is studying the number of patients arriving at a hospital emergency room with asthma attacks during a 1-hour period. She proposes using a Poisson distribution to model the number of arrivals per hour.
+
+Describe how you would verify whether each of the assumptions for a Poisson distribution are satisfied in this context. (e.g. what would you need to know/verify for each assumption, specific to this context?)
+
+\vskip 3cm
+
+## Q3
+
+a. An environmental agency classifies daily air quality in a city into three categories: Good, Moderate, and Unhealthy. The probabilities of each category on a randomly selected day are summarized in the table below:
+
+| Air Quality | Probability |
+|-------------|------------|
+| Good        | 0.5        |
+| Moderate    | 0.3        |
+| Unhealthy   | 0.2        |
+
+
+State the Kolmogorov axioms. Are all axioms true for this example? 
+
+\vskip 3cm
+
+b. A public health researcher is studying the number of **asthma attacks requiring emergency care per day** in a mid-sized city. She models the number of attacks per day using a Poisson distribution with rate parameter $\lambda = 3$.  
+
+Recall the Poisson PMF:  
+
+$$P(X = k) = \frac{e^{-\lambda} \lambda^k}{k!}, \quad k = 0, 1, 2, \dots$$
+
+
+Write out, in terms of the Poisson PMF, the probability that on a randomly selected day there are **at least 2 asthma attacks**. You do not need to compute the numeric value.  
+
+c. Continuing part (b) above, Which of the following R commands correctly calculates the probability that on a randomly selected day there are **at least 2 asthma attacks**?
+
+(A) `dbinom(1, lambda = 3)`  
+
+(B) `1 - ppois(1, lambda = 3)`  
+
+(C) `ppois(2, lambda = 3)`  
+
+(D) `1 - dpois(2, lambda = 3)` 
+
+## Code
+
+Elena Epidata is an epidemiologist exploring health trends in the U.S. population. She is using a dataset similar to **NHANES**, which includes variables such as **age, BMI, blood pressure, and cholesterol** for a sample of adults. Elena is new to R and is practicing basic data exploration.
+
+## Q4
+
+Elena types the following code in R:
+
+```{r}
+#| echo: true
+#| eval: false
+library(tidyverse)
+nhanes <- read_csv("nhanes_sample.csv")
+View(nhanes)
+glimpse(nhanes)
+names(nhanes)
+```
+
+Which of the following statements are true about the outputs of these commands? Select all that apply.
+
+(A) `View()` opens a spreadsheet-style view of the dataset.
+(B) `glimpse()` prints a concise summary of the dataset to the console.
+(C) `names()` lists the names of the columns.
+(D) `View()` returns a vector of column names.
+
+
+## Q5
+
+Elena wants to examine a subset of the data. She types:
+
+```{r}
+#| echo: true
+#| eval: false
+nhanes_highbp <- nhanes |>
+  filter(age >= 50, sbp > 140)
+```
+
+a. What subset of data has she created?
+
+\vskip 1cm
+
+b. What does `|>` do?
+
+\vskip 1cm
+
+c. Will anything be printed out by running this code?
+
+\vskip 1cm
+
+## Q6
+
+Elena wants to create a scatter plot of BMI vs. systolic blood pressure and color points by sex. She writes:
+
+```{r}
+#| echo: true
+#| eval: false
+ggplot(nhanes, aes(x = bmi, y = sbp, color = sex)) +
+  geom_point() +
+  labs(x = "BMI", y = "Systolic Blood Pressure (mmHg)")
+```
+
+Which of the following statements are true? Select all that apply.
+
+(A) `geom_point()` creates a scatter plot.
+(B) Points are colored based on BMI.
+(C) This code produces a boxplot of blood pressure.
+(D) The x-axis represents BMI.
+
+## Q7
+
+Elena wants to calculate the average BMI by `age_group`. This variable has 3 categories: `young`, `mid`, and `older`. She types:
+
+```{r}
+#| echo: true
+#| eval: false
+nhanes_summary <- nhanes |>
+  group_by(age_group) |>
+  summarize(mean_bmi = mean(bmi, na.rm = TRUE))
+```
+
+What does `nhanes_summary` contain?
+
+\vskip 2cm
+
+## Conceptual (True/False)
+
+Circle either True or False. 
+
+## Q8
+
+The Poisson distribution is often used to model counts of rare events occurring independently in a fixed time or space interval.
+
+True  
+
+False 
+
+## Q9
+
+In a discrete probability distribution, all individual probabilities must be greater than 0.
+
+True  
+
+False  
+
+## Q 10
+
+Bayes’ Rule allows you to compute the probability of an event given some observed evidence: P(A|B) = [P(B|A) * P(A)] / P(B).
+
+True  
+
+False  
+
+## Q11
+
+A frequentist interprets probability as a personal degree of belief, while a Bayesian interprets probability as the long-run relative frequency of events.
+
+True  
+
+False  

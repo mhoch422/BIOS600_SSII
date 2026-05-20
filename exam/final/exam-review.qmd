@@ -1,0 +1,203 @@
+---
+title: "Final Exam Review"
+author: "Your Name Here"
+date: today
+format: html
+---
+
+## Instructions
+
+This exercise uses NHANES (National Health and Nutrition Examination Survey) data to explore relationships between health variables. Complete all questions, showing your code, output, and interpretations where requested.
+
+```{r}
+#| label: setup
+#| message: false
+#| warning: false
+
+# Load required packages
+library(NHANES)
+library(tidyverse)
+library(car)
+library(GGally)
+
+# Load and prepare data
+data(NHANES)
+
+# Create a clean subset for analysis
+nhanes_clean <- NHANES |>
+  filter(Age >= 18, Age <= 65) |>  # Adults only
+  select(Age, Gender, BMI, BPSysAve, BPDiaAve, 
+         DirectChol, TotChol, Diabetes, PhysActive) |>
+  na.omit() |>
+  distinct()
+
+# Preview data
+head(nhanes_clean)
+```
+
+
+## Exercise 1: Correlation Analysis 
+
+We want to explore the relationship between systolic blood pressure (BPSysAve) and age.
+
+### (a)
+
+Calculate the Pearson correlation coefficient between systolic blood pressure and age. Interpret the value including direction and strength.
+
+```{r}
+#| label: q1a
+
+# type code here
+```
+
+[type response here]
+
+
+### (b)
+
+Calculate the Spearman correlation coefficient for the same variables. How does it differ from the Pearson correlation? When might Spearman be preferred?
+
+```{r}
+#| label: q1b
+
+# type code here
+
+```
+
+[type response here]
+
+### (c)
+
+Create a scatterplot with a fitted line to visualize this relationship.
+
+```{r}
+#| label: q1c
+
+# type code here
+
+```
+
+## Exercise 2: Simple Linear Regression
+
+In this exercise, you will fit a simple linear regression model predicting systolic blood pressure from age.
+
+### (a)
+
+Write out the mathematical model for this regression, clearly defining all terms. (Use LaTeX here. Knowing how to write something in LaTeX won't be on the exam, but knowing how to write out a model in symbols will be.)
+
+[type response here]
+
+### (b)
+
+Fit the model in R and display the summary output using `tidy()` and `kable()`.
+
+```{r}
+#| label: q2b
+
+# type code here
+
+```
+
+### (c)
+
+Interpret the slope coefficient. What does the p-value for age tell us? State the null and alternative hypotheses being tested.
+
+[type response here]
+
+## Exercise 3: Model Assumptions 
+
+In the following exercise, we'll check all four assumptions of linear regression for the model from Question 2.
+
+### (a)
+
+Create diagnostic plots to check: (1) Linearity, (2) Normality of residuals, (3) Homoscedasticity, (4) Independence
+
+```{r}
+#| label: q3a
+
+# Your code here
+
+```
+
+### (b)
+
+For each assumption, state whether it appears to be met or violated based on your plots. Explain your reasoning.
+
+**Assessment:**
+1. Linearity: [type response here]
+2. Normality: [type answer here]
+3. Homoscedasticity: [type answer here]
+4. Independence: [type answer here]
+
+## Exercise 4: Multiple Linear Regression
+
+In this question, we'll fit a multiple linear regression model predicting systolic blood pressure from age, BMI, and gender.
+
+### (a)
+
+Fit the model and display the estimated coefficients using `tidy()` and `kable()`. Round to 3 digits.
+
+```{r}
+#| label: q4a
+
+# Your code here
+
+```
+
+### (b)
+
+Interpret each coefficient in the model. How does the interpretation of the age coefficient differ from Question 3?
+
+[type response here]
+
+### (c)
+
+What is the $R^2$ and adjusted $R^2$? Interpret the adjusted $R^2$. Why might we prefer adjusted $R^2$ to $R^2$?
+
+[type response here]
+
+### (d)
+
+What is the F-statistic testing? State the null and alternative hypotheses. Interpret the p-value.
+
+```{r}
+#| label: q4d
+
+# Your code here
+
+```
+
+[type response here]
+
+### (e)
+
+Predict the systolic blood pressure for a 45-year-old male with BMI of 28. (First create a new data frame, then use the `predict()` function.) Write a 1-sentence conclusion about the predicted value. 
+
+```{r}
+#| label: q4e
+
+# type code here
+
+```
+
+[type response here]
+
+### (f) 
+
+You were concerned there might be differences in the association between BMI and systolic blood pressure by gender. Run the test with the interaction term for gender and BMI.  
+
+```{r}
+#| label: q4f
+
+# type code here
+
+```
+
+
+i) Given the interaction term is in the model, interpret the coefficient for BMI (what happens to systolic blood pressure when BMI increases by 1 kg/m2)
+
+[type response here]
+
+ii) Based on the results from this model do you think there is evidence of a difference in the association by gender (assume $\alpha=0.05$). Why or why not?
+
+[type response here]

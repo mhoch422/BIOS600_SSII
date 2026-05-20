@@ -1,0 +1,98 @@
+---
+title: "AE 06: Logistic regression"
+author: "Your Name Here"
+date: "Date Here"
+format: html
+---
+
+In this application exercise, you will work with a **simulated environmental dataset** containing three variables:
+
+- `bird_presence`: whether a rare bird species was detected at a survey site (0/1)
+- `air_quality`: numeric index (higher = worse air quality)
+- `trees`: number of trees per hectare at the site
+- `wetland`: whether the site is a wetland (1 = yes, 0 = no)
+
+You will:
+
+1. Fit a logistic regression model  
+2. Interpret a continuous coefficient  
+3. Interpret a binary or categorical coefficient  
+4. Predict a probability for a new site
+
+## Computational setup
+
+```{r}
+#| message: false
+#| warning: false
+library(tidymodels)
+library(kableExtra)
+```
+
+## Simulating the dataset
+
+Run the following code to simulate the dataset. 
+
+```{r}
+set.seed(9745)
+
+n <- 200
+
+air_quality <- rnorm(n, mean = 50, sd = 10)      # continuous predictor
+trees <- rpois(n, lambda = 30)                   # count predictor
+wetland <- rbinom(n, size = 1, prob = 0.4)       # binary predictor
+
+# true model:
+# logit(p) = -7 + 0.05*air_quality + 0.04*trees + 1.0*wetland
+log_odds <- -7 + 0.05 * air_quality + 0.04 * trees + 1 * wetland
+prob <- exp(log_odds) / (1 + exp(log_odds))
+
+bird_presence <- rbinom(n, size = 1, prob = prob)
+
+env_data <- data.frame(
+  bird_presence,
+  air_quality,
+  trees,
+  wetland
+)
+
+head(env_data)
+```
+
+## Exercise 1
+
+Fit a logistic regression model predicting bird presence from air quality, trees, and whether the side was a wetland. Display the coefficient estimates table using `kable()`, rounding to 3 digits.
+
+```{r}
+# insert code here
+```
+
+## Exercise 2: Interpretation
+
+Interpret the estimated coefficient for `air_quality` in terms of **odds**. (You can state in terms of a multiplicative change or a percent difference in odds.) (1–2 sentences)
+
+[type response here]
+
+
+## Exercise 3: Interpretation
+
+Interpret the estimated coefficient for `wetland` in terms of **odds**. (You can state in terms of a multiplicative change or a percent difference in odds.) (1–2 sentences)
+
+[type response here]
+
+## Exercise 4: Prediction
+
+Predict the **probability** of bird presence for a site with:
+
+- `air_quality` = 60
+
+- `trees` = 40
+
+- `wetland` = 1 (wetland site)
+
+Use `predict(..., type = "response")`. 
+
+```{r}
+# type code here
+```
+
+
