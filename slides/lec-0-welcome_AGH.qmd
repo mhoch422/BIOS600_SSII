@@ -3,9 +3,7 @@ title: "Lec 1: Course overview & What is statistical inference?"
 subtitle: "BIOS 600 - Summer Session II 2026"
 institute: "UNC - Chapel Hill"
 logo: "images/logo_600.png"
-format: pptx
-execute:
-  freeze: auto
+format: html
 ---
 
 ## Welcome! Meet Molly 
@@ -299,11 +297,11 @@ Unfortunately, we (usually) have to settle with a **sample** from the population
   - Reporting bias: tendency to under-report all information available
   - Many more: non-response bias, attrition bias, confounding, detection bias, lack of blinding, straight-up falsified data (this happens)...[and more!](https://catalogofbias.org/biases/)
 
-![](images/lec-1/bias.PNG){style="width:80%; height:auto;"}
+![](images/lec-1/bias.PNG){style="width:80%; height:auto;" fig-alt="Website heading with dark blue background and Catalogue of Bias written in white, with logos for CEBM and the University of Oxford"}
 
 ## A few years ago...{.smaller}
 
-![](images/lec-1/covid.PNG){width="100"}
+![](images/lec-1/covid.PNG){width=60% fig-alt="Headline reading COVID-19 Antibody Seroprevalence in Santa Clara County, California with author list and warning that reads This article is a preprint and has not been peer-reviewed [what does this mean?]. It reports new medical research that has yet to be evaluated and so should not be used to guide clinical practice."}
 
 [link to article](https://pubmed.ncbi.nlm.nih.gov/33615345/)
 
@@ -313,7 +311,7 @@ Unfortunately, we (usually) have to settle with a **sample** from the population
 
 ## However...
 
-![](images/lec-1/covid2.PNG){width="300"}
+![](images/lec-1/covid2.PNG){width="300" fig-alt="Article with headline Peer Review of COVID-19 Antibody Seroprevalence in Santa Clara County, California by Balaji S. Srinivasan"}
 
 [What do some other people have to say about this study...?](https://medium.com/@balajis/peer-review-of-covid-19-antibody-seroprevalence-in-santa-clara-county-california-1f6382258c25)
 
@@ -368,14 +366,14 @@ Best practices from the American Statistical Association:
 
 ::: columns
 ::: {.column width="50%"}
-![](images/lec-1/drip.PNG){fig-alt="Former Harvard stem cell researcher up to 18 retractions" fig-align="center" width="400"}
+![](images/lec-1/drip.PNG){fig-alt="Article with headline Drip, drip: Former Harvard stem cell researcher up to 18 retractions and first two paragraphs reading Piero Anversa, a former star researcher at Harvard Medical School who left the institution under a cloud, is up to 18 retractions. But that's barely half of the 31 papers by Anversa's group that Harvard has requested journals pull over concerns about the integrity of the findings. The two articles, published in the Proceedings of the National Academy of Sciences, appeared in 2008 and 2009. Anversa and a frequent co-author, Annarosa Leri, are among the authors on each." fig-align="center" width="400"}
 
 - misconduct, including image manipulation
 
 :::
 
 ::: {.column width="50%"}
-![](images/lec-1/duke.png){fig-alt="Duke agrees to pay $112 million to settle false claims related to scientific misconduct" fig-align="center" width="400"}
+![](images/lec-1/duke.png){fig-alt="Screenshot of HHS Department Office of Inspector General website article with headline reading Duke University Agrees to pay U.S. $112.5 Million to Settle False Claims Act Allegations Related to Scientific Research Misconduct" fig-align="center" width="400"}
 
 - submitting falsified data to secure federal research grants
 :::
@@ -395,24 +393,24 @@ Sharing code and data can help identify even accidental mistakes
 
 ::: {.column width="60%"}
 
-![](images/lec-1/accidental.png){fig-alt="Notice of Retraction:" fig-align="center" width="400"}
+![](images/lec-1/accidental.png){fig-alt="Article in JAMA Pediatrics by Piush J. Mandhane, MD, PhD titled Notice of Retraction with first two paragraphs reading To the Editor I write on behalf of my coauthors to request a retraction of our Research Letter titled Post-COVID-19 Condition in Children, published in JAMA Pediatrics online on September 18, 2023, and in the November 2023 issue. Since publication, we have identified methodological (Analytical) errors in our original report that impacted our estimate of the prevalence of post-COVID-19 condition (PCC) in children and adolescents and our reported associations between pre- and post-COVID-19 symptoms. We identified a coding error whereby children with missing symptoms data were coded as having no symptoms. This error results in 2 participants being misclassified as having symptom resolution when they should have been classified as having PCC. We identified another child who should have been classified as having PCC. We also identified an error in which we included only participants with at least 2 months of symptom data (coded as 61 days) rather than those with at least 8 weeks (56 days) of symptom data." fig-align="center" width="400"}
 :::
 :::
 ## What is biostatistics good for? {.smaller}
 
-- 📊 **Turning Data Into Insight**  
+- **Turning Data Into Insight**  
   Biostatistics helps us move beyond raw numbers to identify meaningful patterns in health and disease.  
 
 - 🧪 **Evaluating Interventions**  
   From vaccines to health policies, biostatistics allows us to rigorously test what *really works*.  
 
-- 🌍 **Promoting Health Equity**  
+- **Promoting Health Equity**  
   Careful analysis helps uncover disparities in health outcomes and guide solutions for underserved communities.  
 
-- 🔮 **Forecasting & Prevention**  
+- **Forecasting & Prevention**  
   Models help us anticipate outbreaks, chronic disease trends, and the impact of prevention strategies.  
 
-- 🏥 **Improving Patient Care**  
+- **Improving Patient Care**  
   Biostatistics drives evidence-based medicine by connecting research to better clinical decisions.  
 
 
@@ -420,19 +418,19 @@ Sharing code and data can help identify even accidental mistakes
 
 - When we appropriately apply statistical inference methods, they can do a lot of good!
 
-![](images/lec-1/hospital.PNG){width="300"}
+![](images/lec-1/hospital.PNG){width="300" fig-alt="Article from JAMA Internal Medicine with title Comparison of Hospital Mortality and Readmission Rates for Medicare Patients Treated by Male vs Female Physicians"}
 
 [Link to Study](https://pmc.ncbi.nlm.nih.gov/articles/PMC5558155/)
 
 ## What is biostatistics good for?
 
-![](images/lec-1/hurricane.PNG){width="300"}
+![](images/lec-1/hurricane.PNG){width="300" fig-alt="Article from the New England Journal of Medicine with headline Mortality in Puerto Rico after Hurricane Maria"}
 
 [Link to Study](https://www.nejm.org/doi/full/10.1056/NEJMsa1803972)
 
 ## What is biostatistics good for?
 
-![](images/lec-1/incarceration.PNG){width="300"}
+![](images/lec-1/incarceration.PNG){width="300" fig-alt="Article with title Mass incarceration and public health: the association between black jail incarceration and adverse birth outcomes among black women in Louisiana"}
 
 [Link to Study](https://pmc.ncbi.nlm.nih.gov/articles/PMC6935062/)
 

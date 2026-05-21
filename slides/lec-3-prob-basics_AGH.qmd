@@ -1,36 +1,30 @@
 ---
 title: "Lecture 3: Basics of probability"
-subtitle: "BIOS 600 - Spring 2026"
+subtitle: "BIOS 600 - Summer Session II 2026"
 institute: "UNC - Chapel Hill"
 logo: "images/logo_600.png"
-format:
-  revealjs:
-    css: reveal-custom.css
-execute:
-  freeze: auto
+format: html
 ---
 
 ## Reading
 
 - [OpenIntro Statistics](https://www.openintro.org/go/?id=os4_for_screen_readers&referrer=/book/os/index.php): Section 3.1.1-3.1.6
+-   Pagano and Gavreau: Sections 6.2, 6.3
+-   [OpenIntro Statistics](https://www.openintro.org/go/?id=os4_for_screen_readers&referrer=/book/os/index.php): Section 3.2
 
 ## Announcements
 
-- Lab 2 session Today at 3:30pm, due Friday at 11:59pm
+- HW 2 Due tonight, Jun 23 at 11:59pm
 
-- HW 1 Due Tuesday, Jan 27 at 11:59pm
 
-- Office Hours have shifted
-  - Dr. Howard office hours (on canvas) - Fridays 1-2 pm
-  - Tutoring available - **bio600tutor@unc.edu**
-
-# Last Week
+# Last Class
 
 - **Skewed** distributions can be right or left skewed depending on which side the "tail" is on.
 
 - Example of right skew (tail is on the right)
 
 ```{r}
+#| fig-alt: "Histogram plot with most values clustered next to 0 and a long right tail"
 set.seed(123)
 
 # Simulate data from a normal distribution
@@ -45,11 +39,12 @@ hist(right_skewed_data, breaks = 30,
      xlab = "Value")
 ```
 
-# Last Week
+# Last Class
 
 - Data has Mean of 12, Median of 10 
 
 ```{r}
+#| fig-alt: "Histogram plot with most values clustered next to 0, one at 200; there is a vertical red line at 10 and a vertical blue line at 12"
 set.seed(123)
 
 # Many typical values
@@ -71,11 +66,14 @@ legend("topright",
        col = c("red", "blue"),
        lwd = 2)
 ```
-# Last Week
+
+# Last Class
 
 - Mean is higher than the median but data is not skewed
 
 ```{r}
+#| fig-alt: "Histogram plot with values spread evenly around 8 to 12, with a vertical blue line at 10 and a vertical red line at 12"
+
 # Many typical values
 hist(x, breaks = 30, col = "gray",
      main = "Servings of Fruits and Vegetables",
@@ -91,7 +89,7 @@ legend("topright",
        lwd = 2)
 ```
 
-# Last Week
+# Last Class
 
 - Categorical Data
   - Nominal - includes binary or dictotomous
@@ -298,7 +296,7 @@ How do we extend inclusion-exclusion to more than two events?
 
 ## DeMorgan's laws
 
-![](images/lec-3/demorgan.jpg){width="100"}
+![](images/lec-3/demorgan.jpg){fig-cap="A photogrpah of Augustus De Morgan" fig-alt="A photograph of Augustus De Morgan" width="100"}
 
 -   **Complement of union**: $(A\cup B)^C = A^C \cap B^C$
 -   **Complement of intersection**: $(A\cap B)^C = A^C \cup B^C$
@@ -311,7 +309,7 @@ How do we interpret these in plain English?
 
 ## Gunter et al. study (2017) {.smaller}
 
-![](images/lec-3/coffee.png){width="300"}
+![](images/lec-3/coffee.png){fig-alt="Article heading from Annals of Internal Medicine with title Coffee Drinking and Mortality in 10 European Countries" width="300"}
 
 | Coffee drinking | Died? Yes | Died? No | Total |
 |-----------------|:---------:|:--------:|:-----:|
@@ -328,6 +326,130 @@ What was the probability that a randomly selected person in the trial..
 
 -   ...did not die during the study and was a high coffee drinker?
 
+## Conditional probability
+
+- **Conditional probability** is the probability an event will occur when another event has already occurred. The **conditional probability** of event $A$ given event $B$ is
+
+
+$$
+P(A|B) = \frac{P(A\cap B)}{P(B)}
+$$
+
+- How can we represent this visually? (Drawing)
+
+## Examples {.smaller}
+
+Examples come up all the time in the real world:
+
+-   Given that a mammogram comes back positive, what is the probability that a woman has breast cancer?
+-   Given that a 68-year old man has suffered four previous heart attacks, what is the probability he dies in the next five years?
+-   Given that a patient has a mutation in the CFTR gene, what is the probability their offspring will have cystic fibrosis?
+-   Given the storm doesn't shift north, we have a 60% change of snow
+
+## Independence and the multiplicative rule {.smaller}
+
+We can rewrite the definition of conditional probability:
+
+$$
+P(A|B) = \frac{P(A\cap B)}{P(B)} \implies  \underbrace{P(A\cap B) = P(A | B) \times P(B)}_{\text{Multiplicative Rule}}
+$$
+
+
+::: callout-tip
+## Question
+
+What does the multiplicative rule mean in plain English?
+:::
+
+- The probability that A and B **both happen** is the probability that B happened, multiplied by the probability of A happened (given B already happened).  
+
+## The multiplicative rule
+
+Events $A$ and $B$ are said to be **independent** when
+
+
+::: {.callout-caution appearance="minimal"}
+
+<div style="text-align: center;">
+
+$$
+P(A \cap B) = P(A) \times P(B)
+$$
+
+</div>
+
+:::
+
+or equivalently, $P(A|B) = P(A)$ or $P(B|A) = P(B)$
+
+- In other words, if A and B are independent, then the probability of both happening is simply the probability of A happening times the probability of B happening. (Since B happening has nothing to do with A later happening, or vice-versa).
+
+## Example
+
+- Experiment: Toss a fair 6-sided dice two times. We assume the two tosses are **independent** from each other. 
+
+- Let $A$ = getting a 1 on the first toss. Let $B$ = getting a 1 on the second toss.
+
+- What is $P(A)$?
+
+- What is $P(B)$?
+
+- What is the $P(A \cap B)$?
+
+- What is $P(A | B)$ ?
+
+- What is $P(B | A)$ ?
+    
+## Examples
+
+- Example #1: Randomized Clinical Trial 
+  - Let $A$ = Participant is on a new treatment
+  - Let $B$ = Participant is Older than 50
+
+- Example #2: Electronic Health Records
+  - Let $A$ = Participant is taking GLP-1 
+  - Let $B$ = Participant has health insurance 
+  
+## Recall: disjoint events
+
+- Definition: Two outcomes are **disjoint** or **mutually exclusive** if they cannot both happen. 
+
+- For example: If we roll a die, the outcomes 1 and 2 are disjoint since they cannot both occur. 
+
+- On the other hand, the outcomes 1 and "rolling an odd number" are not disjoint since both occur if the outcome of the roll is a 1. 
+
+
+## Disjoint vs. independent events 
+
+- Flipping one coin
+- Let $A$ = heads, $B$ = tails 
+- Are these two outcomes disjoint? 
+
+
+- Are these two outcomes independent?
+
+
+
+
+## Conditional probabilities and independence {.smaller}
+
+| Coffee drinking | Died? Yes | Died? No | Total |
+|-----------------|:---------:|:--------:|:-----:|
+| None            |   1039    |   5438   | 6477  |
+| Med-Low         |   4440    |  29712   | 29809 |
+| High            |   3601    |  24934   | 28535 |
+| **Total**       |   9080    |  60084   | 64821 |
+
+What was the probability a randomly selected person in the study...
+
+-   ...died?
+-   ...died, given they were a non-coffee drinker?
+
+::: callout-caution
+## Question
+
+In this study, were dying and coffee drinking independent events?
+:::
 
 ## Recap
 
@@ -336,4 +458,6 @@ What was the probability that a randomly selected person in the trial..
 - Probability spaces, sample spaces, events
 - Set operations
 - How do probabilities work? (Set operations, DeMorgan's Laws)
+- Conditional probability, the multiplicative rule, and Bayes' theorem
+- Disjoint vs. independent events
 
