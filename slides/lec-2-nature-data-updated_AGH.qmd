@@ -1,13 +1,9 @@
 ---
 title: "Lecture 2: The nature of data"
-subtitle: "BIOS 600 - Spring 2026"
+subtitle: "BIOS 600 - Summer Session II 2026"
 institute: "UNC - Chapel Hill"
 logo: "images/logo_600.png"
-format:
-  revealjs:
-    css: reveal-custom.css
-execute:
-  freeze: auto
+format: docx
 ---
 
 ```{r}
@@ -20,12 +16,8 @@ library(tidyverse)
 
 ## Announcements
 
-- **Lab #1** due this Friday, Jan 16 at 11:59pm.
-- **HW #1** posted today. Due next Thursday Jan 22 at 11:59pm.
-- **Reminder** Office hours today for Dr. Howard from 9:45-10:45 in McGavern-Greenberg 3101A
-- Please reach out to me or TAs if you need assistance outside of office hours 
-  - **Abby Foes** — agfoes@unc.edu
-  - **Alex Akushevich** — aku@unc.edu
+- **HW #1** due today at 11:59pm.
+- Please reach out to me if you need assistance outside of office hours 
 
 ## Download or print notes to PDF {.smaller}
 
@@ -598,9 +590,9 @@ These two distributions have the same mean and standard deviation, but are clear
 -   Quantiles, outliers, standard deviation vs. variance, Chebyshev's inequality
 
 
-## Sneak peek for lab next week
+## Sneak peek for lab on Friday
 
-- For lab next week, you'll need to install the `tidyverse` package. Do so with the following in your Console:
+- For lab on Friday, you'll need to install the `tidyverse` package. Do so with the following in your Console:
 
 ```{r}
 #| eval: false
@@ -610,4 +602,4 @@ install.packages("tidyverse")
 
 ## Next up
 
-- Tuesday's Class: Probability basics
+- Tomorrow's Class: Probability basics, begin conditional probability
