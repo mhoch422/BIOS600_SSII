@@ -3,7 +3,7 @@ title: "Lec 1: Course overview & What is statistical inference?"
 subtitle: "BIOS 600 - Summer Session II 2026"
 institute: "UNC - Chapel Hill"
 logo: "images/logo_600.png"
-format: revealjs
+format: html
 ---
 
 ## Welcome! Meet Molly 

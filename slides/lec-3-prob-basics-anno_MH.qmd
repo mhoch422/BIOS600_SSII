@@ -3,7 +3,7 @@ title: "Lecture 3: Basics of probability"
 subtitle: "BIOS 600 - Summer Session II 2026"
 institute: "UNC - Chapel Hill"
 logo: "images/logo_600.png"
-format: revealjs
+format: html
 ---
 
 ## Reading
