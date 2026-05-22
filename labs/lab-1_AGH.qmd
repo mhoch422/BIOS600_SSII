@@ -1,48 +1,12 @@
 ---
-title: "Lab 01"
-subtitle: "BIOS 600 - Spring 2025"
+title: "HW 1"
+subtitle: "BIOS 600 - Summer Session II 2026"
 logo: "images/logo_600.png"
 editor: visual
 format: html
 ---
 
-Due Friday, Jan 16 at 11:59pm.
-
-# Welcome
-
-## Meet the TAs
-
-![](images/lab-1/hello-sticker.jpeg){width="300"}
-
-- Alex Akushevich, PhD student
-
-- Abby Foes, PhD student
-
-## **What to expect in lab**
-
-- Introduction to the lab assignment (\~ 5 - 10 minutes)
-
-- Work on the lab assignment (feel free to collaborate, but labs will be turned in individually. Ensure you understand everything you're turning in!)
-
-- Lab instructions will always be posted on the Canvas homepage (under "Labs" column)
-
-## **Tips**
-
-- You do not have to finish the lab in class, they will always be due the following **Friday at 11:59 pm**.
-
-- One work strategy is to get through portions that you think will be most challenging (which initially might be the coding component) during lab when a TA can help you on the spot and leave the narrative writing until later.
-
-## A quick note
-
-- Today's lab introduces the computing tools we will be using this semester.
-
-- We will begin by installing R and RStudio, and familiarizing ourselves with its basic functionality.
-
-- We will also introduce Quarto as a tool to create high-quality reproducible reports - don't worry, a fillable template is provided.
-
-**This is an individual lab. Your TAs will guide you through the first portion of the lab (until the "On your own" section).**
-
-- Also note that the process of installing R/RStudio on individual computers sometimes takes troubleshooting. If you get stuck, don't worry - TAs are here to help! We will also have an office hour later in the week to provide assistance with installation.
+This assignment is due Jun 23 at 11:59 PM.
 
 ## Installing R
 

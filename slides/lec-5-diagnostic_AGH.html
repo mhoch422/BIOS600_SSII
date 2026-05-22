@@ -6,16 +6,19 @@
 <script src="lec-5-diagnostic_AGH_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="lec-5-diagnostic_AGH_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="lec-5-diagnostic_AGH_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="lec-5-diagnostic_AGH_files/libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.8.26">
+<link href="lec-5-diagnostic_AGH_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.36">
 
-  <title>Lecture 5: Diagnostic Testing</title>
+  <title>Lecture 4: Conditional Probability Continued and Diagnostic Testing</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
   <link rel="stylesheet" href="lec-5-diagnostic_AGH_files/libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="lec-5-diagnostic_AGH_files/libs/revealjs/dist/reveal.css">
   <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -28,8 +31,7 @@
       vertical-align: middle;
     }
   </style>
-  <link rel="stylesheet" href="lec-5-diagnostic_AGH_files/libs/revealjs/dist/theme/quarto-534cd8e3a96973385dffff3f4709048d.css">
-  <link rel="stylesheet" href="reveal-custom.css">
+  <link rel="stylesheet" href="lec-5-diagnostic_AGH_files/libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
   <link href="lec-5-diagnostic_AGH_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="lec-5-diagnostic_AGH_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="lec-5-diagnostic_AGH_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -127,8 +129,8 @@
     <div class="slides">
 
 <section id="title-slide" class="quarto-title-block center">
-  <h1 class="title">Lecture 5: Diagnostic Testing</h1>
-  <p class="subtitle">BIOS 600 - Spring 2026</p>
+  <h1 class="title">Lecture 4: Conditional Probability Continued and Diagnostic Testing</h1>
+  <p class="subtitle">BIOS 600 - Summer Session II 2026</p>
 
 <div class="quarto-title-authors">
 </div>
@@ -137,87 +139,9 @@
 <section id="announcements" class="slide level2">
 <h2>Announcements</h2>
 <ul>
-<li><p>Syllabus has been updated</p></li>
-<li><p><strong>Lab 3</strong> posted, will be the focus of lab <strong>next</strong> Tuesday</p></li>
-<li><p>Not due until next Friday Feb 6 at 11:59 pm</p></li>
-<li><p><strong>HW 2</strong> will be assigned after class, due Feb 5 at 11:59pm.</p></li>
+<li><p><strong>Lab 1</strong> posted, will be the focus of lab tomorrow!</p></li>
+<li><p>Not due until next Monday, Jun 29 at 11:59 pm</p></li>
 <li><p>Please take advantage of office hours</p></li>
-<li><p>You will have a lab and HW due the week before the exam</p></li>
-</ul>
-</section>
-<section id="announcements-1" class="slide level2 smaller">
-<h2>Announcements</h2>
-<ul>
-<li>Free Tutoring available! Open sessions and individual sessions.</li>
-</ul>
-<table class="caption-top">
-<thead>
-<tr class="header">
-<th>Tutor</th>
-<th>Open Session Time</th>
-<th>Location/Zoom</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Jose Lopez</td>
-<td>Wednesdays 2-4pm</td>
-<td><a href="https://unc.zoom.us/j/94988210536">https://unc.zoom.us/j/94988210536</a></td>
-</tr>
-<tr class="even">
-<td>Jose Lopez</td>
-<td>Fridays 8-9:30am</td>
-<td><a href="https://unc.zoom.us/j/94988210536">https://unc.zoom.us/j/94988210536</a></td>
-</tr>
-<tr class="odd">
-<td>Molly Hoch</td>
-<td>Fridays 2-4pm</td>
-<td>McGavern Greenberg 3104E</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>Email <strong>bios600tutor@unc.edu</strong> to set up an individual appointment.</li>
-<li>I will remain on this zoom until 10:30 today</li>
-</ul>
-</section>
-<section id="exam-format" class="slide level2">
-<h2>Exam Format</h2>
-<ul>
-<li><p>Exam will be in class - on paper</p></li>
-<li><p>All you need is something to write with</p></li>
-<li><p>We will be splitting up into two classrooms</p>
-<ul>
-<li>McGavern 2301</li>
-<li>This classroom</li>
-</ul></li>
-<li><p>Formula sheet will be provided (will post on Canvas)</p></li>
-<li><p>Thursday before exam will be review class</p></li>
-</ul>
-</section>
-<section id="announcements-2" class="slide level2">
-<h2>Announcements</h2>
-<ul>
-<li><p>Lectures 1-7, Labs 1-4, HW 1-3, AE 1</p></li>
-<li><p>Exam format:</p>
-<ul>
-<li>Code Section</li>
-<li>Applied Section</li>
-<li>Conceptual Section (includes T/F)</li>
-</ul></li>
-<li><p>Study guide will be sent out</p></li>
-</ul>
-</section>
-<section id="rstudio-demo" class="slide level2">
-<h2>RStudio Demo</h2>
-<ul>
-<li><p>Starting a new Quarto document</p></li>
-<li><p>New header</p></li>
-<li><p>New chunk, running a chunk</p></li>
-<li><p>Setting <code>message</code> and <code>warning</code> to <code>false</code> when reading in data or loading a package.</p></li>
-<li><p><code>install.packages()</code> vs.&nbsp;<code>library()</code>: Baking analogy!</p></li>
-<li><p>Running code in Console vs.&nbsp;in your quarto document</p></li>
-<li><p>Questions?</p></li>
 </ul>
 </section>
 <section id="reading" class="slide level2">
@@ -233,6 +157,222 @@
 <li><p>How conditional probabilities relate to sensitivity, specificity, &amp; more!</p></li>
 <li><p>Example with Bayes’ theorem</p></li>
 <li><p>ROC Curves</p></li>
+</ul>
+</section>
+<section id="the-law-of-total-probability" class="slide level2">
+<h2>The law of total probability</h2>
+<ul>
+<li>Suppose we partition <span class="math inline">\(B\)</span> into mutually disjoint events <span class="math inline">\(B_1, B_2, \ldots B_k\)</span> that comprise the entire sample space.</li>
+<li>Then the <strong>law of total probability</strong> states that the probability of event <span class="math inline">\(A\)</span> is</li>
+</ul>
+<p><span class="math display">\[
+P(A) = P(A \cap B_1) + P(A \cap B_2) + \cdots + P(A \cap B_k)
+\]</span></p>
+<ul>
+<li>[Drawing]</li>
+</ul>
+</section>
+<section id="rewriting" class="slide level2">
+<h2>Rewriting…</h2>
+<ul>
+<li>We can rewrite these probabilities using the multiplicative rule as follows:</li>
+</ul>
+<p><span class="math display">\[
+\begin{aligned}
+P(A) &amp;= P(A \cap B_1) + P(A \cap B_2) + \cdots + P(A \cap B_k) \\
+     &amp;= P(A|B_1) P(B_1) + P(A|B_2)P(B_2) + \cdots + P(A | B_k)P(B_k)
+\end{aligned}
+\]</span></p>
+<ul>
+<li>Why rewrite? Sometimes <span class="math inline">\(P(A|B_1)\)</span>, <span class="math inline">\(P(B_1)\)</span> are easier to find than <span class="math inline">\(P(A \cap B_1)\)</span>, etc. We’ll find out WHY (i.e.&nbsp;what these probabilities represent) in our next lecture.</li>
+</ul>
+</section>
+<section id="the-law-of-total-probability-in-action" class="slide level2 smaller">
+<h2>The law of total probability in action</h2>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Coffee drinking</th>
+<th style="text-align: center;">Died? Yes</th>
+<th style="text-align: center;">Died? No</th>
+<th style="text-align: center;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>None</td>
+<td style="text-align: center;">1039</td>
+<td style="text-align: center;">5438</td>
+<td style="text-align: center;">6477</td>
+</tr>
+<tr class="even">
+<td>Med-Low</td>
+<td style="text-align: center;">4440</td>
+<td style="text-align: center;">29712</td>
+<td style="text-align: center;">29809</td>
+</tr>
+<tr class="odd">
+<td>High</td>
+<td style="text-align: center;">3601</td>
+<td style="text-align: center;">24934</td>
+<td style="text-align: center;">28535</td>
+</tr>
+<tr class="even">
+<td><strong>Total</strong></td>
+<td style="text-align: center;">9080</td>
+<td style="text-align: center;">60084</td>
+<td style="text-align: center;">64821</td>
+</tr>
+</tbody>
+</table>
+<p>What was the probability a randomly selected person died? Let’s find this using the law of total probability.</p>
+</section>
+<section id="the-law-of-total-probability-in-action-1" class="slide level2">
+<h2>The law of total probability in action</h2>
+<ul>
+<li><p>In an introductory statistics course, 50% of students were undergrads, 40% were master’s students, and 10% were PhD students.</p></li>
+<li><p>80% of the undergrads didn’t get enough sleep, 40% of the master’s students didn’t get enough sleep, and 10% of the PhD students didn’t get enough sleep.</p></li>
+<li><p>What is the probability that a randomly selected student in this class didn’t get enough sleep? Are sufficient sleep status and year independent?</p></li>
+</ul>
+<p><strong>Let’s solve this using the Law of Total Probability…</strong></p>
+</section>
+<section id="solution" class="slide level2">
+<h2>Solution</h2>
+</section>
+<section id="order-matters" class="slide level2">
+<h2>Order matters!</h2>
+<p>What is the probability that a random person…</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Coffee drinking</th>
+<th style="text-align: center;">Died? Yes</th>
+<th style="text-align: center;">Died? No</th>
+<th style="text-align: center;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>None</td>
+<td style="text-align: center;">1039</td>
+<td style="text-align: center;">5438</td>
+<td style="text-align: center;">6477</td>
+</tr>
+<tr class="even">
+<td>Med-Low</td>
+<td style="text-align: center;">4440</td>
+<td style="text-align: center;">29712</td>
+<td style="text-align: center;">29809</td>
+</tr>
+<tr class="odd">
+<td>High</td>
+<td style="text-align: center;">3601</td>
+<td style="text-align: center;">24934</td>
+<td style="text-align: center;">28535</td>
+</tr>
+<tr class="even">
+<td><strong>Total</strong></td>
+<td style="text-align: center;">9080</td>
+<td style="text-align: center;">60084</td>
+<td style="text-align: center;">64821</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>…was a high coffee drinker, given that they died?</p></li>
+<li><p>…died, given that they were a high coffee drinker?</p></li>
+</ul>
+<p>Are these two probabilities the same?</p>
+</section>
+<section id="bayes-rule" class="slide level2">
+<h2>Bayes’ rule</h2>
+<ul>
+<li><p>We can use <strong>Bayes’ rule</strong> to “reverse” the order of conditioning.</p></li>
+<li><p>By definition:</p></li>
+</ul>
+<p><span class="math display">\[P(A | B) = \frac{P(A \cap B)}{P(B)} = \frac{P(B | A) P(A)}{P(B)}\]</span></p>
+</section>
+<section id="bayes-rule-1" class="slide level2">
+<h2>Bayes’ rule</h2>
+<ul>
+<li>Using the definition of conditional probability, the law of total probability, and the multiplicative rule, we have</li>
+</ul>
+<p><span class="math display">\[\begin{align}
+P(A | B) = \frac{P(A \cap B)}{P(B)} &amp;= \frac{P(B | A) P(A)}{P(B)} \\
+&amp;= \frac{P(B | A) P(A) }{P(B | A) P(A) + P(B | A^C) P(A^C)}
+\end{align}\]</span></p>
+</section>
+<section id="what-if-a-is-partitioned-into-mutually-disjoint-events" class="slide level2">
+<h2>What if <span class="math inline">\(A\)</span> is partitioned into mutually disjoint events?</h2>
+<p>If instead <span class="math inline">\(A\)</span> is partitioned into <span class="math inline">\(k\)</span> mutually disjoint events that together comprise the entire sample space, Bayes’ rule gives:</p>
+<p><span class="math display">\[\begin{align}
+P(A | B) &amp;= \frac{P(B | A) P(A)}{P(B)} \\
+&amp;= \frac{P(B | A) P(A) }{P(B | A_1) P(A_1) + P(B | A_2) P(A_2) + \cdots P(B | A^k) P(A^k)}
+\end{align}\]</span></p>
+</section>
+<section id="bayes-rule-example" class="slide level2 smaller">
+<h2>Bayes’ rule Example</h2>
+<p>What is the probability that a random person in the coffee study…</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Coffee drinking</th>
+<th style="text-align: center;">Died? Yes</th>
+<th style="text-align: center;">Died? No</th>
+<th style="text-align: center;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>None</td>
+<td style="text-align: center;">1039</td>
+<td style="text-align: center;">5438</td>
+<td style="text-align: center;">6477</td>
+</tr>
+<tr class="even">
+<td>Med-Low</td>
+<td style="text-align: center;">4440</td>
+<td style="text-align: center;">29712</td>
+<td style="text-align: center;">29809</td>
+</tr>
+<tr class="odd">
+<td>High</td>
+<td style="text-align: center;">3601</td>
+<td style="text-align: center;">24934</td>
+<td style="text-align: center;">28535</td>
+</tr>
+<tr class="even">
+<td><strong>Total</strong></td>
+<td style="text-align: center;">9080</td>
+<td style="text-align: center;">60084</td>
+<td style="text-align: center;">64821</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>…was a high coffee drinker, given that he died?</li>
+<li>…died, given that he was a high coffee drinker?</li>
+</ul>
+<p>Let’s verify our results using Bayes’ rule.</p>
+</section>
+<section id="solution-1" class="slide level2">
+<h2>Solution</h2>
+</section>
+<section id="why-do-we-need-bayes-rule" class="slide level2">
+<h2>Why do we need Bayes’ rule?</h2>
+<ul>
+<li><p>If we have the row and column totals, we can directly calculate these conditional probabilities from a table.</p></li>
+<li><p>So, why would we even need Bayes’ rule?</p></li>
+<li><p>There are many cases where you would not have row/column totals.</p></li>
+</ul>
+</section>
+<section id="example-medical-diagnosis-with-missing-data" class="slide level2 smaller">
+<h2>Example: Medical diagnosis with missing data</h2>
+<ul>
+<li><p>Imagine a scenario where a rare disease is being studied.</p></li>
+<li><p>You may have detailed information about patients who tested positive for the disease (including their symptoms and demographics), but you might lack comprehensive data on the entire population’s symptom distribution or total number of people tested.</p></li>
+<li><p>In this case, you wouldn’t have the full row or column totals, making it necessary to use Bayes’ Theorem to infer probabilities based on the available conditional probabilities and the prevalence of the disease.</p></li>
+<li><p>This is common in situations where data is incomplete, either due to privacy concerns, lack of resources, or when dealing with emerging diseases.</p></li>
 </ul>
 </section>
 <section id="conditional-probabilities" class="slide level2 smaller">
@@ -367,7 +507,7 @@
 <li><p>Plug in quantities from step 4 and solve.</p></li>
 </ol>
 </section>
-<section id="bayes-rule" class="slide level2 smaller">
+<section id="bayes-rule-2" class="slide level2 smaller">
 <h2>Bayes’ rule</h2>
 <p>Recall Bayes’ rule below.</p>
 <p><span class="math display">\[
@@ -762,80 +902,42 @@ P(A | B) &amp;= \frac{P(B | A) P(A)}{P(B)} \\
       });
     </script>
     
-
     <script>
-
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-
       // slide changes (different for each slide format).
-
       (function () {
-
         // dispatch for htmlwidgets
-
         function fireSlideEnter() {
-
           const event = window.document.createEvent("Event");
-
           event.initEvent("slideenter", true, true);
-
           window.document.dispatchEvent(event);
-
         }
-
-    
 
         function fireSlideChanged(previousSlide, currentSlide) {
-
           fireSlideEnter();
 
-    
-
           // dispatch for shiny
-
           if (window.jQuery) {
-
             if (previousSlide) {
-
               window.jQuery(previousSlide).trigger("hidden");
-
             }
-
             if (currentSlide) {
-
               window.jQuery(currentSlide).trigger("shown");
-
             }
-
           }
-
         }
-
-    
 
         // hookup for slidy
-
         if (window.w3c_slidy) {
-
           window.w3c_slidy.add_observer(function (slide_num) {
-
             // slide_num starts at position 1
-
             fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-
           });
-
         }
 
-    
-
       })();
-
     </script>
-
-    
 
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {

@@ -98,7 +98,6 @@
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="lec-2-nature-data-updated_AGH_files/libs/revealjs/dist/theme/quarto-2740581606dc327e82f18f789b69d8a0.css">
-  <link rel="stylesheet" href="reveal-custom.css">
   <link href="lec-2-nature-data-updated_AGH_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="lec-2-nature-data-updated_AGH_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
   <link href="lec-2-nature-data-updated_AGH_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
@@ -197,7 +196,7 @@
 
 <section id="title-slide" class="quarto-title-block center">
   <h1 class="title">Lecture 2: The nature of data</h1>
-  <p class="subtitle">BIOS 600 - Spring 2026</p>
+  <p class="subtitle">BIOS 600 - Summer Session II 2026</p>
 
 <div class="quarto-title-authors">
 </div>
@@ -212,14 +211,8 @@
 <section id="announcements" class="slide level2">
 <h2>Announcements</h2>
 <ul>
-<li><strong>Lab #1</strong> due this Friday, Jan 16 at 11:59pm.</li>
-<li><strong>HW #1</strong> posted today. Due next Thursday Jan 22 at 11:59pm.</li>
-<li><strong>Reminder</strong> Office hours today for Dr.&nbsp;Howard from 9:45-10:45 in McGavern-Greenberg 3101A</li>
-<li>Please reach out to me or TAs if you need assistance outside of office hours
-<ul>
-<li><strong>Abby Foes</strong> — agfoes@unc.edu</li>
-<li><strong>Alex Akushevich</strong> — aku@unc.edu</li>
-</ul></li>
+<li><strong>HW #1</strong> due today at 11:59pm.</li>
+<li>Please reach out to me if you need assistance outside of office hours</li>
 </ul>
 </section>
 <section id="download-or-print-notes-to-pdf" class="slide level2 smaller">
@@ -245,45 +238,6 @@
 <li>Tap Print (this allows you to change the orientation)</li>
 <li>In the print preview, tap the Share button again to save the PDF to Files or another app.</li>
 </ol>
-</section>
-<section>
-<section id="survey-results" class="title-slide slide level1 center">
-<h1>Survey results</h1>
-
-</section>
-<section id="tutoringoffice-hours" class="slide level2">
-<h2>Tutoring/Office Hours</h2>
-<ul>
-<li>Interest in office hours
-<ul>
-<li>Monday morning</li>
-<li>Monday afternoon</li>
-<li>Wednesday afternoon</li>
-<li>Friday afternoon</li>
-</ul></li>
-<li>Updated office hours will be posted to Canvas later today</li>
-</ul>
-</section>
-<section id="interests" class="slide level2">
-<h2>Interests</h2>
-<ul>
-<li>clinical research, public health policy, social determinants of health, reproductive health, environmental engineering, environmental health, biotechnology, nutrition, global health, health equities, molecular genetics, implementation science, chemistry, health economics, social sciences, public health law, data science, biology, gut microbiome, computational ’omics, water and sanitation health, ecology, healthcare administration &amp; quality improvement, medicine, epidemiology, pediatrics, maternal health, sustainability, toxicology, physical therapy &amp; more!</li>
-</ul>
-</section>
-<section id="hopes" class="slide level2">
-<h2>Hopes</h2>
-<ul>
-<li>Getting more comfortable and confident coding in R, what you can do with biostatistics, coding and biostatistics skills for your research projects here in Gillings and for your future careers, data visualization, data literacy, refine writing and data analysis skills, how to analyze + interpret data accurately, &amp; more</li>
-</ul>
-</section>
-<section id="r-supportive-learning" class="slide level2 smaller">
-<h2>R + supportive learning</h2>
-<ul>
-<li><p>R experience: Mostly never used R before! Many beginners, a few with more experience</p></li>
-<li><p>What supports learning: step-by-step examples + independent practice, working in groups, hands-on coding, visuals, video recordings, repetition, practice problems, slides with photos + fun examples, examples in class that reflect the lab</p></li>
-<li><p>Many shared being nervous about coding and learning statistics in general. That’s okay - we are here to support you!</p></li>
-<li><p>Remember you can post a question at any time on Ed Discussion. You can even post anonymously. The teaching team is here to help.</p></li>
-</ul>
 </section>
 <section id="review-from-last-time" class="slide level2">
 <h2>Review from last time</h2>
@@ -340,9 +294,9 @@
 <li>ggplot2 is the data visualization package in the tidyverse</li>
 <li>Inspired by <em>The Grammar of Graphics</em> (Wilkinson)</li>
 </ul>
-<p><img data-src="images/lec-2/gg.png"></p>
+<p><img data-src="images/lec-2/gg.png" alt="A picture of a book called The Grammar of Graphics, accompanied by an image with seven stacked rectangles, labeled from top to bottom as Theme Coordinates Statistics Facets Geometries Aesthetics and Data."></p>
 </div><div class="column" style="width:50%;">
-<p><img data-src="images/lec-2/ggplot2.png"></p>
+<p><img data-src="images/lec-2/ggplot2.png" alt="A black hexagon with multi-colored polka dots and the word tidyverse; a grey triangle extends from the upper-right of the black hexagon to a grey hexagon with the word g g plot 2 and a series of connected blue dots, going from light blue to dark blue."></p>
 </div></div>
 </section>
 <section id="what-is-a-grammar-of-graphics" class="slide level2">
@@ -351,7 +305,7 @@
 <li>A system allowing for concise description of graphical components</li>
 </ul>
 
-<img data-src="images/lec-2/gg2.png" width="300" class="r-stretch"></section>
+<img data-src="images/lec-2/gg2.png" alt="an image with seven stacked rectangles, labeled from top to bottom as Theme Coordinates Statistics Facets Geometries Aesthetics and Data." width="300" class="r-stretch"></section>
 <section id="what-is-a-grammar-of-graphics-1" class="slide level2">
 <h2>What is a Grammar of Graphics?</h2>
 <p>A statistical graphic is</p>
@@ -361,13 +315,8 @@
 <li>using <strong>geometries</strong> (points, lines, bars, etc.)</li>
 <li>mapped onto a specific <strong>coordinate</strong> and/or <strong>facet</strong> system</li>
 </ul>
-</section></section>
-<section>
-<section id="types-of-data" class="title-slide slide level1 small center">
-<h1>Types of data</h1>
-
 </section>
-<section id="categorical-data" class="slide level2">
+<section id="categorical-data" class="slide level2 smaller">
 <h2>Categorical data</h2>
 <div class="columns">
 <div class="column" style="width:50%;">
@@ -406,8 +355,23 @@
 </section>
 <section id="identifying-data-types" class="slide level2">
 <h2>Identifying data types</h2>
-
-<img data-src="images/lec-2/tab1.PNG" width="400" class="r-stretch"></section>
+<p><img data-src="images/lec-2/tab1.PNG"> <!-- Here are some sample baseline characteristics of black and white participants from the ACCORD trial. --></p>
+<!-- | Variable | Black Participants n=1937 | White Participants n=6372 | -->
+<!-- |----|----|----| -->
+<!-- | Age, yr | 62 $\pm$ 6 | 63 $\pm$ 7 | -->
+<!-- | Female, n (%) | 967 (50) | 2156 (34) | -->
+<!-- | Education |  |  | -->
+<!-- | Less than high school graduate, n (%) | 401 (21) | 631 (10) | -->
+<!-- | High school graduate (or GED), n (%) | 591 (31) | 1635 (26) | -->
+<!-- | Some college or technical school, n (%) | 615 (32) | 2286 (36) | -->
+<!-- | College graduate or more, n (%) | 326 (17) | 1817 (29) | -->
+<!-- | Insurance coverage, n (%) | 1622 (84) | 5746 (90) | -->
+<!-- | Systolic BP, mm Hg | 139 $\pm$ 17 | 135 $\pm$ 16 | -->
+<!-- | Body mass index, kg/m\^2 | 32 $\pm$ 5 | 33 $\pm$ 5 | -->
+<!-- | Hemoglobin A1c, % | 8.2 $\pm$ 1.1 | 8.2 $\pm$ 0.9 | -->
+<!-- | Current smoking, n (%) | 792 (48) | 3168 (57) | -->
+<!-- The values are presented as number (percentage) or mean $\pm$ SD. -->
+</section>
 <section id="identifying-data-types-1" class="slide level2">
 <h2>Identifying data types</h2>
 <div class="callout callout-tip callout-titled callout-style-default">
@@ -472,11 +436,11 @@
 </div>
 </div><div class="column" style="font-size: 70%;">
 <ul>
-<li>Summarizes numerical variable by categories</li>
-<li>Visually depict frequency distributions for nominal or ordinal data</li>
-<li>Bars represent either frequency or relative frequency by category</li>
-<li>Separation between bars (non-continuous data)</li>
-<li>May contain error bars to indicate estimate variability</li>
+<li><p>Summarizes numerical variable by categories</p></li>
+<li><p>Visually depict frequency distributions for nominal or ordinal data</p></li>
+<li><p>Bars represent either frequency or relative frequency by category</p></li>
+<li><p>Separation between bars (non-continuous data)</p></li>
+<li><p>May contain error bars to indicate estimate variability</p></li>
 </ul>
 </div></div>
 </section>
@@ -495,11 +459,11 @@
 </div>
 </div><div class="column" style="font-size: 70%;">
 <ul>
-<li>Summarizes numerical variable</li>
-<li>Five-number summary: sample minimum, 25th percentile, median, 75th percentile, sample maximum</li>
-<li>Outliers</li>
-<li>Spread and skew</li>
-<li>(More on all these later!)</li>
+<li><p>Summarizes numerical variable</p></li>
+<li><p>Five-number summary: sample minimum, 25th percentile, median, 75th percentile, sample maximum</p></li>
+<li><p>Outliers</p></li>
+<li><p>Spread and skew</p></li>
+<li><p>(More on all these later!)</p></li>
 </ul>
 </div></div>
 </section>
@@ -518,10 +482,10 @@
 </div>
 </div><div class="column" style="font-size: 70%;">
 <ul>
-<li>Summarizes numerical variable</li>
-<li>Frequency distribution for discrete or continuous numerical data</li>
-<li>Outliers</li>
-<li>Each bar is proportional to the frequency of the categories</li>
+<li><p>Summarizes numerical variable</p></li>
+<li><p>Frequency distribution for discrete or continuous numerical data</p></li>
+<li><p>Outliers</p></li>
+<li><p>Each bar is proportional to the frequency of the categories</p></li>
 </ul>
 </div></div>
 </section>
@@ -540,9 +504,9 @@
 </div>
 </div><div class="column" style="font-size: 70%;">
 <ul>
-<li>Summarizes numerical variable (most often used across time)</li>
-<li>Each value on x-axis corresponds to only one measurement on y-axis (and vice versa)</li>
-<li>Often used to depict change over time and connected with line.</li>
+<li><p>Summarizes numerical variable (most often used across time)</p></li>
+<li><p>Each value on x-axis corresponds to only one measurement on y-axis (and vice versa)</p></li>
+<li><p>Often used to depict change over time and connected with line.</p></li>
 </ul>
 <div title="Question">
 <div class="callout callout-warning callout-titled callout-style-default">
@@ -593,7 +557,7 @@
 <section id="reminder-the-population-vs.-a-sample" class="slide level2 smaller">
 <h2>Reminder: the population vs.&nbsp;a sample</h2>
 
-<img data-src="images/lec-2/poly.PNG" width="300" class="r-stretch"><ul>
+<img data-src="images/lec-2/poly.PNG" alt="Article titled Polysaccharide Conjugate Vaccine against Pneumococcal Pneumonia in Adults" width="300" class="r-stretch"><ul>
 <li><p><strong>Population and research question</strong>: Is the PCV13 vaccine effective against community acquired pneumonia in <strong>adults aged 65 or older</strong>?</p></li>
 <li><p>Sample: 84,496 adults 65 years of age or older recruited in a trial between September 2008 and January 2010 and 101 sites throughout the Netherlands.</p></li>
 </ul>
@@ -623,9 +587,9 @@
 <li><p>Sample <strong>statistic</strong> collected: proportion of vaccinated adults in the trial who became ill with community-acquired pneumonia</p></li>
 </ul>
 </div><div class="column" style="width:60%;">
-<p><img data-src="images/lec-2/poly.PNG"></p>
+<p><img data-src="images/lec-2/poly.PNG" alt="Article titled Polysaccharide Conjugate Vaccine against PNeumococcal Pneumonia in Adults"></p>
 </div></div>
-</section></section>
+</section>
 <section>
 <section id="numerical-summary-statistics" class="title-slide slide level1 center">
 <h1>Numerical summary statistics</h1>
@@ -665,14 +629,14 @@
 <section id="are-point-estimates-of-location-enough" class="slide level2">
 <h2>Are point estimates of location enough?</h2>
 
-<img data-src="images/lec-2/irma.png" width="700" class="r-stretch"></section>
+<img data-src="images/lec-2/irma.png" alt="A map of the Caribbean, central America, and the southeastern united states with the path of a hurricane superimposed over it. The path starts in Puerto Rico and ends in Florida, with a cone of potential track area getting steadily wider as the path goes northward." class="r-stretch"></section>
 <section id="skewness" class="slide level2 smaller">
 <h2>Skewness</h2>
 <div class="cell">
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="lec-2-nature-data-updated_AGH_files/figure-revealjs/unnamed-chunk-8-1.png" style="height:40.0%" width="960"></p>
+<p><img data-src="lec-2-nature-data-updated_AGH_files/figure-revealjs/unnamed-chunk-8-1.png" style="height:40.0%" alt="A histogram with values clustered around 0 and a long right tail." width="960"></p>
 </figure>
 </div>
 </div>
@@ -722,8 +686,79 @@
 </section>
 <section id="lets-go-back-to-this-descriptive-table" class="slide level2">
 <h2>Let’s go back to this descriptive table</h2>
-
-<img data-src="images/lec-2/tab1.PNG" width="400" class="r-stretch"></section>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Black Participants n=1937</th>
+<th>White Participants n=6372</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Age, yr</td>
+<td>62 <span class="math inline">\(\pm\)</span> 6</td>
+<td>63 <span class="math inline">\(\pm\)</span> 7</td>
+</tr>
+<tr class="even">
+<td>Female, n (%)</td>
+<td>967 (50)</td>
+<td>2156 (34)</td>
+</tr>
+<tr class="odd">
+<td>Education</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Less than high school graduate, n (%)</td>
+<td>401 (21)</td>
+<td>631 (10)</td>
+</tr>
+<tr class="odd">
+<td>High school graduate (or GED), n (%)</td>
+<td>591 (31)</td>
+<td>1635 (26)</td>
+</tr>
+<tr class="even">
+<td>Some college or technical school, n (%)</td>
+<td>615 (32)</td>
+<td>2286 (36)</td>
+</tr>
+<tr class="odd">
+<td>College graduate or more, n (%)</td>
+<td>326 (17)</td>
+<td>1817 (29)</td>
+</tr>
+<tr class="even">
+<td>Insurance coverage, n (%)</td>
+<td>1622 (84)</td>
+<td>5746 (90)</td>
+</tr>
+<tr class="odd">
+<td>Systolic BP, mm Hg</td>
+<td>139 <span class="math inline">\(\pm\)</span> 17</td>
+<td>135 <span class="math inline">\(\pm\)</span> 16</td>
+</tr>
+<tr class="even">
+<td>Body mass index, kg/m^2</td>
+<td>32 <span class="math inline">\(\pm\)</span> 5</td>
+<td>33 <span class="math inline">\(\pm\)</span> 5</td>
+</tr>
+<tr class="odd">
+<td>Hemoglobin A1c, %</td>
+<td>8.2 <span class="math inline">\(\pm\)</span> 1.1</td>
+<td>8.2 <span class="math inline">\(\pm\)</span> 0.9</td>
+</tr>
+<tr class="even">
+<td>Current smoking, n (%)</td>
+<td>792 (48)</td>
+<td>3168 (57)</td>
+</tr>
+</tbody>
+</table>
+<p>The values are presented as number (percentage) or mean <span class="math inline">\(\pm\)</span> SD.</p>
+</section>
 <section id="variance" class="slide level2 smaller">
 <h2>Variance</h2>
 <ul>
@@ -805,7 +840,7 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="lec-2-nature-data-updated_AGH_files/figure-revealjs/unnamed-chunk-9-1.png" width="960"></p>
+<p><img data-src="lec-2-nature-data-updated_AGH_files/figure-revealjs/unnamed-chunk-9-1.png" alt="A histogram with most values around 0 and a long right tail." width="960"></p>
 </figure>
 </div>
 </div>
@@ -815,7 +850,7 @@
 <div class="cell-output-display">
 <div>
 <figure>
-<p><img data-src="lec-2-nature-data-updated_AGH_files/figure-revealjs/unnamed-chunk-10-1.png" width="960"></p>
+<p><img data-src="lec-2-nature-data-updated_AGH_files/figure-revealjs/unnamed-chunk-10-1.png" alt="A histogram that is symmetric around 2." width="960"></p>
 </figure>
 </div>
 </div>
@@ -829,7 +864,7 @@
 <section id="group-discussion" class="slide level2 smaller">
 <h2>Group discussion</h2>
 <ul>
-<li><p>Go to this paper: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8851219/pdf/sur.2020.429.pdf">https://pmc.ncbi.nlm.nih.gov/articles/PMC8851219/pdf/sur.2020.429.pdf</a> (Also linked on Canvas)</p>
+<li><p>Go to this paper: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8851219/pdf/sur.2020.429.pdf" class="uri">https://pmc.ncbi.nlm.nih.gov/articles/PMC8851219/pdf/sur.2020.429.pdf</a> (Also linked on Canvas)</p>
 <ul>
 <li>Exploratory data analysis of 2017 Nationwide Inpatient Sample (NIS) from the Healthcare Cost and Utilization Project (HCUP).</li>
 </ul></li>
@@ -852,10 +887,10 @@
 <li>Quantiles, outliers, standard deviation vs.&nbsp;variance, Chebyshev’s inequality</li>
 </ul>
 </section>
-<section id="sneak-peek-for-lab-next-week" class="slide level2">
-<h2>Sneak peek for lab next week</h2>
+<section id="sneak-peek-for-lab-on-friday" class="slide level2">
+<h2>Sneak peek for lab on Friday</h2>
 <ul>
-<li>For lab next week, you’ll need to install the <code>tidyverse</code> package. Do so with the following in your Console:</li>
+<li>For lab on Friday, you’ll need to install the <code>tidyverse</code> package. Do so with the following in your Console:</li>
 </ul>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -864,7 +899,7 @@
 <section id="next-up" class="slide level2">
 <h2>Next up</h2>
 <ul>
-<li>Tuesday’s Class: Probability basics</li>
+<li>Tomorrow’s Class: Probability basics, begin conditional probability</li>
 </ul>
 
 </section></section>
@@ -1085,80 +1120,42 @@
       });
     </script>
     
-
     <script>
-
       // htmlwidgets need to know to resize themselves when slides are shown/hidden.
-
       // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
-
       // slide changes (different for each slide format).
-
       (function () {
-
         // dispatch for htmlwidgets
-
         function fireSlideEnter() {
-
           const event = window.document.createEvent("Event");
-
           event.initEvent("slideenter", true, true);
-
           window.document.dispatchEvent(event);
-
         }
-
-    
 
         function fireSlideChanged(previousSlide, currentSlide) {
-
           fireSlideEnter();
 
-    
-
           // dispatch for shiny
-
           if (window.jQuery) {
-
             if (previousSlide) {
-
               window.jQuery(previousSlide).trigger("hidden");
-
             }
-
             if (currentSlide) {
-
               window.jQuery(currentSlide).trigger("shown");
-
             }
-
           }
-
         }
-
-    
 
         // hookup for slidy
-
         if (window.w3c_slidy) {
-
           window.w3c_slidy.add_observer(function (slide_num) {
-
             // slide_num starts at position 1
-
             fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
-
           });
-
         }
 
-    
-
       })();
-
     </script>
-
-    
 
     <script id="quarto-html-after-body" type="application/javascript">
       window.document.addEventListener("DOMContentLoaded", function (event) {

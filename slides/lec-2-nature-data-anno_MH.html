@@ -1,0 +1,1401 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lecture 2: The nature of data</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="lec-2-nature-data-anno_MH_files/libs/clipboard/clipboard.min.js"></script>
+<script src="lec-2-nature-data-anno_MH_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="lec-2-nature-data-anno_MH_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="lec-2-nature-data-anno_MH_files/libs/quarto-html/popper.min.js"></script>
+<script src="lec-2-nature-data-anno_MH_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="lec-2-nature-data-anno_MH_files/libs/quarto-html/anchor.min.js"></script>
+<link href="lec-2-nature-data-anno_MH_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="lec-2-nature-data-anno_MH_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="lec-2-nature-data-anno_MH_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="lec-2-nature-data-anno_MH_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="lec-2-nature-data-anno_MH_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lecture 2: The nature of data</h1>
+<p class="subtitle lead">BIOS 600 - Summer Session II 2026</p>
+</div>
+
+
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Authors</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+  </div>
+
+<div class="quarto-title-meta">
+
+      
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.2     ✔ tibble    3.3.0
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.1.0     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+</div>
+<section id="reading" class="level2">
+<h2 class="anchored" data-anchor-id="reading">Reading</h2>
+<ul>
+<li>No reading for today</li>
+</ul>
+</section>
+<section id="announcements" class="level2">
+<h2 class="anchored" data-anchor-id="announcements">Announcements</h2>
+<ul>
+<li><strong>HW #1</strong> due today at 11:59pm.</li>
+<li>Please reach out to me if you need assistance outside of office hours</li>
+</ul>
+</section>
+<section id="download-or-print-notes-to-pdf" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="download-or-print-notes-to-pdf">Download or print notes to PDF</h2>
+<p>If you’d like to export this presentation to a PDF, do the following in Chrome or Firefox:</p>
+<ol type="1">
+<li>Toggle into Print View using the E key.</li>
+<li>Open the in-browser print dialog (CTRL/CMD+P)</li>
+<li>Change the Destination to Save as PDF.</li>
+<li>Change the Layout to Landscape.</li>
+<li>Change the Margins to None.</li>
+<li>Enable the Background graphics option.</li>
+<li>Click Save.</li>
+</ol>
+</section>
+<section id="download-or-print-notes-to-ipad" class="level2 small">
+<h2 class="small anchored" data-anchor-id="download-or-print-notes-to-ipad">Download or print notes to Ipad</h2>
+<p>If you’d like to export this presentation to a PDF, do the following:</p>
+<ol type="1">
+<li>Open the slides in Safari from Canvas</li>
+<li>Tap the Share button</li>
+<li>Tap Options and select PDF</li>
+<li>Tap Print (this allows you to change the orientation)</li>
+<li>In the print preview, tap the Share button again to save the PDF to Files or another app.</li>
+</ol>
+</section>
+<section id="review-from-last-time" class="level2">
+<h2 class="anchored" data-anchor-id="review-from-last-time">Review from last time</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Populations and samples
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Consider the following research questions:</p>
+<ol type="1">
+<li>What is the average mercury content in swordfish in the Atlantic Ocean?</li>
+<li>Over the last five years, what is the average time to complete a degree for UNC undergrads?</li>
+<li>Does a new drug reduce the number of deaths in patients with severe heart disease?</li>
+</ol>
+<p>In small groups, identify the target population and what represents an individual case for each of the questions above.</p>
+</div>
+</div>
+</section>
+<section id="exploratory-data-analysis-eda" class="level2">
+<h2 class="anchored" data-anchor-id="exploratory-data-analysis-eda">Exploratory data analysis (EDA)</h2>
+<ul>
+<li>Initial data analysis approach that summarizes main characteristics of dataset</li>
+<li>Often visual or in the form of basic summary statistics</li>
+</ul>
+</section>
+<section id="data-visualization" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="data-visualization">Data visualization</h2>
+<ul>
+<li>The creation and study of the visual representation of data</li>
+<li>Many tools available (R is popular; many systems within R for data visualization)</li>
+<li>Creating visualizations helps us see patterns and identify potential data quality issues</li>
+<li>We will focus on <strong>ggplot2</strong>, a component of the <strong>tidyverse</strong></li>
+</ul>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>“The simple graph has brought more information to the data analyst’s mind than any other device.” - John Tukey</p>
+</div>
+</div>
+</div>
+</section>
+<section id="ggplot2-in-tidyverse" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="ggplot2-in-tidyverse">ggplot2 in tidyverse</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<ul>
+<li>The tidyverse is a group of R packages designed for data science</li>
+<li>All tidyverse packages share an underlying design philosophy</li>
+<li>ggplot2 is the data visualization package in the tidyverse</li>
+<li>Inspired by <em>The Grammar of Graphics</em> (Wilkinson)</li>
+</ul>
+<p><img src="images/lec-2/gg.png" class="img-fluid" alt="A picture of a book called The Grammar of Graphics, accompanied by an image with seven stacked rectangles, labeled from top to bottom as Theme Coordinates Statistics Facets Geometries Aesthetics and Data."></p>
+</div><div class="column" style="width:50%;">
+<p><img src="images/lec-2/ggplot2.png" class="img-fluid" alt="A black hexagon with multi-colored polka dots and the word tidyverse; a grey triangle extends from the upper-right of the black hexagon to a grey hexagon with the word g g plot 2 and a series of connected blue dots, going from light blue to dark blue."></p>
+</div>
+</div>
+</section>
+<section id="what-is-a-grammar-of-graphics" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-a-grammar-of-graphics">What is a Grammar of Graphics?</h2>
+<ul>
+<li>A system allowing for concise description of graphical components</li>
+</ul>
+<p><img src="images/lec-2/gg2.png" class="img-fluid" alt="an image with seven stacked rectangles, labeled from top to bottom as Theme Coordinates Statistics Facets Geometries Aesthetics and Data." width="300"></p>
+</section>
+<section id="what-is-a-grammar-of-graphics-1" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-a-grammar-of-graphics-1">What is a Grammar of Graphics?</h2>
+<p>A statistical graphic is</p>
+<ul>
+<li>data (which may be statistically summarized or transformed)</li>
+<li><strong>mapped</strong> to <strong>aesthetic</strong> attributes (color, size, xy-position, etc.)</li>
+<li>using <strong>geometries</strong> (points, lines, bars, etc.)</li>
+<li>mapped onto a specific <strong>coordinate</strong> and/or <strong>facet</strong> system</li>
+</ul>
+</section>
+<section id="categorical-data" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="categorical-data">Categorical data</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Nominal data</strong></p>
+<ul>
+<li>Named categories without numeric meaning</li>
+<li>Ex: Only two categories: binary or dichotomous</li>
+<li>Ex: breast cancer status, blood type, health insurance provider type, etc.</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><strong>Ordinal data</strong></p>
+<ul>
+<li>Ordered categories, but differences between values not easily measured</li>
+<li>Relative comparisons made about differences between levels</li>
+<li>Stage of colon cancer, Likert scale, frequency of smoking (often, sometimes, rarely, never), etc.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="numerical-data" class="level2">
+<h2 class="anchored" data-anchor-id="numerical-data">Numerical data</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p><strong>Count</strong> or <strong>rank</strong> data</p>
+<ul>
+<li>Discrete counts or ranks.</li>
+<li>Number of alcoholic drinks consumed in the past week, numerical rank of cancers by mortality, etc.</li>
+</ul>
+</div><div class="column" style="width:50%;">
+<p><strong>Continuous data</strong></p>
+<ul>
+<li>Measurable quantities where difference between possible values can be arbitrarily small</li>
+<li>Data may lie within a range or be unbounded</li>
+<li>Birth weight, BMI, ppm ozone, etc.</li>
+</ul>
+</div>
+</div>
+</section>
+<section id="identifying-data-types" class="level2">
+<h2 class="anchored" data-anchor-id="identifying-data-types">Identifying data types</h2>
+<!-- ![](images/lec-2/tab1.PNG) -->
+<p>Here are some sample baseline characteristics of black and white participants from the ACCORD trial.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Black Participants n=1937</th>
+<th>White Participants n=6372</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Age, yr</td>
+<td>62 <span class="math inline">\(\pm\)</span> 6</td>
+<td>63 <span class="math inline">\(\pm\)</span> 7</td>
+</tr>
+<tr class="even">
+<td>Female, n (%)</td>
+<td>967 (50)</td>
+<td>2156 (34)</td>
+</tr>
+<tr class="odd">
+<td>Education</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Less than high school graduate, n (%)</td>
+<td>401 (21)</td>
+<td>631 (10)</td>
+</tr>
+<tr class="odd">
+<td>High school graduate (or GED), n (%)</td>
+<td>591 (31)</td>
+<td>1635 (26)</td>
+</tr>
+<tr class="even">
+<td>Some college or technical school, n (%)</td>
+<td>615 (32)</td>
+<td>2286 (36)</td>
+</tr>
+<tr class="odd">
+<td>College graduate or more, n (%)</td>
+<td>326 (17)</td>
+<td>1817 (29)</td>
+</tr>
+<tr class="even">
+<td>Insurance coverage, n (%)</td>
+<td>1622 (84)</td>
+<td>5746 (90)</td>
+</tr>
+<tr class="odd">
+<td>Systolic BP, mm Hg</td>
+<td>139 <span class="math inline">\(\pm\)</span> 17</td>
+<td>135 <span class="math inline">\(\pm\)</span> 16</td>
+</tr>
+<tr class="even">
+<td>Body mass index, kg/m^2</td>
+<td>32 <span class="math inline">\(\pm\)</span> 5</td>
+<td>33 <span class="math inline">\(\pm\)</span> 5</td>
+</tr>
+<tr class="odd">
+<td>Hemoglobin A1c, %</td>
+<td>8.2 <span class="math inline">\(\pm\)</span> 1.1</td>
+<td>8.2 <span class="math inline">\(\pm\)</span> 0.9</td>
+</tr>
+<tr class="even">
+<td>Current smoking, n (%)</td>
+<td>792 (48)</td>
+<td>3168 (57)</td>
+</tr>
+</tbody>
+</table>
+<p>The values are presented as number (percentage) or mean <span class="math inline">\(\pm\)</span> SD.</p>
+</section>
+<section id="identifying-data-types-1" class="level2">
+<h2 class="anchored" data-anchor-id="identifying-data-types-1">Identifying data types</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>In small groups, discuss the following:
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>According to the table on the previous slide, what kind of data types are the following variables?</p>
+<ul>
+<li>Age</li>
+<li>Female</li>
+<li>Education</li>
+<li>Hemoglobin A1c</li>
+<li>Current smoking</li>
+</ul>
+</div>
+</div>
+<p>Use the convention “Numerical; continuous” or “Categorical; Ordinal”, etc.</p>
+</section>
+<section id="complications" class="level2">
+<h2 class="anchored" data-anchor-id="complications">Complications</h2>
+<p>In designing a study, what variable should we use for smoking exposure?</p>
+<ul>
+<li>Binary variable yes/no?</li>
+<li>Ordinal current/former/never smoker?</li>
+<li>Discrete number of cigarettes smoked in past week?</li>
+<li>Continuous measurement of lifetime pack-years?</li>
+</ul>
+<p>In the real world, decisions are made based on sample size, statistical power, likelihood of measurement error, or simply convenience (this happens a lot!)</p>
+</section>
+<section id="visualizing-cdc-data" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="visualizing-cdc-data">Visualizing CDC data</h2>
+<p>Let’s take a look at some basic visualizations using state-level data collected by the Center for Disease Control (CDC). We’ll examine the following variables:</p>
+<ul>
+<li>State (categorical; nominal)</li>
+<li>Human Development Index (HDI) (categorical; ordinal)
+<ul>
+<li>a composite index that measures a country’s average achievements in health, knowledge, and standard of living</li>
+</ul></li>
+<li>Region (categorical; nominal)</li>
+<li>Adult obesity % (numerical; continuous)</li>
+<li>Adequate aerobic activity % (numerical; continuous)</li>
+</ul>
+</section>
+<section id="bar-charts" class="level2">
+<h2 class="anchored" data-anchor-id="bar-charts">Bar charts</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>cdc <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://karamccor.github.io/b6002/labs/data/cdc_cleaned.csv"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># cdc &lt;- read.csv("https://www2.stat.duke.edu/courses/Spring21/sta102.001/labs/data/cdc_cleaned.csv")</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># write.csv(cdc, "C:/Users/kmcco/OneDrive - University of North Carolina at Chapel Hill/Documents/UNC_Teaching/fall2024/bios600-f24/labs/data/cdc_cleaned.csv")</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig.alt: "Bar chart with four bars, x-axis is region, y-axis is count. The title is Number of US States by Census Region; the Midwest bar has value 12, the Northeast bar has value 10, the South bar has value 15, and the West bar has value 13."</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> cdc, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Region)) <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Number of US States by Census Region"</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Region"</span>, <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lec-2-nature-data-anno_MH_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p>Summarizes numerical variable by categories</p></li>
+<li><p>Visually depict frequency distributions for nominal or ordinal data</p></li>
+<li><p>Bars represent either frequency or relative frequency by category</p></li>
+<li><p>Separation between bars (non-continuous data)</p></li>
+<li><p>May contain error bars to indicate estimate variability</p></li>
+</ul>
+</section>
+<section id="box-plots" class="level2">
+<h2 class="anchored" data-anchor-id="box-plots">Box plots</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> cdc, <span class="fu">aes</span>(<span class="at">x =</span> HDI, <span class="at">y =</span> Obesity)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()<span class="sc">+</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Adult Obesity (%) by State HDI"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"HDI"</span>, <span class="at">y =</span> <span class="st">"Adult Obesity (%)"</span>) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lec-2-nature-data-anno_MH_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" alt="A graph with title Adult Obesity Percentage by State HDI, with x-axis titled HDI and y-axis titled percent adult obesity. Over Bottom ten on the x axis there is a white box going from about 33 to 36 on the y axis, with a black line through it around 35 and a black dot below it at 28. Over Middle there is a white box going from about 27.5 to 32 on the y axis with a black line through it around 30. Over Top ten there is a white box going from about 24 to 28 on the y axis with a black line through it around 26." width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p>Summarizes numerical variable</p></li>
+<li><p>Five-number summary: sample minimum, 25th percentile, median, 75th percentile, sample maximum</p></li>
+<li><p>Outliers</p></li>
+<li><p>Spread and skew</p></li>
+<li><p>(More on all these later!)</p></li>
+</ul>
+</section>
+<section id="histograms" class="level2">
+<h2 class="anchored" data-anchor-id="histograms">Histograms</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig.alt: "A histogram with 9 bars titled Distribution of adult obesity percentage by state, with x-axis titled adult obesity percentage and y-axis titled count. The highest bar goes from 31%-33% and has count 14, and the lowest bar goes from 21%-23% and has count 1."</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> cdc, <span class="fu">aes</span>(<span class="at">x =</span> Obesity)) <span class="sc">+</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">color =</span> <span class="st">"darkblue"</span>, <span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">binwidth =</span> <span class="dv">2</span>)<span class="sc">+</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Adult Obesity (%) by State"</span>,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Adult Obesity (%)"</span>, <span class="at">y =</span> <span class="st">"Count"</span>) <span class="sc">+</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">18</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lec-2-nature-data-anno_MH_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p>Summarizes numerical variable</p></li>
+<li><p>Frequency distribution for discrete or continuous numerical data</p></li>
+<li><p>Outliers</p></li>
+<li><p>Each bar is proportional to the frequency of the categories</p></li>
+</ul>
+</section>
+<section id="line-plots" class="level2">
+<h2 class="anchored" data-anchor-id="line-plots">Line plots</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig.alt: "A line plot with title Obesity by State, with x-axis labeled state and y-axis labeled adult obesity percentage. Above Alabama, there is a black dot around 26%, then a line going down from that dot to another above Alaska at around 31.5%, then a line going down from that dot to another above Arizona at around 29%, and then a line going up from that dot to another above Arkansas at around 36%."</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> cdc[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,], <span class="fu">aes</span>(<span class="at">x =</span> State, <span class="at">y =</span> Obesity, <span class="at">group =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Obesity by State"</span>,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"State"</span>, <span class="at">y =</span> <span class="st">"Adult Obesity (%)"</span>)<span class="sc">+</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">28</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lec-2-nature-data-anno_MH_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="576"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p>Summarizes numerical variable (most often used across time)</p></li>
+<li><p>Each value on x-axis corresponds to only one measurement on y-axis (and vice versa)</p></li>
+<li><p>Often used to depict change over time and connected with line.</p></li>
+</ul>
+<div class="callout callout-style-default callout-warning callout-titled" title="Question">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Is this plot useful?</p>
+</div>
+</div>
+</section>
+<section id="scatterplots" class="level2">
+<h2 class="anchored" data-anchor-id="scatterplots">Scatterplots</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#| fig-alt: "A three-panel scatterplot titled Adequate aerobic activity associated with lower obesity by State HDI, with left panel for bottom ten HDI, center panel for Middle 30 HDI, and right panel for top 10 HDI. The x-axis is labeled adequate aerobic activity percentage and the y-axis is labeled obesity. The points in all three panels show a downward trend in obesity as the percentage of adequate aerobic activity increases."</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>cdc <span class="sc">|&gt;</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Exercise, <span class="at">y =</span> Obesity)) <span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="dv">4</span>) <span class="sc">+</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(. <span class="sc">~</span> HDI) <span class="sc">+</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Adequate aerobic activity </span><span class="sc">\n</span><span class="st"> associated with lower obesity by State HDI"</span>) <span class="sc">+</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">"Adequate aerobic activity (%)"</span>) <span class="sc">+</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">26</span>),</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">16</span>),</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>))  <span class="co"># make title smaller)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lec-2-nature-data-anno_MH_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p>Shows relationship between multiple continuous measurements</p></li>
+<li><p>You can add color, shape, transparency, etc to further differentiate by category</p></li>
+</ul>
+</section>
+<section id="some-best-practices" class="level2">
+<h2 class="anchored" data-anchor-id="some-best-practices">Some best practices</h2>
+<ul>
+<li>Keep it simple</li>
+<li>Summarize and highlight</li>
+<li>Tell a story with the plot (use “active titles”)</li>
+<li>If possible, replace text with visuals</li>
+</ul>
+</section>
+<section id="reminder-the-population-vs.-a-sample" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="reminder-the-population-vs.-a-sample">Reminder: the population vs.&nbsp;a sample</h2>
+<p><img src="images/lec-2/poly.PNG" class="img-fluid" alt="Article titled Polysaccharide Conjugate Vaccine against Pneumococcal Pneumonia in Adults" width="300"></p>
+<ul>
+<li><p><strong>Population and research question</strong>: Is the PCV13 vaccine effective against community acquired pneumonia in <strong>adults aged 65 or older</strong>?</p></li>
+<li><p>Sample: 84,496 adults 65 years of age or older recruited in a trial between September 2008 and January 2010 and 101 sites throughout the Netherlands.</p></li>
+</ul>
+</section>
+<section id="parameters-and-statistics" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="parameters-and-statistics">Parameters and statistics</h2>
+<p><strong>Parameters</strong></p>
+<ul>
+<li>Attribute of the population of interest</li>
+<li>Not computable directly (unless entire population is perfectly measured)</li>
+<li>Written in Greek letters</li>
+</ul>
+<p><strong>Statistics</strong></p>
+<ul>
+<li>Attribute of a sample</li>
+<li>Function of the observed values at hand</li>
+<li>Confusingly, both the function and the values</li>
+<li>Written in Roman letters</li>
+</ul>
+</section>
+<section id="example" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="example">Example</h2>
+<div class="columns">
+<div class="column" style="width:40%;">
+<ul>
+<li><p>Population <strong>parameter</strong> of interest: vaccine efficacy among all adults aged 65 or older</p></li>
+<li><p>Sample <strong>statistic</strong> collected: proportion of vaccinated adults in the trial who became ill with community-acquired pneumonia</p></li>
+</ul>
+</div><div class="column" style="width:60%;">
+<p><img src="images/lec-2/poly.PNG" class="img-fluid" alt="Article titled Polysaccharide Conjugate Vaccine against PNeumococcal Pneumonia in Adults"></p>
+</div>
+</div>
+</section>
+<section id="numerical-summary-statistics" class="level1">
+<h1>Numerical summary statistics</h1>
+<section id="mean" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="mean">Mean</h2>
+<ul>
+<li><strong>Sample mean</strong>: the arithmetic average of values in the sample:</li>
+</ul>
+<p><span class="math display">\[\bar{x} = \frac{1}{n}(x_1 + \ldots + x_n) = \frac{1}{n} \sum_{i=1}^n x_i\]</span></p>
+<ul>
+<li><p>Population mean <span class="math inline">\(\mu\)</span> is calculated the same way, but would involve sum over every observation in the population (rarely possible!)</p></li>
+<li><p>The sample mean is a <strong>point estimate</strong> of the population mean</p></li>
+<li><p>Not the exact population mean (unless lucky), but for a representative sample, it’s a pretty good guess</p></li>
+<li><p>As the sample size gets larger, on average <span class="math inline">\(\bar{x}\)</span> gets closer and closer to <span class="math inline">\(\mu\)</span></p></li>
+</ul>
+</section>
+<section id="median" class="level2">
+<h2 class="anchored" data-anchor-id="median">Median</h2>
+<ul>
+<li><p><strong>Sample median</strong>: the <span class="math inline">\(50^{th}\)</span> <strong>percentile</strong></p></li>
+<li><p>Middle number of observations after being ranked in numerical order</p></li>
+<li><p>For odd number observations, it is the exact middle value; otherwise, it is the arithmetic average of the middle two.</p></li>
+<li><p>Example: What is the median of <span class="math inline">\(\{3, 4, 5, 5, 7, 8, 9, 9\}\)</span> ?</p></li>
+<li><p>More <strong>robust</strong> to extreme values or outliers when compared to the mean.</p></li>
+</ul>
+</section>
+<section id="mode" class="level2">
+<h2 class="anchored" data-anchor-id="mode">Mode</h2>
+<ul>
+<li><strong>Sample mode</strong>: the most frequent value in the dataset</li>
+<li>There does not only have to be one mode (we can have bimodal or trimodal or other <strong>multimodal</strong> distributions)</li>
+<li>Example: What is the mode of <span class="math inline">\(\{1, 2, 3, 4, 4, 5, 5, 5, 7, 9\}\)</span>?</li>
+</ul>
+</section>
+<section id="are-point-estimates-of-location-enough" class="level2">
+<h2 class="anchored" data-anchor-id="are-point-estimates-of-location-enough">Are point estimates of location enough?</h2>
+<p><img src="images/lec-2/irma.png" class="img-fluid" alt="A map of the Caribbean, central America, and the southeastern united states with the path of a hurricane superimposed over it. The path starts in Puerto Rico and ends in Florida, with a cone of potential track area getting steadily wider as the path goes northward."></p>
+</section>
+<section id="skewness" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="skewness">Skewness</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the seed for reproducibility</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate data from a normal distribution</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>normal_data <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">400</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform the data to make it right-skewed</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>right_skewed_data <span class="ot">&lt;-</span> <span class="fu">exp</span>(normal_data)</span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a histogram</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(right_skewed_data, <span class="at">breaks =</span> <span class="dv">30</span>,</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"darkgoldenrod3"</span>, <span class="at">main =</span> <span class="st">" "</span>, </span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Value"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lec-2-nature-data-anno_MH_files/figure-html/unnamed-chunk-8-1.png" style="height:40.0%" alt="A histogram with values clustered around 0 and a long right tail." width="672" class="figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li><p><strong>Skewed</strong> distributions are not symmetric</p></li>
+<li><p>They can be right or left skewed depending on which side the “tail” is on.</p></li>
+</ul>
+</section>
+<section id="minimum-maximum-and-range" class="level2">
+<h2 class="anchored" data-anchor-id="minimum-maximum-and-range">Minimum, maximum, and range</h2>
+<ul>
+<li><p><strong>Sample minimum</strong> and <strong>maximum</strong>: the smallest and largest observations in the dataset</p></li>
+<li><p><strong>Sample range</strong>: the difference between the sample maximum and the sample minimum</p></li>
+</ul>
+</section>
+<section id="quantiles" class="level2">
+<h2 class="anchored" data-anchor-id="quantiles">Quantiles</h2>
+<ul>
+<li><p>Cutpoints dividing the data into equal-sized groups (tertiles, quartiles, quintiles, percentiles, etc.)</p></li>
+<li><p>First quartile (Q1) and third quartile (Q3) cut off the bottom and top 25%, respectively</p></li>
+<li><p><strong>Interquartile range</strong> (IQR): Q3-Q1; shows the width of the middle 50% of the data</p></li>
+<li><p>The sample minimum, Q1, Q2 (median), Q3, and maximum are sometimes called the <strong>five number summary</strong></p></li>
+</ul>
+</section>
+<section id="outliers" class="level2">
+<h2 class="anchored" data-anchor-id="outliers">Outliers</h2>
+<ul>
+<li><p>Observations numerically distant from others (definitions vary)</p></li>
+<li><p>Statistical methods robust to outliers (e.g.&nbsp;the median) can be used if outliers are problematic</p></li>
+<li><p>For example: the mean of 1, 2, 3, 4, 5, 10 is 4.1667, while the median of the same set of numbers is 3.5.</p></li>
+<li><p>Should be noted and handled carefully! (e.g.&nbsp;maternal ages of 11 vs 111 in a dataset)</p></li>
+</ul>
+</section>
+<section id="standard-deviation" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="standard-deviation">Standard deviation</h2>
+<ul>
+<li><strong>Sample standard deviation</strong>: most common measure of spread, based on deviations around the mean</li>
+</ul>
+<p><span class="math display">\[s = \sqrt{\frac{1}{n-1} \sum_{i=1}^n (x_i - \bar{x})^2}\]</span></p>
+<ul>
+<li><p>Population SD <span class="math inline">\(\sigma\)</span> is calculated the same way, but requires sum over everyone in the population (with <span class="math inline">\(\bar{x}\)</span> replaced by <span class="math inline">\(\mu\)</span>)</p></li>
+<li><p>Same units as original dataset for easier interpretation</p></li>
+<li><p>Often used to express confidence (e.g.&nbsp;a <strong>margin of error</strong> for a poll being around <span class="math inline">\(\pm\)</span> 2 SD of the mean)</p></li>
+<li><p>Squared deviations weight larger deviations more heavily, and so also positive and negative deviations do not cancel out</p></li>
+</ul>
+</section>
+<section id="lets-go-back-to-this-descriptive-table" class="level2">
+<h2 class="anchored" data-anchor-id="lets-go-back-to-this-descriptive-table">Let’s go back to this descriptive table</h2>
+<!-- ![](images/lec-2/tab1.PNG) -->
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Black Participants n=1937</th>
+<th>White Participants n=6372</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Age, yr</td>
+<td>62 <span class="math inline">\(\pm\)</span> 6</td>
+<td>63 <span class="math inline">\(\pm\)</span> 7</td>
+</tr>
+<tr class="even">
+<td>Female, n (%)</td>
+<td>967 (50)</td>
+<td>2156 (34)</td>
+</tr>
+<tr class="odd">
+<td>Education</td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td>Less than high school graduate, n (%)</td>
+<td>401 (21)</td>
+<td>631 (10)</td>
+</tr>
+<tr class="odd">
+<td>High school graduate (or GED), n (%)</td>
+<td>591 (31)</td>
+<td>1635 (26)</td>
+</tr>
+<tr class="even">
+<td>Some college or technical school, n (%)</td>
+<td>615 (32)</td>
+<td>2286 (36)</td>
+</tr>
+<tr class="odd">
+<td>College graduate or more, n (%)</td>
+<td>326 (17)</td>
+<td>1817 (29)</td>
+</tr>
+<tr class="even">
+<td>Insurance coverage, n (%)</td>
+<td>1622 (84)</td>
+<td>5746 (90)</td>
+</tr>
+<tr class="odd">
+<td>Systolic BP, mm Hg</td>
+<td>139 <span class="math inline">\(\pm\)</span> 17</td>
+<td>135 <span class="math inline">\(\pm\)</span> 16</td>
+</tr>
+<tr class="even">
+<td>Body mass index, kg/m^2</td>
+<td>32 <span class="math inline">\(\pm\)</span> 5</td>
+<td>33 <span class="math inline">\(\pm\)</span> 5</td>
+</tr>
+<tr class="odd">
+<td>Hemoglobin A1c, %</td>
+<td>8.2 <span class="math inline">\(\pm\)</span> 1.1</td>
+<td>8.2 <span class="math inline">\(\pm\)</span> 0.9</td>
+</tr>
+<tr class="even">
+<td>Current smoking, n (%)</td>
+<td>792 (48)</td>
+<td>3168 (57)</td>
+</tr>
+</tbody>
+</table>
+<p>The values are presented as number (percentage) or mean <span class="math inline">\(\pm\)</span> SD.</p>
+</section>
+<section id="variance" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="variance">Variance</h2>
+<ul>
+<li><strong>Sample variance</strong>: approximately the average squared deviation from the mean</li>
+</ul>
+<p><span class="math display">\[s^2 = \frac{1}{n-1} \sum_{i=1}^n(x_i - \bar{x})^2\]</span></p>
+<ul>
+<li>Estimate of the population variance <span class="math inline">\(\sigma^2\)</span></li>
+<li>Division by <span class="math inline">\(n-1\)</span> instead of <span class="math inline">\(n\)</span> to avoid bias in small samples
+<ul>
+<li>Don’t worry about that right now, more details in a subsequent statistics class if interested</li>
+</ul></li>
+</ul>
+</section>
+<section id="how-big-are-most-values" class="level2">
+<h2 class="anchored" data-anchor-id="how-big-are-most-values">How big are most values?</h2>
+<ul>
+<li>For a distribution of any shape, most of the data are within “average <span class="math inline">\(\pm\)</span> <span class="math inline">\(k\)</span> SDs”</li>
+</ul>
+<div class="callout callout-style-simple callout-note no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Chebyshev’s inequality
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><strong>Chebyshev’s inequality</strong> tells us the proportion of values in the range “average <span class="math inline">\(\pm\)</span> <span class="math inline">\(k\)</span> SDs” is at least <span class="math inline">\(1-\frac{1}{k^2}\)</span></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="chevychevs-bounds" class="level2">
+<h2 class="anchored" data-anchor-id="chevychevs-bounds">Chevychev’s bounds</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: center;">Range</th>
+<th style="text-align: center;">Proportion</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">Average <span class="math inline">\(\pm\)</span> 2 SDs</td>
+<td style="text-align: center;">at least <span class="math inline">\(1-\frac{1}{4}\)</span> = 75%</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Average <span class="math inline">\(\pm\)</span> 3 SDs</td>
+<td style="text-align: center;">at least <span class="math inline">\(1-\frac{1}{9}\)</span> = 89%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">Average <span class="math inline">\(\pm\)</span> 4 SDs</td>
+<td style="text-align: center;">at least <span class="math inline">\(1-\frac{1}{16}\)</span> = 94%</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">Average <span class="math inline">\(\pm\)</span> 5 SDs</td>
+<td style="text-align: center;">at least <span class="math inline">\(1-\frac{1}{25}\)</span> = 96%</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>If we know the exact distribution (coming soon), we can often calculate better bounds</p></li>
+<li><p>However, these bounds hold for <em>any</em> distribution (that has a well-defined mean and variance)</p></li>
+</ul>
+</section>
+<section id="why-is-chebyshevs-inequality-useful" class="level2">
+<h2 class="anchored" data-anchor-id="why-is-chebyshevs-inequality-useful">Why is Chebyshev’s inequality useful?</h2>
+<ul>
+<li><p>You may have heard of the “68-95-99.7” rule. (68% of your data are within 1 SD, 95% are within 2 SD, 99.7% are within 3 SD).</p></li>
+<li><p>However, this only works for bell-shaped (normal distribution) data.</p></li>
+<li><p>Chebyshev holds for all distributions - no matter how skewed or irregular!</p></li>
+</ul>
+</section>
+<section id="why-not-always-use-means-and-sds" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="why-not-always-use-means-and-sds">Why not always use means and SDs?</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the mean and standard deviation of the right-skewed distribution</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>mean_skewed <span class="ot">&lt;-</span> <span class="fu">mean</span>(right_skewed_data)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>sd_skewed <span class="ot">&lt;-</span> <span class="fu">sd</span>(right_skewed_data)</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate a symmetric normal distribution with the same mean and standard deviation</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>symmetric_normal_data <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1000</span>, <span class="at">mean =</span> mean_skewed, <span class="at">sd =</span> sd_skewed)</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a histogram of the symmetric normal distribution without axes, axis labels, or main title</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(right_skewed_data, <span class="at">breaks =</span> <span class="dv">30</span>,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">col =</span> <span class="st">"darkgoldenrod3"</span>, <span class="at">main =</span> <span class="st">" "</span>, </span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Value"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lec-2-nature-data-anno_MH_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" alt="A histogram with most values around 0 and a long right tail." width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(symmetric_normal_data, <span class="at">breaks =</span> <span class="dv">30</span>, <span class="at">ann =</span> <span class="cn">FALSE</span>, <span class="at">col =</span> <span class="st">"darkgoldenrod3"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lec-2-nature-data-anno_MH_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" alt="A histogram that is symmetric around 2." width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>These two distributions have the same mean and standard deviation, but are clearly very different!</p>
+<ul>
+<li>Exploratory data analysis can help us visually see differences in two datasets that basic statistics (e.g.&nbsp;mean and sd) might not reveal</li>
+</ul>
+</section>
+<section id="group-discussion" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="group-discussion">Group discussion</h2>
+<ul>
+<li><p>Go to this paper: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8851219/pdf/sur.2020.429.pdf" class="uri">https://pmc.ncbi.nlm.nih.gov/articles/PMC8851219/pdf/sur.2020.429.pdf</a> (Also linked on Canvas)</p>
+<ul>
+<li>Exploratory data analysis of 2017 Nationwide Inpatient Sample (NIS) from the Healthcare Cost and Utilization Project (HCUP).</li>
+</ul></li>
+<li><p>Based on the table (pg. 593), what are the mean and median of the <strong>Total charges</strong> for emergency general surgery (EGS)? What might this mean about outliers?</p></li>
+<li><p>Based on the histogram (pg. 595), does the data follow a normal distribution? How do you know?</p>
+<ul>
+<li><p>What do the histogram and boxplot reveal that summary statistics alone might miss?</p></li>
+<li><p>Which measure of center and spread are more appropriate here and why?</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="recap" class="level2">
+<h2 class="anchored" data-anchor-id="recap">Recap</h2>
+<ul>
+<li>Exploratory data analysis: initial data analysis that summarizes key aspects of data</li>
+<li>Types of data: categorical, numerical</li>
+<li>Examples of plots: bar charts, box plots, histograms, etc.</li>
+<li>Population vs.&nbsp;sample</li>
+<li>Numerical summary statistics: mean, median, mode</li>
+<li>Quantiles, outliers, standard deviation vs.&nbsp;variance, Chebyshev’s inequality</li>
+</ul>
+</section>
+<section id="sneak-peek-for-lab-on-friday" class="level2">
+<h2 class="anchored" data-anchor-id="sneak-peek-for-lab-on-friday">Sneak peek for lab on Friday</h2>
+<ul>
+<li>For lab on Friday, you’ll need to install the <code>tidyverse</code> package. Do so with the following in your Console:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="next-up" class="level2">
+<h2 class="anchored" data-anchor-id="next-up">Next up</h2>
+<ul>
+<li>Tomorrow’s Class: Probability basics, begin conditional probability</li>
+</ul>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
