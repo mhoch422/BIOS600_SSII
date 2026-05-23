@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lecture 7: Continuous distributions</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="lec-7-continuous-anno_MH_files/libs/clipboard/clipboard.min.js"></script>
+<script src="lec-7-continuous-anno_MH_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="lec-7-continuous-anno_MH_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="lec-7-continuous-anno_MH_files/libs/quarto-html/popper.min.js"></script>
+<script src="lec-7-continuous-anno_MH_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="lec-7-continuous-anno_MH_files/libs/quarto-html/anchor.min.js"></script>
+<link href="lec-7-continuous-anno_MH_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="lec-7-continuous-anno_MH_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="lec-7-continuous-anno_MH_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="lec-7-continuous-anno_MH_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="lec-7-continuous-anno_MH_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lecture 7: Continuous distributions</h1>
+<p class="subtitle lead">BIOS 600 - Summer Session II 2026</p>
+</div>
+
+
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Authors</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+  </div>
+
+<div class="quarto-title-meta">
+
+      
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="announcements" class="level2">
+<h2 class="anchored" data-anchor-id="announcements">Announcements</h2>
+<ul>
+<li><p>HW 5 and AE 1 due tonight at 11:59pm</p></li>
+<li><p>HW 6 due tomorrow at 11:59pm.</p></li>
+<li><p>Today’s lecture marks the end of the content for Exam 01! (Today’s lecture is included in Exam 01 content.)</p></li>
+<li><p>Information, topics list and formula sheet have been added on Canvas.</p></li>
+</ul>
+</section>
+<section id="announcements-1" class="level2">
+<h2 class="anchored" data-anchor-id="announcements-1">Announcements</h2>
+<ul>
+<li><p>Tomorrow’s class will be entirely review for exam</p></li>
+<li><p>Continue to post on Ed Discussion about any questions you have! I am happy to answer any questions, no matter how small.</p></li>
+</ul>
+</section>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<ul>
+<li><p>Review discrete probability distributions</p></li>
+<li><p>Continuous distributions and examples</p></li>
+<li><p>A little more with dplyr and the tidyverse!</p></li>
+</ul>
+</section>
+<section id="supplemental-reading" class="level2">
+<h2 class="anchored" data-anchor-id="supplemental-reading">Supplemental Reading</h2>
+<ul>
+<li>Pagano and Gavreau: Section 7.4</li>
+<li><a href="https://www.openintro.org/go/?id=os4_for_screen_readers&amp;referrer=/book/os/index.php">OpenIntro Statistics</a>: 3.5, 4.1</li>
+</ul>
+</section>
+<section id="review-what-is-a-random-variable" class="level2">
+<h2 class="anchored" data-anchor-id="review-what-is-a-random-variable">Review: What is a random variable?</h2>
+<p>A <strong>random variable</strong> is a quantity whose value depends on the outcome of a random event.</p>
+<ul>
+<li><p>Traditionally, we use capital letters <span class="math inline">\(X\)</span>, <span class="math inline">\(Y\)</span>, <span class="math inline">\(Z\)</span> to denote random variables.</p></li>
+<li><p>The values that random variables take are lowercase <span class="math inline">\(x\)</span>, <span class="math inline">\(y\)</span>, <span class="math inline">\(z\)</span></p></li>
+<li><p>So, the probability that random variable <span class="math inline">\(X\)</span> has the value <span class="math inline">\(x\)</span> is denoted by <span class="math inline">\(P(X = x)\)</span></p></li>
+</ul>
+<p>Random variables encountered in this class will be either discrete or continuous.</p>
+</section>
+<section id="review-discrete-random-variables" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="review-discrete-random-variables">Review: Discrete random variables</h2>
+<ul>
+<li><p><strong>Discrete</strong> random variables are those that can take on a countable number of potential values (could be countably infinite!), each associated with a probability of occurring.</p></li>
+<li><p><strong>Bernoulli</strong> random variable - A dichotomous (two-level) random variable <span class="math inline">\(X\)</span> (e.g.&nbsp;dead or alive) with a probability of “success” denoted by <span class="math inline">\(p\)</span>.</p></li>
+<li><p><strong>Binomial</strong> random variable - A random variable <span class="math inline">\(Z\)</span> denotes getting a certain number of <span class="math inline">\(k\)</span> “successes” from a sequence of <span class="math inline">\(n\)</span> independent Bernoulli trials, with probability <span class="math inline">\(p\)</span> of “success”</p></li>
+<li><p><strong>Poisson</strong> random variable - A random variable <span class="math inline">\(X\)</span> that takes on non-zero integer values, used for count data</p></li>
+</ul>
+</section>
+<section id="continuous-distributions" class="level1">
+<h1>Continuous distributions</h1>
+<section id="can-we-be-more-precise" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="can-we-be-more-precise">Can we be more precise?</h2>
+<p>Letting <span class="math inline">\(X\)</span> be the random variable that corresponds to how long a baby’s gestation was, we could imagine subdividing further and further:</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Event</th>
+<th>Probability</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(X\)</span> &lt; 20 wk.</td>
+<td><span class="math inline">\(P(X &lt; 20)\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(X\)</span> = 20 to 21 wk.</td>
+<td>etc.</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(X\)</span> = 21 to 22 wk.</td>
+<td>etc.</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(X\)</span> = 22 to 23 wk.</td>
+<td>etc.</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+</tr>
+</tbody>
+</table>
+</div><div class="column" style="width:50%;">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Event</th>
+<th>Probability</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math inline">\(X\)</span> &lt; 20 wk.</td>
+<td><span class="math inline">\(P(X &lt; 20)\)</span></td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(X\)</span> = 20 to 20.1 wk.</td>
+<td>etc.</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(X\)</span> = 20.1 to 20.2 wk.</td>
+<td>etc.</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(X\)</span> = 20.2 to 20.3 wk.</td>
+<td>etc.</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="can-we-be-more-precise-1" class="level2">
+<h2 class="anchored" data-anchor-id="can-we-be-more-precise-1">Can we be more precise?</h2>
+<ul>
+<li><p>Now let gestational age <span class="math inline">\(X\)</span> be a <strong>continuous</strong> random variable, which can take on <em>any</em> value, say from 0 to <span class="math inline">\(\infty\)</span>.</p></li>
+<li><p>How might we define a continuous probability distribution that corresponds to <span class="math inline">\(X\)</span>?</p></li>
+</ul>
+</section>
+<section id="continuous-probability-distributions" class="level2">
+<h2 class="anchored" data-anchor-id="continuous-probability-distributions">Continuous probability distributions</h2>
+<ul>
+<li><p>The probability that a continuous variable equals any specific value is 0</p></li>
+<li><p>No use tabulating - there is an <em>uncountably</em> infinite number of possible values they can be, all with <span class="math inline">\(P(X = x) = 0\)</span></p></li>
+<li><p>The distribution is given by a <strong>probability density function</strong>, helps us describe probabilities for <em>ranges</em> of values.</p></li>
+</ul>
+</section>
+<section id="density-functions" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="density-functions">Density functions</h2>
+<p>Probability density functions may be given graphically, satisfying the following two rules:</p>
+<ul>
+<li><p>The density must be non-negative everywhere <span class="math inline">\((f(x) \geq 0\)</span> for all <span class="math inline">\(x\)</span> from <span class="math inline">\(-\infty\)</span> to <span class="math inline">\(\infty\)</span>)</p></li>
+<li><p>The total area under the density must be 1</p></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up the plotting area to have 1 row and 3 columns</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up the x-axis values for the normal distribution</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>x_normal <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">length =</span> <span class="dv">1000</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>y_normal <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(x_normal, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the density of the standard normal distribution</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_normal, y_normal, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">main =</span> <span class="st">"Normal Distribution"</span>,</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Value"</span>, <span class="at">ylab =</span> <span class="st">"Density"</span>, <span class="at">col =</span> <span class="st">"black"</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up the x-axis values for the uniform distribution</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>x_uniform <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="at">length =</span> <span class="dv">1000</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>y_uniform <span class="ot">&lt;-</span> <span class="fu">dunif</span>(x_uniform, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">1</span>)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the density of the uniform distribution</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_uniform, y_uniform, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">main =</span> <span class="st">"Uniform Distribution"</span>,</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Value"</span>, <span class="at">ylab =</span> <span class="st">"Density"</span>, <span class="at">col =</span> <span class="st">"black"</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up the x-axis values for the exponential distribution</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>x_exponential <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">6</span>, <span class="at">length =</span> <span class="dv">1000</span>)</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>y_exponential <span class="ot">&lt;-</span> <span class="fu">dexp</span>(x_exponential, <span class="at">rate =</span> <span class="dv">1</span>)</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the density of the exponential distribution</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x_exponential, y_exponential, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">main =</span> <span class="st">"Exponential Distribution"</span>,</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Value"</span>, <span class="at">ylab =</span> <span class="st">"Density"</span>, <span class="at">col =</span> <span class="st">"black"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lec-7-continuous-anno_MH_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" alt="Three graphs side-by-side. The one on the left is titled Normal Distribution, with a bell-shaped curve. The one in the middle is titled Uniform Distribution, with a straight line for a curve. The one on the right is titled Exponential Distribution, with a curve that starts at 1 near zero and steeply declines as the x-value increases." width="768"></p>
+</figure>
+</div>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Reset plotting layout</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="with-density-functions-we-work-with-areas-under-the-curve" class="level2">
+<h2 class="anchored" data-anchor-id="with-density-functions-we-work-with-areas-under-the-curve">With density functions, we work with areas under the curve</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up the x-axis values</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>, <span class="at">length =</span> <span class="dv">1000</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the density of the standard normal distribution</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(x, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the standard normal distribution</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">type =</span> <span class="st">"l"</span>, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">main =</span> <span class="st">"Standard Normal Distribution"</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Value"</span>, <span class="at">ylab =</span> <span class="st">"Density"</span>)</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Shade the area above x = 2.5</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>x_shade <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="fl">0.5</span>, <span class="fl">1.5</span>, <span class="at">length =</span> <span class="dv">1000</span>)</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>y_shade <span class="ot">&lt;-</span> <span class="fu">dnorm</span>(x_shade, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">polygon</span>(<span class="fu">c</span>(<span class="fl">0.5</span>, x_shade, <span class="fl">1.5</span>), <span class="fu">c</span>(<span class="dv">0</span>, y_shade, <span class="dv">0</span>), <span class="at">col =</span> <span class="st">"darkgoldenrod3"</span>, <span class="at">border =</span> <span class="cn">NA</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lec-7-continuous-anno_MH_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" alt="A graph titled Standard Normal Distribution with a bell-shaped curve centered at x=0; there is a shaded area under the curve from about x = 0.5 to x=1.5." width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="the-normal-gaussian-distribution" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="the-normal-gaussian-distribution">The normal (Gaussian) distribution</h2>
+<div class="columns">
+<div class="column" style="width:70%;">
+<p>For the <strong>normal distribution</strong>,</p>
+<p><span class="math display">\[
+f(x) = \frac{1}{\sqrt{2\pi \sigma^2}} \textrm{exp}\Bigl\{-\frac{1}{2} \frac{(x - \mu)^2}{\sigma^2}\Bigr\}
+\]</span></p>
+<p>where <span class="math inline">\(\mu\)</span> is the mean and <span class="math inline">\(\sigma^2\)</span> is the variance.</p>
+<ul>
+<li>We often write <span class="math inline">\(N(\mu, \sigma^2)\)</span>.</li>
+</ul>
+<p>You do NOT need to know this formula for the exam.</p>
+</div><div class="column" style="width:30%;">
+<p><img src="images/lec-7/gauss.jpg" class="img-fluid" alt="A painting of the mathematician Guass in a dark coat and hat."></p>
+</div>
+</div>
+</section>
+<section id="section" class="level2">
+<h2 class="anchored" data-anchor-id="section">68-95-99.7</h2>
+<p><img src="images/lec-7/empirical.png" class="img-fluid" alt="A bell-shaped curve designed to show how standard deviation works for normal distribution. States that 99.7% of the data are within 3 standard deviations of the mean; 95% within 2 standard deviations; and 68% within one standard deviation."></p>
+</section>
+<section id="standardization" class="level2">
+<h2 class="anchored" data-anchor-id="standardization">Standardization</h2>
+<ul>
+<li><p>The normal distribution is a family of distributions of a specific form. There are an infinite amount of possible distributions, since <span class="math inline">\(\mu\)</span> can be any real number and <span class="math inline">\(\sigma^2\)</span> can be any positive number.</p></li>
+<li><p>It would be very cumbersome to have to individually think about a <span class="math inline">\(N(0, 20)\)</span> vs.&nbsp;<span class="math inline">\(N(2.5, 2)\)</span> vs.&nbsp;<span class="math inline">\(N(694, 1549)\)</span> vs.&nbsp;…. distribution, depending on the situation.</p></li>
+<li><p>In practice, we could calculate a <strong>standard score</strong> or <strong>z-score</strong> that gives the number of standard deviations away from the mean an observation from a particular population is.</p></li>
+</ul>
+</section>
+<section id="z-scores" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="z-scores">z-scores</h2>
+<ul>
+<li><p>A <strong>z-score</strong> tells us how many population standard deviations an observation is away from the population mean.</p></li>
+<li><p>They provide ways to compare results across many different measurement scales, since z-scores are <em>unitless</em></p></li>
+</ul>
+<div class="poll">
+<p><span class="math display">\[z=\frac{x-\mu}{\sigma}\]</span></p>
+</div>
+<p>(note the use of population parameters <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span>)</p>
+<ul>
+<li>So, a z-score of 1.2 is 1.2 standard deviations above a mean; a z-score of -0.8 is 0.8 standard deviations below the mean.</li>
+</ul>
+</section>
+<section id="osteoporosis" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="osteoporosis">Osteoporosis</h2>
+<ul>
+<li><p>According to NHANES, the mean bone mineral density for a 65 year old white woman is 809 mg/cm<span class="math inline">\(^2\)</span>, with a standard deviation of 140 mg/cm<span class="math inline">\(^2\)</span>.</p></li>
+<li><p>Suppose you are a 65 year old white woman whose bone density is 698 mg/cm<span class="math inline">\(^2\)</span>.</p></li>
+</ul>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Should you be very concerned about osteoporosis?</p>
+<p>Let’s calculate a z-score and find out!</p>
+</div>
+</div>
+</div>
+</section>
+<section id="return-to-the-tidyverse" class="level2">
+<h2 class="anchored" data-anchor-id="return-to-the-tidyverse">Return to the tidyverse</h2>
+<p>In lab, we began to learn how to use dplyr for data manipulation. There are still a few more functions that will prove quite useful in our work in this class.</p>
+<p>Particularly, these functions can be used to create new variables in a dataset based on existing variables.</p>
+</section>
+<section id="mutate" class="level2">
+<h2 class="anchored" data-anchor-id="mutate">mutate</h2>
+<ul>
+<li>Suppose we have a dataset named dat, that contains measurements of mass (kg), height (m), and body temperature in fahrenheit (fahrenheit) for study participants.</li>
+<li>We want to make new variables for their BMI and body temperature in celsius. We can create these variables as follows (recalling the appropriate formulas):</li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.2     ✔ tibble    3.3.0
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.1.0     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bmi =</span> kg<span class="sc">/</span>m<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">|&gt;</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">celsius =</span> (fahrenheit <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">*</span> <span class="dv">5</span><span class="sc">/</span><span class="dv">9</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="saving-the-dataframe" class="level2">
+<h2 class="anchored" data-anchor-id="saving-the-dataframe">Saving the dataframe</h2>
+<ul>
+<li><p>Most often when you define a new variable with mutate, you’ll want to use it later (for instance, in a visualization or in downstream analyses).</p></li>
+<li><p>In this case, you’d want to save the resulting dataframe, often by overwriting the original one. As an example:</p></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bmi =</span> kg<span class="sc">/</span>m<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li><p>In this case, we’ve saved over the <code>dat</code> dataframe, which now contains the new variable <code>bmi</code>.</p></li>
+<li><p>We could also save it as a new dataframe by using a different name.</p></li>
+</ul>
+</section>
+<section id="case_when" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="case_when">case_when</h2>
+<ul>
+<li><p>We can also do more sophisticated data creation using <code>case_when</code>, which allows for a sequence of formulas defining new variables.</p></li>
+<li><p>Let’s suppose we want to create a new variable that categorizes BMI based on CDC cut-offs.</p></li>
+<li><p>Consider the following code, which utilizes the bmi variable we saved previously:</p></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>dat_bmi <span class="ot">&lt;-</span> dat <span class="sc">|&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bmi_cat =</span> <span class="fu">case_when</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    bmi <span class="sc">&lt;</span> <span class="dv">18</span> <span class="sc">~</span> <span class="st">"underweight"</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    bmi <span class="sc">&gt;=</span> <span class="dv">18</span> <span class="sc">&amp;</span> bmi <span class="sc">&lt;</span> <span class="dv">25</span> <span class="sc">~</span> <span class="st">"normal"</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    bmi <span class="sc">&gt;=</span> <span class="dv">25</span> <span class="sc">&amp;</span> bmi <span class="sc">&lt;</span> <span class="dv">30</span> <span class="sc">~</span> <span class="st">"oberweight"</span>,</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    bmi <span class="sc">&gt;</span> <span class="dv">30</span> <span class="sc">~</span> <span class="st">"obese"</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Be sure all parentheses are closed!</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li>We have used the <code>case_when</code> function to create a new variable. The individual cases are separated by commas, and within each case, the condition (e.g., BMI &gt; 30) is on the left and the outcome for the new variable (e.g., “obese”) is on the right of a tilde (~).</li>
+</ul>
+</section>
+<section id="nc-bike-crash-example" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="nc-bike-crash-example">NC Bike Crash Example</h2>
+<p>Let’s walk through a concrete example using the ncbikecrash data. Suppose we want to classify whether a crash occurred on a weekend or on a weekday. We will use case_when in combination with the logical operator %in% to do so (the c() function tells R that there is a list of things coming up):</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ncbikecrash <span class="ot">&lt;-</span> ncbikecrash <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">weekend =</span> <span class="fu">case_when</span>(</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    crash_day <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Saturday"</span>, <span class="st">"Sunday"</span>) <span class="sc">~</span> <span class="st">"Weekend"</span>,</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    crash_day <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Monday"</span>,</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Tuesday"</span>,</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Wednesday"</span>,</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Thursday"</span>,</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Friday"</span>) <span class="sc">~</span> <span class="st">"Weekday"</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="nc-bike-crash-example-1" class="level2">
+<h2 class="anchored" data-anchor-id="nc-bike-crash-example-1">NC Bike Crash Example</h2>
+<p>Let’s check our work by counting the number of observations in each of our categories:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ncbikecrash <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(weekend)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  weekend    n
+1 Weekday 5658
+2 Weekend 1809</code></pre>
+</div>
+</div>
+<p>It looks like 1809 crashes happened on weekends and 5658 occurred on weekdays.</p>
+</section>
+<section id="recap" class="level2">
+<h2 class="anchored" data-anchor-id="recap">Recap</h2>
+<ul>
+<li><p>Review discrete distributions</p></li>
+<li><p>Continuous distributions, density functions</p></li>
+<li><p>The normal (Gaussian) distribution</p></li>
+<li><p>z-scores</p></li>
+<li><p>Some more tidyverse</p></li>
+</ul>
+</section>
+<section id="next-class" class="level2">
+<h2 class="anchored" data-anchor-id="next-class">Next class</h2>
+<ul>
+<li>Review for Exam 1!</li>
+</ul>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

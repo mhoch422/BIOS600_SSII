@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="BIOS 600 Summer Session II 2026">
+
+<title>Lab 02: Basic Data Visualization &amp; Data Wrangling</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="lab-1_MH_files/libs/clipboard/clipboard.min.js"></script>
+<script src="lab-1_MH_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="lab-1_MH_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="lab-1_MH_files/libs/quarto-html/popper.min.js"></script>
+<script src="lab-1_MH_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="lab-1_MH_files/libs/quarto-html/anchor.min.js"></script>
+<link href="lab-1_MH_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="lab-1_MH_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="lab-1_MH_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="lab-1_MH_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="lab-1_MH_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lab 02: Basic Data Visualization &amp; Data Wrangling</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>BIOS 600 Summer Session II 2026 </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Due Monday, Jun 29 at 11:59pm.</p>
+<section id="set-up" class="level2">
+<h2 class="anchored" data-anchor-id="set-up">Set up</h2>
+<ol type="1">
+<li><p>In Canvas, you’ll find the template for this assignment (“Lab 01 Template”). Download the file and open it.</p></li>
+<li><p>Save it in your class project folder as “<code>lab-01.qmd</code>”.</p></li>
+<li><p>Open the document. Replace “Your Name Here” with your name in the YAML (the header of the document). Also, replace “Today’s Date Here” with today’s date.</p></li>
+</ol>
+</section>
+<section id="note-the-r-chunks" class="level2">
+<h2 class="anchored" data-anchor-id="note-the-r-chunks">Note the R chunks</h2>
+<p>In opening the lab template, note the <strong>R chunks</strong>. The beauty of .qmd documents is that we can directly run code in them, and the outputs will appear in your final document. To do that, we create an R chunk, which you will see in your template as gray areas where you can write R code. The R code in chunks will be evaluated and displayed in the final rendered document.</p>
+<ul>
+<li><p>Note that the rendering environment from <strong>R chunks</strong> and the Console are <strong>separate</strong>. This means that if you load a dataset in the Console, it will not be available in R chunks unless you also load it into R chunks.</p></li>
+<li><p>Similarly, if you load in a dataset in the R chunk and render the document, the dataset will be in the R chunk environment, but will not exist in the Console. Thus, if you wish to load in a dataset and use it for displaying results in your final rendered document, the dataset must be <strong>loaded into an R chunk</strong> regardless of whether you have already loaded it into the Console.</p></li>
+</ul>
+</section>
+<section id="the-tidyverse" class="level2">
+<h2 class="anchored" data-anchor-id="the-tidyverse">The tidyverse</h2>
+<p>As mentioned previously, one of the biggest strengths of R is its large userbase who have contributed user-written functions to R via packages. R packages are “add-ons” to the basic functions available in R (think of them as apps on a phone).</p>
+<ul>
+<li><p>The <code>tidyverse</code> is a collection of packages designed around a common grammar and data structure.</p></li>
+<li><p>Some packages in the tidyverse that we will be using throughout this semester will be <code>ggplot2</code>, used for creating graphics and figures, and <code>dplyr</code> and <code>tidyr</code>, used for data manipulation and wrangling.</p></li>
+</ul>
+</section>
+<section id="loading-the-cdc-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="loading-the-cdc-dataset">Loading the CDC dataset</h2>
+<p>Once again, let’s load the <code>cdc</code> dataset. Enter the following command into the console for now (you can directly copy/paste it, but make sure everything is exactly as below):</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>cdc <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aggreenbean.github.io/Bios600/labs/data/cdc_cleaned.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>First, install the <code>tidyverse</code> package by running the following code in your R Studio <strong>console</strong>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>After installing the <code>tidyverse</code> package, you <strong>never have to install it again on your device</strong> – all that is needed to use functions from the <code>tidyverse</code> is to load the package once per R session using the following code:</p>
+<ul>
+<li>(This code is already written for you in an R chunk in your template. To run the chunk, click the green arrow at the upper right corner of the chunk. The data will also be loaded in at the same time.)</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.2     ✔ tibble    3.3.0
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.1.0     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+</div>
+<p>Notice that by default, R automatically prints extra information about the package that was just loaded. You’ll want to hide this information in your assignments to make them neater. In the next section, we’ll find out how to do so.</p>
+</section>
+<section id="code-chunk-options" class="level2">
+<h2 class="anchored" data-anchor-id="code-chunk-options">Code Chunk Options</h2>
+<p>When you write code in Quarto, you put it inside code chunks. These chunks can have options that control how the code runs and what shows up in the final document.</p>
+<p>Some of the most useful options are:</p>
+<p><code>label</code> – a short name you give each chunk. Helps organize your document and makes it easier to debug if there’s an error.</p>
+<ul>
+<li>Every chunk in your assignment should have a unique, descriptive label (e.g.&nbsp;setup, load-data, summary-stats, plot1).</li>
+</ul>
+<p><code>warning</code> – controls whether R warnings are shown in the output. - By default, R will print warnings (e.g., “package is built under a different R version”). To keep your document neat, set <code>warning = FALSE</code> if you don’t want those to print.</p>
+<p><code>message</code> – controls whether messages are shown. For example, when you load tidyverse, R prints a lot of startup messages. You don’t need those in your assignment, so set message = FALSE.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Formatting
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>On this assignment and all HW/Labs going forward, there will be a “Formatting” portion of the grading rubric. To earn full points, you should ensure there are no messages, warnings, or lengthy code output printed in your document. To do this, be sure to set <code>message = false</code> and <code>warning = false</code> in your code chunks where you load packages/data. This is a good practice to prepare you to work with collaborators in the future!</p>
+</div>
+</div>
+<p>In your Quarto template, find the chunk that loads in the CDC dataset. Which options are used in this chunk?</p>
+</section>
+<section id="so-whats-the-difference-between-library-and-install.packages" class="level2">
+<h2 class="anchored" data-anchor-id="so-whats-the-difference-between-library-and-install.packages">So, what’s the difference between library and install.packages?</h2>
+<p><strong>A baking analogy</strong>: Imagine you want to bake a cake. You need to get the necessary kitchen gadgets in order to bake the cake. <code>install.packages()</code> is like going to the store and buying a KitchenAid mixer. <code>library</code> is like taking the KitchenAid mixer out of the pantry to actually bake the cake. When you want to bake another cake in 2 weeks, all you need to do is take the KitchenAid out of the pantry (you don’t need to buy another one). Similarly, you only need to run <code>install.packages()</code> once per machine, per package. Then, every time you use a package, simply “activate” it using <code>library()</code>.</p>
+</section>
+<section id="a-quick-note-before-we-get-started" class="level2">
+<h2 class="anchored" data-anchor-id="a-quick-note-before-we-get-started">A quick note before we get started</h2>
+<p>Remember that the console and the Quarto document have different workspaces. If you load the <code>tidyverse</code> package in your console, it won’t be loaded into the workspace for the Quarto document. In the lab template, <strong>code for loading the tidyverse has already been provided</strong>. However, note that you must have the package <strong>installed first</strong>.</p>
+<p>Also, it’s good practice to <strong>render often</strong> after making small changes to your document. This way, you can ensure you fix any coding issues as they arise.</p>
+</section>
+<section id="basic-data-manipulation" class="level2">
+<h2 class="anchored" data-anchor-id="basic-data-manipulation">Basic data manipulation</h2>
+<p>First, let’s take a <code>glimpse</code> of the dataset by running the following code in the console:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(cdc)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 50
+Columns: 17
+$ X                   &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,…
+$ State               &lt;chr&gt; "Alabama", "Alaska", "Arizona", "Arkansas", "Calif…
+$ Region              &lt;chr&gt; "South", "West", "West", "South", "West", "West", …
+$ HDI                 &lt;chr&gt; "Bottom ten", "Middle", "Middle", "Bottom ten", "M…
+$ InfantMortalityRate &lt;dbl&gt; 8.7, 6.7, 6.1, 7.5, 4.3, 4.8, 4.8, 6.7, 6.1, 7.5, …
+$ CVDeathRate         &lt;dbl&gt; 229.7, 154.1, 138.8, 223.2, 145.6, 128.4, 147.8, 1…
+$ DrugDeathRate       &lt;dbl&gt; 15.7, 16.0, 19.0, 13.8, 11.3, 15.4, 22.1, 22.0, 16…
+$ MotorDeathRate      &lt;dbl&gt; 17.5, 8.8, 13.1, 17.8, 8.1, 10.0, 7.4, 13.3, 14.5,…
+$ CancerDeathRate     &lt;dbl&gt; 175.6, 159.8, 141.3, 185.4, 142.8, 134.4, 146.2, 1…
+$ Obesity             &lt;dbl&gt; 35.7, 31.4, 29.0, 35.7, 25.0, 22.3, 26.0, 30.7, 27…
+$ Smoking             &lt;dbl&gt; 21.5, 19.0, 14.7, 23.6, 11.0, 15.6, 13.4, 17.7, 15…
+$ Exercise            &lt;dbl&gt; 45.4, 55.3, 51.9, 41.2, 56.3, 60.4, 50.9, 49.7, 50…
+$ Seatbelt            &lt;dbl&gt; 95.7, 88.4, 87.2, 74.4, 97.1, 82.4, 85.1, 91.9, 88…
+$ FluVaccination      &lt;dbl&gt; 43.9, 39.1, 41.8, 46.2, 48.0, 49.9, 52.7, 51.2, 43…
+$ ChildVaccination    &lt;dbl&gt; 70.6, 66.3, 72.3, 66.6, 75.0, 75.4, 80.6, 79.3, 66…
+$ Under18             &lt;dbl&gt; 22.8, 25.3, 24.1, 23.8, 23.6, 23.3, 21.6, 21.8, 20…
+$ Over65              &lt;dbl&gt; 15.3, 9.4, 15.9, 15.7, 12.9, 12.7, 15.5, 16.4, 19.…</code></pre>
+</div>
+</div>
+<p>Each row is an <em>observation</em> and each column is a <em>variable</em>. How many rows and columns does the <code>cdc</code> dataset have? What does each row (observation) represent?</p>
+</section>
+<section id="data-visualization" class="level2">
+<h2 class="anchored" data-anchor-id="data-visualization">Data visualization</h2>
+<p>Today we will be making some basic visualizations using the <code>ggplot</code> package in the <code>tidyverse</code>.</p>
+<p>In this section we’ll work through a visualization example using the <code>cdc</code> dataset. The variables in this dataset are as follows:</p>
+<ul>
+<li><p><code>State</code>, the name of the state</p></li>
+<li><p><code>Region</code>, the US Census region that each state belongs to</p></li>
+<li><p><code>HDI</code>, the Human Development Index of each state in 2017, categorized into whether they are among the top ten, the bottom ten, or the middle</p></li>
+<li><p><code>InfantMortalityRate</code>: infant mortality rate per 100,000</p></li>
+<li><p><code>CVDeathRate</code>: death rate per 100,000 due to cardiovasulcar causes</p></li>
+<li><p><code>DrugDeathRate</code>: death rate per 100,000 due to drug-related causes (ODs, etc.)</p></li>
+<li><p><code>MotorDeathRate</code>: death rate per 100,000 due to motor vehicle-related causes</p></li>
+<li><p><code>CancerDeathRate</code>: death rate per 100,000 due to cancer</p></li>
+<li><p><code>Obesity</code>: % of adults who are obese</p></li>
+<li><p><code>Smoking</code>: % of adults who smoked at least one cigarette in the past month</p></li>
+<li><p><code>Exercise</code>: % of adults who participated in at least 2.5 hours of aerobic activity per week</p></li>
+<li><p><code>Seatbelt</code>: % of adults to regularly wear their seat belt</p></li>
+<li><p><code>FluVaccination</code>: % of adults who received a flu vaccine</p></li>
+<li><p><code>ChildVaccination</code>: % of children who aged 19-35 months who have received the DTaP, polio, MMR, Hib, hepatitis B, varicella and PCV vaccines</p></li>
+<li><p><code>Under18</code>: % of residents under age 18</p></li>
+<li><p><code>Over65</code>: % of residents over age 65</p></li>
+</ul>
+<p>Let’s begin with a very simple plot. Run the following code in the console:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> cdc, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Exercise, <span class="at">y =</span> Obesity)) <span class="sc">+</span> </span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We just created our first plot in R! Let’s break down what each of these components is.</p>
+<ul>
+<li><p><code>ggplot()</code> is the function that tells R to make a plot.</p></li>
+<li><p>We are plotting data from the <code>cdc</code> dataset, with <code>Exercise</code> on the x-axis and <code>Obesity</code> on the y-axis.</p></li>
+<li><p>Adding (+) the <code>geom_point()</code> in a new layer (separated on a new line for clarity) tells R specifically to create a scatterplot.</p></li>
+</ul>
+<p>Note that you can almost “read” this code in English:</p>
+<p>“First create a ggplot using the”cdc” dataset. We will map the “Exercise” variable to the x-axis aesthetic, and map the “Obesity” variable to the y-axis aesthetic. Next, we will use the “point” geometry to create a scatterplot using these variable mappings.”</p>
+<p>Does there appear to be a relationship between the percentage of adults in a state who participate in at least 2.5 hours of aerobic exercise a week and the percentage of adults in that state who are obese? If so, what is this relationship?</p>
+<p>Now run the following code:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> cdc, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Exercise, <span class="at">y =</span> Obesity, <span class="at">color =</span> HDI, <span class="at">shape =</span> HDI)) <span class="sc">+</span> </span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Again, how does this code differ from the previous plot, and what changes in the plot itself correspond to the additional code?</p>
+</section>
+<section id="exercise-1" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-1">Exercise 1</h2>
+<p>How does the HDI of a state relate to the percentage of residents in each state who get 2.5 hours of aerobic activity and who are obese?</p>
+</section>
+<section id="example-graphs" class="level2">
+<h2 class="anchored" data-anchor-id="example-graphs">Example graphs</h2>
+<p>This section contains the code used to produce the basic graphs in the course slides. Take a moment to examine the similarities and differences between the code examples provided. What is your guess for what each line of code does, given the graphs? What is the aesthetic mapping for each plot? What geometries are being plotted?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> cdc, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Region)) <span class="sc">+</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>) <span class="sc">+</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Number of US States by Census Region"</span>, </span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Region"</span>, <span class="at">y =</span> <span class="st">"Count"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lab-1_MH_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> cdc, <span class="fu">aes</span>(<span class="at">x =</span> HDI, <span class="at">y =</span> Obesity)) <span class="sc">+</span> <span class="fu">geom_boxplot</span>()<span class="sc">+</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Adult Obesity (%) by State HDI"</span>, </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"HDI"</span>, <span class="at">y =</span> <span class="st">"Adult Obesity (%)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lab-1_MH_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> cdc, <span class="fu">aes</span>(<span class="at">x =</span> Obesity)) <span class="sc">+</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">color =</span> <span class="st">"darkblue"</span>, <span class="at">fill =</span> <span class="st">"lightblue"</span>, <span class="at">binwidth =</span> <span class="dv">2</span>)<span class="sc">+</span> </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Adult Obesity (%) by State"</span>, </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Adult Obesity (%)"</span>, <span class="at">y =</span> <span class="st">"Count"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lab-1_MH_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> cdc[<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>,], <span class="fu">aes</span>(<span class="at">x =</span> State, <span class="at">y =</span> Obesity, <span class="at">group =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Obesity by State"</span>, </span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"State"</span>, <span class="at">y =</span> <span class="st">"Adult Obesity (%)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lab-1_MH_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> cdc, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Exercise, <span class="at">y =</span> Obesity, <span class="at">color =</span> HDI)) <span class="sc">+</span> </span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Aerobic Activity vs. Obesity by State HDI"</span>, </span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Adequate aerobic activity (%)"</span>, <span class="at">y =</span> <span class="st">"Obesity (%)"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lab-1_MH_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(cdc, <span class="fu">aes</span>(<span class="at">x =</span> Exercise, <span class="at">y =</span> Obesity,</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>                <span class="at">size =</span> Smoking, <span class="at">color =</span> Region)) <span class="sc">+</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"State-level Tradeoffs: Obesity, Exercise, and Smoking"</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Percent Exercising"</span>,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Percent Obese"</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">size =</span> <span class="st">"Smoking %"</span>,</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Region"</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lab-1_MH_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="wrangling-data" class="level2">
+<h2 class="anchored" data-anchor-id="wrangling-data">Wrangling Data</h2>
+<p>The second part of today’s lab will focus on data wrangling using the <code>tidyverse</code> (in particular, basic functions in <code>dplyr</code>). There is a lot of material – follow along with the code that is written to familiarize yourself with the commands. You are highly encouraged to ask your lab TA or each other for help!</p>
+<p>The data are available by typing in the following. Note that we are naming the dataset <code>ncbikecrash</code> - you may may the dataset something else if you wish, but make sure that you are using this name consistently throughout the lab!</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>ncbikecrash <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aggreenbean.github.io/Bios600/labs/data/bikecrash.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Since we are using the <code>tidyverse</code> package, we can load the package in the Console.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>You’ll notice some “conflicts” above - this is fine. It just means that multiple packages have R functions with the same name. R will assume we want to use the functions from the <code>tidyverse</code> as opposed to the other package, in this case <code>stats</code>. <code>dplyr::filter() masks stats::filter()</code> means that the <code>filter</code> function from the <code>dplyr</code> package (part of the tidyverse) will be used in lieu of the <code>filter</code> function from the <code>stats</code> package. Nothing to worry about for now. (And remember that you’ll <strong>suppress these messages</strong> in your own lab document with <code>#| warning: false</code> and <code>#| message: false</code>).</p>
+</section>
+<section id="nc-bike-crash-data" class="level2">
+<h2 class="anchored" data-anchor-id="nc-bike-crash-data">NC bike crash data</h2>
+<p>This week’s data come from the North Carolina Department of Transportation. Each year, about 1,000 bicyclists are involved in police-reported crashes with motor vehicles in North Carolina, with 60 serious injuries and 20 deaths. This is a tragic yet preventable public health issue. Today’s dataset provides all 7,467 police-reported bicycle crashes involving a motor vehicle in North Carolina from 2007 through 2014.</p>
+</section>
+<section id="examining-our-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="examining-our-dataset">Examining our dataset</h2>
+<p>Remember, the R Console and the Quarto document live in <strong>separate environments</strong>. If you load the tidyverse package or the dataset in your console, it won’t be loaded into the workspace for rendering the Quarto document (and vice-versa). The Console is very useful for “testing” code – seeing if what you input results in what you want. However, for creating reproducible documents, you should be editing code in your Quarto document.</p>
+<p>Suppose we’re interested in knowing the names or some basic characteristics of the <code>ncbikecrash</code> dataset. This is probably not something we want to include in our final document, but something just for our own curiosity. Try running the following two commands in the Console:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(ncbikecrash)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(ncbikecrash)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The <code>names()</code> function returns the list of variable names in the dataset, while the <code>glimpse()</code> function (part of the <code>tidyverse</code>) provides a list of names, the type of variable (integer vs.&nbsp;string vs.&nbsp;double, etc.), as well as the first few observations of each so you get a feel for what some of the data points look like for each variable.</p>
+<p>You can also <code>View</code> the dataset by using the <code>View()</code> function. Try running the following command in the Console:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(ncbikecrash)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="manipulating-datasets" class="level2">
+<h2 class="anchored" data-anchor-id="manipulating-datasets">Manipulating datasets</h2>
+<p><code>dplyr</code> is a package that allows users to do some of the most common data manipulation functions. Essentially, pliers for dataframes (hence the name). It is based on the philosophy of functions as verbs that manipulate dataframes. Under the rules of dplyr, the first argument is always a dataframe, subsequent arguments say what to do with that dataframe, and dplyr-based manipulations will always return a data frame. What are some of these verbs that say what to do with our dataframes?</p>
+<ul>
+<li><code>filter</code>: pick rows (observations) matching certain criteria</li>
+<li><code>slice</code>: pick rows (observations) using an index/indices</li>
+<li><code>distinct</code>: filter for unique rows</li>
+<li><code>select</code>: pick columns (variables) by name</li>
+<li><code>arrange</code>: reorder rows</li>
+<li><code>summarize</code>: reduce variables to summary statistic values</li>
+<li><code>mutate</code>: add new variables (often used with <code>case_when</code>…more on this later)</li>
+<li>…and many more.</li>
+</ul>
+<p>As you can see, many of these verbs do what you would expect them to do based on their function name.</p>
+</section>
+<section id="pipes" class="level2">
+<h2 class="anchored" data-anchor-id="pipes">Pipes</h2>
+<p><code>dplyr</code> functions use a special operator, <code>|&gt;</code>, called a <strong>pipe</strong>. This operator “pipes” the output of the previous line of code as the first input of the next line of code. You can think of pronouncing it as “and then.” (Note that previous versions of <code>tidyverse</code> used <code>%&gt;%</code>, which you might come across in older documentation. <code>|&gt;</code> is the newer version.)</p>
+<p>Let’s use an everyday example to illustrate how a pipe works. Consider the following sequence of actions: 1) find car keys, 2) start the car, 3) drive to UNC, and finally, 4) park. if we express this sequence of actions as a set of nested functions in R “code,” this might look like</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">park</span>(<span class="fu">drive</span>(<span class="fu">start_car</span>(<span class="fu">find</span>(<span class="st">"keys"</span>)), <span class="at">to =</span> <span class="st">"campus"</span>))</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ...don't try running this code, it won't work.</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>If we use pipes, we have a more natural and easier to read structure:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span>(<span class="st">"keys"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">start_car</span>() <span class="sc">|&gt;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">drive</span>(<span class="at">to =</span> <span class="st">"campus"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">park</span>()</span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="co"># don't try running this code, either</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># still, try to "read" the code in plain English</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Remember, the <code>|&gt;</code> operator is pronounced “and then,” and so the above function using pipes might be pronounced find keys, and then start the car, and then drive to campus, and then park.” Much easier to figure out!</p>
+</section>
+<section id="logical-operators-in-r" class="level2">
+<h2 class="anchored" data-anchor-id="logical-operators-in-r">Logical operators in R</h2>
+<p>In <code>R</code>, there are different ways of relating variables. Consider two variables, <code>x</code> and <code>y</code>.</p>
+<ul>
+<li><code>x &amp; y</code>: <code>x</code> AND <code>y</code></li>
+<li><code>x | y</code>: <code>x</code> OR <code>y</code></li>
+<li><code>!x</code>: NOT <code>x</code></li>
+<li><code>&lt;</code> and <code>&gt;</code>: less than/greater than</li>
+<li><code>&lt;=</code> and <code>&gt;=</code>: less than/greater than or equal to</li>
+<li><code>==</code>: exactly equal to</li>
+<li><code>!=</code>: not equal to</li>
+<li><code>is.na(x)</code>: tests if <code>x</code> is <code>NA</code> and returns a list of <code>TRUE</code> or <code>FALSE</code> for each element of <code>x</code> (similarly, <code>!is.na(x)</code> tests for NOT being <code>NA</code>)</li>
+<li><code>x %in% y</code>: tests if elements of <code>x</code> are in <code>y</code> and returns a list of <code>TRUE</code> or <code>FALSE</code> corresponding to each element of <code>x</code></li>
+</ul>
+</section>
+<section id="putting-it-all-together" class="level2">
+<h2 class="anchored" data-anchor-id="putting-it-all-together">Putting it all together</h2>
+<p>In this section, we’re going to walk through some code that examines the logical operators in R. Follow along these steps that make use of some of the functions above.</p>
+<section id="filter" class="level3">
+<h3 class="anchored" data-anchor-id="filter">filter</h3>
+<p>We use the <code>filter</code> function to select a subset of observations following some criterion(a). Suppose we are only interested in observations in Durham County. Run the following code:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>ncbikecrash <span class="sc">|&gt;</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(county <span class="sc">==</span> <span class="st">"Durham"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The code should have returned a dataset with 340 rows (observations) and the same 65 variables as before. We use the logical operator <code>==</code> to take counties exactly equal to “Durham.” Remember that the output of pipe operators is another dataframe (if you are wondering what a tibble is, you can think of it as a special dataframe format specific to the <code>tidyverse</code>).</p>
+<p>Suppose we wanted to save the Durham County crashes as a new dataframe, <code>durham_crashes</code>. We can use the assignment operator to do that:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>durham_crashes <span class="ot">&lt;-</span> ncbikecrash <span class="sc">|&gt;</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(county <span class="sc">==</span> <span class="st">"Durham"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Finally, we can filter for many conditions at once. Suppose we’re interested in crashes in Durham County where an ambulance was required, from 2014 onward. We might use the following code:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>ncbikecrash <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(county <span class="sc">==</span> <span class="st">"Durham"</span> <span class="sc">&amp;</span> ambulance_req <span class="sc">==</span> <span class="st">"Yes"</span> <span class="sc">&amp;</span> crash_year <span class="sc">&gt;=</span> <span class="dv">2014</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We see that there are 28 such observations, and that the previous code returned a <code>tibble</code> containing their information.</p>
+</section>
+</section>
+<section id="slice" class="level2">
+<h2 class="anchored" data-anchor-id="slice">slice</h2>
+<p>Instead of picking observations that match certain criteria, we can simply take a <code>slice</code> of the dataset that contains specified row numbers that we want. For instance, let’s take the 4th observation:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>ncbikecrash <span class="sc">|&gt;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">4</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>In <code>R</code>, the <code>:</code> specifies that we want everything from the left side of the colon to the right side. So, 1:8 would be “1 to 8.” So, if we wanted to take the first eight observations, we could take the following slice:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>ncbikecrash <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">slice</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="select" class="level2">
+<h2 class="anchored" data-anchor-id="select">select</h2>
+<p>On the other hand, instead of choosing rows (observations), suppose we’re interested in choosing columns (variables). We can use the select function to do so. Say we want to keep only the locality and speed_limit variables from the dataframe. Run the following code and see what happens:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>ncbikecrash <span class="sc">|&gt;</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(locality, speed_limit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We see that we have a new tibble consisting of only the locality and speed limit variables, but for all 7,467 observations.</p>
+<p>The magic of pipes is that we can continue to do more and more operations. Try running the following code, remembering that the pipe operator is pronounced “and then”:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>ncbikecrash <span class="sc">|&gt;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(county <span class="sc">==</span> <span class="st">"Durham"</span> <span class="sc">&amp;</span> ambulance_req <span class="sc">==</span> <span class="st">"Yes"</span> <span class="sc">&amp;</span> crash_year <span class="sc">&gt;=</span> <span class="dv">2014</span>) <span class="sc">|&gt;</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(locality, speed_limit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>What are we doing? We are taking the original dataset <code>ncbikecrash</code>, and then filtering observations where the county was Durham AND an ambulance was required AND the crash year was 2014 or greater, and then selecting to keep only the variables corresponding to locality and speed limit. The result is a <code>tibble</code> containing 28 observations of 2 variables.</p>
+<p>We can also use <code>select</code> to exclude variables. Suppose we want every variable EXCEPT the “region” variable. We can easily do that by using a minus sign:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>ncbikecrash <span class="sc">|&gt;</span> </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>region)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong>Quick Review</strong></p>
+<p>What do you think the following code would do?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>ncbikecrash <span class="sc">|&gt;</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(county <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Wake"</span>, <span class="st">"Richmond"</span>, <span class="st">"Vance"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>How about the following code?</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>ncbikecrash <span class="sc">|&gt;</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(development <span class="sc">==</span> <span class="st">"Residential"</span> <span class="sc">|</span> development <span class="sc">==</span> <span class="st">"Commercial"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(region, development, bike_age, driver_age)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<!-- ## sample_n and sample_frac -->
+<!-- We can also take random samples from our datasets. `sample_n` takes a random sample of n observations, whereas `sample_frac` takes a random sample based on the fraction of observations. Both of these functions can sample with or without replacement using the option `replace = TRUE` or `FALSE`. -->
+<!-- What is the difference between the following two sets of code? -->
+<!-- ```{r eval = F} -->
+<!-- ncbikecrash |>  -->
+<!--   sample_n(5, replace = FALSE) -->
+<!-- ``` -->
+<!-- ```{r eval = F} -->
+<!-- ncbikecrash |> -->
+<!--   sample_frac(0.2, replace = FALSE) -->
+<!-- ``` -->
+<!-- The first example using `sample_n` returned a `tibble` with 5 observations, while the second example using `sample_frac` returned a `tibble` with one-fifth of the total observations in the dataset (proportion equal to 0.2 out of 1). As always, you can save these as new datasets.  -->
+<!-- The following code would save a random sample of 1/3 of the `ncbikecrash` dataset as a new dataset called `ncbikecrash_sample`: -->
+<!-- ```{r eval = F} -->
+<!-- ncbikecrash_sample <- ncbikecrash |> -->
+<!--   sample_frac(1/3, replace = FALSE) -->
+<!-- ``` -->
+<!-- Notice that here we used a fraction instead of a decimal. -->
+</section>
+<section id="distinct-and-arrange" class="level2">
+<h2 class="anchored" data-anchor-id="distinct-and-arrange">distinct and arrange</h2>
+<p>The <code>distinct</code> function returns all unique observations. Suppose we’re interested in all cities and counties that had a bike crash. Run the following code:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>ncbikecrash <span class="sc">|&gt;</span> </span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(county, city)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>As expected, we have a <code>tibble</code> containing every county/city combination in the dataset, and have only those variables. However, there are a lot of repeats! We can find the unique observations as follows:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>ncbikecrash <span class="sc">|&gt;</span> </span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(county, city) <span class="sc">|&gt;</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>“<em>Take the ncbikecrash data, and then select county and city, and then keep only the distinct observations</em>.”</p>
+<p>Note that these are in the order that they first appeared in the dataset. We can <code>arrange</code> them in alphabetical order as follows:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>ncbikecrash <span class="sc">|&gt;</span> </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(county, city) <span class="sc">|&gt;</span> </span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(county, city)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>The above code, after taking the distinct observations, then arranges in order by county, and then by city. If we wanted to order in the opposite direction (descending, instead of ascending), we can simply use the <code>desc()</code> function:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>ncbikecrash <span class="sc">|&gt;</span> </span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(county, city) <span class="sc">|&gt;</span> </span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(county), city)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>We see that we are ordering first in descending order by county, and then by ascending order by city (within the counties). If we have numeric data, we can also arrange to order the data based on their numeric values. The <code>desc()</code> function works the same way.</p>
+</section>
+<section id="summarise-and-group_by" class="level2">
+<h2 class="anchored" data-anchor-id="summarise-and-group_by">summarise and group_by</h2>
+<p>Often times, we want to summarize values in our dataset by calculating certain summary statistics such as the mean, median, or standard deviation, etc. We can do that by using the summarise or summarize function (dplyr was written by Hadley Wickham, who is from New Zealand, hence the British spelling).</p>
+<p>Suppose we are interested in the mean hour at which crashes occur:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>ncbikecrash <span class="sc">|&gt;</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_hr =</span> <span class="fu">mean</span>(crash_hour))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Here, we’re creating a variable <code>avg_hr</code> that has the mean of <code>crash_hour</code>. By running the above code, you should see that the average is 14.7, or around 2:45 PM.</p>
+<section id="handling-na-values" class="level3">
+<h3 class="anchored" data-anchor-id="handling-na-values">Handling NA values</h3>
+<p>If you have NAs in your dataset, R might throw an error if you try to calculate the <code>mean()</code> of a variable. To remove all NAs, we could do the following:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>ncbikecrash <span class="sc">|&gt;</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_hr =</span> <span class="fu">mean</span>(crash_hour, <span class="at">na.rm =</span> T))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>Here, the <code>na.rm = T</code> is telling R to remove any NA values from the <code>crash_hour</code> variable before calculating the mean.</p>
+</section>
+<section id="summarizing-based-on-groups" class="level3">
+<h3 class="anchored" data-anchor-id="summarizing-based-on-groups">Summarizing based on groups</h3>
+<p>We can also summarize based on different groups. For instance, if we were interested in the mean hour at which crashes occur based on whether the crash was a hit and run, we can first <code>group_by</code> the <code>hit_run</code> variable, and then summarize the mean <code>crash_hour</code> as follows:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>ncbikecrash <span class="sc">|&gt;</span> </span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(hit_run) <span class="sc">|&gt;</span> </span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_hr =</span> <span class="fu">mean</span>(crash_hour))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+</section>
+<section id="count" class="level2">
+<h2 class="anchored" data-anchor-id="count">count</h2>
+<p>It is also easy to count observations of categorical variables. Suppose we wanted to count the number of observations in each category of the variable <code>driver_alcohol_drugs</code>. We can simply run</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>ncbikecrash <span class="sc">|&gt;</span> </span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(driver_alcohol_drugs)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<!-- ## mutate and case_when -->
+<!-- Finally, one of the most common data manipulation tasks is to create a new variable based on values of existing variables. For instance, suppose we have a dataset named dat, that contains measurements of mass (kg), height (m), and body temperature in fahrenheit (fahrenheit) for study participants. We want to make new variables for their BMI and body temperature in celsius. We can create these variables as follows (recalling the appropriate formulas): -->
+<!-- ```{r eval = F} -->
+<!-- dat |>  -->
+<!--   mutate(bmi = kg/m^2) -->
+<!-- # Don't run this code; there is no "dat" dataset -->
+<!-- ``` -->
+<!-- ```{r eval = F} -->
+<!-- dat |>  -->
+<!--   mutate(celsius = (fahrenheit - 32) * 5/9) -->
+<!-- # same. -->
+<!-- ``` -->
+<!-- In doing so, we’ve created the new variables `bmi` and `celsius` equal to the right side of the equals sign in the mutate function. Most often when you define a new variable with mutate, you’ll want to use it later (for instance, in a visualization or in downstream analyses). In this case, you’d want to save the resulting dataframe, often by overwriting the original one. As an example: -->
+<!-- ```{r eval = F} -->
+<!-- dat <- dat |>  -->
+<!--   mutate(bmi = kg/m^2) -->
+<!-- ``` -->
+<!-- In this case, we’ve saved over the `dat` dataframe, which now contains the new variable `bmi`. -->
+<!-- Finally, we can also do more sophisticated data creation using `case_when`, which allows for a sequence of formulas defining new variables. For instance, let’s suppose we want to create a new variable that categorizes BMI based on CDC cut-offs. Consider the following code, which utilizes the bmi variable we saved previously: -->
+<!-- ```{r eval = F} -->
+<!-- dat <- dat |>  -->
+<!--   mutate(bmi_cat = case_when( -->
+<!--     bmi < 18 ~ "underweight", -->
+<!--     bmi >= 18 & bmi < 25 ~ "normal", -->
+<!--     bmi >= 25 & bmi < 30 ~ "oberweight", -->
+<!--     bmi > 30 ~ "obese" -->
+<!--   )) -->
+<!-- # Be sure all parentheses are closed! -->
+<!-- ``` -->
+<!-- We have used the `case_when` function to create a new variable. The individual cases are separated by commas, and within each case, the condition (e.g., BMI \> 30) is on the left and the outcome for the new variable (e.g., “obese”) is on the right of a tilde (\~). We have also saved over the original dataframe in order to keep this new variable, `bmi_cat`. -->
+<!-- Let’s do a concrete example using the ncbikecrash data. Suppose we want to classify whether a crash occurred on a weekend or on a weekday. We will use case_when in combination with the logical operator %in% to do so (the c() function tells R that there is a list of things coming up): -->
+<!-- ```{r} -->
+<!-- ncbikecrash <- ncbikecrash |>  -->
+<!--   mutate(weekend = case_when( -->
+<!--     crash_day %in% c("Saturday", "Sunday") ~ "Weekend", -->
+<!--     crash_day %in% c("Monday",  -->
+<!--                      "Tuesday",  -->
+<!--                      "Wednesday",  -->
+<!--                      "Thursday",  -->
+<!--                      "Friday") ~ "Weekday" -->
+<!--   )) -->
+<!-- ``` -->
+<!-- Let’s check our work by counting the number of observations in each of our categories: -->
+<!-- ```{r} -->
+<!-- ncbikecrash |> -->
+<!--   count(weekend) -->
+<!-- ``` -->
+<!-- It looks like 1809 crashes happened on weekends and 5658 occurred on weekdays. -->
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Ensure all code is visible on PDF
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In your final PDF that you turn in on Gradescope, ensure all code is visible for full credit. If lines of code are too long (left to right), they may run off the page when you convert to PDF. You should consider indenting code after commas. Ask your TAs if you need help checking this!</p>
+</div>
+</div>
+</section>
+<section id="your-turn" class="level2">
+<h2 class="anchored" data-anchor-id="your-turn">Your turn!</h2>
+<p>In each of the following plots, make sure you have informative plot titles and axis labels.</p>
+</section>
+<section id="exercise-2" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-2">Exercise 2</h2>
+<p>Modify the code used for the bar graph that counts the number of US States by Census Region such that the bars are colored pink. Which region has the most states? Which has the least?</p>
+</section>
+<section id="exercise-3" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-3">Exercise 3</h2>
+<p>Create a visualization that explores the distribution of adults who smoke among different levels of the Human Development Index. (Hint: what type of visualization might be appropriate? Try modifying some of the code you see above, changing some of the variable names. Remember to also change any titles as needed. Provide an informative plot title, x-axis label, and y-axis label).</p>
+<ol type="a">
+<li>Describe the distributions among each level of HDI - are they symmetric or skewed? Any outliers?</li>
+<li>How does smoking relate to Human Development Index in this dataset? Describe the pattern you see.</li>
+</ol>
+</section>
+<section id="exercise-4" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-4">Exercise 4</h2>
+<p>Create a visualization that explores the relationship between flu vaccination rate (x-axis) and childhood vaccination rate (y-axis). What relationship(s) do you see? Make sure you have an informative title, x-axis label, and y-axis label.</p>
+</section>
+<section id="exercise-5" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-5">Exercise 5</h2>
+<p>Create a visualization that explores the relationship between death rate per 100,000 due to cardiovascular causes (x-axis) and the percentage of obese residents in a state (y-axis). Color-code your plot based on HDI category. (Hint: Have we done a similar visualization earlier in this lab assignment? Modify the earlier code. You’ll need to add a title, x-axis label, and y-axis label). What relationship(s) do you see?</p>
+</section>
+<section id="exercise-6" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-6">Exercise 6</h2>
+<p>Create boxplots to visualize the infant mortality rate (y-axis) by region (x-axis). Include an informative title, x-axis label, and y-axis label. Comment on the relationship(s) you see.</p>
+<p><strong>Note</strong>: each of the following exercises should be done in “one go” using a series of pipes. Code should be fully shown in your final PDF for each exercise. If you are asked to “create a table,” then there is no need for additional narrative, unless specifically asked to make a conclusion based on the table.</p>
+</section>
+<section id="exercise-7" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-7">Exercise 7</h2>
+<ol type="a">
+<li>Run the provided code to determine the bike crashes that occurred in <strong>residential</strong> development areas where the driver age group was <strong>0 to 19</strong>. How many such bike crashes satisfy this criteria? Provide a 1-sentence response to answer this question.</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run this code</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>ncbikecrash <span class="sc">|&gt;</span> </span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(development <span class="sc">==</span> <span class="st">"Residential"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(driver_age_group <span class="sc">==</span> <span class="st">"0-19"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Hint
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>To do this, run the provided code. In the <code>Description</code> of the data frame that is printed out, you’ll see <code>df[rows x columns]</code>. The number of “rows” is the number of observations that satisfy these criteria.</p>
+</div>
+</div>
+<p><strong>Note</strong>: Do not display the output of all observations satisfying these criteria. Run the code yourself to find out the answer, but your template will have <code>#| eval: false</code> as a code option which <strong>suppresses this lengthy output</strong>.</p>
+<ol start="2" type="a">
+<li>Now, edit the provided code so that the dataset is filtered to “Residential” development areas, the same as part (a). Then, run the code to create a table displaying the number of bike crashes in <strong>each age group</strong> for residential areas.</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># edit code below: replace blank with Residential</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>ncbikecrash <span class="sc">|&gt;</span> </span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(development <span class="sc">==</span> <span class="st">"______"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(driver_age_group)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="exercise-8" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-8">Exercise 8</h2>
+<p>Edit the code below to create a table which orders the most commonly occurring estimated speed from lowest to highest. (i.e., the least commonly occuring speed will appear first in the table.) To do this, replace the blank with the <code>driver_est_speed</code> variable, then run the code. <strong>Note:</strong> It’s okay for <code>NA</code> values to be present in your table.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># edit code: replace blank with driver estimated speed variable</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>ncbikecrash <span class="sc">|&gt;</span> </span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(____________) <span class="sc">|&gt;</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(n)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="exercise-9" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-9">Exercise 9</h2>
+<p>Write code that 1) filters to crashes in Durham, Orange, or Wake counties, 2) groups by county, then 3) summarizes the mean driver age in each county.</p>
+<p>What was the mean driver age (<code>driver_age</code>) involved in a crash in each of those three counties? Display output only for those three counties.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>You can filter by multiple counties using the following line of code. Recall the <code>|</code> operator means <code>OR</code>:</p>
+<p><code>filter(county == "Henderson" | county == "Wilmington")</code></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>There are some missing values for <code>driver_age</code>. You can either filter for rows where the driver age isn’t missing or use the na.rm = T option in the <code>mean()</code> function.</p>
+</div>
+</div>
+</section>
+<section id="exercise-10" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-10">Exercise 10</h2>
+<p>What is the mean hour for when a crash occurs in Durham County for each month? Create a table which displays this information, arranged from earliest to latest hour.</p>
+</section>
+<section id="submission" class="level2">
+<h2 class="anchored" data-anchor-id="submission">Submission</h2>
+<p>As you’ve seen previously, we can <strong>Render</strong> the template into an .html file that can be opened by any web browser. To export it as a .pdf, open the file in your web browser and then print to or save as a .pdf document. Your TAs will show you how if you need help! (There is a way to directly knit to a .pdf file, but it’s quite a bit more involved.)</p>
+<p>You will submit the PDF documents for labs and homework to Gradescope as part of your final submission.</p>
+<p>To submit your assignment:</p>
+<ul>
+<li><p>Access Gradescope through the menu on the BIOS 600 Canvas site.</p></li>
+<li><p>Click on the assignment, and you’ll be prompted to submit it.</p></li>
+<li><p>Mark the pages associated with each exercise. All of the pages of your lab should be associated with at least one question (i.e., should be “checked”).</p></li>
+<li><p>Select the first page of your .PDF submission to be associated with the “Formatting” section.</p></li>
+</ul>
+</section>
+<section id="grading" class="level2">
+<h2 class="anchored" data-anchor-id="grading">Grading</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Component</th>
+<th>Points</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Ex 1</td>
+<td>2</td>
+</tr>
+<tr class="even">
+<td>Ex 2</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>Ex 3</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>Ex 4</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>Ex 5</td>
+<td>4</td>
+</tr>
+<tr class="even">
+<td>Ex 6</td>
+<td>4</td>
+</tr>
+<tr class="odd">
+<td>Ex 7</td>
+<td>5</td>
+</tr>
+<tr class="even">
+<td>Ex 8</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>Ex 9</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>Ex 10</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>Formatting</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td><strong>Total</strong></td>
+<td><strong>24</strong></td>
+</tr>
+</tbody>
+</table>
+<p>The “Formatting” grade is to assess the document format. This includes having a neatly organized document (no excessive output, warnings/messages when loading packages and/or data) with readable code and your name and the date updated in the YAML.</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
