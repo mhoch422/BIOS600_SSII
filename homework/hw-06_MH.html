@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>HW 1</title>
+<title>HW 06</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -61,18 +61,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="hw-01_MH_files/libs/clipboard/clipboard.min.js"></script>
-<script src="hw-01_MH_files/libs/quarto-html/quarto.js" type="module"></script>
-<script src="hw-01_MH_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="hw-01_MH_files/libs/quarto-html/popper.min.js"></script>
-<script src="hw-01_MH_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="hw-01_MH_files/libs/quarto-html/anchor.min.js"></script>
-<link href="hw-01_MH_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="hw-01_MH_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="hw-01_MH_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="hw-01_MH_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="hw-01_MH_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="hw-06_MH_files/libs/clipboard/clipboard.min.js"></script>
+<script src="hw-06_MH_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="hw-06_MH_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="hw-06_MH_files/libs/quarto-html/popper.min.js"></script>
+<script src="hw-06_MH_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="hw-06_MH_files/libs/quarto-html/anchor.min.js"></script>
+<link href="hw-06_MH_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="hw-06_MH_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="hw-06_MH_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="hw-06_MH_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="hw-06_MH_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -84,8 +113,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">HW 1</h1>
-<p class="subtitle lead">BIOS 600 - Summer Session II 2026</p>
+<h1 class="title">HW 06</h1>
+<p class="subtitle lead">Lecture 06</p>
 </div>
 
 
@@ -102,141 +131,111 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>This assignment is due Jun 23 at 11:59 PM.</p>
-<section id="installing-r" class="level2">
-<h2 class="anchored" data-anchor-id="installing-r">Installing R</h2>
-<section id="what-is-r" class="level3">
-<h3 class="anchored" data-anchor-id="what-is-r">What is R?</h3>
-<p>R is a statistical programming language used for computation, data analysis, and graphics generation. It is widely used by statisticians, data scientists, and applied researchers in many fields.</p>
+<p>Due: Wednesday, July 1 at 11:59pm</p>
+<section id="starting-a-new-quarto-file" class="level2">
+<h2 class="anchored" data-anchor-id="starting-a-new-quarto-file">Starting a new Quarto file</h2>
+<p>For this assignment you will begin a new Quarto file. To do this, go to RStudio and click File &gt; New File &gt; Quarto Document. A pop-up will appear asking for a title, author, and format. You may leave these as the default options for now. Click OK and a new file will open. Update the YAML with your title, name, and date.</p>
 </section>
-<section id="benefits-of-r" class="level3">
-<h3 class="anchored" data-anchor-id="benefits-of-r">Benefits of R</h3>
-<ul>
-<li><p>flexible and freely available to the public, who have in turn written many user-contributed <strong>packages</strong> which provide additional functionality.</p></li>
-<li><p>RStudio is a convenient interface for R that adds convenient features, such as exporting output in nice formats.</p></li>
-<li><p>In this class, we’ll be doing all of our computation in RStudio.</p></li>
-</ul>
-<p>Let’s begin by installing R and RStudio. R is like the “engine” and RStudio is like the “dashboard”, so we need both.</p>
-<p>First, we need to install R, which can be <a href="https://cran.r-project.org/">downloaded here</a> (see screenshot below).</p>
-<p><img src="images/lab-1/r1.png" class="img-fluid"></p>
-<p>Next, install RStudio Desktop, which can be <a href="https://posit.co/download/rstudio-desktop/">downloaded here</a> (see screenshot below).</p>
-<p><img src="images/lab-1/r2.png" class="img-fluid"></p>
-</section>
-</section>
-<section id="first-steps-in-rstudio" class="level2">
-<h2 class="anchored" data-anchor-id="first-steps-in-rstudio">First Steps in RStudio</h2>
-<section id="ensure-you-have-an-updated-version" class="level3">
-<h3 class="anchored" data-anchor-id="ensure-you-have-an-updated-version">Ensure you have an updated version</h3>
-<p>For this course, we’ll be using Quarto to type up HW/Labs. Quarto is a (relatively new) publishing system which may be accessed through RStudio. Some of you may already have R/RStudio installed on your computer. To ensure you have a version of RStudio which can run Quarto, follow these instructions:</p>
-<ul>
-<li><p>For Windows: Go to Help &gt; About RStudio.</p></li>
-<li><p>For Mac: Go to RStudio &gt; About RStudio.</p></li>
-<li><p>The dialogue box will display the RStudio version. <strong>You should have version 2022.07 or later</strong>.</p></li>
-</ul>
-</section>
-<section id="what-if-i-have-an-earlier-version-of-rstudio" class="level3">
-<h3 class="anchored" data-anchor-id="what-if-i-have-an-earlier-version-of-rstudio">What if I have an earlier version of RStudio?</h3>
-<p>You’ll need to update. To update RStudio, first check if an update is available by going to Help &gt; Check for Updates within RStudio (there should be one available). If an update is found (it should be), you’ll be directed to the RStudio website to download the latest version. After downloading, run the installer and follow the prompts to install the new version.</p>
-</section>
-</section>
-<section id="exploring-rstudio" class="level2">
-<h2 class="anchored" data-anchor-id="exploring-rstudio">Exploring RStudio</h2>
-<p>With R and RStudio installed, we’ll begin by exploring RStudio: the interface, reading in data, and basic commands. Upon opening RStudio, you should see something similar to the window below:</p>
-<p><img src="images/lab-1/r3.png" class="img-fluid"></p>
-<p>The <strong>console</strong> is the panel on the left side, and is where users can type commands and see immediate output. Let’s try it out! Type the following code into the console:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">3</span> <span class="sc">+</span> <span class="dv">5</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>You should get output that looks like</p>
-<div class="cell">
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 8</code></pre>
-</div>
-</div>
-<p>(For now, ignore the <code>[1]</code>). By typing in <code>3+5</code>, we got the expected answer, <code>8</code>. We can see that R can be used as a calculator directly in the console. Try some other commands that use R as a calculator. For instance, <code>3*25</code>, <code>exp(2)</code>, or <code>(10+5^2)/sqrt(40)</code>. Of course, R is not simply a calculator; other commands may also be entered here.</p>
-<p>To illustrate, let’s load a dataset. Enter the following command into the console (you can directly copy/paste it, but make sure everything is exactly as below):</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cdc <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://github.com/mhoch422/BIOS600_SSII/blob/main/homework/data/cdc_cleaned.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in scan(file = file, what = what, sep = sep, quote = quote, dec = dec,
-: EOF within quoted string</code></pre>
-</div>
-</div>
-<p>We’ve just loaded a dataset named <code>cdc</code>. These data come primarily from the Sortable Risk Factors and Health Indicators dataset from the CDC, which comprises demographic and health indices compiled from various federal sources. This dataset is now part of our <strong>environment</strong>, which is displayed on the top half and right side of the RStudio window.</p>
-<ul>
-<li><p>The <strong>environment</strong> contains all objects in the current working space. These objects could be variables, lists of variables, or even entire datasets.</p></li>
-<li><p>In the same location as the environment tab, the <strong>history</strong> tab displays all commands used during the current session (don’t worry about the connections tab for now).</p></li>
-<li><p>Finally, the bottom half of the right-hand panel shows information regarding files on your hard drive, installed packages, output such as plots, and help files or other documents.</p></li>
-</ul>
-<p>Coming back to the dataset we loaded in, we can see that it is named <code>cdc</code>. We can take a look at this dataset in a spreadsheet-like window by clicking on <code>cdc</code> in the Environment tab to the right, or by running the following code in the console:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(cdc)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Note that other objects may be added to the environment, either from external data sources from the internet as in today’s example, datasets downloaded to your computer, or even as created as manipulations of existing datasets.</p>
-</section>
-<section id="setting-up-a-project-in-rstudio" class="level2">
-<h2 class="anchored" data-anchor-id="setting-up-a-project-in-rstudio">Setting up a project in RStudio</h2>
-<p>In this class, you’ll use RStudio Projects to stay organized. A project keeps all of your work (scripts, data, and results) together in one place. This is good practice for reproducible research.</p>
-<p><strong>1. What is a working directory?</strong></p>
-<ul>
-<li><p>The working directory is the folder where R looks for files and saves results.</p></li>
-<li><p>Think of it as R’s “current location” on your computer.</p></li>
-<li><p>If you try to load a dataset, R will look in your working directory first.</p></li>
-</ul>
-<p>Check your current working directory by running the following in your <strong>Console</strong>:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p><strong>2. Creating a project</strong></p>
-<p>We’ll create a new project for this course so everything stays in one place. In RStudio, go to the top menu. Click on File → New Project → New Directory → New Project. Name your project something sensible &amp; concise, like: <code>bios600</code>. Choose where on your computer you want this folder saved (e.g., “Documents” or “Desktop”).</p>
-<p>Now RStudio will automatically set your project folder as the working directory whenever you open it.</p>
-<p><strong>3. Creating a “data” folder</strong></p>
-<p>Inside your new project folder, we’re going to create a folder called <code>data</code>.This is where you’ll put all datasets for the course. You can make the folder by doing the following: In your computer’s file explorer (right click → New Folder → name it <code>data</code>). Alternatively, click the little folder with a green plus on your lower right pane within RStudio to create the folder.</p>
-</section>
-<section id="quarto-and-reproducible-research" class="level2">
-<h2 class="anchored" data-anchor-id="quarto-and-reproducible-research">Quarto and reproducible research</h2>
-<p>Quarto is a system that may be used to create easy-to-write, attractive reports, presentations, or webpages that also serve as reproducible records of the data analysis. These reports have the desirable property of being able to not only display written narratives and figures, but also include any R code and the outputs from these code snippets.</p>
-<p>One of the biggest strengths of Quarto is that everything is in one place, and that other users should be able to reproduce your results exactly, if they have your Quarto document and datasets - the analysis is run from the beginning each time you render the document. As well, formatting is easy! Luckily, RStudio already comes with Quarto support, so there is nothing additional to install. (Again, you need &gt;= version 2022.07 to run Quarto within RStudio!)</p>
-<p>Every homework assignment and lab in this class will be written in Quarto, with a template provided for you to use for the first few assignments. This lab’s template can be downloaded by typing in the following code in the Console:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">"https://github.com/mhoch422/BIOS600_SSII/blob/main/homework/hw-1-template_MH.qmd"</span>, <span class="at">destfile=</span><span class="st">"hw-01.qmd"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>You should now see the new file <code>hw-01.qmd</code> under the Files tab in the bottom-right hand side of your RStudio window. Click on <code>hw-01.qmd</code> in this window in order to open it up – it is the template for use in this lab!</p>
-<p>First, put your name in the space at the top where it says “YOUR NAME GOES HERE”.</p>
-<p>Fill in answers in the spaces provided: text narrative should be typed directly in the document and any included R code should be typed inside “chunks,” or sections defined by three backticks (the little mark on the same key as the tilde). See the template for more instructions, or ask your TA.</p>
-<p>An important thing to note is that the workspace of the Quarto document is separate from the console – this means that you must load any packages inside of R chunks if you want to use functions contained in them. In the template for this lab, this has been done already, but in the future you may have to do it yourself.</p>
-<p>In order to turn this template into a shareable document, <strong>Render</strong> the quarto template into an HTML document by pressing the Render button at the top of the document (it is a large blue arrow facing the right). You should see the template rendered as an .html file! To turn it in, print to PDF from your browser. (I recommend Google Chrome.)</p>
-</section>
-<section id="at-the-end-heres-how-youll-turn-this-in" class="level2">
-<h2 class="anchored" data-anchor-id="at-the-end-heres-how-youll-turn-this-in">At the end, here’s how you’ll turn this in:</h2>
-<ul>
-<li><p>“Render” the .qmd file to an html file, by clicking on the blue right arrow button at the top of this window. (Demo)</p></li>
-<li><p>Open the .html document in any browser, and print to pdf. You’ll turn in the .pdf file to Gradescope under Lab 1 Assignments.</p></li>
-</ul>
-</section>
-<section id="on-your-own" class="level1">
-<h1>On your own</h1>
 <section id="exercise-1" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-1">Exercise 1</h2>
-<p>R has various useful datasets built-in. One of these datasets is the <code>mtcars</code> dataset, extracted from the 1974 <em>Motor Trend</em> US magazine. One way we can ask for help in R, and to find out information about the data, is by typing the <code>?</code> in the console. Type <code>?mtcars</code> in the Console to view the help page for the <code>mtcars</code> dataset.</p>
-<p>List three variables from this dataset, along with their units.</p>
+<p>Determine which probability distribution would be most appropriate for modeling the quantity of interest: Bernoulli, Binomial, Normal, or Poisson. No explanation is required (note, it may be the case that not all assumptions are satisfied for your distribution of choice; that’s ok - for here, choose the most appropriate choice).</p>
+<ul>
+<li><ol type="A">
+<li>The mean proportion of people who are left-handed</li>
+</ol></li>
+<li><ol start="2" type="A">
+<li>The number of students in a classroom who have diabetes</li>
+</ol></li>
+<li><ol start="3" type="A">
+<li>How many previous heart attacks a patient has had in the past decade</li>
+</ol></li>
+<li><ol start="4" type="A">
+<li>The number of flights taken by a person in a year</li>
+</ol></li>
+<li><ol start="5" type="A">
+<li>The average weight of newborn infants</li>
+</ol></li>
+<li><ol start="6" type="A">
+<li>Whether a patient develops lung cancer during their life given that they are a smoker</li>
+</ol></li>
+</ul>
 </section>
 <section id="exercise-2" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-2">Exercise 2</h2>
-<p>In the space provided, explain what you think ### in front of text (not code) does.</p>
+<p>Blood cholesterol is often used as a marker for cardiovascular disease risk.<br>
+Suppose the distribution of total cholesterol levels in adults is approximately normal with:</p>
+<ul>
+<li>Mean (<span class="math inline">\(\mu\)</span>) = 200 mg/dL<br>
+</li>
+<li>Standard deviation (<span class="math inline">\(\sigma\)</span>) = 30 mg/dL</li>
+</ul>
+<p>A patient’s cholesterol level is measured at <strong>260 mg/dL</strong>.</p>
+<ol type="a">
+<li><p>Calculate the <strong>z-score</strong> for this patient’s cholesterol value. Use R for your computation and show your code.</p></li>
+<li><p>Interpret the z-score: how many standard deviations above or below the mean is this value?</p></li>
+<li><p>Based on the z-score, would you consider this value to be <strong>unusually high</strong>?<br>
+<em>(Hint: Recall that values more than ~2 standard deviations from the mean are often considered unusual.)</em></p></li>
+</ol>
 </section>
 <section id="exercise-3" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-3">Exercise 3</h2>
-<p>Write a quick one paragraph intro about yourself. Be creative!</p>
+<p>For this exercise and Exercise 4, you will be using the NC bike crash data set from Lab 1. As a reminder, the code chunk below will tell R we are using the <code>tidyverse</code> library, and save the data under the name <code>ncbikecrash</code>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>ncbikecrash <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://mhoch422.github.io/BIOS600_SSII/labs/data/bikecrash.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>What is the mean hour for when a crash occurs in Durham County for each month? Create a table which displays this information, arranged from earliest to latest hour.</p>
 </section>
 <section id="exercise-4" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-4">Exercise 4</h2>
-<p>In the R chunk, pick your two favorite numbers and add them together using R’s built-in calculator function. The answer should be knit directly in the document.</p>
+<p>Create a new variable named <code>time_crash</code> based on the hour (<code>crash_hour</code>) that the crash occured and <strong>save in a new dataset</strong> called <code>ncbikecrash_time</code>. If the crash occurred during from 12:00 am to 6:59 am, define <code>time_crash</code> to be “Early morning.” If the crash occurred from 7:00 am to 11:59 am, define <code>time_crash</code> to be “Morning.” From 12:00 pm to 5:59 pm “Afternoon,” and from 6:00 pm to 11:59 pm “Evening.”</p>
+<p>Then, create a table which counts the number of crashes that occurred during these time periods. When do most crashes occur? <strong>Note:</strong> For this question, you should have one section of code for defining the new dataset with the new variable, and a second section of code for creating the table. (They can be in the same code chunk, but they’ll be two separate pieces.)</p>
 </section>
-<section id="from-.html-to-.pdf" class="level2">
-<h2 class="anchored" data-anchor-id="from-.html-to-.pdf">From .html to .pdf</h2>
-<p>Important: You must turn in a .pdf file corresponding to the Quarto template to Gradescope in order to receive credit for the assignment.</p>
+<section id="submission" class="level2">
+<h2 class="anchored" data-anchor-id="submission">Submission</h2>
+<p>As you’ve seen previously, we can <strong>Render</strong> into an .html file that can be opened by any web browser. To export it as a .pdf, open the file in your web browser and then print to or save as a .pdf document. Contact your TAs in Ed Discussion if you need help!</p>
+<p>You will submit the PDF documents for labs and homework to Gradescope as part of your final submission.</p>
+<p>To submit your assignment:</p>
+<ul>
+<li><p>Access Gradescope through the menu on the BIOS 600 Canvas site.</p></li>
+<li><p>Click on the assignment, and you’ll be prompted to submit it.</p></li>
+<li><p>Mark the pages associated with each exercise. All of the pages of your lab should be associated with at least one question (i.e., should be “checked”).</p></li>
+<li><p>Select the first page of your .PDF submission to be associated with the “Formatting” section.</p></li>
+</ul>
 </section>
+<section id="grading" class="level2">
+<h2 class="anchored" data-anchor-id="grading">Grading</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Component</th>
+<th>Points</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Ex 1</td>
+<td>6</td>
+</tr>
+<tr class="even">
+<td>Ex 2</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>Ex 3</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>Ex 4</td>
+<td>3</td>
+</tr>
+<tr class="odd">
+<td>Formatting</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<p>The “Formatting” grade is to assess the document format. This includes having a neatly organized document (no excessive output, warnings/messages when loading packages and/or data) with readable code and your name and the date updated in the YAML.</p>
 </section>
 
 </main>

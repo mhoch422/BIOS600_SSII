@@ -1,10 +1,14 @@
 ---
 title: "HW 03"
 subtitle: "Lecture 3"
-format: html
+format: docx
 ---
 
 Due: Thursday, June 25 at 11:59pm
+
+## Starting a new Quarto file
+
+For this assignment you will begin a new Quarto file. To do this, go to RStudio and click File > New File > Quarto Document. A pop-up will appear asking for a title, author, and format. You may leave these as the default options for now. Click OK and a new file will open. Update the YAML with your title, name, and date.
 
 ## Covid-19 vaccine dataset
 
@@ -56,6 +60,16 @@ a. Does India have higher or lower prevalence of MSVI than might be expected giv
 
 b. In their conclusion, the authors state “Burden of visual impairment and socioeconomic indicators were closely associated and may help to identify countries requiring greater attention to these issues.” Do you think this is a reasonable statement to make from the scatterplot? Why or why not?
 
+## Exercise 4: SEER Data
+
+According to data from the Surveillance, Epidemiology, and End Results (SEER) Program of the National Cancer Institute, U.S. women have approximately a 1 in 8 lifetime chance (12.5%) of developing breast cancer.
+
+Please provide a numerical answer by using R’s calculator capability (i.e., insert new R chunks, show code calculating the numeric answers). Be careful with parentheses! In addition, provide a 1-sentence explanation of your work. 
+
+a. Suppose three unrelated women are randomly selected from the U.S. population. What is the probability that all three will develop breast cancer at some point during their lives?
+
+b. Suppose three unrelated women are randomly selected from the U.S. population. What is the probability that at least one of them will develop breast cancer at some point during their lives?
+
 ## Submission
 
 As you’ve seen previously, we can **Render** into an .html file that can be opened by any web browser. To export it as a .pdf, open the file in your web browser and then print to or save as a .pdf document. Contact your TAs in Ed Discussion if you need help! 
@@ -82,6 +96,7 @@ To submit your assignment:
 | Ex 1 | 4 |
 | Ex 2 | 2 |
 | Ex 3 | 2 |
+| Ex 4 | 2 |
 | Formatting | 3 |
 
 The “Formatting” grade is to assess the document format. This includes having a neatly organized document (no excessive output, warnings/messages when loading packages and/or data) with readable code and your name and the date updated in the YAML.

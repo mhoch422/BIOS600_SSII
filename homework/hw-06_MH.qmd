@@ -1,0 +1,107 @@
+---
+title: "HW 06"
+subtitle: "Lecture 06"
+format: docx
+---
+
+Due: Wednesday, July 1 at 11:59pm
+
+## Starting a new Quarto file
+
+For this assignment you will begin a new Quarto file. To do this, go to RStudio and click File > New File > Quarto Document. A pop-up will appear asking for a title, author, and format. You may leave these as the default options for now. Click OK and a new file will open. Update the YAML with your title, name, and date.
+
+## Exercise 1
+
+Determine which probability distribution would be most appropriate for modeling the quantity of interest: Bernoulli, Binomial, Normal, or Poisson. No explanation is required (note, it may be the case that not all assumptions are satisfied for your distribution of choice; that’s ok - for here, choose the most appropriate choice).
+
+-   
+
+    (A) The mean proportion of people who are left-handed
+
+-   
+
+    (B) The number of students in a classroom who have diabetes
+
+-   
+
+    (C) How many previous heart attacks a patient has had in the past decade
+
+-   
+
+    (D) The number of flights taken by a person in a year
+
+-   
+
+    (E) The average weight of newborn infants
+
+-   
+
+    (F) Whether a patient develops lung cancer during their life given that they are a smoker
+
+## Exercise 2
+
+Blood cholesterol is often used as a marker for cardiovascular disease risk.  
+Suppose the distribution of total cholesterol levels in adults is approximately normal with:  
+
+- Mean ($\mu$) = 200 mg/dL  
+- Standard deviation ($\sigma$) = 30 mg/dL  
+
+A patient’s cholesterol level is measured at **260 mg/dL**.  
+
+  a. Calculate the **z-score** for this patient’s cholesterol value. Use R for your computation and show your code.  
+  
+  b. Interpret the z-score: how many standard deviations above or below the mean is this value?  
+
+  c. Based on the z-score, would you consider this value to be **unusually high**?  
+   *(Hint: Recall that values more than ~2 standard deviations from the mean are often considered unusual.)*
+   
+## Exercise 3
+
+For this exercise and Exercise 4, you will be using the NC bike crash data set from Lab 1. As a reminder, the code chunk below will tell R we are using the `tidyverse` library, and save the data under the name `ncbikecrash`.
+
+```{r message = F}
+
+library(tidyverse)
+ncbikecrash <- read.csv("https://mhoch422.github.io/BIOS600_SSII/labs/data/bikecrash.csv")
+
+```
+
+What is the mean hour for when a crash occurs in Durham County for each month? Create a table which displays this information, arranged from earliest to latest hour.
+
+## Exercise 4
+
+Create a new variable named `time_crash` based on the hour (`crash_hour`) that the crash occured and **save in a new dataset** called `ncbikecrash_time`. If the crash occurred during from 12:00 am to 6:59 am, define `time_crash` to be “Early morning.” If the crash occurred from 7:00 am to 11:59 am, define `time_crash` to be “Morning.” From 12:00 pm to 5:59 pm “Afternoon,” and from 6:00 pm to 11:59 pm “Evening.” 
+
+Then, create a table which counts the number of crashes that occurred during these time periods. When do most crashes occur? **Note:** For this question, you should have one section of code for defining the new dataset with the new variable, and a second section of code for creating the table. (They can be in the same code chunk, but they'll be two separate pieces.) 
+
+## Submission
+
+As you’ve seen previously, we can **Render** into an .html file that can be opened by any web browser. To export it as a .pdf, open the file in your web browser and then print to or save as a .pdf document. Contact your TAs in Ed Discussion if you need help! 
+
+You will submit the PDF documents for labs and homework to Gradescope as part of your final submission.
+
+To submit your assignment:
+
+- Access Gradescope through the menu on the BIOS 600 Canvas site.
+
+- Click on the assignment, and you’ll be prompted to submit it.
+
+- Mark the pages associated with each exercise. All of the pages of your lab should be associated with at least one question (i.e., should be “checked”).
+
+- Select the first page of your .PDF submission to be associated with the "Formatting" section.
+
+## Grading
+
+| Component | Points |
+|----------|--------|
+| Ex 1 | 6 |
+| Ex 2 | 3 |
+| Ex 3 | 3 |
+| Ex 4 | 3 |
+| Formatting | 3 |
+
+The “Formatting” grade is to assess the document format. This includes having a neatly organized document (no excessive output, warnings/messages when loading packages and/or data) with readable code and your name and the date updated in the YAML.
+
+
+
+

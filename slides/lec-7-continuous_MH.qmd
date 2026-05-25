@@ -255,7 +255,7 @@ Particularly, these functions can be used to create new variables in a dataset b
 
 ```{r echo = F}
 library(tidyverse)
-ncbikecrash <- read.csv("https://aggreenbean.github.io/Bios600/labs/data/bikecrash.csv")
+ncbikecrash <- read.csv("https://mhoch422.github.io/BIOS600_SSII/labs/data/bikecrash.csv")
 
 ```
 
