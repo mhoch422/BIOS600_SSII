@@ -71,7 +71,7 @@ You should get output that looks like
 To illustrate, let's load a dataset. Enter the following command into the console (you can directly copy/paste it, but make sure everything is exactly as below):
 
 ```{r echo = T}
-cdc <- read.csv("https://aggreenbean.github.io/Bios600/labs/data/cdc_cleaned.csv")
+cdc <- read.csv("https://mhoch422.github.io/BIOS600_SSII/homework/data/cdc_cleaned.csv")
 ```
 
 We've just loaded a dataset named `cdc`. These data come primarily from the Sortable Risk Factors and Health Indicators dataset from the CDC, which comprises demographic and health indices compiled from various federal sources. This dataset is now part of our **environment**, which is displayed on the top half and right side of the RStudio window.
@@ -129,10 +129,10 @@ One of the biggest strengths of Quarto is that everything is in one place, and t
 Every homework assignment and lab in this class will be written in Quarto, with a template provided for you to use for the first few assignments. This lab's template can be downloaded by typing in the following code in the Console:
 
 ```{r}
-download.file("https://github.com/mhoch422/BIOS600_SSII/blob/main/homework/hw-01-template.qmd", destfile="lab-01.qmd")
+download.file("https://mhoch422.github.io/BIOS600_SSII/homework/hw-01-template.qmd", destfile="hw-01.qmd")
 ```
 
-You should now see the new file `lab-01.qmd` under the Files tab in the bottom-right hand side of your RStudio window. Click on `lab-01.qmd` in this window in order to open it up – it is the template for use in this lab!
+You should now see the new file `hw-01.qmd` under the Files tab in the bottom-right hand side of your RStudio window. Click on `hw-01.qmd` in this window in order to open it up – it is the template for use in this lab!
 
 First, put your name in the space at the top where it says "YOUR NAME GOES HERE".
 

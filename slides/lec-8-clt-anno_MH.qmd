@@ -3,11 +3,7 @@ title: "Lecture 7: The central limit theorem and confidence intervals"
 subtitle: "BIOS 600 - Summer Session II 2026"
 institute: "UNC - Chapel Hill"
 logo: "images/logo_600.png"
-format:
-  revealjs:
-    css: reveal-custom.css
-execute:
-  freeze: auto
+format: html
 ---
 
 ## Announcements
@@ -221,6 +217,8 @@ The **central limit theorem** states that for a population with mean $\mu$ and s
 ## The sampling distribution of the mean (Smaller n)
 
 ```{r}
+#| fig-alt: "A scatterplot with the title Sampling Distribution of the Mean Resting Heart Rate (BPM) - 300 sample means, n = 5 with many blue dots between 55 and 78, appearing almost like a normal distribution curve"
+
 # --- Population parameters ---
 N_pop <- 1000
 mu <- 65
@@ -269,6 +267,9 @@ for (i in seq_along(counts)) {
 ## The sampling distribution of the mean (Larger n)
 
 ```{r}
+
+#| fig-alt: "A scatterplot with the title Sampling Distribution of the Mean Resting Heart Rate (BPM) - 300 sample means, n = 100 with many blue dots between 62 and 68, appearing almost like a normal distribution curve"
+
 # --- Population parameters ---
 N_pop <- 1000
 mu <- 65
@@ -385,7 +386,7 @@ AE 02 is due on Canvas on no later than **Friday 2/20 at 11:59pm**
 
 ## How do you interpret a confidence interval? {.smaller}
 
-![](images/lec-9/asthma.png){width="200"}
+![](images/lec-9/asthma.png){fig-alt="A table with the title Primary Endpoint Annual asthma exacerbation rate over 48 weeks that states the number of patients analyzed is 267, and the rate estimate is 1.33 with a 95% confidence interval of 1.12 to 1.58"}
 
 -   Researchers conducted a clinical trial of a drug intended for severe asthma patients. Their primary endpoint was evaluating whether the **mean rate** of asthma exacerbation over 48 weeks was different between placebo and treatment arms.
 
@@ -411,7 +412,7 @@ where $Z$ has a standard normal distribution if $X$ is normal, and $Z$ is approx
 
 $$0.95 = P(-1.96 \leq Z \leq 1.96)$$
 
-- [Drawing:]
+![](images/lec-9/ninetyfive.jpeg){fig-alt="A standard normal distribution curve, with the area under the curve shaded from x = -1.96 to x= 1.96. The shaded area is labeled area = 0.95 and the two non-shaded tails are each labeled area = 0.025."}
 
 
 
@@ -592,7 +593,7 @@ Each person should pick a number of confidence intervals to generate (over 50), 
 
 ## How do you interpret a confidence interval? {.smaller}
 
-![](images/lec-9/asthma.png){width="200"}
+![](images/lec-9/asthma.png){fig-alt="A table with the title Primary Endpoint Annual asthma exacerbation rate over 48 weeks that states the number of patients analyzed is 267, and the rate estimate is 1.33 with a 95% confidence interval of 1.12 to 1.58"}
 
 ::: {.callout-tip}
 How would you interpret this confidence interval?

@@ -1,0 +1,165 @@
+---
+title: "Lab 01: Basic Data Visualization & Data Wrangling"
+author: "BIOS 600 Summer Session II 2026"
+format: docx
+---
+
+Due Monday, Jun 29 at 11:59pm.
+
+## Set up
+
+1. In Canvas, you'll find the template for this assignment ("Lab 01 Template"). Download the file and open it. 
+
+2. Save it in your class project folder as "`lab-01.qmd`".
+
+3. Open the document. Replace "Your Name Here" with your name in the YAML (the header of the document). Also, replace "Today's Date Here" with today's date.
+
+
+## Note the R chunks
+
+In opening the lab template, note the **R chunks**. The beauty of .qmd documents is that we can directly run code in them, and the outputs will appear in your final document. To do that, we create an R chunk, which you will see in your template as gray areas where you can write R code. The R code in chunks will be evaluated and displayed in the final rendered document.
+
+- Note that the rendering environment from **R chunks** and the Console are **separate**. This means that if you load a dataset in the Console, it will not be available in R chunks unless you also load it into R chunks. 
+
+- Similarly, if you load in a dataset in the R chunk and render the document, the dataset will be in the R chunk environment, but will not exist in the Console. Thus, if you wish to load in a dataset and use it for displaying results in your final rendered document, the dataset must be **loaded into an R chunk** regardless of whether you have already loaded it into the Console.
+
+## Exercise 1
+
+How does the HDI of a state relate to the percentage of residents in each state who get 2.5 hours of aerobic activity and who are obese?
+
+## Ensure all code is visible on PDF
+
+In your final PDF that you turn in on Gradescope, ensure all code is visible for full credit. If lines of code are too long (left to right), they may run off the page when you convert to PDF. You should consider indenting code after commas. Ask your TAs if you need help checking this! 
+
+:::
+
+## Your turn!
+
+In each of the following plots, make sure you have informative plot titles and axis labels. 
+
+## Exercise 2
+
+Modify the code used for the bar graph that counts the number of US States by Census Region such that the bars are colored pink. Which region has the most states? Which has the least?
+
+## Exercise 3
+
+Create a visualization that explores the distribution of adults who smoke among different levels of the Human Development Index. (Hint: what type of visualization might be appropriate? Try modifying some of the code you see above, changing some of the variable names. Remember to also change any titles as needed. Provide an informative plot title, x-axis label, and y-axis label).
+
+ a) Describe the distributions among each level of HDI - are they symmetric or skewed? Any outliers?
+ b) How does smoking relate to Human Development Index in this dataset? Describe the pattern you see. 
+
+## Exercise 4
+
+Create a visualization that explores the relationship between flu vaccination rate (x-axis) and childhood vaccination rate (y-axis). What relationship(s) do you see? Make sure you have an informative title, x-axis label, and y-axis label.
+
+## Exercise 5
+
+Create a visualization that explores the relationship between death rate per 100,000 due to cardiovascular causes (x-axis) and the percentage of obese residents in a state (y-axis). Color-code your plot based on HDI category. (Hint: Have we done a similar visualization earlier in this lab assignment? Modify the earlier code. You'll need to add a title, x-axis label, and y-axis label). What relationship(s) do you see?
+
+## Exercise 6
+
+Create boxplots to visualize the infant mortality rate (y-axis) by region (x-axis). Include an informative title, x-axis label, and y-axis label. Comment on the relationship(s) you see.
+
+**Note**: each of the following exercises should be done in “one go” using a series of pipes. Code should be fully shown in your final PDF for each exercise. If you are asked to “create a table,” then there is no need for additional narrative, unless specifically asked to make a conclusion based on the table.
+
+## Exercise 7
+
+a. Run the provided code to determine the bike crashes that occurred in **residential** development areas where the driver age group was **0 to 19**. How many such bike crashes satisfy this criteria? Provide a 1-sentence response to answer this question. 
+
+```{r }
+#| label: ex-1a
+#| eval: false
+
+# run this code
+ncbikecrash |> 
+  filter(development == "Residential") |>
+  filter(driver_age_group == "0-19")
+```
+
+::: callout-tip
+
+## Hint
+
+To do this, run the provided code. In the `Description` of the data frame that is printed out, you'll see `df[rows x columns]`. The number of "rows" is the number of observations that satisfy these criteria.
+:::
+
+**Note**: Do not display the output of all observations satisfying these criteria. Run the code yourself to find out the answer, but your template will have `#| eval: false` as a code option which **suppresses this lengthy output**. 
+
+b. Now, edit the provided code so that the dataset is filtered to "Residential" development areas, the same as part (a). Then, run the code to create a table displaying the number of bike crashes in **each age group** for residential areas. 
+
+```{r}
+#| label: ex-1b
+#| eval: false
+# edit code below: replace blank with Residential
+ncbikecrash |> 
+  filter(development == "______") |>
+  count(driver_age_group)
+```
+
+## Exercise 8
+
+Edit the code below to create a table which orders the most commonly occurring estimated speed from lowest to highest. (i.e., the least commonly occuring speed will appear first in the table.) To do this, replace the blank with the `driver_est_speed` variable, then run the code. **Note:** It's okay for `NA` values to be present in your table.
+
+```{r }
+#| label: ex-2
+#| eval: false
+
+# edit code: replace blank with driver estimated speed variable
+ncbikecrash |> 
+  count(____________) |>
+  arrange(n)
+```
+
+## Exercise 9
+
+Write code that 1) filters to crashes in Durham, Orange, or Wake counties, 2) groups by county, then 3) summarizes the mean driver age in each county. 
+
+What was the mean driver age (`driver_age`) involved in a crash in each of those three counties? Display output only for those three counties.
+
+::: callout-tip
+
+You can filter by multiple counties using the following line of code. Recall the `|` operator means `OR`:
+
+`filter(county == "Henderson" | county == "Wilmington")`
+:::
+
+::: callout-tip
+
+There are some missing values for `driver_age`. You can either filter for rows where the driver age isn’t missing or use the na.rm = T option in the `mean()` function.
+:::
+
+
+## Submission
+
+As you’ve seen previously, we can **Render** the template into an .html file that can be opened by any web browser. To export it as a .pdf, open the file in your web browser and then print to or save as a .pdf document. Your TAs will show you how if you need help! (There is a way to directly knit to a .pdf file, but it’s quite a bit more involved.)
+
+You will submit the PDF documents for labs and homework to Gradescope as part of your final submission.
+
+To submit your assignment:
+
+- Access Gradescope through the menu on the BIOS 600 Canvas site.
+
+- Click on the assignment, and you’ll be prompted to submit it.
+
+- Mark the pages associated with each exercise. All of the pages of your lab should be associated with at least one question (i.e., should be “checked”).
+
+- Select the first page of your .PDF submission to be associated with the “Formatting” section.
+
+
+## Grading
+
+| Component | Points |
+|----------|--------|
+| Ex 1 | 2 |
+| Ex 2 | 3 |
+| Ex 3 | 4 |
+| Ex 4 | 4 |
+| Ex 5 | 4 |
+| Ex 6 | 4 |
+| Ex 7 | 5 |
+| Ex 8 | 3 |
+| Ex 9 | 3 |
+| Formatting | 3 |
+| **Total** | **24** |
+
+The “Formatting” grade is to assess the document format. This includes having a neatly organized document (no excessive output, warnings/messages when loading packages and/or data) with readable code and your name and the date updated in the YAML.
