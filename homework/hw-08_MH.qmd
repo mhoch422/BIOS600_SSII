@@ -1,0 +1,100 @@
+---
+title: "HW 8"
+subtitle: "Lecture 8"
+format: docx
+---
+
+Due: Wednesday, July 8, 11:59pm
+
+## Starting a new Quarto file
+
+For this assignment you will begin a new Quarto file. To do this, go to RStudio and click File > New File > Quarto Document. A pop-up will appear asking for a title, author, and format. You may leave these as the default options for now. Click OK and a new file will open. Update the YAML with your title, name, and date.
+
+## Exercise 1
+
+When calculating the confidence interval for a population mean under the following conditions, does the margin of error get wider, narrower, stay the same width, or can we not know for sure?
+
+-   (A)…sample size same, variability increases, confidence level same
+
+-   (B)…sample size decreases, variability increases, confidence level increases
+
+-   (C)…sample size increases, variability same, confidence level same
+
+-   (D)…sample size same, variability same, confidence level increases
+
+-   (E)…sample size increases, variability decreases, confidence level increases
+
+-   (F)…sample size decreases, variability decreases, confidence level decreases
+
+
+## Exercise 2
+
+
+Researchers calculated a 90% confidence interval for the mean SBP among a random sample of ten adults in North Carolina and found it to be (114.836, 125.164). In calculating this interval, the researchers assumed that the underlying distribution was normally distributed, but **did NOT assume** that they knew the population standard deviation of SBP.
+
+a. Interpret this confidence interval.
+
+b. What was the sample mean and sample standard deviation in their sample? Show your work using R. Include units in your response.
+
+## Starting a new Quarto file
+
+For this assignment you will begin a new Quarto file. To do this, go to RStudio and click File > New File > Quarto Document. A pop-up will appear asking for a title, author, and format. You may leave these as the default options for now. Click OK and a new file will open. Update the YAML with your title, name, and date.
+
+
+## Exercises
+
+In Exercise 1, you will be asked questions about a hypothesis test that you have not seen before (and likely won’t ever see). **These questions are intended to assess whether you are familiar with the hypothesis testing process itself** and underlying philosophical details. Only use the information provided below, and assume that required assumptions are satisfied.
+
+### The Anderson-Darling test
+
+The one-sample Anderson-Darling (AD) test can be used to test whether a sample comes from a specific target probability distribution based looking at a function of the empirical distribution function (EDF) of the observed data. The null and alternative hypotheses are given by
+
+- $H_0$: the sample is consistent with a population that has the target distribution of interest
+
+- $H_A$: the sample is NOT consistent with a population that has the target distribution of interest
+
+If, in our observed data, the difference between the EDF and the target distribution is “large enough,” then we reject the null hypothesis in favor of the alternative.
+
+**Suppose we conducted a one-sample AD test against some target distribution at the $\alpha$= 0.10 level and obtained a p-value of 0.24.**
+
+## Exercise 3
+
+For each of the following, answer whether the statement is True or False. If True, you may simply state "True" and no explanation is needed. If the statement is False, additionally provide a 1-sentence explanation as to why it is false. 
+
+a. TRUE/FALSE: Finding a very large p-value from the Anderson- Darling test gives us strong evidence that the sample is consistent with a population with the target distribution of interest. 
+
+b. TRUE/FALSE: If we instead found a p-value smaller than our pre-specified $\alpha$, then there would be enough evidence for us to conclude that the observed EDF is NOT consistent with a population with the target distribution of interest. 
+
+c. TRUE/FALSE: Given the p-value of 0.24, the probability that we have made the correct decision is greater than 0.90. 
+
+d. TRUE/FALSE: Given the p-value of 0.24, the probability that the sample is consistent with a population that has the target distribution of interest is 0.24. 
+
+## Submission
+
+As you’ve seen previously, we can **Render** into an .html file that can be opened by any web browser. To export it as a .pdf, open the file in your web browser and then print to or save as a .pdf document. Contact your TAs in Ed Discussion if you need help! 
+
+You will submit the PDF documents for labs and homework to Gradescope as part of your final submission.
+
+To submit your assignment:
+
+- Access Gradescope through the menu on the BIOS 600 Canvas site.
+
+- Click on the assignment, and you’ll be prompted to submit it.
+
+- Mark the pages associated with each exercise. All of the pages of your lab should be associated with at least one question (i.e., should be “checked”).
+
+- Select the first page of your .PDF submission to be associated with the "Formatting" section.
+
+## Grading
+
+| Component | Points |
+|----------|--------|
+| Ex 1 | 3 |
+| Ex 2 | 3 |
+| Ex 3 | 4 |
+| Formatting | 3 |
+
+The “Formatting” grade is to assess the document format. This includes having a neatly organized document (no excessive output, warnings/messages when loading packages and/or data) with readable code and your name and the date updated in the YAML.
+
+
+

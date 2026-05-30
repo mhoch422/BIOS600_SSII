@@ -1,0 +1,281 @@
+---
+title: "Lecture 12: Power and sample size"
+subtitle: "BIOS 600 - Summer Session II 2026"
+institute: "UNC - Chapel Hill"
+logo: "images/logo_600.png"
+format: html
+---
+
+## Announcements
+
+- HW11 due **tonight** by 11:59 PM
+
+- HW12 and AE04 due **tomorrow** by 11:59 PM
+
+- Exam 2 on Thursday! Tomorrow's class will be for review
+
+
+## Overview
+
+- Why calculate sample size and power?
+
+- How to calculate sample size and power in R
+
+- Application Exercise
+
+## Very optional reading
+
+-   P&G Sections 10.4 and 10.6
+
+-   OI: No corresponding section
+
+## Why calculate sample size and power?
+
+-   To show that under certain required conditions, a hypothesis test has a **good chance of showing the anticipated difference**, if it really exists
+
+-   To be more confident that a null result is not simply a sample of excessive variability
+
+-   To show a funding agency that the study has a reasonable chance of reaching a useful result (leading them to **fund your grant**!)
+
+-   To show that necessary resources (human, animal, financial, time, etc.) will be minimized
+
+## Power {.smaller}
+
+-   Showing adequate statistical power is usually necessary in order to **get funding for research**!
+
+-   **Power** is the probability of rejecting the null hypothesis when it is false (i.e., of avoiding a Type II error)
+
+::: poll
+$$\text{Power} = P(\text{reject } H_0 | H_0 \text{ is false})$$
+:::
+
+and can be also thought of as the likelihood a planned study will detect a deviation from the null hypothesis if one really exists. Power is a function of:
+
+-   Sample size $n$
+
+-   Deviation from the null one hopes to detect
+
+-   Standard deviation $σ$
+
+-   $\alpha$, the Type I error rate
+
+## Power and Error Rates
+
+- Recall: When we conduct a hypothesis test, there are **four possible outcomes** depending on the true state of the null hypothesis and the decision we make.  
+
+| **Decision**                | **Truth: ($H_0$) True** | **Truth: ($H_0$) False** |
+|-----------------------------|--------------------------|---------------------------|
+| **Reject ($H_0$)**          | Type I Error ($\alpha$)         | Correct Decision → Power ($1−\beta$) |
+| **Fail to Reject ($H_0$)**  | Correct Decision         | Type II Error ($\beta$)          |
+
+## n, detectable difference, variance, and $\alpha$
+
+How do these four considerations affect power?
+
+-   When we design a study, it is not enough to know we have a small probability of rejecting $H_0$ when it is in fact true (i.e. setting $\alpha = 0.05$).
+
+-   We want to know we have a large probability of rejecting the null when it is false. Practically speaking, **power less than 80% is typically considered insufficient to warrant a study**.
+
+## Power
+
+- Recall: In our medical diagnostics lecture, we saw that there is a tradeoff between Type 1 and Type 2 error. Lowering $\alpha$ makes it harder to reject the null hypothesis, which usually reduces power—we’re less likely to catch real effects (true positives).
+
+- Increasing power by tolerating more Type I errors is **not acceptable**. Therefore, we can increase power by
+
+-   Considering **larger deviations from the null** (need to think about clinical/practical importance)
+
+-   Increasing $n$ (good, though not always affordable)
+
+## Interactive visualization
+
+<http://rpsychologist.com/d3/NHST/>
+
+Let's check out this interactive visualization to see how this all works for a one-sample z-test.
+
+
+## Power Depends On... {.smaller}
+
+| Factor | Change | Effect on Power | Intuition |
+|:-------|:-------:|:-------------|:-----------------|
+| Sample size ($n$) | $\uparrow$ | $\uparrow$ **Increases** | More data → smaller SE → easier to detect true effects |
+| Variability ($\sigma^2$) | $\uparrow$ | $\downarrow$ **Decreases** | More noise → harder to detect signal |
+| Effect size ($\delta$) | $\uparrow$ | $\uparrow$ **Increases** | Larger true difference → easier to detect |
+| Significance level ($\alpha$) | $\uparrow$ | $\uparrow$ **Increases** | More lenient threshold → higher chance to reject $H_0$ |
+
+
+## Understanding power
+
+- Holding $n$, variance, and $\alpha$ constant, we have **more power** to detect a **larger difference** compared to a smaller one.
+
+- Holding variance, effect size, and $\alpha$ constant, **increasing sample size ($n$)** increases power — with more data, we’re more likely to detect true effects.
+
+## Understanding Power - Your turn!
+
+::: callout-tip
+
+## Circle One
+
+- Holding $n$, effect size, and $\alpha$ constant, **(higher/lower)** variance decreases power because the signal is harder to detect within the noise.
+
+- Holding $n$, variance, and effect size constant, **(increasing/decreasing)** $\alpha$ increases power — we’re more willing to reject the null, so true effects are easier to detect.
+
+:::
+
+
+## What is this deviation? {.smaller}
+
+When we calculate power, we need to know the minimum difference from the null mean $\mu_0$ that we wish to detect. We may set up our hypotheses as
+
+$$H_0: \mu = \mu_0$$
+
+$$H_1: \mu \neq \mu_0$$
+
+but need to specify a **minimum detectable difference**, often called $\delta=μ_1−μ_0$ such that we reject $H_0$ with a certain power (usually 80% or 90%) when in fact $μ=μ_1$. We will need a bigger sample size when $\delta$ is small, and fewer subjects when $\delta$ is larger.
+
+
+## Sample size for for two-sided one-sample test of mean {.smaller}
+
+-   Power and sample size are interrelated.
+
+-   Ideally, when we plan a study, we have a prespecified idea of the minimum difference we want to detect, $δ=μ_1−μ_0$, the standard deviation, $\sigma$, and the power, $1-\beta$, we'd like to have to detect it. In that case, it is straightforward to calculate the required sample size (here given for a one-sample test):
+
+
+$$n = \left[ \frac{\sigma (z^*_{1-\alpha/2} + z^*_{1-\beta})}{\mu_1-\mu_0}\right]^2$$
+
+
+-   This can be derived from looking at the rejection regions when $H_0$ and $H_1$ are true, though the details are outside the scope of this class.
+-   You can easily calculate power and sample size in R.
+
+
+## Case study: ultra low dose contraception {.smaller}
+
+-   Suppose you want to ensure a new manufacturer of birth control pills provides the correct dosage of 0.02 $\mu$g estrogen.
+
+-   How many pills do you need to sample in a shipment in order to ensure 80% power to detect a difference of 10% at $\alpha$=0.05, assuming $\sigma$=0.008? (10% of 0.02 is 0.002)
+
+$$n = \left[\frac{\sigma(z^*_{1-\alpha/2} + z^*_{1-\beta})}{\mu_1-\mu_0}\right]^2$$
+
+What are $z^*_{1-\alpha/2}$ and $z^*_{1-\beta}$? These are the $1-\alpha$ and $1-\beta$ quantile cutoffs of a Z-distribution.
+
+## Z cutoffs in R
+
+- $\alpha = 0.05$
+
+- Power = 80%, so Type 2 error rate is 1-.80 = .20 = $\beta$. 
+
+```{r}
+#| echo: true
+alpha <- 0.05 # type 1 error rate
+beta <- .20 # type 2 error rate
+qnorm(1-alpha/2); qnorm(1-beta)
+```
+
+## Plugging in our values {.smaller}
+
+$= \left[\frac{.008(1.96 + 0.84)}{0.002}\right]^2$
+
+$= 125.44$
+
+Using a normal approximation, we would need 126 pills sampled to detect the desired difference of 10%, given $\sigma = 0.008$, at 80% power.
+
+- To be conservative, always **round up for sample size calculations**.
+
+## We use the t-distribution in practice
+
+- In the example above, we used the z-distribution. However, we use the $t$ distribution in practice instead of the $z$. 
+
+- This is because the population standard deviation ($\sigma$) is **rarely known**, so we estimate it from the sample.  
+
+- The *t*-distribution accounts for this extra uncertainty.
+
+- When sample sizes are **small or moderate**, using the *t*-distribution provides more accurate power estimates, since it better reflects the variability from estimating $\sigma$.
+
+## In R
+
+```{r}
+#| echo: true
+power.t.test(delta = 0.002,
+             sd = 0.008,
+             sig.level = 0.05,
+             power = 0.8,
+             type = "one.sample")
+```
+
+Using the t-distribution, we need 128 pills sampled to detect the desired difference.
+
+
+## Example: Power Calculation
+
+- Researchers are testing whether a new low-sodium diet reduces **systolic blood pressure (SBP)** compared to a control diet.  
+
+- Previous studies suggest an average reduction of **8 mmHg** with a standard deviation of **10 mmHg**.  
+
+- They plan to recruit **20 participants per group** and use a **two-sided t-test** at the 0.05 level.
+
+**Question:** What statistical *power* will they have to detect this difference?
+
+## In R
+
+\footnotesize
+
+```{r}
+#| echo: true
+# Power calculation for two-sample t-test
+power.t.test(n = 20, 
+             delta = 8, 
+             sd = 10, 
+             sig.level = 0.05, 
+             type = "two.sample", 
+             alternative = "two.sided")
+```
+## Interpretation
+
+**Interpretation**: With 20 participants per group, the study has about 69% power to detect an 8 mmHg difference.
+
+- In other words, if the true effect exists, there’s roughly a 7-in-10 chance we’ll correctly reject the null hypothesis.
+
+## Example 2: Sample size calculation
+
+- Suppose we want to test whether a new medication lowers LDL cholesterol compared to a placebo. 
+
+- From pilot data, we expect a difference of 15 mg/dL with a standard deviation of 20 mg/dL. 
+
+- We want 90% power at a 0.05 significance level for a two-sided test. 
+
+**Question**: How many participants per group are needed?
+
+## In R
+
+\footnotesize
+
+```{r}
+#| echo: true
+power.t.test(power = 0.90,
+             delta = 15,
+             sd = 20,
+             sig.level = 0.05,
+             type = "two.sample",
+             alternative = "two.sided")
+```
+
+## Interpretation
+
+39 individuals per group are needed (rounding up) to achieve 90% power to detect a 15 mg/dL difference in LDL cholesterol between treatments. 
+
+## Application Exercise
+
+::: callout-tip
+
+## AE 04
+
+Head to Canvas and begin working on Application Exercise (AE) 04: Power and Sample Size Calculation. 
+
+- AE 04 is due **Tuesday 3/24 at 11:59pm**. 
+
+- (Turn in a PDF on Canvas.)
+
+:::
+
+## Next Class
+
+- Review for Exam 2
