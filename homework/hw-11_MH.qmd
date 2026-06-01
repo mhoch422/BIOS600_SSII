@@ -1,0 +1,101 @@
+---
+title: "HW 11"
+format: html
+---
+
+Due Tuesday, July 14 at 11:59pm.
+
+## Starting a new Quarto file
+
+For this assignment you will begin a new Quarto file. To do this, go to RStudio and click File > New File > Quarto Document. A pop-up will appear asking for a title, author, and format. You may leave these as the default options for now. Click OK and a new file will open. Update the YAML with your title, name, and date.
+
+## Data
+
+We’ll be revisiting the licorice example presented in HW 9. We’ll assume that we can treat pain score as a continuous numeric variable. The data are available with the following code:
+
+```{r echo = T, message = F}
+#| echo: true
+#| message: false
+library(tidyverse)
+# read in data
+licorice <- read.csv("data/licorice.csv")
+```
+
+Some relevant variables of interest are:
+
+- `preOp_sex`: Sex (0 = Male; 1 = Female)
+
+- `preOp_calcBMI`: Body mass index in kg/m2
+
+- `preOp_asa`: The American Society of Anesthesiology severity score (1 = healthy patient, 2 = mild systemic disease, 3 = severe systemic disease)
+
+- `treat`: Treatment given (0 = Sugar placebo; 1 = Licorice solution)
+
+- `pacu30min_throatPain`: Sore throat pain score 30 minutes after arrival in PACU (11-point scale: 0 = No pain; 10 = Worst pain)
+
+- `pacu90min_throatPain`: Sore throat pain score 90 minutes after arrival in PACU
+
+- `postOp4hour_throatPain`: Sore throat pain score 4 hours after surgery
+
+
+## Exercises
+
+In Exercise 1, use the `licorice` dataset. You may assume that the pain scores are continuous numeric variables for the purposes of this assignment.
+
+## Exercise 1
+
+For this exercise, use the original `licorice` dataset. 
+
+We'd like to comprehensively evaluate whether the mean throat pain score 30 minutes after surgery (`pacu30min_throatPain`) varies by ASA classification.
+
+a. What are the three assumptions of ANOVA?
+
+b. Create a boxplot of ASA classification (x-axis) by `pacu30min_throatPain` (y-axis). Suppress warnings with `#| warning: false`. Based on the boxplot, do the data seem to be normally distributed within each group?
+
+c. You decide to perform a Kruskal-Wallis test here. State the null and alternative hypotheses in words. 
+
+d. Use R to perform the Kruskal-Wallis test to evaluate whether the mean throat pain score 30 minutes after surgery varies by ASA classification. You should show code and output.
+
+e. State your p-value, whether you reject or fail to reject the null hypothesis, and state your conclusion.
+
+
+## Exercise 2
+
+For this exercise, refer to the test outlined in Lecture 11 Slide 8:
+
+a. What is the name of this test?
+
+b. List the steps to conducting this test. 
+
+c. Which assumption does this test NOT require that the paired t-test does require?
+
+d. Does this test take into account the magnitude of the differences between paired values?
+
+## Submission
+
+As you’ve seen previously, we can **Render** into an .html file that can be opened by any web browser. To export it as a .pdf, open the file in your web browser and then print to or save as a .pdf document. Contact your TAs in Ed Discussion if you need help! 
+
+You will submit the PDF documents for labs and homework to Gradescope as part of your final submission.
+
+To submit your assignment:
+
+- Access Gradescope through the menu on the BIOS 600 Canvas site.
+
+- Click on the assignment, and you’ll be prompted to submit it.
+
+- Mark the pages associated with each exercise. All of the pages of your lab should be associated with at least one question (i.e., should be “checked”).
+
+- Select the first page of your .PDF submission to be associated with the "Formatting" section.
+
+## Grading
+
+| Component | Points |
+|----------|--------|
+| Ex 1 | 6 |
+| Ex 2 | 2 |
+| Formatting | 3 |
+
+The “Formatting” grade is to assess the document format. This includes having a neatly organized document (no excessive output, warnings/messages when loading packages and/or data) with readable code and your name and the date updated in the YAML.
+
+
+

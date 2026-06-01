@@ -1,0 +1,52 @@
+---
+title: "HW 12"
+format: html
+---
+
+Due Wednesday, July 15, at 11:59pm.
+
+## Starting a new Quarto file
+
+For this assignment you will begin a new Quarto file. To do this, go to RStudio and click File > New File > Quarto Document. A pop-up will appear asking for a title, author, and format. You may leave these as the default options for now. Click OK and a new file will open. Update the YAML with your title, name, and date.
+
+## Data
+
+We’ll be revisiting the cereal data from HW 11. You should have `cereal.csv` downloaded to your `data` folder. You may load the dataset with the code below: (Ensure that you suppress any warnings and messages.)
+
+```{r echo = T}
+#| message: false
+#| warning: false
+cereal <- read.csv("data/cereal.csv")
+```
+
+## Exercise 1
+
+Suppose you are interested in testing whether name brand cereals (Cheerios, Frosted Mini-Wheats, Lucky Charms, etc.) and their generic counterparts (Oat-ee-os, Frosted Wheat Squares, Charmed Marshmallows, etc.) have similar amounts of Vitamin D. How many total cereals would you need to test in order to detect a mean difference of 2 units (Vitamin D is literally measured in “international units”) between name brand and generic cereals (i.e. two groups) with 90% power at a 5% type 1 error rate if the standard deviation of this difference is 4 units? Show your code in R, assuming a two-sided test. State your conclusion in 1 sentence.
+
+## Submission
+
+As you’ve seen previously, we can **Render** into an .html file that can be opened by any web browser. To export it as a .pdf, open the file in your web browser and then print to or save as a .pdf document. Contact your TAs in Ed Discussion if you need help! 
+
+You will submit the PDF documents for labs and homework to Gradescope as part of your final submission.
+
+To submit your assignment:
+
+- Access Gradescope through the menu on the BIOS 600 Canvas site.
+
+- Click on the assignment, and you’ll be prompted to submit it.
+
+- Mark the pages associated with each exercise. All of the pages of your lab should be associated with at least one question (i.e., should be “checked”).
+
+- Select the first page of your .PDF submission to be associated with the "Formatting" section.
+
+## Grading
+
+| Component | Points |
+|----------|--------|
+| Ex 5 | 2 |
+| Formatting | 3 |
+
+The “Formatting” grade is to assess the document format. This includes having a neatly organized document (no excessive output, warnings/messages when loading packages and/or data) with readable code and your name and the date updated in the YAML.
+
+
+
