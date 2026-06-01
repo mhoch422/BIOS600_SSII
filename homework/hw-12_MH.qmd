@@ -23,6 +23,61 @@ cereal <- read.csv("data/cereal.csv")
 
 Suppose you are interested in testing whether name brand cereals (Cheerios, Frosted Mini-Wheats, Lucky Charms, etc.) and their generic counterparts (Oat-ee-os, Frosted Wheat Squares, Charmed Marshmallows, etc.) have similar amounts of Vitamin D. How many total cereals would you need to test in order to detect a mean difference of 2 units (Vitamin D is literally measured in “international units”) between name brand and generic cereals (i.e. two groups) with 90% power at a 5% type 1 error rate if the standard deviation of this difference is 4 units? Show your code in R, assuming a two-sided test. State your conclusion in 1 sentence.
 
+## Exercise 2
+
+A city would like to implement an intervention to reduce fine particulate matter (PM$_{2.5}$) near a busy roadway. They are currently designing their study and plan to apply for grant funding. From earlier monitoring, the standard deviation of hourly PM$_{2.5}$ (in $\mu$g/$m^3$) at monitoring sites is about 8 $\mu$g/$m^3$.  
+Researchers plan a study with two independent groups (intervention vs control) with 25 monitoring sites in each group.  They hope to detect a mean reduction of 5 $\mu$g/$m^3$. .
+
+a. Using a two-sided test with $\alpha = 0.05$, compute the *power* of the study (per-group `n = 25`) to detect a 5 $\mu$g/$m^3$ difference. Include a 1-sentence conclusion with your answer. 
+
+b. Do you think this grant would get funded as it currently stands? Why or why not? If not, what's one thing the city could do to increase the power of their study?
+
+## Exercise 3
+
+## Data: mtcars
+
+Load the data by running the code:
+
+```{r}
+#| warning: false
+#| message: false
+data(mtcars)
+library(tidyverse)
+library(ggcorrplot)
+
+```
+
+Let's take a quick look at the contents:
+
+```{r}
+?mtcars
+glimpse(mtcars)
+
+```
+
+Let's focus on a few variables:
+
+-   mpg: miles per gallon (fuel efficiency)
+
+-   hp: horsepower, a measure of engine power, or the rate at which work is done.
+
+-   wt: weight of the car.
+
+-   qsec: Time to complete a quarter mile (i.e. speed of car in a drag race).
+
+Now, as an example, let's take one pair of variables and look at the linear correlation, as well as the scatter plot comparing the two values.
+
+```{r}
+data <- mtcars
+cor(data$wt, data$mpg)
+plot(data$wt, data$mpg)
+```
+Looks quite straightforward--they are strongly negatively correlated, and show a clear linear relationship. And it makes intuitive sense, a heavier car is going to have lower mpg because there is more mass for the engine to move.
+
+a. Using code from above, find the correlation between horsepower and quarter mile time, then make a scatter plot with horsepower on the x-axis, and quarter-mile time on the y-axis.
+
+b. How would you interpret and explain the correlation and scatter plot you obtained?
+
 ## Submission
 
 As you’ve seen previously, we can **Render** into an .html file that can be opened by any web browser. To export it as a .pdf, open the file in your web browser and then print to or save as a .pdf document. Contact your TAs in Ed Discussion if you need help! 
@@ -43,7 +98,9 @@ To submit your assignment:
 
 | Component | Points |
 |----------|--------|
-| Ex 5 | 2 |
+| Ex 1 | 2 |
+| Ex 2 | 4 |
+| Ex 3 | 3 |
 | Formatting | 3 |
 
 The “Formatting” grade is to assess the document format. This includes having a neatly organized document (no excessive output, warnings/messages when loading packages and/or data) with readable code and your name and the date updated in the YAML.

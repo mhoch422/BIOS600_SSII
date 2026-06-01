@@ -1,17 +1,17 @@
 ---
-title: "Lab 7"
+title: "Lab 3"
 format: html
 ---
 
-Due Friday, April 10 11:59pm
+Due Monday, July 20, 11:59pm
 
 ## Set up
 
 1. **Open your RStudio project** by going to File > Open Project. Select your BIOS 600 folder. (If you see a blue cube with your project name at the top right of your RStudio window, you're good to go - you are already in your project folder.)
 
-2. To begin, start a new Quarto file. Change the title to Lab 7. Keep the output as html. 
+2. To begin, start a new Quarto file. Change the title to Lab 3. Keep the output as html. 
 
-3. "Save As" into your class project folder with a new name: "`lab-07.qmd`".
+3. "Save As" into your class project folder with a new name: "`lab-03.qmd`".
 
 4. Update your name and date in the YAML. 
 
