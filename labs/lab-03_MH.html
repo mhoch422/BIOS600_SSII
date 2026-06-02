@@ -137,6 +137,39 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>We will use these variables to explore relationships and correlations in the dataset.</p>
 </section>
+<section id="partial-correlation" class="level2">
+<h2 class="anchored" data-anchor-id="partial-correlation">Partial correlation</h2>
+<p>We can ask ourselves</p>
+<ul>
+<li><p><strong>Is higher fuel efficiency associated with lower horsepower?</strong></p></li>
+<li><p>We anticipate</p>
+<ul>
+<li>Lighter cars have higher fuel efficiency</li>
+<li>Lighter cars have lower horsepower</li>
+</ul></li>
+</ul>
+</section>
+<section id="partial-correlation-1" class="level2">
+<h2 class="anchored" data-anchor-id="partial-correlation-1">Partial correlation</h2>
+<ul>
+<li><p>Car weight could be a <strong>confounder</strong></p></li>
+<li><p>Car weight is associated with the exposure (horsepower)</p></li>
+<li><p>Car weight is associated with the outcome (fuel efficiency)</p></li>
+<li><p>If I look at the association between fuel efficiency and horsepower I might get a biased estimate</p>
+<ul>
+<li>Could look like two things are related when they aren’t</li>
+<li>Could look larger or smaller than it really is</li>
+</ul></li>
+</ul>
+</section>
+<section id="partial-correlation-2" class="level2">
+<h2 class="anchored" data-anchor-id="partial-correlation-2">Partial correlation</h2>
+<ul>
+<li><p><strong>Partial correlation</strong> is one approach</p></li>
+<li><p>Isolates the direct association, preventing misleading results caused by confounding variables</p></li>
+<li><p>Partial correlation removes age’s influence from both variables, then asks what’s left</p></li>
+</ul>
+</section>
 <section id="pearsons-correlation" class="level2">
 <h2 class="anchored" data-anchor-id="pearsons-correlation">Pearson’s correlation</h2>
 <p>First, we will compute the Pearson’s correlation coefficient between <code>mpg</code> (miles per gallon) and <code>hp</code> (horsepower). Pearson’s correlation measures the strength and direction of the linear relationship between two continuous variables.</p>

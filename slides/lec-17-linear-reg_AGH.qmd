@@ -1,6 +1,6 @@
 ---
-title: "Lecture 17: Introduction to linear regression"
-subtitle: "BIOS 600 - Spring 2026"
+title: "Lecture 17: Introduction to linear regression and multiple regression"
+subtitle: "BIOS 600 - Summer Session II 2026"
 institute: "UNC - Chapel Hill"
 logo: "images/logo_600.png"
 format:
@@ -12,94 +12,15 @@ execute:
 
 ## Announcements
 
-- Lab 7 (new lab) today - due **this** Friday April 10th
+- Lab 3 due **tonight** by 11:59 PM
 
-## Topics covered in lab today
+- HW 13 due **tomorrow** by 11:59 PM
 
-- In lab today we talk about two additional concepts
+## Revisiting lab from Friday
+
+- In lab Friday we talked about two additional concepts
   - Partial correlation
   - Spearman's correlation coefficients
-
-## Partial correlation
-
-- Let's say I have a sample of 100 adults and I have: 
-  - Age (in years)
-  - Cognitive function score - ranging from 0-100
-  - Systolic blood pressure (SBP)
-
-- **Is higher SBP is associated with lower cognitive scores?**
-
-- We anticipate
-  - Older individuals have lower cognitive function scores
-  - Older individuals have higher SBP 
-  
-## Partial correlation
-
-- Age could be a **confounder** 
-  - Age is associated with the exposure (SBP)
-  - Age is associated with the outcome (cognitive function)
-
-- If I look at the association between SBP and cognitive function I might get a biased estimate
-  - Could look like two things are related when they aren't
-  - Could look larger or smaller than it really is
-
-## Partial correlation 
-
-![](images/lec-17/confounding.png){width="100"}
-
-## Partial correlation
-
-- **Partial correlation** is one approach 
-
-- Isolates the direct association, preventing misleading results caused by confounding variables
-
-- Partial correlation removes age's influence from both variables, then asks what's left
-
-- We'll get into other methods (and a bit more detail on these ideas later)
-
-```{r, echo=FALSE, warning=FALSE, message=FALSE}
-library(tidyverse)
-library(knitr)
-library(ppcor)
-# Simulate data
-set.seed(7)
-n <- 100
-
-age <- round(rnorm(n, mean = 50, sd = 12))
-sbp <- round(105 + 0.65 * (age - 50) + rnorm(n, 0, 9))
-cog <- round(82 + 0.40 * (age - 50) + 0.05 * (sbp - 130) + rnorm(n, 0, 7))
-
-study <- data.frame(id = 1:n, age, sbp, cog)
-```
-
-## Partial correlation
-
-Here's the dataset, with age, sbp and cognitive function
-
-```{r}
-head(study)
-```
-
-## Partial correlation
-
-Pearson correlation between sbp and cogntive function
-
-```{r}
-cor(study$sbp, study$cog)
-```
-
-Partial correlation 
-
-```{r}
-pcor.test(study$cog,study$sbp,study$age)
-```
-
-## Spearman correlation 
-
-- Another way to measure correlation, ranging from -1 to 1
-- Both measure the same basic idea — but they do it differently
-- **Pearson** uses the actual values — it measures the strength of a *linear* relationship
-- **Spearman** converts values to ranks first — it measures the strength of a *monotonic* relationship
 
 ## Pearson vs. Spearman
 

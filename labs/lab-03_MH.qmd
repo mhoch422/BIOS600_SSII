@@ -46,6 +46,34 @@ The `mtcars` dataset contains data about fuel consumption and vehicle design for
 
 We will use these variables to explore relationships and correlations in the dataset.
 
+## Partial correlation
+
+We can ask ourselves
+
+- **Is higher fuel efficiency associated with lower horsepower?**
+
+- We anticipate
+  - Lighter cars have higher fuel efficiency
+  - Lighter cars have lower horsepower
+  
+## Partial correlation
+
+  - Car weight could be a **confounder** 
+  - Car weight is associated with the exposure (horsepower)
+  - Car weight is associated with the outcome (fuel efficiency)
+
+- If I look at the association between fuel efficiency and horsepower I might get a biased estimate
+  - Could look like two things are related when they aren't
+  - Could look larger or smaller than it really is
+
+## Partial correlation
+
+- **Partial correlation** is one approach 
+
+- Isolates the direct association, preventing misleading results caused by confounding variables
+
+- Partial correlation removes age's influence from both variables, then asks what's left
+
 ## Pearson's correlation
 
 First, we will compute the Pearson’s correlation coefficient between `mpg` (miles per gallon) and `hp` (horsepower). Pearson’s correlation measures the strength and direction of the linear relationship between two continuous variables.
@@ -65,7 +93,6 @@ mtcars |>
        y = "Horsepower", 
        title = "MPG vs. Horsepower")
 ```
-
 
 
 The Pearson’s correlation between `mpg` and `hp` is approximately -0.776. This negative correlation suggests that as horsepower increases, miles per gallon tends to decrease, which is also apparent in the scatterplot. The strength of the linear relationship is strong because the correlation is close to -1.
