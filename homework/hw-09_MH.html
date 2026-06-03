@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>HW 12</title>
+<title>HW 9</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -61,17 +61,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="hw-12_MH_files/libs/clipboard/clipboard.min.js"></script>
-<script src="hw-12_MH_files/libs/quarto-html/quarto.js" type="module"></script>
-<script src="hw-12_MH_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="hw-12_MH_files/libs/quarto-html/popper.min.js"></script>
-<script src="hw-12_MH_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="hw-12_MH_files/libs/quarto-html/anchor.min.js"></script>
-<link href="hw-12_MH_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="hw-12_MH_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="hw-12_MH_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="hw-12_MH_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="hw-12_MH_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="hw-09_MH_files/libs/clipboard/clipboard.min.js"></script>
+<script src="hw-09_MH_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="hw-09_MH_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="hw-09_MH_files/libs/quarto-html/popper.min.js"></script>
+<script src="hw-09_MH_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="hw-09_MH_files/libs/quarto-html/anchor.min.js"></script>
+<link href="hw-09_MH_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="hw-09_MH_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="hw-09_MH_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="hw-09_MH_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="hw-09_MH_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -113,7 +113,7 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">HW 12</h1>
+<h1 class="title">HW 9</h1>
 </div>
 
 
@@ -130,90 +130,134 @@ window.Quarto = {
 </header>
 
 
-<p>Due Wednesday, July 15, at 11:59pm.</p>
+<p>Due: Wednesday, July 9, 11:59pm.</p>
+<section id="ai-use" class="level2">
+<h2 class="anchored" data-anchor-id="ai-use">AI use</h2>
+<p>Refer to the syllabus for our AI use policy. You will be asked to include any AI prompts used in this assignment at the end.</p>
+</section>
 <section id="starting-a-new-quarto-file" class="level2">
 <h2 class="anchored" data-anchor-id="starting-a-new-quarto-file">Starting a new Quarto file</h2>
 <p>For this assignment you will begin a new Quarto file. To do this, go to RStudio and click File &gt; New File &gt; Quarto Document. A pop-up will appear asking for a title, author, and format. You may leave these as the default options for now. Click OK and a new file will open. Update the YAML with your title, name, and date.</p>
 </section>
-<section id="data" class="level2">
-<h2 class="anchored" data-anchor-id="data">Data</h2>
-<p>We’ll be revisiting the cereal data from HW 10. You should have <code>cereal.csv</code> downloaded to your <code>data</code> folder. You may load the dataset with the code below: (Ensure that you suppress any warnings and messages.)</p>
+<section id="sore-throat-data-implementing-t-tests-in-r" class="level2">
+<h2 class="anchored" data-anchor-id="sore-throat-data-implementing-t-tests-in-r">Sore Throat Data: Implementing t-tests in R</h2>
+<p>Today’s data are made available by the Lerner Research Institute and Dr.&nbsp;Amy S. Nowacki of the Cleveland Clinic. This dataset is representative of a study by Ruetzler et al.&nbsp;(2013) that examined the effect of licorice gargles on postextubation sore throat.</p>
+<p>Postoperative sore throat is an annoying complication of intubation after surgery, particularly with double-lumen tubes, which are of a wider gauge. Reutzler et al.&nbsp;(2013) performed an experimental study among patients having elective surgery who required intubation with a double-lumen tube. Prior to anesthesia, patients were randomly assigned to gargle either a licorice-based solution or sugar water. Sore throat was evaluated 30 minutes, 90 minutes, and 4 hours after conclusion of the surgery, evaluated using an 11-point Likert scale (0 = no pain, 10 = worst pain).</p>
+<p>Let’s assume that we can treat this pain score as a continuous numeric variable.</p>
+<p>First, load the tidyverse.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>cereal <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/cereal.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
+<p>Download <code>licorice.csv</code> from the Canvas assignment page. Copy the data into your project data folder. Ensure you are in your project folder in RStudio (check for the blue box in the upper right corner with the project folder name visible.)</p>
+<p>Then, read in the data the following code:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>licorice <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/licorice.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Need help reading in your data?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you’re having trouble reading in your data, it may be a file path issue. Try typing <code>getwd()</code> in the console and make sure you are in your project directory. Make sure the data is in your data folder and that you are reading it in exactly as it’s named. Contact the teaching team or post in Ed Discussion if you need assistance.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Remember to suppress warnings and messages when 1) loading packages and/or 2) reading in data using Quarto options <code>#| message: false</code> and <code>#| warning: false</code>.</p>
+<p>Render your document now to check!</p>
+</div>
+</div>
+<p>Some relevant variables of interest are:</p>
+<ul>
+<li><p><code>preOp_sex</code>: Sex (0 = Male; 1 = Female)</p></li>
+<li><p><code>preOp_calcBMI</code>: Body mass index in kg/m2</p></li>
+<li><p><code>treat</code>: Treatment given (0 = Sugar placebo; 1 = Licorice solution)</p></li>
+<li><p><code>pacu30min_throatPain</code>: Sore throat pain score 30 minutes after arrival in PACU (11-point scale: 0 = No pain; 10 = Worst pain)</p></li>
+<li><p><code>postOp4hour_throatPain</code>: Sore throat pain score 4 hours after surgery (11-point scale: 0 = No pain; 10 = worst pain)</p></li>
+</ul>
+<p>Questions 2-5 use the <code>licorice</code> dataset above. You may assume that the pain scores are continuous numeric variables for the purposes of this assignment.</p>
 </section>
 <section id="exercise-1" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-1">Exercise 1</h2>
-<p>Suppose you are interested in testing whether name brand cereals (Cheerios, Frosted Mini-Wheats, Lucky Charms, etc.) and their generic counterparts (Oat-ee-os, Frosted Wheat Squares, Charmed Marshmallows, etc.) have similar amounts of Vitamin D. How many total cereals would you need to test in order to detect a mean difference of 2 units (Vitamin D is literally measured in “international units”) between name brand and generic cereals (i.e.&nbsp;two groups) with 90% power at a 5% type 1 error rate if the standard deviation of this difference is 4 units? Show your code in R, assuming a two-sided test. State your conclusion in 1 sentence.</p>
+<p>Among patients who received the placebo sugar solution, we’d like to test the hypothesis that the mean throat pain score 30 minutes after surgery is not equal to 1. Use <span class="math inline">\(\alpha\)</span> = .05. To do this, follow the steps below:</p>
+<ol type="a">
+<li><p>Write out the null and alternative hypotheses <strong>in words</strong>.</p></li>
+<li><p>Write out the null and alternative hypotheses <strong>in symbols</strong>. (Use LaTex.)</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The null hypothesis is provided for you. Write the following in your Quarto document: <code>$H_0: \mu = 1$</code>.</p>
+</div>
+</div>
+<p>Now write out the alternative hypothesis on your own.</p>
+<ol start="3" type="a">
+<li><p>Under the null hypothesis, what distribution does our test statistic follow? Include degrees of freedom. (LaTex is optional for this part.)</p></li>
+<li><p>Create a new dataset called <code>licorice_s</code> from the original <code>licorice</code> dataset, <strong>filtering</strong> to only those in the placebo/sugar group. (Nothing needs to be printed here. Just show the code.)</p></li>
+<li><p>With your new dataset (<code>licorice_s</code>), test the hypothesis that the mean throat pain score 30 minutes after surgery is not equal to 1. Use <span class="math inline">\(\alpha = 0.05\)</span>.</p></li>
+<li><p>What is your conclusion based on part (e)?</p></li>
+</ol>
 </section>
 <section id="exercise-2" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-2">Exercise 2</h2>
-<p>A city would like to implement an intervention to reduce fine particulate matter (PM<span class="math inline">\(_{2.5}\)</span>) near a busy roadway. They are currently designing their study and plan to apply for grant funding. From earlier monitoring, the standard deviation of hourly PM<span class="math inline">\(_{2.5}\)</span> (in <span class="math inline">\(\mu\)</span>g/<span class="math inline">\(m^3\)</span>) at monitoring sites is about 8 <span class="math inline">\(\mu\)</span>g/<span class="math inline">\(m^3\)</span>.<br>
-Researchers plan a study with two independent groups (intervention vs control) with 25 monitoring sites in each group. They hope to detect a mean reduction of 5 <span class="math inline">\(\mu\)</span>g/<span class="math inline">\(m^3\)</span>. .</p>
+<p>Now we’d like to compare the two treatment groups, assessing the hypothesis that the mean throat pain score 30 minutes after surgery was different between them. Follow the steps below to conduct the test:</p>
 <ol type="a">
-<li><p>Using a two-sided test with <span class="math inline">\(\alpha = 0.05\)</span>, compute the <em>power</em> of the study (per-group <code>n = 25</code>) to detect a 5 <span class="math inline">\(\mu\)</span>g/<span class="math inline">\(m^3\)</span> difference. Include a 1-sentence conclusion with your answer.</p></li>
-<li><p>Do you think this grant would get funded as it currently stands? Why or why not? If not, what’s one thing the city could do to increase the power of their study?</p></li>
+<li><p>Write out the null and alternative hypotheses <strong>in words</strong>.</p></li>
+<li><p>Write out the null and alternative hypotheses <strong>in symbols</strong>. (Use LaTex.)</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The null hypothesis is provided for you. Write the following in your Quarto document: <code>$H_0: \mu_L = \mu_S$</code>. <span class="math inline">\(L\)</span> and <span class="math inline">\(S\)</span> denote licorice and sugar, respectively.</p>
+</div>
+</div>
+<p>Now write out the alternative hypothesis on your own.</p>
+<ol start="3" type="a">
+<li><p>With the <code>licorice</code> dataset, test the hypothesis that the mean throat pain score between treatment and placebo groups 30 minutes after surgery are not equal. Use <span class="math inline">\(\alpha = 0.05\)</span>. Assume unequal variances.</p></li>
+<li><p>What is your conclusion based on part (c)?</p></li>
 </ol>
 </section>
 <section id="exercise-3" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-3">Exercise 3</h2>
-</section>
-<section id="data-mtcars" class="level2">
-<h2 class="anchored" data-anchor-id="data-mtcars">Data: mtcars</h2>
-<p>Load the data by running the code:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(mtcars)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggcorrplot)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Let’s take a quick look at the contents:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>?mtcars</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(mtcars)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 32
-Columns: 11
-$ mpg  &lt;dbl&gt; 21.0, 21.0, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 22.8, 19.2, 17.8,…
-$ cyl  &lt;dbl&gt; 6, 6, 4, 6, 8, 6, 8, 4, 4, 6, 6, 8, 8, 8, 8, 8, 8, 4, 4, 4, 4, 8,…
-$ disp &lt;dbl&gt; 160.0, 160.0, 108.0, 258.0, 360.0, 225.0, 360.0, 146.7, 140.8, 16…
-$ hp   &lt;dbl&gt; 110, 110, 93, 110, 175, 105, 245, 62, 95, 123, 123, 180, 180, 180…
-$ drat &lt;dbl&gt; 3.90, 3.90, 3.85, 3.08, 3.15, 2.76, 3.21, 3.69, 3.92, 3.92, 3.92,…
-$ wt   &lt;dbl&gt; 2.620, 2.875, 2.320, 3.215, 3.440, 3.460, 3.570, 3.190, 3.150, 3.…
-$ qsec &lt;dbl&gt; 16.46, 17.02, 18.61, 19.44, 17.02, 20.22, 15.84, 20.00, 22.90, 18…
-$ vs   &lt;dbl&gt; 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0,…
-$ am   &lt;dbl&gt; 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0,…
-$ gear &lt;dbl&gt; 4, 4, 4, 3, 3, 3, 3, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3,…
-$ carb &lt;dbl&gt; 4, 4, 1, 1, 2, 1, 4, 2, 2, 4, 4, 3, 3, 3, 4, 4, 4, 1, 2, 1, 1, 2,…</code></pre>
-</div>
-</div>
-<p>Let’s focus on a few variables:</p>
-<ul>
-<li><p>mpg: miles per gallon (fuel efficiency)</p></li>
-<li><p>hp: horsepower, a measure of engine power, or the rate at which work is done.</p></li>
-<li><p>wt: weight of the car.</p></li>
-<li><p>qsec: Time to complete a quarter mile (i.e.&nbsp;speed of car in a drag race).</p></li>
-</ul>
-<p>Now, as an example, let’s take one pair of variables and look at the linear correlation, as well as the scatter plot comparing the two values.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> mtcars</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(data<span class="sc">$</span>wt, data<span class="sc">$</span>mpg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.8676594</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(data<span class="sc">$</span>wt, data<span class="sc">$</span>mpg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="hw-12_MH_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Looks quite straightforward–they are strongly negatively correlated, and show a clear linear relationship. And it makes intuitive sense, a heavier car is going to have lower mpg because there is more mass for the engine to move.</p>
+<p>Suppose we are interested in testing whether the difference in mean throat pain scores 4 hours after surgery differs between the two treatment groups.</p>
 <ol type="a">
-<li><p>Using code from above, find the correlation between horsepower and quarter mile time, then make a scatter plot with horsepower on the x-axis, and quarter-mile time on the y-axis.</p></li>
-<li><p>How would you interpret and explain the correlation and scatter plot you obtained?</p></li>
+<li><p>Write out the null and alternative hypotheses <strong>in words</strong>.</p></li>
+<li><p>With the <code>licorice</code> dataset, use <code>t.test</code> to test the hypothesis that the mean throat pain score between treatment and placebo groups 4 hours after surgery are not equal. Use <span class="math inline">\(\alpha = 0.01\)</span>. Assume unequal variances. (Simply show code and display output.)</p></li>
+<li><p>What is the p-value reported from part (b)?</p></li>
+<li><p>Part of a <code>t.test</code> output is a confidence interval of the average difference in measurements. If a confidence interval contains zero, we fail to reject the null hypothesis. If a confidence interval does not contain zero, then we reject the null hypothesis.</p></li>
 </ol>
+<p>Based on the t.test output in part (b), what is the 99% confidence interval for the mean difference in throat pain levels between the two treatment groups? (Round to three decimals when reporting.) Does this confidence interval include zero? Based on this, would we reject or fail to reject <span class="math inline">\(H_0\)</span> in this case, and does your answer agree or disagree with the p-value in part (c)?</p>
+</section>
+<section id="exercise-4" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-4">Exercise 4</h2>
+<p>Based on your analyses in Exercises 2-4, do you think that licorice gargle prior to surgery is effective in reducing post-intubation sore throat? Explain your answer in 3-4 sentences.</p>
 </section>
 <section id="submission" class="level2">
 <h2 class="anchored" data-anchor-id="submission">Submission</h2>
@@ -239,7 +283,7 @@ $ carb &lt;dbl&gt; 4, 4, 1, 1, 2, 1, 4, 2, 2, 4, 4, 3, 3, 3, 4, 4, 4, 1, 2, 1, 1
 <tbody>
 <tr class="odd">
 <td>Ex 1</td>
-<td>2</td>
+<td>6</td>
 </tr>
 <tr class="even">
 <td>Ex 2</td>
@@ -247,9 +291,13 @@ $ carb &lt;dbl&gt; 4, 4, 1, 1, 2, 1, 4, 2, 2, 4, 4, 3, 3, 3, 4, 4, 4, 1, 2, 1, 1
 </tr>
 <tr class="odd">
 <td>Ex 3</td>
-<td>3</td>
+<td>4</td>
 </tr>
 <tr class="even">
+<td>Ex 4</td>
+<td>2</td>
+</tr>
+<tr class="odd">
 <td>Formatting</td>
 <td>3</td>
 </tr>

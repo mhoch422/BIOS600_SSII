@@ -1,7 +1,7 @@
 ---
 title: "HW 8"
 subtitle: "Lecture 8"
-format: docx
+format: html
 ---
 
 Due: Wednesday, July 8, 11:59pm
@@ -36,16 +36,9 @@ a. Interpret this confidence interval.
 
 b. What was the sample mean and sample standard deviation in their sample? Show your work using R. Include units in your response.
 
-## Starting a new Quarto file
-
-For this assignment you will begin a new Quarto file. To do this, go to RStudio and click File > New File > Quarto Document. A pop-up will appear asking for a title, author, and format. You may leave these as the default options for now. Click OK and a new file will open. Update the YAML with your title, name, and date.
-
-
-## Exercises
-
-In Exercise 1, you will be asked questions about a hypothesis test that you have not seen before (and likely won’t ever see). **These questions are intended to assess whether you are familiar with the hypothesis testing process itself** and underlying philosophical details. Only use the information provided below, and assume that required assumptions are satisfied.
-
 ### The Anderson-Darling test
+
+In Exercise 3, you will be asked questions about a hypothesis test that you have not seen before (and likely won’t ever see). **These questions are intended to assess whether you are familiar with the hypothesis testing process itself** and underlying philosophical details. Only use the information provided below, and assume that required assumptions are satisfied.
 
 The one-sample Anderson-Darling (AD) test can be used to test whether a sample comes from a specific target probability distribution based looking at a function of the empirical distribution function (EDF) of the observed data. The null and alternative hypotheses are given by
 
@@ -71,7 +64,7 @@ d. TRUE/FALSE: Given the p-value of 0.24, the probability that the sample is con
 
 ## Submission
 
-As you’ve seen previously, we can **Render** into an .html file that can be opened by any web browser. To export it as a .pdf, open the file in your web browser and then print to or save as a .pdf document. Contact your TAs in Ed Discussion if you need help! 
+As you’ve seen previously, we can **Render** into an .html file that can be opened by any web browser. To export it as a .pdf, open the file in your web browser and then print to or save as a .pdf document. Contact me in Ed Discussion if you need help! 
 
 You will submit the PDF documents for labs and homework to Gradescope as part of your final submission.
 

@@ -1,6 +1,6 @@
 ---
-title: "Lecture 11: Comparing Two Means"
-subtitle: "BIOS 600 - Spring 2026"
+title: "Lecture 9: Comparing Two Means"
+subtitle: "BIOS 600 - Summer Session II 2026"
 institute: "UNC - Chapel Hill"
 logo: "images/logo_600.png"
 format: html

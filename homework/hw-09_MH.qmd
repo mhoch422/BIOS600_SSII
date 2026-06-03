@@ -1,6 +1,6 @@
 ---
 title: "HW 9"
-format: docx
+format: html
 ---
 
 Due: Wednesday, July 9, 11:59pm.

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>HW 12</title>
+<title>HW 8</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,55 +23,20 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
-<script src="hw-12_MH_files/libs/clipboard/clipboard.min.js"></script>
-<script src="hw-12_MH_files/libs/quarto-html/quarto.js" type="module"></script>
-<script src="hw-12_MH_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="hw-12_MH_files/libs/quarto-html/popper.min.js"></script>
-<script src="hw-12_MH_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="hw-12_MH_files/libs/quarto-html/anchor.min.js"></script>
-<link href="hw-12_MH_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="hw-12_MH_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="hw-12_MH_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="hw-12_MH_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="hw-12_MH_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="hw-08_MH_files/libs/clipboard/clipboard.min.js"></script>
+<script src="hw-08_MH_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="hw-08_MH_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="hw-08_MH_files/libs/quarto-html/popper.min.js"></script>
+<script src="hw-08_MH_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="hw-08_MH_files/libs/quarto-html/anchor.min.js"></script>
+<link href="hw-08_MH_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="hw-08_MH_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="hw-08_MH_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="hw-08_MH_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="hw-08_MH_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -113,7 +78,8 @@ window.Quarto = {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">HW 12</h1>
+<h1 class="title">HW 8</h1>
+<p class="subtitle lead">Lecture 8</p>
 </div>
 
 
@@ -130,94 +96,55 @@ window.Quarto = {
 </header>
 
 
-<p>Due Wednesday, July 15, at 11:59pm.</p>
+<p>Due: Wednesday, July 8, 11:59pm</p>
 <section id="starting-a-new-quarto-file" class="level2">
 <h2 class="anchored" data-anchor-id="starting-a-new-quarto-file">Starting a new Quarto file</h2>
 <p>For this assignment you will begin a new Quarto file. To do this, go to RStudio and click File &gt; New File &gt; Quarto Document. A pop-up will appear asking for a title, author, and format. You may leave these as the default options for now. Click OK and a new file will open. Update the YAML with your title, name, and date.</p>
 </section>
-<section id="data" class="level2">
-<h2 class="anchored" data-anchor-id="data">Data</h2>
-<p>We’ll be revisiting the cereal data from HW 10. You should have <code>cereal.csv</code> downloaded to your <code>data</code> folder. You may load the dataset with the code below: (Ensure that you suppress any warnings and messages.)</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>cereal <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/cereal.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
 <section id="exercise-1" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-1">Exercise 1</h2>
-<p>Suppose you are interested in testing whether name brand cereals (Cheerios, Frosted Mini-Wheats, Lucky Charms, etc.) and their generic counterparts (Oat-ee-os, Frosted Wheat Squares, Charmed Marshmallows, etc.) have similar amounts of Vitamin D. How many total cereals would you need to test in order to detect a mean difference of 2 units (Vitamin D is literally measured in “international units”) between name brand and generic cereals (i.e.&nbsp;two groups) with 90% power at a 5% type 1 error rate if the standard deviation of this difference is 4 units? Show your code in R, assuming a two-sided test. State your conclusion in 1 sentence.</p>
+<p>When calculating the confidence interval for a population mean under the following conditions, does the margin of error get wider, narrower, stay the same width, or can we not know for sure?</p>
+<ul>
+<li><p>(A)…sample size same, variability increases, confidence level same</p></li>
+<li><p>(B)…sample size decreases, variability increases, confidence level increases</p></li>
+<li><p>(C)…sample size increases, variability same, confidence level same</p></li>
+<li><p>(D)…sample size same, variability same, confidence level increases</p></li>
+<li><p>(E)…sample size increases, variability decreases, confidence level increases</p></li>
+<li><p>(F)…sample size decreases, variability decreases, confidence level decreases</p></li>
+</ul>
 </section>
 <section id="exercise-2" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-2">Exercise 2</h2>
-<p>A city would like to implement an intervention to reduce fine particulate matter (PM<span class="math inline">\(_{2.5}\)</span>) near a busy roadway. They are currently designing their study and plan to apply for grant funding. From earlier monitoring, the standard deviation of hourly PM<span class="math inline">\(_{2.5}\)</span> (in <span class="math inline">\(\mu\)</span>g/<span class="math inline">\(m^3\)</span>) at monitoring sites is about 8 <span class="math inline">\(\mu\)</span>g/<span class="math inline">\(m^3\)</span>.<br>
-Researchers plan a study with two independent groups (intervention vs control) with 25 monitoring sites in each group. They hope to detect a mean reduction of 5 <span class="math inline">\(\mu\)</span>g/<span class="math inline">\(m^3\)</span>. .</p>
+<p>Researchers calculated a 90% confidence interval for the mean SBP among a random sample of ten adults in North Carolina and found it to be (114.836, 125.164). In calculating this interval, the researchers assumed that the underlying distribution was normally distributed, but <strong>did NOT assume</strong> that they knew the population standard deviation of SBP.</p>
 <ol type="a">
-<li><p>Using a two-sided test with <span class="math inline">\(\alpha = 0.05\)</span>, compute the <em>power</em> of the study (per-group <code>n = 25</code>) to detect a 5 <span class="math inline">\(\mu\)</span>g/<span class="math inline">\(m^3\)</span> difference. Include a 1-sentence conclusion with your answer.</p></li>
-<li><p>Do you think this grant would get funded as it currently stands? Why or why not? If not, what’s one thing the city could do to increase the power of their study?</p></li>
+<li><p>Interpret this confidence interval.</p></li>
+<li><p>What was the sample mean and sample standard deviation in their sample? Show your work using R. Include units in your response.</p></li>
 </ol>
+<section id="the-anderson-darling-test" class="level3">
+<h3 class="anchored" data-anchor-id="the-anderson-darling-test">The Anderson-Darling test</h3>
+<p>In Exercise 3, you will be asked questions about a hypothesis test that you have not seen before (and likely won’t ever see). <strong>These questions are intended to assess whether you are familiar with the hypothesis testing process itself</strong> and underlying philosophical details. Only use the information provided below, and assume that required assumptions are satisfied.</p>
+<p>The one-sample Anderson-Darling (AD) test can be used to test whether a sample comes from a specific target probability distribution based looking at a function of the empirical distribution function (EDF) of the observed data. The null and alternative hypotheses are given by</p>
+<ul>
+<li><p><span class="math inline">\(H_0\)</span>: the sample is consistent with a population that has the target distribution of interest</p></li>
+<li><p><span class="math inline">\(H_A\)</span>: the sample is NOT consistent with a population that has the target distribution of interest</p></li>
+</ul>
+<p>If, in our observed data, the difference between the EDF and the target distribution is “large enough,” then we reject the null hypothesis in favor of the alternative.</p>
+<p><strong>Suppose we conducted a one-sample AD test against some target distribution at the <span class="math inline">\(\alpha\)</span>= 0.10 level and obtained a p-value of 0.24.</strong></p>
+</section>
 </section>
 <section id="exercise-3" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-3">Exercise 3</h2>
-</section>
-<section id="data-mtcars" class="level2">
-<h2 class="anchored" data-anchor-id="data-mtcars">Data: mtcars</h2>
-<p>Load the data by running the code:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(mtcars)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggcorrplot)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Let’s take a quick look at the contents:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>?mtcars</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(mtcars)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>Rows: 32
-Columns: 11
-$ mpg  &lt;dbl&gt; 21.0, 21.0, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 22.8, 19.2, 17.8,…
-$ cyl  &lt;dbl&gt; 6, 6, 4, 6, 8, 6, 8, 4, 4, 6, 6, 8, 8, 8, 8, 8, 8, 4, 4, 4, 4, 8,…
-$ disp &lt;dbl&gt; 160.0, 160.0, 108.0, 258.0, 360.0, 225.0, 360.0, 146.7, 140.8, 16…
-$ hp   &lt;dbl&gt; 110, 110, 93, 110, 175, 105, 245, 62, 95, 123, 123, 180, 180, 180…
-$ drat &lt;dbl&gt; 3.90, 3.90, 3.85, 3.08, 3.15, 2.76, 3.21, 3.69, 3.92, 3.92, 3.92,…
-$ wt   &lt;dbl&gt; 2.620, 2.875, 2.320, 3.215, 3.440, 3.460, 3.570, 3.190, 3.150, 3.…
-$ qsec &lt;dbl&gt; 16.46, 17.02, 18.61, 19.44, 17.02, 20.22, 15.84, 20.00, 22.90, 18…
-$ vs   &lt;dbl&gt; 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0,…
-$ am   &lt;dbl&gt; 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0,…
-$ gear &lt;dbl&gt; 4, 4, 4, 3, 3, 3, 3, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3,…
-$ carb &lt;dbl&gt; 4, 4, 1, 1, 2, 1, 4, 2, 2, 4, 4, 3, 3, 3, 4, 4, 4, 1, 2, 1, 1, 2,…</code></pre>
-</div>
-</div>
-<p>Let’s focus on a few variables:</p>
-<ul>
-<li><p>mpg: miles per gallon (fuel efficiency)</p></li>
-<li><p>hp: horsepower, a measure of engine power, or the rate at which work is done.</p></li>
-<li><p>wt: weight of the car.</p></li>
-<li><p>qsec: Time to complete a quarter mile (i.e.&nbsp;speed of car in a drag race).</p></li>
-</ul>
-<p>Now, as an example, let’s take one pair of variables and look at the linear correlation, as well as the scatter plot comparing the two values.</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> mtcars</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(data<span class="sc">$</span>wt, data<span class="sc">$</span>mpg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] -0.8676594</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(data<span class="sc">$</span>wt, data<span class="sc">$</span>mpg)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="hw-12_MH_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p>Looks quite straightforward–they are strongly negatively correlated, and show a clear linear relationship. And it makes intuitive sense, a heavier car is going to have lower mpg because there is more mass for the engine to move.</p>
+<p>For each of the following, answer whether the statement is True or False. If True, you may simply state “True” and no explanation is needed. If the statement is False, additionally provide a 1-sentence explanation as to why it is false.</p>
 <ol type="a">
-<li><p>Using code from above, find the correlation between horsepower and quarter mile time, then make a scatter plot with horsepower on the x-axis, and quarter-mile time on the y-axis.</p></li>
-<li><p>How would you interpret and explain the correlation and scatter plot you obtained?</p></li>
+<li><p>TRUE/FALSE: Finding a very large p-value from the Anderson- Darling test gives us strong evidence that the sample is consistent with a population with the target distribution of interest.</p></li>
+<li><p>TRUE/FALSE: If we instead found a p-value smaller than our pre-specified <span class="math inline">\(\alpha\)</span>, then there would be enough evidence for us to conclude that the observed EDF is NOT consistent with a population with the target distribution of interest.</p></li>
+<li><p>TRUE/FALSE: Given the p-value of 0.24, the probability that we have made the correct decision is greater than 0.90.</p></li>
+<li><p>TRUE/FALSE: Given the p-value of 0.24, the probability that the sample is consistent with a population that has the target distribution of interest is 0.24.</p></li>
 </ol>
 </section>
 <section id="submission" class="level2">
 <h2 class="anchored" data-anchor-id="submission">Submission</h2>
-<p>As you’ve seen previously, we can <strong>Render</strong> into an .html file that can be opened by any web browser. To export it as a .pdf, open the file in your web browser and then print to or save as a .pdf document. Contact your TAs in Ed Discussion if you need help!</p>
+<p>As you’ve seen previously, we can <strong>Render</strong> into an .html file that can be opened by any web browser. To export it as a .pdf, open the file in your web browser and then print to or save as a .pdf document. Contact me in Ed Discussion if you need help!</p>
 <p>You will submit the PDF documents for labs and homework to Gradescope as part of your final submission.</p>
 <p>To submit your assignment:</p>
 <ul>
@@ -239,15 +166,15 @@ $ carb &lt;dbl&gt; 4, 4, 1, 1, 2, 1, 4, 2, 2, 4, 4, 3, 3, 3, 4, 4, 4, 1, 2, 1, 1
 <tbody>
 <tr class="odd">
 <td>Ex 1</td>
-<td>2</td>
+<td>3</td>
 </tr>
 <tr class="even">
 <td>Ex 2</td>
-<td>4</td>
+<td>3</td>
 </tr>
 <tr class="odd">
 <td>Ex 3</td>
-<td>3</td>
+<td>4</td>
 </tr>
 <tr class="even">
 <td>Formatting</td>

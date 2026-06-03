@@ -11,7 +11,7 @@ For this assignment you will begin a new Quarto file. To do this, go to RStudio 
 
 ## Data
 
-We’ll be revisiting the cereal data from HW 11. You should have `cereal.csv` downloaded to your `data` folder. You may load the dataset with the code below: (Ensure that you suppress any warnings and messages.)
+We’ll be revisiting the cereal data from HW 10. You should have `cereal.csv` downloaded to your `data` folder. You may load the dataset with the code below: (Ensure that you suppress any warnings and messages.)
 
 ```{r echo = T}
 #| message: false

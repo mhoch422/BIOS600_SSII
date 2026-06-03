@@ -1,5 +1,5 @@
 ---
-title: "Lecture 14: Multiple Linear Regression"
+title: "Lecture 14: Multiple Linear Regression & Collinearity"
 subtitle: "BIOS 600 - Summer Session II 2026"
 institute: "UNC - Chapel Hill"
 logo: "images/logo_600.png"
