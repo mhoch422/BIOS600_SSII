@@ -1,0 +1,1678 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lecture 14: Multiple Linear Regression</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="lec-14-multiple-reg-anno_MH_files/libs/clipboard/clipboard.min.js"></script>
+<script src="lec-14-multiple-reg-anno_MH_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="lec-14-multiple-reg-anno_MH_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="lec-14-multiple-reg-anno_MH_files/libs/quarto-html/popper.min.js"></script>
+<script src="lec-14-multiple-reg-anno_MH_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="lec-14-multiple-reg-anno_MH_files/libs/quarto-html/anchor.min.js"></script>
+<link href="lec-14-multiple-reg-anno_MH_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="lec-14-multiple-reg-anno_MH_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="lec-14-multiple-reg-anno_MH_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="lec-14-multiple-reg-anno_MH_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="lec-14-multiple-reg-anno_MH_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lecture 14: Multiple Linear Regression</h1>
+<p class="subtitle lead">BIOS 600 - Summer Session II 2026</p>
+</div>
+
+
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Authors</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+  </div>
+
+<div class="quarto-title-meta">
+
+      
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="announcements" class="level2">
+<h2 class="anchored" data-anchor-id="announcements">Announcements</h2>
+<ul>
+<li><p>HW 13 due <strong>tonight</strong></p></li>
+<li><p>HW 14 due <strong>tomorrow</strong></p></li>
+<li><p>Thursday’s lecture will be review for the final exam, which is <strong>July 27th</strong></p></li>
+</ul>
+</section>
+<section id="reading" class="level2">
+<h2 class="anchored" data-anchor-id="reading">Reading</h2>
+<ul>
+<li><p>P&amp;G: Chapter 19</p></li>
+<li><p>OI: 9.1 and 9.3</p></li>
+</ul>
+</section>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<ul>
+<li><p>Regression with multiple explanatory variables</p></li>
+<li><p>Interpreting categorical variables, plus releveling factors</p></li>
+<li><p>Interactions &amp; how to interpret interaction terms</p></li>
+<li><p>Checking for multicollinearity</p></li>
+</ul>
+</section>
+<section id="computational-setup" class="level2">
+<h2 class="anchored" data-anchor-id="computational-setup">Computational setup</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(car)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="back-to-lab-02" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="back-to-lab-02">Back to Lab 02</h2>
+<p>In Lab 2 we examined the regression of obesity percentage on adequate exercise percentage.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lec-14-multiple-reg-anno_MH_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" alt="A scatterplot with x-axis titled Obesity and y-axis titled Exercise. The dots follow a downward trend generally." width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Do we think this is the only factor that can help us predict obesity percentage?</p>
+</section>
+<section id="multiple-regression" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="multiple-regression">Multiple regression</h2>
+<ul>
+<li><p>The multiple regression model extends the simple linear regression model by incorporating more than one explanatory variable.</p></li>
+<li><p>The assumptions are similar to those of the simple linear regression model. This type of model is often called a <strong>multivariable</strong> (<strong>not multivariate</strong>) model.</p></li>
+</ul>
+<p>Multiple regression is often used to control for confounders or predictors that explain variability in the response:</p>
+<ul>
+<li><p>Knowing a state has above average exercise percentage might tell you something about the obesity percentage</p></li>
+<li><p>If you also knew that state’s HDI category, you might be able to do even better!</p></li>
+</ul>
+</section>
+<section id="multiple-regression-1" class="level2">
+<h2 class="anchored" data-anchor-id="multiple-regression-1">Multiple regression</h2>
+<ul>
+<li><p>Importantly, accounting for multiple predictors allows us to address potential confounding.</p></li>
+<li><p>We are looking at relationships while <strong>holding others constant</strong> - for instance, we know that exercise percentage and HDI category might be correlated. Perhaps any associations between obesity and exercise percentage we see are actually driven by HDI category.</p></li>
+</ul>
+</section>
+<section id="multiple-regression-2" class="level2">
+<h2 class="anchored" data-anchor-id="multiple-regression-2">Multiple regression</h2>
+<ul>
+<li><p>By fitting a multiple linear regression model, we can look at associations between obesity and exercise percentage <strong>while holding HDI constant</strong> (that is, at each possible value of HDI, what is the “remaining relationship” between exercise and obesity percentage?).</p></li>
+<li><p>Similarly, we can also look at associations between HDI and obesity <strong>while holding exercise constant</strong> (that is, at each possible value of exercise %, what is the “remaining relationship” between HDI and obesity percentage?).</p></li>
+</ul>
+</section>
+<section id="multiple-regression-3" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="multiple-regression-3">Multiple regression</h2>
+<p>The model is given by</p>
+<div class="poll">
+<p><span class="math display">\[y_i = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \cdots + \beta_p x_{pi} + \epsilon_i\]</span></p>
+</div>
+<ul>
+<li><p><span class="math inline">\(p\)</span> is the total number of predictor or explanatory variables</p></li>
+<li><p><span class="math inline">\(y_i\)</span> is the outcome (dependent variable) of interest</p></li>
+<li><p><span class="math inline">\(\beta_0\)</span> is the intercept parameter</p></li>
+<li><p><span class="math inline">\(\beta_1, \beta_2, \cdots, \beta_p\)</span> are the slope parameters</p></li>
+<li><p><span class="math inline">\(x_{1i}, x_{2i}, \cdots, x_{pi}\)</span> are predictor variables</p></li>
+<li><p><span class="math inline">\(\epsilon_i\)</span> is the error (like the <span class="math inline">\(\beta\)</span>s, it is not observed)</p></li>
+</ul>
+<p>Assumptions are essentially the same as in simple linear regression.</p>
+</section>
+<section id="multiple-regression-4" class="level2">
+<h2 class="anchored" data-anchor-id="multiple-regression-4">Multiple regression</h2>
+<p>Consider the model</p>
+<div class="poll">
+<p><span class="math display">\[Obesity_i = \beta_0 + \beta_1 Exercise_i + \beta_2 Smoking_i + \epsilon_i\]</span></p>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Parameter Meaning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What might the parameters <span class="math inline">\(\beta_0\)</span>, <span class="math inline">\(\beta_1\)</span>, and <span class="math inline">\(\beta_2\)</span> represent?</p>
+</div>
+</div>
+</section>
+<section id="multiple-regression-5" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="multiple-regression-5">Multiple regression</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Obesity <span class="sc">~</span> Exercise <span class="sc">+</span> Smoking, <span class="at">data =</span> cdc)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Obesity ~ Exercise + Smoking, data = cdc)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.6884 -1.4006  0.1385  1.3435  3.6176 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 36.10015    3.86311   9.345 2.72e-12 ***
+Exercise    -0.30899    0.05579  -5.538 1.34e-06 ***
+Smoking      0.54249    0.08716   6.224 1.23e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.837 on 47 degrees of freedom
+Multiple R-squared:  0.7546,    Adjusted R-squared:  0.7442 
+F-statistic: 72.28 on 2 and 47 DF,  p-value: 4.572e-15</code></pre>
+</div>
+</div>
+</section>
+<section id="multiple-regression-kable" class="level2">
+<h2 class="anchored" data-anchor-id="multiple-regression-kable">Multiple regression: kable</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model) <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">36.100</td>
+<td style="text-align: right;">3.863</td>
+<td style="text-align: right;">9.345</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Exercise</td>
+<td style="text-align: right;">-0.309</td>
+<td style="text-align: right;">0.056</td>
+<td style="text-align: right;">-5.538</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Smoking</td>
+<td style="text-align: right;">0.542</td>
+<td style="text-align: right;">0.087</td>
+<td style="text-align: right;">6.224</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>How might we interpret these parameter estimates? (watch out for the scale!)</p>
+</section>
+<section id="interpretation" class="level2">
+<h2 class="anchored" data-anchor-id="interpretation">Interpretation</h2>
+<ul>
+<li><strong>Interpreting <span class="math inline">\(\hat{\beta_1}\)</span></strong>: For every one percent increase of adults who participated in at least 2.5 hours of aerobic activity per week, we expect the percent of adults who are obese to decrease by .308 of a percentage point on average, <strong>holding Smoking constant</strong>.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Your turn
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Use the interpretation above to write out an interpretation of <span class="math inline">\(\hat{\beta_2}\)</span>. Recall that the <code>Smoking</code> variable is defined as percent of adults in region who smoked at least one cigarette in the past month.</p>
+</div>
+</div>
+</section>
+<section id="hypotheses-of-interest" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="hypotheses-of-interest">Hypotheses of interest</h2>
+<p>Hypotheses of interest may include hypotheses for single parameters:</p>
+<ul>
+<li>For instance, <span class="math inline">\(H_0:β_1=0\)</span> vs.&nbsp;<span class="math inline">\(H_1:β_1≠0\)</span>. In our previous model, this would test whether there is a linear association between exercise % and obesity %, <strong>while controlling for smoking %</strong></li>
+</ul>
+<p>This is tested using a t-test with <span class="math inline">\(n−k\)</span> degrees of freedom, where <span class="math inline">\(n\)</span> is the number of observations in the model and <span class="math inline">\(k\)</span> is the number of estimated model parameters (including the intercept and all slope terms).</p>
+</section>
+<section id="hypotheses-of-interest-1" class="level2">
+<h2 class="anchored" data-anchor-id="hypotheses-of-interest-1">Hypotheses of interest</h2>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Say we were to test this hypothesis for our model. What might we conclude?</p>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">36.100</td>
+<td style="text-align: right;">3.863</td>
+<td style="text-align: right;">9.345</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Exercise</td>
+<td style="text-align: right;">-0.309</td>
+<td style="text-align: right;">0.056</td>
+<td style="text-align: right;">-5.538</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Smoking</td>
+<td style="text-align: right;">0.542</td>
+<td style="text-align: right;">0.087</td>
+<td style="text-align: right;">6.224</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>In this case, the p-value was lower than the pre-specified significance cut-off. There is sufficient evidence to suggest that, <strong>controlling for smoking %</strong>, there is a non-zero linear association between exercise % and obesity % by state.</p>
+</section>
+<section id="hypotheses-of-interest-2" class="level2">
+<h2 class="anchored" data-anchor-id="hypotheses-of-interest-2">Hypotheses of interest</h2>
+<p>We might also test multiple parameters at once (for instance, all the slopes):</p>
+<ul>
+<li><span class="math inline">\(H_0: \beta_1 = \beta_2 = 0\)</span> vs.&nbsp;<span class="math inline">\(H_1:\)</span> at least one of the <span class="math inline">\(\beta_k\)</span> is not 0. (variable has a linear association with exercise %)</li>
+</ul>
+<p>This is given by an F test (much like ANOVA!) with numerator df equal to the number of parameters being tested (here, the number of slopes, i.e.&nbsp;2) and denominator df equal to <span class="math inline">\(n−k\)</span> (number of observations minus number of estimated model parameters, <em>including</em> the intercept).</p>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>What might we conclude for the overall F test for our model, assuming <span class="math inline">\(\alpha = 0.05\)</span>?</p>
+</div>
+</div>
+</div>
+</section>
+<section id="f-test" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="f-test">F-test</h2>
+<p>This information is given in the original <code>summary(model)</code>:</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = Obesity ~ Exercise + Smoking, data = cdc)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.6884 -1.4006  0.1385  1.3435  3.6176 
+
+Coefficients:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) 36.10015    3.86311   9.345 2.72e-12 ***
+Exercise    -0.30899    0.05579  -5.538 1.34e-06 ***
+Smoking      0.54249    0.08716   6.224 1.23e-07 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.837 on 47 degrees of freedom
+Multiple R-squared:  0.7546,    Adjusted R-squared:  0.7442 
+F-statistic: 72.28 on 2 and 47 DF,  p-value: 4.572e-15</code></pre>
+</div>
+</div>
+</section>
+<section id="hypotheses-of-interest-3" class="level2">
+<h2 class="anchored" data-anchor-id="hypotheses-of-interest-3">Hypotheses of interest</h2>
+<p><strong>Conclusion</strong>: In this case, the p-value (4.572e-15) was lower than the pre-specified significance cut-off. There is sufficient evidence to suggest that at least one predictor (Exercise and/or Smoking) has a non-zero linear association with obesity %.</p>
+</section>
+<section id="example-is-sbp-associated-with-cognitive-scores" class="level2">
+<h2 class="anchored" data-anchor-id="example-is-sbp-associated-with-cognitive-scores">Example: Is SBP associated with cognitive scores</h2>
+<ul>
+<li><p>There is reason to believe that systolic blood pressure (SBP) is associated with lower cognitive scores in older adults</p></li>
+<li><p>However, both SBP and cognitive scores are associated with age</p></li>
+<li><p>Let’s look at the results of running this model: <span class="math display">\[CognitiveScore_i = \beta_0 + \beta_1 SBP_i + \varepsilon_i\]</span></p></li>
+</ul>
+</section>
+<section id="example-is-sbp-associated-with-cognitive-scores-1" class="level2">
+<h2 class="anchored" data-anchor-id="example-is-sbp-associated-with-cognitive-scores-1">Example: Is SBP associated with cognitive scores?</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>In small groups
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Do both parameter estimates (<span class="math inline">\(\hat{\beta}_0\)</span>, <span class="math inline">\(\hat{\beta}_1\)</span>)make sense to interpret here? If so, how would you interpret each one?</p>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">49.297</td>
+<td style="text-align: right;">7.518</td>
+<td style="text-align: right;">6.557</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SBP</td>
+<td style="text-align: right;">0.309</td>
+<td style="text-align: right;">0.070</td>
+<td style="text-align: right;">4.427</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="example-confounding" class="level2">
+<h2 class="anchored" data-anchor-id="example-confounding">Example: Confounding</h2>
+<ul>
+<li>Here is the correlation matrix for SBP, cognitive score, and age:</li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>                     SBP CognitiveScore       Age
+SBP            1.0000000      0.4082618 0.6637731
+CognitiveScore 0.4082618      1.0000000 0.4830672
+Age            0.6637731      0.4830672 1.0000000</code></pre>
+</div>
+</div>
+<ul>
+<li><p>We see that age is correlated to both of our other variables!</p></li>
+<li><p>Let’s look at this model: <span class="math display">\[CognitiveScore_i = \beta_0 + \beta_1 SBP_i + \beta_2 Age_i + \varepsilon_i\]</span></p></li>
+</ul>
+</section>
+<section id="example-confounding-1" class="level2">
+<h2 class="anchored" data-anchor-id="example-confounding-1">Example: Confounding</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>In small groups
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Now that we’re controlling for age, how does your interpretation of <span class="math inline">\(\hat{\beta}_{1}\)</span> change?</p>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">55.022</td>
+<td style="text-align: right;">7.400</td>
+<td style="text-align: right;">7.435</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">SBP</td>
+<td style="text-align: right;">0.118</td>
+<td style="text-align: right;">0.089</td>
+<td style="text-align: right;">1.330</td>
+<td style="text-align: right;">0.187</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Age</td>
+<td style="text-align: right;">0.284</td>
+<td style="text-align: right;">0.088</td>
+<td style="text-align: right;">3.218</td>
+<td style="text-align: right;">0.002</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="multiple-regression-in-real-life" class="level2">
+<h2 class="anchored" data-anchor-id="multiple-regression-in-real-life">Multiple Regression in Real Life</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Based on <a href="https://bmcmedinformdecismak.biomedcentral.com/articles/10.1186/s12911-022-01884-9?utm_source=chatgpt.com">this paper</a>, answer the following questions:</p>
+<ol type="1">
+<li><p>In 1-2 sentences, describe the goal of this study/analysis.</p></li>
+<li><p>What was the outcome variable?</p></li>
+<li><p>How many independent variables did they use in their multiple regression model?</p></li>
+<li><p>In Table 4, what was the F-value and p-value? What is your conclusion?</p></li>
+<li><p>Which four predictor variables most significantly influenced the outcome?</p></li>
+</ol>
+</div>
+</div>
+</section>
+<section id="confidence-intervals" class="level2">
+<h2 class="anchored" data-anchor-id="confidence-intervals">Confidence intervals</h2>
+<p>For individual predictors, we can also use the standard error estimate to construct confidence intervals. These intervals are constructed using a critical value from a t distribution:</p>
+<div class="poll">
+<p><span class="math display">\[(\hat \beta_k - t^*_{1-\alpha/2; n-k} \times SE(\hat \beta_k), \hat \beta_k + t^*_{1-\alpha/2; n-k} \times SE(\hat \beta_k))\]</span></p>
+</div>
+<p>For instance, <span class="math inline">\(SE (\hat \beta_1)=0.06\)</span>. Thus, we have that a 95% confidence interval for <span class="math inline">\(β_1\)</span> is (-0.43, -0.19). If we were to interpret this interval, it would have to be conditionally on the other variables in the model.</p>
+</section>
+<section id="r-squared" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="r-squared">R-squared</h2>
+<ul>
+<li><p>In our model, <span class="math inline">\(R^2=0.7546\)</span>, suggesting that about 75% of the variability in obesity percentage can be explained by our model.</p></li>
+<li><p>However, <span class="math inline">\(R^2\)</span> can never decrease when variables are added to a model, even if they are useless.</p></li>
+<li><p>Thus, we can use <strong>adjusted</strong> <span class="math inline">\(R^2 \leq R^2\)</span>, where the adjustment is made to account for the number of predictors.</p></li>
+<li><p>The <strong>adjusted</strong> <span class="math inline">\(R^2\)</span> incorporates a penalty for each additional variable in a model, so that the adjusted <span class="math inline">\(R^2\)</span> will go down if a new variable does not improve prediction much, and it will go up if the new variable does improve prediction, conditional on the other variables already in the model.</p></li>
+<li><p>With that said, <span class="math inline">\(R^2\)</span> or adj. <span class="math inline">\(R^2\)</span> should never be used as the only reasons to select variables for your model - you must rely on scientific knowledge and context!</p></li>
+</ul>
+</section>
+<section id="categorical-predictors" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="categorical-predictors">Categorical predictors</h2>
+<ul>
+<li><p>We often have categorical predictors in modeling settings (for instance, here we have HDI). However, it might not make sense to think about a “one unit increase” in a categorical variable (how would that even work?)</p></li>
+<li><p>In regression settings, we can account for categorical variables by creating <strong>dummy variables</strong>, which are indicator variables for certain conditions happening. For instance, there are three categories of HDI in the dataset: bottom ten, middle, and top ten.</p></li>
+<li><p>When considering categorical variables, one variable is taken to be the <strong>baseline</strong> or <strong>reference</strong> value. All other categories will be compared to it.</p></li>
+</ul>
+</section>
+<section id="categorical-predictors-1" class="level2">
+<h2 class="anchored" data-anchor-id="categorical-predictors-1">Categorical predictors</h2>
+<p>Suppose the “top ten” category is taken to be the referent value. Then we can create two dummy variables:</p>
+<ul>
+<li><p>HDI == Middle: 1 if this condition is true; 0 otherwise</p></li>
+<li><p>HDI == Bottom Ten: 1 if this condition is true; 0 otherwise</p></li>
+</ul>
+</section>
+<section id="interpretation-of-dummy-variables" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="interpretation-of-dummy-variables">Interpretation of dummy variables</h2>
+<p>Consider the model</p>
+<div class="poll">
+<p><span class="math display">\[Obesity_i = \beta_0 + \beta_1(HDI == Middle)_i + \]</span></p>
+<p><span class="math display">\[ \beta_2(HDI == BottomTen)_i + \epsilon_i\]</span></p>
+</div>
+<p>The parameter interpretations are below.</p>
+<ul>
+<li><p><span class="math inline">\(\beta_0\)</span> represents the expected obesity percentage for a state with 0 for the two dummy variables. That is, in the top ten HDI</p></li>
+<li><p><span class="math inline">\(\beta_1\)</span> represents the expected difference in obesity percentage for a state in the middle HDI category, <strong>compared to the top ten</strong></p></li>
+<li><p><span class="math inline">\(\beta_2\)</span> represents the expected difference in obesity percentage for a state in the bottom ten HDI category, <strong>compared to the top ten</strong></p></li>
+</ul>
+<p>Note that we had to estimate <em>multiple</em> “slopes” for this one variable - one corresponding to each non-reference level.</p>
+</section>
+<section id="interpretation-of-dummy-variables-1" class="level2">
+<h2 class="anchored" data-anchor-id="interpretation-of-dummy-variables-1">Interpretation of dummy variables</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Obesity <span class="sc">~</span> HDI, <span class="at">data =</span> cdc)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(fit2) <span class="sc">|&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">34.430</td>
+<td style="text-align: right;">0.816</td>
+<td style="text-align: right;">42.195</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">HDIMiddle</td>
+<td style="text-align: right;">-4.797</td>
+<td style="text-align: right;">0.942</td>
+<td style="text-align: right;">-5.091</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">HDITop ten</td>
+<td style="text-align: right;">-8.080</td>
+<td style="text-align: right;">1.154</td>
+<td style="text-align: right;">-7.002</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>How would you interpret the estimates?</p>
+</section>
+<section id="changing-the-reference-level" class="level2">
+<h2 class="anchored" data-anchor-id="changing-the-reference-level">Changing the reference level</h2>
+<ul>
+<li>Wait a minute! R automatically assigned the lowest level of HDI as the reference level. Let’s see how we can change the reference level:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>cdc_new <span class="ot">&lt;-</span> cdc <span class="sc">|&gt;</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">HDI_relevel =</span> <span class="fu">fct_relevel</span>(HDI, <span class="st">"Top ten"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li><p>This reorders the factor levels so that “<code>Top ten</code>” becomes the first (reference) level.</p></li>
+<li><p>Now, when we run the regression, the model will automatically use <code>Top ten</code> as the baseline.</p></li>
+</ul>
+</section>
+<section id="re-running-the-model" class="level2">
+<h2 class="anchored" data-anchor-id="re-running-the-model">Re-running the model</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">26.350</td>
+<td style="text-align: right;">0.816</td>
+<td style="text-align: right;">32.293</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">HDI_relevelBottom ten</td>
+<td style="text-align: right;">8.080</td>
+<td style="text-align: right;">1.154</td>
+<td style="text-align: right;">7.002</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">HDI_relevelMiddle</td>
+<td style="text-align: right;">3.283</td>
+<td style="text-align: right;">0.942</td>
+<td style="text-align: right;">3.485</td>
+<td style="text-align: right;">0.001</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="interpretation-of-dummy-variables-2" class="level2">
+<h2 class="anchored" data-anchor-id="interpretation-of-dummy-variables-2">Interpretation of dummy variables</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>fit3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Obesity <span class="sc">~</span> Exercise <span class="sc">+</span> HDI_relevel, </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> cdc_new)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(fit3) <span class="sc">|&gt;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">44.897</td>
+<td style="text-align: right;">3.406</td>
+<td style="text-align: right;">13.184</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Exercise</td>
+<td style="text-align: right;">-0.348</td>
+<td style="text-align: right;">0.063</td>
+<td style="text-align: right;">-5.545</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">HDI_relevelBottom ten</td>
+<td style="text-align: right;">5.125</td>
+<td style="text-align: right;">1.049</td>
+<td style="text-align: right;">4.887</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">HDI_relevelMiddle</td>
+<td style="text-align: right;">2.753</td>
+<td style="text-align: right;">0.744</td>
+<td style="text-align: right;">3.702</td>
+<td style="text-align: right;">0.001</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>How would you interpret these estimates?</p>
+</section>
+<section id="interactionseffect-modification" class="level2">
+<h2 class="anchored" data-anchor-id="interactionseffect-modification">Interactions/Effect Modification</h2>
+<ul>
+<li><p>What if I am interested in seeing if sex and BMI (kg/m2) are associated with fasting blood glucose levels (FBG)?</p></li>
+<li><p>I might consider the following model:</p></li>
+</ul>
+<p><span class="math display">\[FBG_i = \beta_0 + \beta_1 Female_i + \beta_2 BMI_i\]</span></p>
+<ul>
+<li>But what if I think that the association between BMI and FBG differs by sex?</li>
+</ul>
+</section>
+<section id="interactionseffect-modification-1" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="interactionseffect-modification-1">Interactions/Effect Modification</h2>
+<ul>
+<li><p>This is a case of effect modification - the relationship between one predictor and the outcome depends on the value of another predictor variable</p></li>
+<li><p>This could mean any of the following:</p>
+<ul>
+<li>Association is in the same direction (e.g.&nbsp;positive/negative) but the association is stronger in magnitude depending on the value of the effect modifier (e.g.&nbsp;association is positive for males and females, but stronger association for females)</li>
+<li>Association is in one direction for certain values but the opposite direction depending on other values of the effect modifier (e.g.&nbsp;association is positive for males but negative for females)</li>
+<li>Association is present for certain values of the effect modifier, but no association is seen for other values (e.g.&nbsp;association is positive for males but no evidence of association for females)</li>
+</ul></li>
+</ul>
+</section>
+<section id="interactionseffect-modification-2" class="level2">
+<h2 class="anchored" data-anchor-id="interactionseffect-modification-2">Interactions/Effect Modification</h2>
+<ul>
+<li><p>To model a case of effect modification - when the relationship between one predictor and the outcome depends on the value of another predictor variable, we create an <strong>interaction term</strong>.</p></li>
+<li><p>This is created simply by multiplying two predictors <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> to create a new predictor, <span class="math inline">\(x_1x_2\)</span>. When interaction terms are in a model, interpretations can become tricky.</p></li>
+</ul>
+</section>
+<section id="interactionseffect-modification-3" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="interactionseffect-modification-3">Interactions/Effect Modification</h2>
+<ul>
+<li>With interaction terms in the model
+<ul>
+<li>Difference between females and males in FBG, holding BMI constant, is no longer given by <span class="math inline">\(\beta_1\)</span></li>
+<li><span class="math inline">\(\beta_2\)</span> no longer represents the change in FBG associated with a 1 <span class="math inline">\(kg/m^{2}\)</span> change in BMI, holding sex constant</li>
+</ul></li>
+</ul>
+<p><span class="math display">\[FBG_i = \beta_0 + \beta_1 Female_i + \beta_2 BMI_i + \beta_3 (BMI_i)(Female_i)\]</span></p>
+<ul>
+<li>But how can I get an estimate for how they are associated?</li>
+</ul>
+</section>
+<section id="association-between-bmi-and-fasting-blood-glucose-fbg-ignoring-gender" class="level2">
+<h2 class="anchored" data-anchor-id="association-between-bmi-and-fasting-blood-glucose-fbg-ignoring-gender">Association between BMI and fasting blood glucose (FBG), ignoring gender</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lec-14-multiple-reg-anno_MH_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" alt="A scatterplot with x-axis labeled BMI and y-axis labeled Fasting Blood Glucose. The dots seem to have a slight upward trend, and a blue line with a positive slope is superimposed over the dots." width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="association-between-bmi-and-fasting-blood-glucose-fbg-ignoring-gender-1" class="level2">
+<h2 class="anchored" data-anchor-id="association-between-bmi-and-fasting-blood-glucose-fbg-ignoring-gender-1">Association between BMI and fasting blood glucose (FBG), ignoring gender</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">62.859</td>
+<td style="text-align: right;">10.210</td>
+<td style="text-align: right;">6.157</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">bmi</td>
+<td style="text-align: right;">2.963</td>
+<td style="text-align: right;">0.376</td>
+<td style="text-align: right;">7.882</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="association-between-bmi-and-fasting-blood-glucose-fbg-controlling-for-gender" class="level2">
+<h2 class="anchored" data-anchor-id="association-between-bmi-and-fasting-blood-glucose-fbg-controlling-for-gender">Association between BMI and fasting blood glucose (FBG), controlling for gender</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">53.746</td>
+<td style="text-align: right;">9.835</td>
+<td style="text-align: right;">5.465</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">bmi</td>
+<td style="text-align: right;">2.938</td>
+<td style="text-align: right;">0.359</td>
+<td style="text-align: right;">8.185</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">genderFemale</td>
+<td style="text-align: right;">19.571</td>
+<td style="text-align: right;">2.789</td>
+<td style="text-align: right;">7.017</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="now-lets-look-again" class="level2">
+<h2 class="anchored" data-anchor-id="now-lets-look-again">Now let’s look again</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lec-14-multiple-reg-anno_MH_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" alt="A scatterplot with x-axis labeled BMI and y-axis labeled Fasting Blood Glucose. The dots are colored red for male and blue for female. The blue dots seem to have higher y-values than the red dots, and this difference is larger for higher x-values." width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="association-between-bmi-and-fasting-blood-glucose-fbg-with-interaction" class="level2">
+<h2 class="anchored" data-anchor-id="association-between-bmi-and-fasting-blood-glucose-fbg-with-interaction">Association between BMI and fasting blood glucose (FBG), with interaction</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">77.400</td>
+<td style="text-align: right;">13.731</td>
+<td style="text-align: right;">5.637</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">bmi</td>
+<td style="text-align: right;">2.057</td>
+<td style="text-align: right;">0.506</td>
+<td style="text-align: right;">4.063</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">genderFemale</td>
+<td style="text-align: right;">-27.579</td>
+<td style="text-align: right;">19.400</td>
+<td style="text-align: right;">-1.422</td>
+<td style="text-align: right;">0.156</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">bmi:genderFemale</td>
+<td style="text-align: right;">1.754</td>
+<td style="text-align: right;">0.714</td>
+<td style="text-align: right;">2.456</td>
+<td style="text-align: right;">0.014</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="association-between-bmi-and-fasting-blood-glucose-fbg-with-interaction-1" class="level2">
+<h2 class="anchored" data-anchor-id="association-between-bmi-and-fasting-blood-glucose-fbg-with-interaction-1">Association between BMI and fasting blood glucose (FBG), with interaction</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lec-14-multiple-reg-anno_MH_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" alt="A scatterplot with x-axis labeled BMI and y-axis labeled Fasting Blood Glucose. The dots are colored red for male and blue for female. The blue dots seem to have higher y-values than the red dots, and this difference is larger for higher x-values. A red line with a positive slope and a blue line with a steeper positive slope are superimposed over the dots." width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="association-between-bmi-and-fasting-blood-glucose-fbg-with-interaction-2" class="level2">
+<h2 class="anchored" data-anchor-id="association-between-bmi-and-fasting-blood-glucose-fbg-with-interaction-2">Association between BMI and fasting blood glucose (FBG), with interaction</h2>
+<ul>
+<li><p><span class="math display">\[FBG_i = \beta_0 + \beta_1 Female_i + \beta_2 BMI_i + \beta_3 (BMI_i)(Female_i)\]</span></p></li>
+<li><p>For males, <span class="math inline">\(Female_i=0\)</span>,</p></li>
+</ul>
+</section>
+<section id="association-between-bmi-and-fasting-blood-glucose-fbg-with-interaction-3" class="level2">
+<h2 class="anchored" data-anchor-id="association-between-bmi-and-fasting-blood-glucose-fbg-with-interaction-3">Association between BMI and fasting blood glucose (FBG), with interaction</h2>
+<ul>
+<li><p><span class="math display">\[FBG_i = \beta_0 + \beta_1 Female_i + \beta_2 BMI_i + \beta_3 (BMI_i)(Female_i)\]</span></p></li>
+<li><p>For females, <span class="math inline">\(Female_i=1\)</span></p></li>
+</ul>
+</section>
+<section id="interactions" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="interactions">Interactions</h2>
+<ul>
+<li><p>Interpretation of interaction terms with categorical predictors is easier than with continuous predictors.</p></li>
+<li><p>Since categorical predictors are based on dummy variables, they can only take on the values of 0 or 1 in the model.</p></li>
+<li><p>But in general, the same idea applies for continuous variables - an interaction effect implies that the regression coefficient for an explanatory variable would change depending on the value of another predictor (for instance, the relationship between exercise and obesity might depend on the % of the state that smokes at least one cigarette).</p></li>
+</ul>
+</section>
+<section id="interactions-1" class="level2">
+<h2 class="anchored" data-anchor-id="interactions-1">Interactions</h2>
+<p>Let’s consider a model with <strong>main effects</strong> of exercise and smoking and an <strong>interaction term</strong> between them:</p>
+<p><span class="math display">\[Obesity_i = \beta_0 + \beta_1 Exercise + \beta_2 Smoking\]</span></p>
+<p><span class="math display">\[+ \beta_3 (Exercise_i \cdot Smoking_i) + \epsilon_i\]</span></p>
+<p>What is the expected change in obesity % given a one percentage point increase in exercise %?</p>
+</section>
+<section id="interactions-model" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="interactions-model">Interactions model</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>fit_int <span class="ot">&lt;-</span> <span class="fu">lm</span>(Obesity <span class="sc">~</span> Exercise <span class="sc">+</span> </span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>                Smoking <span class="sc">+</span> </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>                Exercise<span class="sc">*</span>Smoking, </span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> cdc)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(fit_int) <span class="sc">|&gt;</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">38.577</td>
+<td style="text-align: right;">13.867</td>
+<td style="text-align: right;">2.782</td>
+<td style="text-align: right;">0.008</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Exercise</td>
+<td style="text-align: right;">-0.358</td>
+<td style="text-align: right;">0.270</td>
+<td style="text-align: right;">-1.325</td>
+<td style="text-align: right;">0.192</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Smoking</td>
+<td style="text-align: right;">0.408</td>
+<td style="text-align: right;">0.729</td>
+<td style="text-align: right;">0.559</td>
+<td style="text-align: right;">0.579</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Exercise:Smoking</td>
+<td style="text-align: right;">0.003</td>
+<td style="text-align: right;">0.015</td>
+<td style="text-align: right;">0.186</td>
+<td style="text-align: right;">0.853</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><strong>Interpretation</strong>: If exercise increases by 1 percentage point, the expected change in obesity % depends on smoking %, and is: -.358 + .003(Smoking%)</p>
+</section>
+<section id="more-interpretation" class="level2">
+<h2 class="anchored" data-anchor-id="more-interpretation">More interpretation</h2>
+<p>So,</p>
+<ul>
+<li><p>When Smoking = 0%, the slope of Exercise is -0.358 (exercise is assoc. w/ lower obesity).</p></li>
+<li><p>When Smoking = 50%, slope = -0.358 + 0.003(50) = -0.208 (still negative association, but smaller in magnitude).</p></li>
+</ul>
+<p><strong>However</strong>: The interaction term is not significant. So we should remove the interaction term and just use the model with main effects only.</p>
+</section>
+<section id="the-math-behind-it" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="the-math-behind-it">The math behind it</h2>
+<ul>
+<li>How did we get that interpretation? Here’s the math behind it…</li>
+</ul>
+<p>For a given exercise (ex) and smoking (sm) percentage, our predicted obesity (ob) percentage is</p>
+<p><span class="math display">\[\hat {ob}_i = \hat \beta_0 + \hat \beta_1 ex_i + \hat \beta_2 sm_i + \hat \beta_3 ex_i sm_i\]</span></p>
+<p>and for a state at the same smoking % but 1 percentage point higher in exercise %, the predicted obesity percentage is</p>
+<p><span class="math display">\[\hat {ob}_{i'} = \hat \beta_0 + \hat \beta_1 (ex_i + 1) + \hat \beta_2 sm_i + \hat \beta_3 (ex_i + 1) sm_i\]</span></p>
+<p><span class="math display">\[ = \hat \beta_0 +  \hat \beta_1 ex_i + \hat \beta_1 + \hat \beta_2 sm_i + \hat \beta_3 ex_i sm_i + \hat \beta_3 sm_i\]</span></p>
+</section>
+<section id="the-math-behind-it-1" class="level2">
+<h2 class="anchored" data-anchor-id="the-math-behind-it-1">The math behind it</h2>
+<ul>
+<li><p>Subtracting, we have <span class="math inline">\(\hat ob_{i'} - \hat ob_i= \hat \beta_1 + \hat \beta_3 sm_i\)</span>, which is the expected change in obesity % for a 1% change in exercise %.</p></li>
+<li><p><strong>Takeaway</strong>: In the interactions model, the relationship of exercise and obesity depends on the level of smoking in that state.</p></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Quick review
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Take a few minutes to review the math in small groups.</p>
+</div>
+</div>
+</section>
+<section id="multicollinearity" class="level2">
+<h2 class="anchored" data-anchor-id="multicollinearity">Multicollinearity</h2>
+<ul>
+<li><p>One common problem in multiple regression is <strong>multicollinearity</strong>, which occurs when multiple highly correlated variables are used as predictors.</p></li>
+<li><p><strong>Collinearity</strong> simply refers to two variables behind highly correlated.</p></li>
+<li><p>In this case, the model can <strong>become unstable</strong> (often seen as standard errors that get huge and lead to huge confidence interval estimates), and it can be difficult to assess the relationships of the predictors.</p></li>
+</ul>
+</section>
+<section id="diagnosing-multicollinearity" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="diagnosing-multicollinearity">Diagnosing multicollinearity</h2>
+<p>If nothing is significant when you “expect” something to be, we have some clues:</p>
+<ul>
+<li><p>Individual predictors are significant in simple linear regression models,</p></li>
+<li><p>but standard errors and interval estimates are huge,</p></li>
+<li><p>and the overall F test is significant</p></li>
+</ul>
+<p>A <strong>significant overall F test with no significant individual variable test</strong> is a typical sign of collinearity. We can check out the correlations among the three predictors.</p>
+</section>
+<section id="checking-vif" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="checking-vif">Checking VIF</h2>
+<ul>
+<li><p>The common way to check for multicollinearity is through VIF values. VIF values indicate the extent of multicollinearity.</p></li>
+<li><p>A VIF value of 1 suggests no correlation with other predictors.</p></li>
+<li><p>Values between 1 and 5 generally indicate moderate correlation.</p></li>
+<li><p>Values above 5 (or sometimes 10, depending on the context) are often considered problematic, indicating severe multicollinearity and potential issues with coefficient stability and interpretation.</p></li>
+</ul>
+</section>
+<section id="vif" class="level2">
+<h2 class="anchored" data-anchor-id="vif">VIF</h2>
+<ul>
+<li>Let’s say we had the following model:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>fit4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Obesity <span class="sc">~</span> Exercise <span class="sc">+</span> Smoking <span class="sc">+</span> Over65, </span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> cdc)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>vif_values <span class="ot">&lt;-</span> <span class="fu">vif</span>(fit4) <span class="co"># car package</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>vif_values</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Exercise  Smoking   Over65 
+1.420894 1.541720 1.123272 </code></pre>
+</div>
+</div>
+<ul>
+<li>In this model, none of the VIFs are above 5 (in fact, they’re much closer to 1), so multicollinearity is not an issue here.</li>
+</ul>
+<!-- ## R Demo: Uploading an excel file -->
+<!-- - You can upload `.xlsx` files using the **readxl** package.  -->
+<!-- ```{r} -->
+<!-- #| echo: true -->
+<!-- #| eval: false -->
+<!-- # Install (only once) -->
+<!-- install.packages("readxl") -->
+<!-- # Load each time you start R -->
+<!-- library(readxl) -->
+<!-- # read in data -->
+<!-- # Example: import a dataset called "biostats_data.xlsx" -->
+<!-- data <- read_excel("data/biostats_data.xlsx") -->
+<!-- ``` -->
+<!-- ## R Demo: merging datasets -->
+<!-- - Merging datasets could be helpful for your project! -->
+<!-- - Let's say you have two data sets.. -->
+<!-- ```{r} -->
+<!-- # Create two sample data frames -->
+<!-- df1 <- data.frame( -->
+<!--   ID = c(1, 2, 3, 4), -->
+<!--   Name = c("Alice", "Bob", "Charlie", "David") -->
+<!-- ) -->
+<!-- df2 <- data.frame( -->
+<!--   ID = c(1, 3, 5), -->
+<!--   City = c("New York", "London", "Paris") -->
+<!-- ) -->
+<!-- ``` -->
+<!-- ```{r} -->
+<!-- #| echo: true -->
+<!-- df1 -->
+<!-- df2 -->
+<!-- ``` -->
+<!-- ## R Demo: Merging datasets -->
+<!-- - As long as you have an identifying column (e.g. studyid, patient number, observation number etc.), you can merge using `left_join()`: -->
+<!-- ```{r} -->
+<!-- #| echo: true -->
+<!-- # The 'by' argument specifies the  -->
+<!-- # common column(s) to join on. -->
+<!-- merged_df <- df1 |> -->
+<!--   left_join(df2, by = "ID") -->
+<!-- merged_df  -->
+<!-- ``` -->
+<!-- ## R Demo: Merging datasets -->
+<!-- - Note the difference here when merging using `right_join()` -->
+<!-- ```{r} -->
+<!-- #| echo: true -->
+<!-- # The 'by' argument specifies the  -->
+<!-- # common column(s) to join on. -->
+<!-- merged_df_right <- df1 |> -->
+<!--   right_join(df2, by = "ID") -->
+<!-- merged_df_right  -->
+<!-- ``` -->
+<!-- ## R Demo: Merging datasets -->
+<!-- - As similarly with `full_join()` -->
+<!-- ```{r} -->
+<!-- #| echo: true -->
+<!-- # The 'by' argument specifies the  -->
+<!-- # common column(s) to join on. -->
+<!-- merged_df_full <- df1 |> -->
+<!--   full_join(df2, by = "ID") -->
+<!-- merged_df_full  -->
+<!-- ``` -->
+<!-- ## R Demo: Dropping NA values -->
+<!-- - We haven't talked about missing data much, but it may be simplest to conduct a "complete case analysis" where you only perform an analysis on complete cases: -->
+<!-- ```{r} -->
+<!-- #| echo: true -->
+<!-- merged_df |> -->
+<!--   drop_na() -->
+<!-- ``` -->
+<!-- ## R Demo: `write.csv()` -->
+<!-- - You can save your cleaned/merged dataset at any point using `write.csv()` -->
+<!-- ```{r} -->
+<!-- #| echo: true -->
+<!-- #| eval: false -->
+<!-- write.csv(merged_df, file = "data/data_clean.csv",  -->
+<!--           row.names = F)  -->
+<!-- # do not create a column of row names -->
+<!-- ``` -->
+<!-- - Note that you may need to include `row.names = F` so that R does not create an additional column of row numbers. -->
+</section>
+<section id="recap" class="level2">
+<h2 class="anchored" data-anchor-id="recap">Recap</h2>
+<ul>
+<li><p>How to check regression diagnostics</p></li>
+<li><p>How to interpret model coefficients in a multiple regression model</p></li>
+<li><p>Interpreting results of an overall F-test in a multiple regression model</p></li>
+<li><p>Adjusted <span class="math inline">\(R^2\)</span> vs.&nbsp;<span class="math inline">\(R^2\)</span></p></li>
+<li><p>Interpreting coefficient estimates for categorical predictors</p></li>
+<li><p>Interactions, interpretations, and the math behind it all</p></li>
+<li><p>Collinearity</p></li>
+</ul>
+</section>
+<section id="next-class" class="level2">
+<h2 class="anchored" data-anchor-id="next-class">Next class</h2>
+<ul>
+<li>Logistic regression!</li>
+</ul>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

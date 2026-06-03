@@ -1,0 +1,792 @@
+---
+title: "Lecture 14: Multiple Linear Regression"
+subtitle: "BIOS 600 - Summer Session II 2026"
+institute: "UNC - Chapel Hill"
+logo: "images/logo_600.png"
+format: html
+---
+
+## Announcements
+
+- HW 13 due **tonight**
+
+- HW 14 due **tomorrow**
+
+- Thursday's lecture will be review for the final exam, which is **July 27th**
+
+## Reading
+
+-   P&G: Chapter 19
+
+-   OI: 9.1 and 9.3
+
+## Overview 
+
+- Regression with multiple explanatory variables
+
+- Interpreting categorical variables, plus releveling factors
+
+- Interactions & how to interpret interaction terms
+
+- Checking for multicollinearity
+
+## Computational setup
+
+```{r}
+#| echo: true
+#| message: false
+#| warning: false
+library(tidyverse)
+library(tidymodels)
+library(kableExtra)
+library(car)
+```
+
+## Back to Lab 02 {.smaller}
+
+In Lab 2 we examined the regression of obesity percentage on adequate exercise percentage.
+
+```{r}
+#| echo: false
+#| fig-alt: "A scatterplot with x-axis titled Obesity and y-axis titled Exercise. The dots follow a downward trend generally."
+
+
+cdc <- read.csv("https://karamccor.github.io/b6002/labs/data/cdc_cleaned.csv")
+
+cdc %>%
+  ggplot(aes(x = Obesity, y = Exercise)) +
+  geom_point() +
+  theme_bw()
+```
+
+Do we think this is the only factor that can help us predict obesity percentage?
+
+## Multiple regression {.smaller}
+
+-   The multiple regression model extends the simple linear regression model by incorporating more than one explanatory variable.
+
+-   The assumptions are similar to those of the simple linear regression model. This type of model is often called a **multivariable** (**not multivariate**) model.
+
+Multiple regression is often used to control for confounders or predictors that explain variability in the response:
+
+-   Knowing a state has above average exercise percentage might tell you something about the obesity percentage
+
+-   If you also knew that state's HDI category, you might be able to do even better!
+
+## Multiple regression
+
+-   Importantly, accounting for multiple predictors allows us to address potential confounding.
+
+-   We are looking at relationships while **holding others constant** - for instance, we know that exercise percentage and HDI category might be correlated. Perhaps any associations between obesity and exercise percentage we see are actually driven by HDI category.
+
+## Multiple regression
+
+-   By fitting a multiple linear regression model, we can look at associations between obesity and exercise percentage **while holding HDI constant** (that is, at each possible value of HDI, what is the "remaining relationship" between exercise and obesity percentage?).
+
+-   Similarly, we can also look at associations between HDI and obesity **while holding exercise constant** (that is, at each possible value of exercise %, what is the "remaining relationship" between HDI and obesity percentage?).
+
+## Multiple regression {.smaller}
+
+The model is given by
+
+::: poll
+$$y_i = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \cdots + \beta_p x_{pi} + \epsilon_i$$
+:::
+
+-   $p$ is the total number of predictor or explanatory variables
+
+-   $y_i$ is the outcome (dependent variable) of interest
+
+-   $\beta_0$ is the intercept parameter
+
+-   $\beta_1, \beta_2, \cdots, \beta_p$ are the slope parameters
+
+-   $x_{1i}, x_{2i}, \cdots, x_{pi}$ are predictor variables
+
+-   $\epsilon_i$ is the error (like the $\beta$s, it is not observed)
+
+Assumptions are essentially the same as in simple linear regression.
+
+## Multiple regression
+
+Consider the model
+
+::: poll
+$$Obesity_i = \beta_0 + \beta_1 Exercise_i + \beta_2 Smoking_i + \epsilon_i$$
+:::
+
+::: callout-tip
+
+## Parameter Meaning
+What might the parameters $\beta_0$, $\beta_1$, and $\beta_2$ represent?
+
+:::
+
+## Multiple regression {.smaller}
+
+```{r echo = T}
+model <- lm(Obesity ~ Exercise + Smoking, data = cdc)
+summary(model)
+```
+
+
+## Multiple regression: kable
+
+```{r}
+#| echo: true
+tidy(model) |>
+  kable(digits = 3)
+```
+
+How might we interpret these parameter estimates? (watch out for the scale!)
+
+## Interpretation
+
+-   **Interpreting $\hat{\beta_1}$**: For every one percent increase of adults who participated in at least 2.5 hours of aerobic activity per week, we expect the percent of adults who are obese to decrease by .308 of a percentage point on average, **holding Smoking constant**.
+
+::: callout-tip
+
+## Your turn
+
+Use the interpretation above to write out an interpretation of $\hat{\beta_2}$. Recall that the `Smoking` variable is defined as percent of adults in region who smoked at least one cigarette in the past month.
+
+:::
+
+
+## Hypotheses of interest {.smaller}
+
+Hypotheses of interest may include hypotheses for single parameters:
+
+-   For instance, $H_0:β_1=0$ vs. $H_1:β_1≠0$. In our previous model, this would test whether there is a linear association between exercise % and obesity %, **while controlling for smoking %**
+
+This is tested using a t-test with $n−k$ degrees of freedom, where $n$ is the number of observations in the model and $k$ is the number of estimated model parameters (including the intercept and all slope terms).
+
+
+
+## Hypotheses of interest
+
+::: {.callout-tip appearance="simple"}
+Say we were to test this hypothesis for our model. What might we conclude?
+:::
+
+```{r}
+#| echo: FALSE
+tidy(model) |>
+  kable(digits = 3)
+```
+
+In this case, the p-value was lower than the pre-specified significance cut-off. There is sufficient evidence to suggest that, **controlling for smoking %**, there is a non-zero linear association between exercise % and obesity % by state.
+
+## Hypotheses of interest
+
+We might also test multiple parameters at once (for instance, all the slopes):
+
+-   $H_0: \beta_1 = \beta_2 = 0$ vs. $H_1:$ at least one of the $\beta_k$ is not 0. (variable has a linear association with exercise %)
+
+This is given by an F test (much like ANOVA!) with numerator df equal to the number of parameters being tested (here, the number of slopes, i.e. 2) and denominator df equal to $n−k$ (number of observations minus number of estimated model parameters, *including* the intercept).
+
+::: {.callout-tip appearance="simple"}
+What might we conclude for the overall F test for our model, assuming $\alpha = 0.05$?
+:::
+
+## F-test {.smaller}
+
+This information is given in the original `summary(model)`:
+
+\footnotesize
+
+```{r}
+#| echo: FALSE
+summary(model)
+```
+
+## Hypotheses of interest
+
+**Conclusion**: In this case, the p-value (4.572e-15) was lower than the pre-specified significance cut-off. There is sufficient evidence to suggest that at least one predictor (Exercise and/or Smoking) has a non-zero linear association with obesity %.
+
+## Example: Is SBP associated with cognitive scores
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(tidyverse)
+library(tidymodels)
+library(knitr)
+library(ppcor)
+# Simulate data
+set.seed(7)
+n <- 100
+
+Age <- round(rnorm(n, mean = 50, sd = 12))
+SBP <- round(105 + 0.65 * (Age - 50) + rnorm(n, 0, 9))
+CognitiveScore <- round(82 + 0.40 * (Age - 50) + 0.00 * (SBP - 130) + rnorm(n, 0, 7))
+
+study <- data.frame(id = 1:n, Age, SBP, CognitiveScore)
+```
+
+- There is reason to believe that systolic blood pressure (SBP) is associated with lower cognitive scores in older adults
+
+- However, both SBP and cognitive scores are associated with age
+
+- Let's look at the results of running this model: 
+$$CognitiveScore_i = \beta_0 + \beta_1 SBP_i + \varepsilon_i$$
+
+## Example: Is SBP associated with cognitive scores?
+
+::: {.callout-tip}
+##  In small groups
+Do both parameter estimates ($\hat{\beta}_0$, $\hat{\beta}_1$)make sense to interpret here? If so, how would you interpret each one?
+:::
+
+```{r}
+#| echo: FALSE
+study_sbp <- lm(CognitiveScore ~ SBP, 
+                   data = study)
+tidy(study_sbp) |>
+  kable(digits = 3)
+```
+
+## Example: Confounding
+
+- Here is the correlation matrix for SBP, cognitive score, and age:
+
+```{r}
+#| echo: FALSE
+cor(study[, c("SBP", "CognitiveScore", "Age")])
+```
+
+- We see that age is correlated to both of our other variables!
+
+- Let's look at this model:
+$$CognitiveScore_i = \beta_0 + \beta_1 SBP_i + \beta_2 Age_i + \varepsilon_i$$
+
+## Example: Confounding
+
+::: {.callout-tip}
+##  In small groups
+Now that we're controlling for age, how does your interpretation of $\hat{\beta}_{1}$ change?
+:::
+
+```{r}
+#| echo: FALSE
+study_age <- lm(CognitiveScore ~ SBP + Age, 
+                   data = study)
+tidy(study_age) |>
+  kable(digits = 3)
+```
+
+
+## Multiple Regression in Real Life
+
+::: callout-tip
+
+Based on [this paper](https://bmcmedinformdecismak.biomedcentral.com/articles/10.1186/s12911-022-01884-9?utm_source=chatgpt.com), answer the following questions:
+
+1. In 1-2 sentences, describe the goal of this study/analysis.
+
+2. What was the outcome variable?
+
+3. How many independent variables did they use in their multiple regression model?
+
+4. In Table 4, what was the F-value and p-value? What is your conclusion?
+
+5. Which four predictor variables most significantly influenced the outcome?
+
+:::
+
+
+## Confidence intervals
+
+For individual predictors, we can also use the standard error estimate to construct confidence intervals. These intervals are constructed using a critical value from a t distribution:
+
+::: poll
+$$(\hat \beta_k - t^*_{1-\alpha/2; n-k} \times SE(\hat \beta_k), \hat \beta_k + t^*_{1-\alpha/2; n-k} \times SE(\hat \beta_k))$$
+:::
+
+For instance, $SE (\hat \beta_1)=0.06$. Thus, we have that a 95% confidence interval for $β_1$ is (-0.43, -0.19). If we were to interpret this interval, it would have to be conditionally on the other variables in the model.
+
+## R-squared {.smaller}
+
+-   In our model, $R^2=0.7546$, suggesting that about 75% of the variability in obesity percentage can be explained by our model.
+
+-   However, $R^2$ can never decrease when variables are added to a model, even if they are useless.
+
+-   Thus, we can use **adjusted** $R^2 \leq R^2$, where the adjustment is made to account for the number of predictors.
+
+-   The **adjusted** $R^2$ incorporates a penalty for each additional variable in a model, so that the adjusted $R^2$ will go down if a new variable does not improve prediction much, and it will go up if the new variable does improve prediction, conditional on the other variables already in the model.
+
+-   With that said, $R^2$ or adj. $R^2$ should never be used as the only reasons to select variables for your model - you must rely on scientific knowledge and context!
+
+## Categorical predictors {.smaller}
+
+-   We often have categorical predictors in modeling settings (for instance, here we have HDI). However, it might not make sense to think about a "one unit increase" in a categorical variable (how would that even work?)
+
+-   In regression settings, we can account for categorical variables by creating **dummy variables**, which are indicator variables for certain conditions happening. For instance, there are three categories of HDI in the dataset: bottom ten, middle, and top ten.
+
+-   When considering categorical variables, one variable is taken to be the **baseline** or **reference** value. All other categories will be compared to it.
+
+## Categorical predictors
+
+Suppose the "top ten" category is taken to be the referent value. Then we can create two dummy variables:
+
+-   HDI == Middle: 1 if this condition is true; 0 otherwise
+
+-   HDI == Bottom Ten: 1 if this condition is true; 0 otherwise
+
+## Interpretation of dummy variables {.smaller}
+
+Consider the model
+
+::: poll
+$$Obesity_i = \beta_0 + \beta_1(HDI == Middle)_i + $$
+
+$$ \beta_2(HDI == BottomTen)_i + \epsilon_i$$
+:::
+
+The parameter interpretations are below.
+
+-   $\beta_0$ represents the expected obesity percentage for a state with 0 for the two dummy variables. That is, in the top ten HDI
+
+-   $\beta_1$ represents the expected difference in obesity percentage for a state in the middle HDI category, **compared to the top ten**
+
+-   $\beta_2$ represents the expected difference in obesity percentage for a state in the bottom ten HDI category, **compared to the top ten**
+
+Note that we had to estimate *multiple* "slopes" for this one variable - one corresponding to each non-reference level.
+
+## Interpretation of dummy variables
+
+```{r echo = T}
+fit2 <- lm(Obesity ~ HDI, data = cdc)
+tidy(fit2) |>
+  kable(digits = 3)
+```
+
+How would you interpret the estimates?
+
+## Changing the reference level
+
+- Wait a minute! R automatically assigned the lowest level of HDI as the reference level. Let's see how we can change the reference level:
+
+```{r, echo=TRUE}
+cdc_new <- cdc |>
+  mutate(HDI_relevel = fct_relevel(HDI, "Top ten"))
+```
+
+- This reorders the factor levels so that "`Top ten`" becomes the first (reference) level. 
+
+- Now, when we run the regression, the model will automatically use `Top ten` as the baseline. 
+
+## Re-running the model
+
+```{r}
+#| echo: FALSE
+fit2_relevel <- lm(Obesity ~ HDI_relevel, 
+                   data = cdc_new)
+tidy(fit2_relevel) |>
+  kable(digits = 3)
+```
+
+
+## Interpretation of dummy variables
+
+```{r echo = T}
+fit3 <- lm(Obesity ~ Exercise + HDI_relevel, 
+           data = cdc_new)
+tidy(fit3) |>
+  kable(digits = 3)
+```
+
+How would you interpret these estimates?
+
+## Interactions/Effect Modification
+
+- What if I am interested in seeing if sex and BMI (kg/m2) are associated with fasting blood glucose levels (FBG)?
+
+- I might consider the following model:
+
+$$FBG_i = \beta_0 + \beta_1 Female_i + \beta_2 BMI_i$$
+
+- But what if I think that the association between BMI and FBG differs by sex?
+
+## Interactions/Effect Modification {.smaller}
+
+- This is a case of effect modification - the relationship between one predictor and the outcome depends on the value of another predictor variable
+
+- This could mean any of the following:
+  - Association is in the same direction (e.g. positive/negative) but the association is stronger in magnitude depending on the value of the effect modifier (e.g. association is positive for males and females, but stronger association for females)
+  - Association is in one direction for certain values but the opposite direction depending on other values of the effect modifier (e.g. association is positive for males but negative for females)
+  - Association is present for certain values of the effect modifier, but no association is seen for other values (e.g. association is positive for males but no evidence of association for females)
+  
+## Interactions/Effect Modification
+
+- To model a case of effect modification - when the relationship between one predictor and the outcome depends on the value of another predictor variable, we create an **interaction term**.
+
+- This is created simply by multiplying two predictors $x_1$ and $x_2$ to create a new predictor, $x_1x_2$. When interaction terms are in a model, interpretations can become tricky.
+
+## Interactions/Effect Modification {.smaller}
+
+- With interaction terms in the model
+  - Difference between females and males in FBG, holding BMI constant, is no longer given by $\beta_1$
+  - $\beta_2$ no longer represents the change in FBG associated with a 1 $kg/m^{2}$ change in BMI, holding sex constant
+
+$$FBG_i = \beta_0 + \beta_1 Female_i + \beta_2 BMI_i + \beta_3 (BMI_i)(Female_i)$$
+
+- But how can I get an estimate for how they are associated? 
+
+```{r}
+#| echo: FALSE
+#| label: simulate-data
+#| include: false
+
+set.seed(42)
+n <- 500
+
+dat <- tibble(
+  gender = rep(c(1, 0), each = n / 2),  # 1 = Female, 0 = Male
+  bmi = rnorm(n, mean = 27, sd = 4)
+) |>
+  mutate(
+    fbg = case_when(
+      gender == 1 ~ 60 + 3.5 * bmi + rnorm(n / 2, 0, 30),
+      gender == 0 ~ 65 + 2.5 * bmi + rnorm(n / 2, 0, 30)
+    ),
+    gender = factor(gender, levels = c(0, 1), labels = c("Male", "Female"))
+  )
+```
+
+## Association between BMI and fasting blood glucose (FBG), ignoring gender
+
+```{r}
+#| echo: FALSE
+#| message: FALSE
+#| warning: FALSE
+#| fig-alt: "A scatterplot with x-axis labeled BMI and y-axis labeled Fasting Blood Glucose. The dots seem to have a slight upward trend, and a blue line with a positive slope is superimposed over the dots."
+library(ggplot2)
+
+ggplot(dat, aes(x = bmi, y = fbg)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    x = "BMI (kg/m²)",
+    y = "Fasting Blood Glucose (FBG)"
+  )
+```
+
+## Association between BMI and fasting blood glucose (FBG), ignoring gender
+
+```{r}
+#| echo: FALSE
+mod1 <- lm(fbg ~ bmi, data=dat)
+tidy(mod1) |>
+  kable(digits=3)
+```
+## Association between BMI and fasting blood glucose (FBG), controlling for gender
+
+```{r}
+#| echo: FALSE
+mod1 <- lm(fbg ~ bmi + gender, data=dat)
+tidy(mod1) |>
+  kable(digits=3)
+```
+
+## Now let's look again
+
+```{r}
+#| echo: FALSE
+#| message: FALSE
+#| warning: FALSE
+#| fig-alt: "A scatterplot with x-axis labeled BMI and y-axis labeled Fasting Blood Glucose. The dots are colored red for male and blue for female. The blue dots seem to have higher y-values than the red dots, and this difference is larger for higher x-values."
+library(ggplot2)
+
+ggplot(dat, aes(x = bmi, y = fbg, color = gender)) +
+  geom_point(alpha = 0.6) +
+  labs(
+    x = "BMI (kg/m²)",
+    y = "Fasting Blood Glucose (FBG)",
+    color = "Gender"
+  )
+```
+
+## Association between BMI and fasting blood glucose (FBG), with interaction
+
+```{r}
+#| echo: FALSE
+mod1 <- lm(fbg ~ bmi + gender + bmi*gender, data=dat)
+tidy(mod1) |>
+  kable(digits=3)
+```
+## Association between BMI and fasting blood glucose (FBG), with interaction
+
+```{r}
+#| fig-alt: "A scatterplot with x-axis labeled BMI and y-axis labeled Fasting Blood Glucose. The dots are colored red for male and blue for female. The blue dots seem to have higher y-values than the red dots, and this difference is larger for higher x-values. A red line with a positive slope and a blue line with a steeper positive slope are superimposed over the dots."
+#| echo: FALSE
+#| warning: FALSE
+library(ggplot2)
+
+ggplot(dat, aes(x = bmi, y = fbg, color = gender)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(
+    x = "BMI (kg/m²)",
+    y = "Fasting Blood Glucose (FBG)",
+    color = "Gender"
+  )
+```
+
+## Association between BMI and fasting blood glucose (FBG), with interaction
+
+- $$FBG_i = \beta_0 + \beta_1 Female_i + \beta_2 BMI_i + \beta_3 (BMI_i)(Female_i)$$
+
+-  For males, $Female_i=0$,
+
+
+## Association between BMI and fasting blood glucose (FBG), with interaction
+  
+- $$FBG_i = \beta_0 + \beta_1 Female_i + \beta_2 BMI_i + \beta_3 (BMI_i)(Female_i)$$
+
+- For females, $Female_i=1$
+
+## Interactions {.smaller}
+
+-   Interpretation of interaction terms with categorical predictors is easier than with continuous predictors.
+
+-   Since categorical predictors are based on dummy variables, they can only take on the values of 0 or 1 in the model.
+
+-   But in general, the same idea applies for continuous variables - an interaction effect implies that the regression coefficient for an explanatory variable would change depending on the value of another predictor (for instance, the relationship between exercise and obesity might depend on the % of the state that smokes at least one cigarette).
+
+## Interactions
+
+Let's consider a model with **main effects** of exercise and smoking and an **interaction term** between them:
+
+$$Obesity_i = \beta_0 + \beta_1 Exercise + \beta_2 Smoking$$
+
+$$+ \beta_3 (Exercise_i \cdot Smoking_i) + \epsilon_i$$
+
+What is the expected change in obesity % given a one percentage point increase in exercise %?
+
+## Interactions model {.smaller}
+
+```{r}
+#| echo: true
+fit_int <- lm(Obesity ~ Exercise + 
+                Smoking + 
+                Exercise*Smoking, 
+                   data = cdc)
+tidy(fit_int) |>
+  kable(digits = 3)
+```
+
+**Interpretation**: If exercise increases by 1 percentage point, the expected change in obesity % depends on smoking %, and is: -.358 + .003(Smoking%)
+
+## More interpretation
+
+So, 
+
+- When Smoking = 0%, the slope of Exercise is -0.358 (exercise is assoc. w/ lower obesity).
+
+- When Smoking = 50%, slope = -0.358 + 0.003(50) = -0.208 (still negative association, but smaller in magnitude).
+
+**However**: The interaction term is not significant. So we should remove the interaction term and just use the model with main effects only. 
+
+## The math behind it {.smaller}
+
+- How did we get that interpretation? Here's the math behind it...
+
+For a given exercise (ex) and smoking (sm) percentage, our predicted obesity (ob) percentage is
+
+$$\hat {ob}_i = \hat \beta_0 + \hat \beta_1 ex_i + \hat \beta_2 sm_i + \hat \beta_3 ex_i sm_i$$
+
+and for a state at the same smoking % but 1 percentage point higher in exercise %, the predicted obesity percentage is
+
+$$\hat {ob}_{i'} = \hat \beta_0 + \hat \beta_1 (ex_i + 1) + \hat \beta_2 sm_i + \hat \beta_3 (ex_i + 1) sm_i$$
+
+$$ = \hat \beta_0 +  \hat \beta_1 ex_i + \hat \beta_1 + \hat \beta_2 sm_i + \hat \beta_3 ex_i sm_i + \hat \beta_3 sm_i$$
+
+## The math behind it
+
+- Subtracting, we have $\hat ob_{i'} - \hat ob_i= \hat \beta_1 + \hat \beta_3 sm_i$, which is the expected change in obesity % for a 1% change in exercise %.
+
+- **Takeaway**: In the interactions model, the relationship of exercise and obesity depends on the level of smoking in that state.
+
+::: callout-tip
+## Quick review
+
+Take a few minutes to review the math in small groups.
+
+:::
+
+
+## Multicollinearity
+
+-   One common problem in multiple regression is **multicollinearity**, which occurs when multiple highly correlated variables are used as predictors.
+
+- **Collinearity** simply refers to two variables behind highly correlated.
+
+-   In this case, the model can **become unstable** (often seen as standard errors that get huge and lead to huge confidence interval estimates), and it can be difficult to assess the relationships of the predictors.
+
+## Diagnosing multicollinearity {.smaller}
+
+If nothing is significant when you "expect" something to be, we have some clues:
+
+-   Individual predictors are significant in simple linear regression models,
+
+-   but standard errors and interval estimates are huge,
+
+-   and the overall F test is significant
+
+A **significant overall F test with no significant individual variable test** is a typical sign of collinearity. We can check out the correlations among the three predictors.
+
+## Checking VIF {.smaller}
+
+- The common way to check for multicollinearity is through VIF values. VIF values indicate the extent of multicollinearity.
+
+- A VIF value of 1 suggests no correlation with other predictors.
+
+- Values between 1 and 5 generally indicate moderate correlation.
+
+- Values above 5 (or sometimes 10, depending on the context) are often considered problematic, indicating severe multicollinearity and potential issues with coefficient stability and interpretation. 
+
+## VIF
+
+
+- Let's say we had the following model:
+
+```{r}
+#| echo: true
+fit4 <- lm(Obesity ~ Exercise + Smoking + Over65, 
+           data = cdc)
+vif_values <- vif(fit4) # car package
+vif_values
+```
+- In this model, none of the VIFs are above 5 (in fact, they're much closer to 1), so multicollinearity is not an issue here. 
+
+<!-- ## R Demo: Uploading an excel file -->
+
+<!-- - You can upload `.xlsx` files using the **readxl** package.  -->
+
+<!-- ```{r} -->
+<!-- #| echo: true -->
+<!-- #| eval: false -->
+<!-- # Install (only once) -->
+<!-- install.packages("readxl") -->
+
+<!-- # Load each time you start R -->
+<!-- library(readxl) -->
+
+<!-- # read in data -->
+
+<!-- # Example: import a dataset called "biostats_data.xlsx" -->
+<!-- data <- read_excel("data/biostats_data.xlsx") -->
+
+<!-- ``` -->
+
+<!-- ## R Demo: merging datasets -->
+
+<!-- - Merging datasets could be helpful for your project! -->
+
+<!-- - Let's say you have two data sets.. -->
+
+<!-- ```{r} -->
+<!-- # Create two sample data frames -->
+<!-- df1 <- data.frame( -->
+<!--   ID = c(1, 2, 3, 4), -->
+<!--   Name = c("Alice", "Bob", "Charlie", "David") -->
+<!-- ) -->
+
+<!-- df2 <- data.frame( -->
+<!--   ID = c(1, 3, 5), -->
+<!--   City = c("New York", "London", "Paris") -->
+<!-- ) -->
+<!-- ``` -->
+
+<!-- ```{r} -->
+<!-- #| echo: true -->
+<!-- df1 -->
+
+<!-- df2 -->
+<!-- ``` -->
+
+<!-- ## R Demo: Merging datasets -->
+
+<!-- - As long as you have an identifying column (e.g. studyid, patient number, observation number etc.), you can merge using `left_join()`: -->
+
+<!-- ```{r} -->
+<!-- #| echo: true -->
+<!-- # The 'by' argument specifies the  -->
+<!-- # common column(s) to join on. -->
+<!-- merged_df <- df1 |> -->
+<!--   left_join(df2, by = "ID") -->
+
+<!-- merged_df  -->
+<!-- ``` -->
+
+<!-- ## R Demo: Merging datasets -->
+
+<!-- - Note the difference here when merging using `right_join()` -->
+
+<!-- ```{r} -->
+<!-- #| echo: true -->
+<!-- # The 'by' argument specifies the  -->
+<!-- # common column(s) to join on. -->
+<!-- merged_df_right <- df1 |> -->
+<!--   right_join(df2, by = "ID") -->
+
+<!-- merged_df_right  -->
+<!-- ``` -->
+
+<!-- ## R Demo: Merging datasets -->
+
+<!-- - As similarly with `full_join()` -->
+
+<!-- ```{r} -->
+<!-- #| echo: true -->
+<!-- # The 'by' argument specifies the  -->
+<!-- # common column(s) to join on. -->
+<!-- merged_df_full <- df1 |> -->
+<!--   full_join(df2, by = "ID") -->
+
+<!-- merged_df_full  -->
+<!-- ``` -->
+
+<!-- ## R Demo: Dropping NA values -->
+
+<!-- - We haven't talked about missing data much, but it may be simplest to conduct a "complete case analysis" where you only perform an analysis on complete cases: -->
+
+<!-- ```{r} -->
+<!-- #| echo: true -->
+<!-- merged_df |> -->
+<!--   drop_na() -->
+<!-- ``` -->
+
+<!-- ## R Demo: `write.csv()` -->
+
+<!-- - You can save your cleaned/merged dataset at any point using `write.csv()` -->
+
+<!-- ```{r} -->
+<!-- #| echo: true -->
+<!-- #| eval: false -->
+
+<!-- write.csv(merged_df, file = "data/data_clean.csv",  -->
+<!--           row.names = F)  -->
+<!-- # do not create a column of row names -->
+<!-- ``` -->
+
+<!-- - Note that you may need to include `row.names = F` so that R does not create an additional column of row numbers. -->
+
+## Recap
+
+- How to check regression diagnostics
+
+- How to interpret model coefficients in a multiple regression model
+
+- Interpreting results of an overall F-test in a multiple regression model
+
+- Adjusted $R^2$ vs. $R^2$
+
+- Interpreting coefficient estimates for categorical predictors
+
+- Interactions, interpretations, and the math behind it all
+
+- Collinearity
+
+## Next class
+
+- Logistic regression!
