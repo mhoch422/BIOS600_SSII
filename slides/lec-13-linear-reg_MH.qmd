@@ -301,7 +301,7 @@ Increasing Exercise % by one unit changes predicted Obesity % by exactly $\hat{\
 
 ```{r}
 #| echo: true
-#| fig-alt: "A histogram ittled Histogram of exercise, with x axis labeled Exercise and y-axis labeled frequency. There are six bins, each covering five percentage points from 35 to 65. The distribution appears normal."
+#| fig-alt: "A histogram titled Histogram of exercise, with x axis labeled Exercise and y-axis labeled frequency. There are six bins, each covering five percentage points from 35 to 65. The distribution appears normal."
 hist(cdc$Exercise)
 ```
 

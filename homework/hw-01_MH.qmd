@@ -126,7 +126,7 @@ Quarto is a system that may be used to create easy-to-write, attractive reports,
 
 One of the biggest strengths of Quarto is that everything is in one place, and that other users should be able to reproduce your results exactly, if they have your Quarto document and datasets - the analysis is run from the beginning each time you render the document. As well, formatting is easy! Luckily, RStudio already comes with Quarto support, so there is nothing additional to install. (Again, you need \>= version 2022.07 to run Quarto within RStudio!)
 
-Every homework assignment and lab in this class will be written in Quarto, with a template provided for you to use for the first few assignments. This lab's template can be downloaded by typing in the following code in the Console:
+Every homework assignment and lab in this class will be written in Quarto, with a template provided for you to use for the first few assignments. This homework's template can be downloaded by typing in the following code in the Console:
 
 ```{r}
 download.file("https://mhoch422.github.io/BIOS600_SSII/homework/hw-01-template.qmd", destfile="hw-01.qmd")

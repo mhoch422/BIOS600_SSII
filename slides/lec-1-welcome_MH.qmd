@@ -14,12 +14,19 @@ format: revealjs
 -   Interests: Spending time outdoors, reading, watching movies
 -   Office Hours: Mondays and Wednesdays 1-3pm. 
 
-
 ## Check out Ed Discussion
 
 -   This semester, you can ask questions about the class in our discussion forum, [Ed Discussion](https://edstem.org/us/join/TaE2wk)
 - The link to join is also posted on our home page in Canvas.
-- Take a moment to introduce yourself in the forum! Name, Year + Program, and a fun fact about yourself. 
+- Take a moment to introduce yourself in the forum! Name, Year + Program, and a fun fact about yourself.
+
+## Meet each other!
+
+- Turn to the person or people sitting closest to you and share:
+
+  - Your name
+  - Your year/program
+  - Why you're taking this class
 
 ## Course overview: Canvas
 
@@ -83,10 +90,10 @@ format: revealjs
 
 | Category | Percentage |
 |----------|------------|
-| Homework | 40%        |
-| Labs     | 15%        |
+| Homework | 30%        |
+| Labs     | 10%        |
 | Exams    | 40%        |
-| Participation   | 5%         |
+| Participation   | 20%         |
 
 See the course syllabus (available on Canvas) for how the final letter grade will be determined.
 

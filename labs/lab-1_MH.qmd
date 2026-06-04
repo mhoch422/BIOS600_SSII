@@ -610,7 +610,7 @@ ncbikecrash |>
 ::: {.callout-tip}
 ## Ensure all code is visible on PDF
 
-In your final PDF that you turn in on Gradescope, ensure all code is visible for full credit. If lines of code are too long (left to right), they may run off the page when you convert to PDF. You should consider indenting code after commas. Ask your TAs if you need help checking this! 
+In your final PDF that you turn in on Gradescope, ensure all code is visible for full credit. If lines of code are too long (left to right), they may run off the page when you convert to PDF. You should consider indenting code after commas. Ask me if you need help checking this! 
 
 :::
 
@@ -648,7 +648,7 @@ Create boxplots to visualize the infant mortality rate (y-axis) by region (x-axi
 a. Run the provided code to determine the bike crashes that occurred in **residential** development areas where the driver age group was **0 to 19**. How many such bike crashes satisfy this criteria? Provide a 1-sentence response to answer this question. 
 
 ```{r }
-#| label: ex-1a
+#| label: ex-7a
 #| eval: false
 
 # run this code
@@ -669,7 +669,7 @@ To do this, run the provided code. In the `Description` of the data frame that i
 b. Now, edit the provided code so that the dataset is filtered to "Residential" development areas, the same as part (a). Then, run the code to create a table displaying the number of bike crashes in **each age group** for residential areas. 
 
 ```{r}
-#| label: ex-1b
+#| label: ex-7b
 #| eval: false
 # edit code below: replace blank with Residential
 ncbikecrash |> 
@@ -682,7 +682,7 @@ ncbikecrash |>
 Edit the code below to create a table which orders the most commonly occurring estimated speed from lowest to highest. (i.e., the least commonly occuring speed will appear first in the table.) To do this, replace the blank with the `driver_est_speed` variable, then run the code. **Note:** It's okay for `NA` values to be present in your table.
 
 ```{r }
-#| label: ex-2
+#| label: ex-8
 #| eval: false
 
 # edit code: replace blank with driver estimated speed variable

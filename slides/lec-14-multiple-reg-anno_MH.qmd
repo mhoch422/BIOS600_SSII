@@ -51,7 +51,7 @@ In Lab 2 we examined the regression of obesity percentage on adequate exercise p
 #| fig-alt: "A scatterplot with x-axis titled Obesity and y-axis titled Exercise. The dots follow a downward trend generally."
 
 
-cdc <- read.csv("https://karamccor.github.io/b6002/labs/data/cdc_cleaned.csv")
+cdc <- read.csv("https://mhoch422.github.io/BIOS600_SSII/homework/data/cdc_cleaned.csv")
 
 cdc %>%
   ggplot(aes(x = Obesity, y = Exercise)) +
