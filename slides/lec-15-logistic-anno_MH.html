@@ -1,0 +1,1716 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.37">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Lecture 15: Logistic regression</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="lec-15-logistic-anno_MH_files/libs/clipboard/clipboard.min.js"></script>
+<script src="lec-15-logistic-anno_MH_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="lec-15-logistic-anno_MH_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="lec-15-logistic-anno_MH_files/libs/quarto-html/popper.min.js"></script>
+<script src="lec-15-logistic-anno_MH_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="lec-15-logistic-anno_MH_files/libs/quarto-html/anchor.min.js"></script>
+<link href="lec-15-logistic-anno_MH_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="lec-15-logistic-anno_MH_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="lec-15-logistic-anno_MH_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="lec-15-logistic-anno_MH_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="lec-15-logistic-anno_MH_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Lecture 15: Logistic regression</h1>
+<p class="subtitle lead">BIOS 600 - Summer Session II 2026</p>
+</div>
+
+
+<div class="quarto-title-meta-author">
+  <div class="quarto-title-meta-heading">Authors</div>
+  <div class="quarto-title-meta-heading">Affiliation</div>
+  
+  </div>
+
+<div class="quarto-title-meta">
+
+      
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="announcements" class="level2">
+<h2 class="anchored" data-anchor-id="announcements">Announcements</h2>
+<ul>
+<li><p>HW 14 due <strong>tonight</strong></p></li>
+<li><p>HW 15 due <strong>tomorrow</strong></p></li>
+<li><p>Class tomorrow will be review for the final exam!</p></li>
+</ul>
+</section>
+<section id="overview" class="level2">
+<h2 class="anchored" data-anchor-id="overview">Overview</h2>
+<ul>
+<li><p>Review of Linear Regression</p></li>
+<li><p>Logistic regression</p></li>
+<li><p>Interpreting estimated coefficients from a logistic regression model</p></li>
+</ul>
+</section>
+<section id="computational-setup" class="level2">
+<h2 class="anchored" data-anchor-id="computational-setup">Computational setup</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(MASS)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(randomForestSRC) <span class="co"># for pbc data</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(pbc, <span class="at">package =</span> <span class="st">"randomForestSRC"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="very-optional-reading" class="level2">
+<h2 class="anchored" data-anchor-id="very-optional-reading">Very optional reading</h2>
+<ul>
+<li><p>P&amp;G Chapter 20</p></li>
+<li><p>OI: Section 9.5</p></li>
+</ul>
+</section>
+<section id="review-of-linear-regression" class="level2">
+<h2 class="anchored" data-anchor-id="review-of-linear-regression">Review of Linear Regression</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>fit_int <span class="ot">&lt;-</span> <span class="fu">lm</span>(Obesity <span class="sc">~</span> Exercise <span class="sc">+</span> </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                Smoking <span class="sc">+</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                Exercise<span class="sc">*</span>Smoking, </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> cdc)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(fit_int) <span class="sc">|&gt;</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">38.577</td>
+<td style="text-align: right;">13.867</td>
+<td style="text-align: right;">2.782</td>
+<td style="text-align: right;">0.008</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Exercise</td>
+<td style="text-align: right;">-0.358</td>
+<td style="text-align: right;">0.270</td>
+<td style="text-align: right;">-1.325</td>
+<td style="text-align: right;">0.192</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Smoking</td>
+<td style="text-align: right;">0.408</td>
+<td style="text-align: right;">0.729</td>
+<td style="text-align: right;">0.559</td>
+<td style="text-align: right;">0.579</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Exercise:Smoking</td>
+<td style="text-align: right;">0.003</td>
+<td style="text-align: right;">0.015</td>
+<td style="text-align: right;">0.186</td>
+<td style="text-align: right;">0.853</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="review-of-linear-regression-1" class="level2">
+<h2 class="anchored" data-anchor-id="review-of-linear-regression-1">Review of Linear Regression</h2>
+<ul>
+<li><p>Based on this p-value, at <span class="math inline">\(\alpha=0.05\)</span>, I do not have evidence to suggest there are differences in the association between obesity and exercise based on smoking</p></li>
+<li><p>Often, based on non-significant p-values, people remove the interaction term and refit the model</p></li>
+</ul>
+</section>
+<section id="review-of-linear-regression-2" class="level2">
+<h2 class="anchored" data-anchor-id="review-of-linear-regression-2">Review of Linear Regression</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>fit_int <span class="ot">&lt;-</span> <span class="fu">lm</span>(Obesity <span class="sc">~</span> Exercise <span class="sc">+</span> </span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>                Smoking, </span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> cdc)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(fit_int) <span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">36.100</td>
+<td style="text-align: right;">3.863</td>
+<td style="text-align: right;">9.345</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Exercise</td>
+<td style="text-align: right;">-0.309</td>
+<td style="text-align: right;">0.056</td>
+<td style="text-align: right;">-5.538</td>
+<td style="text-align: right;">0</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Smoking</td>
+<td style="text-align: right;">0.542</td>
+<td style="text-align: right;">0.087</td>
+<td style="text-align: right;">6.224</td>
+<td style="text-align: right;">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="should-you-remove-it" class="level2">
+<h2 class="anchored" data-anchor-id="should-you-remove-it">Should you remove it?</h2>
+<section id="lets-say-youre-analyzing-a-randomized-trial" class="level3">
+<h3 class="anchored" data-anchor-id="lets-say-youre-analyzing-a-randomized-trial">Let’s say you’re analyzing a randomized trial</h3>
+<ul>
+<li>Preventive therapy for cardiovascular disease<br>
+</li>
+<li>You included a <strong>treatment × sex</strong> interaction term</li>
+<li>P-value for the interaction term was 0.83</li>
+</ul>
+</section>
+</section>
+<section id="would-you-remove-it" class="level2">
+<h2 class="anchored" data-anchor-id="would-you-remove-it">Would you remove it?</h2>
+<ul>
+<li><p>If you want to know <em>does this therapy benefit men and women similarly?</em></p></li>
+<li><p>If you want to know <em>how does this treatment reduce CVD risk?</em></p></li>
+<li><p>If you know of or suspect strong sex differences in disease mechanisms or treatment pathways?</p></li>
+<li><p>If you know the study is underpowered to detect interactions?</p></li>
+<li><p>Is this one of many potential effect modifiers?</p></li>
+</ul>
+</section>
+<section id="you-could.-.-." class="level2">
+<h2 class="anchored" data-anchor-id="you-could.-.-.">You could. . .</h2>
+<ul>
+<li>Drop interaction term and report overall effect</li>
+<li>Keep interaction and present estimates
+<ul>
+<li>Primary analysis only</li>
+<li>Supplementary analysis only</li>
+</ul></li>
+<li><strong>No single answer applies to all scenarios</strong></li>
+</ul>
+<!-- ## Multiple Regression in Real Life -->
+<!-- ::: callout-tip -->
+<!-- Based on [this paper](https://bmcmedinformdecismak.biomedcentral.com/articles/10.1186/s12911-022-01884-9?utm_source=chatgpt.com), answer the following questions: -->
+<!-- 1. In 1-2 sentences, describe the goal of this study/analysis. -->
+<!-- 2. What was the outcome variable? -->
+<!-- 3. How many independent variables did they use in their multiple regression model? -->
+<!-- 4. In Table 4, what was the F-value and p-value? What is your conclusion? -->
+<!-- 5. Which four predictor variables most significantly influenced the outcome? -->
+<!-- ::: -->
+</section>
+<section id="logistic-regression" class="level1">
+<h1>Logistic regression</h1>
+<section id="models-for-binary-outcomes" class="level2">
+<h2 class="anchored" data-anchor-id="models-for-binary-outcomes">Models for binary outcomes</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li>Suppose we have a binary outcome variable (e.g., <span class="math inline">\(Y = 1\)</span> if a condition is satisfied and 0 otherwise), and potentially multiple predictors on a variety of scales.</li>
+</ul>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>What distribution does our outcome have?</p>
+</div>
+</div>
+</div>
+</section>
+<section id="models-for-binary-outcomes-1" class="level2">
+<h2 class="anchored" data-anchor-id="models-for-binary-outcomes-1">Models for binary outcomes</h2>
+<ul>
+<li>Suppose we want to model <span class="math inline">\(P(Y=1)\)</span>, the success probability. One strategy might be to simply fit a linear regression model to the probabilities:</li>
+</ul>
+<p><span class="math display">\[P(Y_i = 1) = \beta_0 + \beta_1 x_{i1} + \cdots + \beta_p x_{ip} + \epsilon_i\]</span></p>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Is this a reasonable approach? Why or why not?</p>
+</div>
+</div>
+</div>
+</section>
+<section id="primary-biliary-cirrhosis" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="primary-biliary-cirrhosis">Primary biliary cirrhosis</h2>
+<p>The Mayo Clinic conducted a trial for primary biliary cirrhosis, comparing the drug D-penicillamine vs.&nbsp;placebo. Patients were followed for a specified duration, and their status at the end of follow-up (whether they died) was recorded. Researchers are interested in predicting whether a patient died based on the following variables:</p>
+<ul>
+<li><p><code>ascites</code>: whether the patient had ascites (abnormal fluid buildup in the abdomen) (1 = yes, 0 = no)</p></li>
+<li><p><code>bili</code>: serum bilirubin in mg/dL (higher values may indicate liver damage/disease)</p></li>
+<li><p><code>stage</code>: histologic stage of disease (ordinal categorical variable with stages 1, 2, 3, and 4)</p></li>
+</ul>
+</section>
+<section id="what-can-go-wrong" class="level2">
+<h2 class="anchored" data-anchor-id="what-can-go-wrong">What can go wrong?</h2>
+<p>Suppose we fit the following model:</p>
+<p><span class="math display">\[P(Y_i = 1) = \beta_0 + \beta_1 asc_i + \beta_2 bili_i + \beta_3 s2_i + \beta_4 s3_i + \beta_5 s4_i + \epsilon_i\]</span></p>
+<p>where <span class="math inline">\(Y=1\)</span> if a patient died during the study follow-up.</p>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>What can go wrong?</p>
+</div>
+</div>
+</div>
+</section>
+<section id="what-could-go-wrong" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="what-could-go-wrong">What could go wrong?</h2>
+<ul>
+<li>We <em>can</em> technically fit the model:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(status <span class="sc">~</span> ascites <span class="sc">+</span> bili <span class="sc">+</span> <span class="fu">as.factor</span>(stage), </span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> pbc)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(model) <span class="sc">|&gt;</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">0.025</td>
+<td style="text-align: right;">0.107</td>
+<td style="text-align: right;">0.235</td>
+<td style="text-align: right;">0.815</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ascites</td>
+<td style="text-align: right;">0.283</td>
+<td style="text-align: right;">0.102</td>
+<td style="text-align: right;">2.786</td>
+<td style="text-align: right;">0.006</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">bili</td>
+<td style="text-align: right;">0.035</td>
+<td style="text-align: right;">0.006</td>
+<td style="text-align: right;">5.938</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">as.factor(stage)2</td>
+<td style="text-align: right;">0.131</td>
+<td style="text-align: right;">0.119</td>
+<td style="text-align: right;">1.103</td>
+<td style="text-align: right;">0.271</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">as.factor(stage)3</td>
+<td style="text-align: right;">0.230</td>
+<td style="text-align: right;">0.114</td>
+<td style="text-align: right;">2.015</td>
+<td style="text-align: right;">0.045</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">as.factor(stage)4</td>
+<td style="text-align: right;">0.355</td>
+<td style="text-align: right;">0.117</td>
+<td style="text-align: right;">3.037</td>
+<td style="text-align: right;">0.003</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<ul>
+<li>However, let’s check the fitted vs.&nbsp;residuals plot.</li>
+</ul>
+</section>
+<section id="what-could-go-wrong-1" class="level2">
+<h2 class="anchored" data-anchor-id="what-could-go-wrong-1">What could go wrong?</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lec-15-logistic-anno_MH_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" alt="A scatterplot with x-axis labeled Fitted and y-axis labeled Residuals. The points appear to be in two lines, both with slope equal to negative 1. There is a red line at y = 0." width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="from-probabilities-to-log-odds" class="level2">
+<h2 class="anchored" data-anchor-id="from-probabilities-to-log-odds">From probabilities to log odds</h2>
+<ul>
+<li><p>Suppose the probability of an event is <span class="math inline">\(p\)</span>.</p></li>
+<li><p>Then the <strong>odds</strong> that the event occurs is <span class="math inline">\(\frac{p}{1-p}\)</span></p></li>
+<li><p>Taking the natural log of the odds, we have the <strong>logit</strong> of <span class="math inline">\(p\)</span> (also known as the <strong>log-odds</strong>):</p></li>
+</ul>
+<div class="poll">
+<p><span class="math display">\[logit(p) = \text{log} \left(\frac{p}{1-p}\right)\]</span></p>
+</div>
+<ul>
+<li>Although <span class="math inline">\(p\)</span> is constrained to lie between 0 and 1, the logit of <span class="math inline">\(p\)</span> can be anything from <span class="math inline">\(-\infty\)</span> to <span class="math inline">\(\infty\)</span>.</li>
+</ul>
+</section>
+<section id="logistic-regression-model" class="level2">
+<h2 class="anchored" data-anchor-id="logistic-regression-model">Logistic regression model</h2>
+<p>Let’s create a linear model for the log-odds:</p>
+<div class="poll">
+<p><span class="math display">\[logit(p_i) = \text{log} \left(\frac{p_i}{1-p_i}\right) = \beta_0 +
+\beta_1 x_{i1} + \cdots + \beta_p x_{ip}\]</span></p>
+</div>
+<ul>
+<li><p>This is the <strong>logistic regression</strong> model.</p></li>
+<li><p>In this model, it’s ok that we could get any potential value for the logit of <span class="math inline">\(p\)</span> (can range from <span class="math inline">\(-\infty\)</span> to <span class="math inline">\(+ \infty\)</span>).</p></li>
+<li><p>Once we get our <span class="math inline">\(\hat\beta\)</span> estimates, we can always back-transform to get a valid probability between 0 and 1.</p></li>
+</ul>
+</section>
+<section id="interpreting-parameters" class="level2">
+<h2 class="anchored" data-anchor-id="interpreting-parameters">Interpreting parameters</h2>
+<ul>
+<li><p>Suppose that X is a binary (0/1) variable (e.g., X = 1 for smoker and 0 for non-smoker). In this case, we interpret <span class="math inline">\(\text{exp}(\beta_1)\)</span> as the <strong>odds ratio</strong> (OR) of the response for the two possible levels of X.</p></li>
+<li><p>For X on a continuous scale, <span class="math inline">\(\text{exp}(\beta_1)\)</span> is interpreted as the odds ratio of the response comparing two values of X one unit apart.</p></li>
+</ul>
+</section>
+<section id="back-to-pbc" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="back-to-pbc">Back to PBC</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>fit2 <span class="ot">&lt;-</span> <span class="fu">glm</span>(status <span class="sc">~</span> ascites <span class="sc">+</span> bili <span class="sc">+</span> <span class="fu">as.factor</span>(stage), </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>            <span class="at">data =</span> pbc, </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">family =</span> <span class="st">"binomial"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(fit2) <span class="sc">|&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-3.143</td>
+<td style="text-align: right;">1.054</td>
+<td style="text-align: right;">-2.981</td>
+<td style="text-align: right;">0.003</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ascites</td>
+<td style="text-align: right;">2.868</td>
+<td style="text-align: right;">1.067</td>
+<td style="text-align: right;">2.689</td>
+<td style="text-align: right;">0.007</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">bili</td>
+<td style="text-align: right;">0.315</td>
+<td style="text-align: right;">0.064</td>
+<td style="text-align: right;">4.886</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">as.factor(stage)2</td>
+<td style="text-align: right;">1.251</td>
+<td style="text-align: right;">1.095</td>
+<td style="text-align: right;">1.142</td>
+<td style="text-align: right;">0.253</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">as.factor(stage)3</td>
+<td style="text-align: right;">1.716</td>
+<td style="text-align: right;">1.069</td>
+<td style="text-align: right;">1.604</td>
+<td style="text-align: right;">0.109</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">as.factor(stage)4</td>
+<td style="text-align: right;">2.167</td>
+<td style="text-align: right;">1.075</td>
+<td style="text-align: right;">2.015</td>
+<td style="text-align: right;">0.044</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="interpretations" class="level2">
+<h2 class="anchored" data-anchor-id="interpretations">Interpretations</h2>
+<ul>
+<li><p><span class="math inline">\(\hat\beta_{\text{ascites}}\)</span>: The estimate for ascites was 2.87. Thus, the odds ratio for dying is exp(2.87), or approx. 17.6. Patients with ascites have 17.6 times the odds of dying compared to patients that do not, holding all other variables constant.</p></li>
+<li><p><span class="math inline">\(\hat\beta_{\text{bili}}\)</span>: The estimate for bilirubin was 0.31. Thus, the odds ratio for dying for a patient with 1 additional mg/dL serum bilirubin compared to another is exp(0.31) ≈ 1.36, holding all other variables constant.</p></li>
+</ul>
+</section>
+<section id="interpretations-1" class="level2">
+<h2 class="anchored" data-anchor-id="interpretations-1">Interpretations</h2>
+<ul>
+<li><span class="math inline">\(\hat\beta_{\text{stage 3}}\)</span>: The baseline stage was 1. The estimate corresponding to stage 3 was 1.72. Thus, patients in stage 3 have approximately 5.58 times the odds of dying compared to patients with the baseline stage, holding all other variables constant.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Your turn
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What is the interpretation for <span class="math inline">\(\hat\beta_{\text{stage 4}}\)</span>?</p>
+</div>
+</div>
+</section>
+<section id="interpreting-parameters-1" class="level2">
+<h2 class="anchored" data-anchor-id="interpreting-parameters-1">Interpreting parameters</h2>
+<ul>
+<li><p>Why is this the interpretation for continuous variables?</p></li>
+<li><p>Typically we interpret <em>functions</em> of parameters in logistic regression rather than the parameters themselves.</p></li>
+</ul>
+</section>
+<section id="interpreting-parameters-2" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="interpreting-parameters-2">Interpreting parameters</h2>
+<ul>
+<li><p>For a model <span class="math inline">\(logit(p_i) = β_0+β_1X_i\)</span></p></li>
+<li><p>The log odds of response for X = 1 is given by <span class="math inline">\(β_0+β_1\)</span></p></li>
+<li><p>The log odds of response for X = 0 is <span class="math inline">\(β_0\)</span>.</p></li>
+<li><p>So the odds ratio of response comparing X = 1 to X = 0 is given by:</p></li>
+</ul>
+<p><span class="math display">\[\frac{\text{exp}(\beta_0 + \beta_1)}{\text{exp}(\beta_0)} = \frac{\exp(\beta_0)\exp(\beta_1)}{\exp(\beta_0)}= \text{exp}(\beta_1)\]</span></p>
+<ul>
+<li>In a multiple logistic regression model, this has to be interpreted conditionally on values of other variables in the model (i.e., controlling for them).</li>
+</ul>
+</section>
+<section id="what-does-this-mean" class="level2">
+<h2 class="anchored" data-anchor-id="what-does-this-mean">What does this mean?</h2>
+<ul>
+<li><span class="math inline">\(\beta_1=0\)</span>
+<ul>
+<li><strong>exp(0) = 1</strong></li>
+<li>Odds Ratio = <span class="math inline">\(\text{exp}(\beta_1)=\text{exp}(0) = 1\)</span></li>
+<li><strong>No evidence of an association</strong></li>
+</ul></li>
+</ul>
+</section>
+<section id="what-does-this-mean-1" class="level2">
+<h2 class="anchored" data-anchor-id="what-does-this-mean-1">What does this mean?</h2>
+<ul>
+<li><span class="math inline">\(\beta_1 \lt 0\)</span>
+<ul>
+<li>Odds Ratio = <span class="math inline">\(\text{exp}(\beta_1) \lt \text{exp}(0) = 1\)</span></li>
+<li>Odds Ratio &lt; 1</li>
+<li>Continuous: A 1‑unit <strong>increase</strong> in the predictor is associated with <strong>lower odds</strong> of the outcome</li>
+<li>Categorical: Group has <strong>lower odds</strong> of the outcome than the reference group</li>
+</ul></li>
+</ul>
+</section>
+<section id="what-does-this-mean-2" class="level2">
+<h2 class="anchored" data-anchor-id="what-does-this-mean-2">What does this mean?</h2>
+<ul>
+<li><span class="math inline">\(\beta_1 \gt 0\)</span>
+<ul>
+<li>Odds Ratio = <span class="math inline">\(\text{exp}(\beta_1) \gt \text{exp}(0) = 1\)</span></li>
+<li>Odds Ratio &gt; 1</li>
+<li>Continuous: A 1‑unit <strong>increase</strong> in the predictor is associated with <strong>higher odds</strong> of the outcome</li>
+<li>Categorical: This group has <strong>higher odds</strong> of the outcome than the reference group</li>
+</ul></li>
+</ul>
+</section>
+<section id="what-does-this-mean-3" class="level2">
+<h2 class="anchored" data-anchor-id="what-does-this-mean-3">What does this mean?</h2>
+<ul>
+<li><p>Negative <span class="math inline">\(\beta\)</span> → Odds Ratio &lt; 1</p></li>
+<li><p>Positive <span class="math inline">\(\beta\)</span> → Odds Ratio &gt; 1</p></li>
+<li><p><span class="math inline">\(\beta\)</span> = 0 → Odds Ratio = 1</p></li>
+<li><p><strong>Testing if <span class="math inline">\(\beta=0\)</span> is equivalent to testing if the odds ratio = 1</strong></p></li>
+</ul>
+</section>
+<section id="logistic-regression-model-1" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="logistic-regression-model-1">Logistic regression model</h2>
+<div class="poll">
+<p><span class="math display">\[logit(p_i) = \text{log} \left(\frac{p_i}{1-p_i}\right) = \beta_0 +
+\beta_1 x_{i1} + \cdots + \beta_p x_{ip}\]</span></p>
+</div>
+<ul>
+<li><p>Like with linear regression, we can use the estimated coefficients (<span class="math inline">\(\hat{\beta}\)</span>) to make predictions for each individual</p></li>
+<li><p>For logistic regression, we predict <span class="math inline">\(logit(p_i)= \text{log} \left(\frac{p_i}{1-p_i}\right)\)</span></p></li>
+</ul>
+<p><span class="math display">\[logit(\hat{p}_i) = \text{log} \left(\frac{\hat{p}_i}{1-\hat{p}_i}\right) = \hat{\beta_0} +
+\hat{\beta_1} x_{i1} + \cdots + \hat{\beta_p} x_{ip}\]</span></p>
+</section>
+<section id="logistic-regression-model-2" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="logistic-regression-model-2">Logistic regression model</h2>
+<ul>
+<li>If <span class="math inline">\(p=0.5\)</span> then <span class="math inline">\(\frac{p_i}{1-p_i}=1\)</span>
+<ul>
+<li><span class="math inline">\(logit(p_i)=\text{log} \left(\frac{p_i}{1-p_i}\right)=log(1)=0\)</span></li>
+<li>Logit of 0 represents probability of 0.5</li>
+</ul></li>
+<li>If <span class="math inline">\(p&gt;0.5\)</span> then <span class="math inline">\(\frac{p_i}{1-p_i}&gt;1\)</span> and <span class="math inline">\(logit(p_i) &gt; 0\)</span>
+<ul>
+<li>Positive logits represent probabilities above one-half</li>
+</ul></li>
+<li>If <span class="math inline">\(p&lt;0.5\)</span> then <span class="math inline">\(\frac{p_i}{1-p_i}&lt;1\)</span> and <span class="math inline">\(logit(p_i) &lt; 0\)</span>
+<ul>
+<li>Negative logits represent probabilities less than one-half</li>
+</ul></li>
+</ul>
+</section>
+<section id="interpreting-parameters-3" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="interpreting-parameters-3">Interpreting parameters</h2>
+<ul>
+<li>Another <em>function</em> of the parameters we might be interested in is the probability.</li>
+<li>For the simple model</li>
+</ul>
+<div class="poll">
+<p><span class="math display">\[\text{log} \left(\frac{p_i}{1-p_i}\right) = \beta_0 +
+\beta_1 x_{i}\]</span></p>
+</div>
+<p>then the probability that <span class="math inline">\(Y = 1\)</span> when <span class="math inline">\(X = 0\)</span> is <span class="math inline">\(\frac{\text{exp}(\beta_0)}{1 + \text{exp}(\beta_0)}\)</span></p>
+<ul>
+<li>How did we get this?</li>
+</ul>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you’re curious how to convert logit to probability, see next slide. Prepare for math ahead! (This won’t be on the exam!)</p>
+</div>
+</div>
+</section>
+<section id="solving-logistic-model-for-p_i" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="solving-logistic-model-for-p_i">Solving logistic model for <span class="math inline">\(p_i\)</span></h2>
+<p><span class="math display">\[\text{log} \left(\frac{p_i}{1-p_i}\right) = \beta_0 +
+\beta_1 x_{i}\]</span></p>
+<p><span class="math display">\[\left(\frac{p_i}{1-p_i}\right) = \text{exp}(\beta_0 +
+\beta_1 x_{i})\]</span></p>
+<p><span class="math display">\[p_i = (1-p_i)\text{exp}(\beta_0 +
+\beta_1 x_{i})\]</span></p>
+<p><span class="math display">\[p_i = \text{exp}(\beta_0 +
+\beta_1 x_{i}) - p_i \text{exp}(\beta_0 +
+\beta_1 x_{i}) \]</span></p>
+<p><span class="math display">\[p_i + p_i \text{exp}(\beta_0 +
+\beta_1 x_{i})  = \text{exp}(\beta_0 +
+\beta_1 x_{i}) \]</span></p>
+<p><span class="math display">\[p_i(1 + \text{exp}(\beta_0 +
+\beta_1 x_{i}))  = \text{exp}(\beta_0 +
+\beta_1 x_{i}) \]</span></p>
+<p><span class="math display">\[p_i = \frac{\text{exp}(\beta_0 +
+\beta_1 x_{i})}{1 + \text{exp}(\beta_0 +
+\beta_1 x_{i}) } \]</span></p>
+</section>
+<section id="back-to-pbc-1" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="back-to-pbc-1">Back to PBC</h2>
+<p>Remember, we are interested in the probability that a patient died during follow-up (a “success”). We are predicting the log-odds of this event happening.</p>
+</section>
+<section id="predicted-probabilities" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="predicted-probabilities">Predicted probabilities</h2>
+<ul>
+<li><p>There is a one-to-one-relationship between <span class="math inline">\(p\)</span> and <span class="math inline">\(logit(p)\)</span>. So, if we predict the log-odds, we can back-transform to get back to a predicted probability.</p></li>
+<li><p>For instance, suppose a patient does not have ascites, has a bilirubin level of 5 mg/dL, and is a stage 2 patient. Their predicted log-odds are:</p></li>
+</ul>
+<p><span class="math display">\[−3.14+0.31×5+1.25=−0.34\]</span></p>
+<p>Thus, their predicted probability of dying is</p>
+<p><span class="math display">\[\frac{\text{exp}(-0.34)}{1+\text{exp}(-0.34)} = 0.42\]</span></p>
+</section>
+<section id="in-r" class="level2">
+<h2 class="anchored" data-anchor-id="in-r">In R</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example patient:</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>new_patient <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">ascites =</span> <span class="dv">0</span>,</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">bili =</span> <span class="dv">5</span>,</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">stage =</span> <span class="dv">2</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Get predicted log-odds (type = "link")</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>pred_logodds <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit2, </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>                        <span class="at">newdata =</span> new_patient, </span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>                        <span class="at">type =</span> <span class="st">"link"</span>)</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert log-odds to odds</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>pred_odds <span class="ot">&lt;-</span> <span class="fu">exp</span>(pred_logodds)</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert odds to probability</span></span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>pred_prob <span class="ot">&lt;-</span> pred_odds <span class="sc">/</span> (<span class="dv">1</span> <span class="sc">+</span> pred_odds)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="in-r-1" class="level2">
+<h2 class="anchored" data-anchor-id="in-r-1">In R</h2>
+<ul>
+<li><p>Type = link tells R to estimate the outcome variable in terms of a function of the linear predictor (in the case of logistic regression this returns the log-odds (logit) of the outcome)</p></li>
+<li><p>Since generalized linear models do not model the outcome directly in the <code>glm</code> function we need to specify the distribution via the family argument</p></li>
+<li><p>Since generalized linear models do not model the outcome directly in the <code>predict</code> function we need to specify the scale on which predictions are returned (e.g.&nbsp;log‑odds vs.&nbsp;probabilities)</p></li>
+</ul>
+</section>
+<section id="output" class="level2">
+<h2 class="anchored" data-anchor-id="output">Output</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>pred_logodds</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         1 
+-0.3180994 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>pred_prob</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       1 
+0.421139 </code></pre>
+</div>
+</div>
+</section>
+<section id="alternatively" class="level2">
+<h2 class="anchored" data-anchor-id="alternatively">Alternatively…</h2>
+<ul>
+<li>We can also calculate the predicted probability directly using <code>predict</code> by setting the <code>type</code> to be <code>"response"</code>.</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get predicted probability (type = "response")</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>pred_prob2 <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit2, </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                        <span class="at">newdata =</span> new_patient, </span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                        <span class="at">type =</span> <span class="st">"response"</span>)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>pred_prob2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       1 
+0.421139 </code></pre>
+</div>
+</div>
+</section>
+<section id="on-your-own" class="level2">
+<h2 class="anchored" data-anchor-id="on-your-own">On your own</h2>
+<div class="callout callout-style-simple callout-tip">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(fit2) <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-3.143</td>
+<td style="text-align: right;">1.054</td>
+<td style="text-align: right;">-2.981</td>
+<td style="text-align: right;">0.003</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ascites</td>
+<td style="text-align: right;">2.868</td>
+<td style="text-align: right;">1.067</td>
+<td style="text-align: right;">2.689</td>
+<td style="text-align: right;">0.007</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">bili</td>
+<td style="text-align: right;">0.315</td>
+<td style="text-align: right;">0.064</td>
+<td style="text-align: right;">4.886</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">as.factor(stage)2</td>
+<td style="text-align: right;">1.251</td>
+<td style="text-align: right;">1.095</td>
+<td style="text-align: right;">1.142</td>
+<td style="text-align: right;">0.253</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">as.factor(stage)3</td>
+<td style="text-align: right;">1.716</td>
+<td style="text-align: right;">1.069</td>
+<td style="text-align: right;">1.604</td>
+<td style="text-align: right;">0.109</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">as.factor(stage)4</td>
+<td style="text-align: right;">2.167</td>
+<td style="text-align: right;">1.075</td>
+<td style="text-align: right;">2.015</td>
+<td style="text-align: right;">0.044</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>By hand, write out the following. Leave in terms of values given:</p>
+<ol type="1">
+<li><p>What is the <strong>model</strong> we are using?</p></li>
+<li><p>What is the <strong>predicted log odds</strong> of dying for a patient with ascites, a bilirubin level of 3 mg/dL, and stage 3?</p></li>
+<li><p>Given this value, what is the <strong>predicted probability</strong>?</p></li>
+</ol>
+</div>
+</div>
+</div>
+</section>
+<section id="hypothesis-tests-in-logistic-regression" class="level2">
+<h2 class="anchored" data-anchor-id="hypothesis-tests-in-logistic-regression">Hypothesis tests in logistic regression</h2>
+<p>Generally, we wish to know whether the OR = 1 or equivalently, whether the logit of <span class="math inline">\(p\)</span> (a <span class="math inline">\(\beta\)</span> coefficient) = 0. To test</p>
+<p><span class="math display">\[H_0: \beta_k = 0\]</span></p>
+<p><span class="math display">\[H_1: \beta_k \neq 0\]</span></p>
+<p>we can compare the ratio of a parameter estimate to its standard error using the standard normal distribution (reason we use Z instead of t is a bit technical).</p>
+</section>
+<section id="confidence-intervals" class="level2">
+<h2 class="anchored" data-anchor-id="confidence-intervals">Confidence intervals</h2>
+<p>CIs for associations on the <strong>logit scale</strong> are given by</p>
+<div class="poll">
+<p><span class="math display">\[\hat \beta_j \pm z^*_{1-\alpha/2} \times \widehat {SE} (\hat\beta_j)\]</span></p>
+</div>
+<p>These are typically translated into confidence intervals in <strong>odds scale</strong> by exponentiating the lower and upper limits.</p>
+<p><span class="math display">\[[\text{exp}(\hat \beta_j - z^*_{1-\alpha/2} \times \widehat {SE} (\hat\beta_j)), \text{exp}(\hat \beta_j + z^*_{1-\alpha/2} \times \widehat {SE} (\hat\beta_j))]\]</span></p>
+</section>
+<section id="confidence-intervals-1" class="level2">
+<h2 class="anchored" data-anchor-id="confidence-intervals-1">Confidence intervals</h2>
+<ul>
+<li>For the variable ascites [patient had ascites (1 = yes, 0 = no)]
+<ul>
+<li><span class="math inline">\(\hat{\beta}_{ascites}\)</span> = 2.868</li>
+<li>Standard error of <span class="math inline">\(\hat{\beta}_{ascites}\)</span> = 1.067</li>
+</ul></li>
+<li>We are 95% confident that the true difference in the log‑odds of the outcome comparing patients with ascites to those without ascites lies within the following interval, holding the other variables in the model constant: <span class="math display">\[\hat \beta_j \pm z^*_{1-\alpha/2} \times \widehat {SE} (\hat\beta_j)\]</span></li>
+</ul>
+</section>
+<section id="in-r-2" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="in-r-2">In R</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get odds ratios and 95% CIs</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(fit2, <span class="at">conf.int =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 24%">
+<col style="width: 12%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 10%">
+<col style="width: 12%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+<th style="text-align: right;">conf.low</th>
+<th style="text-align: right;">conf.high</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-3.143</td>
+<td style="text-align: right;">1.054</td>
+<td style="text-align: right;">-2.981</td>
+<td style="text-align: right;">0.003</td>
+<td style="text-align: right;">-6.062</td>
+<td style="text-align: right;">-1.499</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ascites</td>
+<td style="text-align: right;">2.868</td>
+<td style="text-align: right;">1.067</td>
+<td style="text-align: right;">2.689</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">1.167</td>
+<td style="text-align: right;">5.796</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">bili</td>
+<td style="text-align: right;">0.315</td>
+<td style="text-align: right;">0.064</td>
+<td style="text-align: right;">4.886</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">0.198</td>
+<td style="text-align: right;">0.450</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">as.factor(stage)2</td>
+<td style="text-align: right;">1.251</td>
+<td style="text-align: right;">1.095</td>
+<td style="text-align: right;">1.142</td>
+<td style="text-align: right;">0.253</td>
+<td style="text-align: right;">-0.525</td>
+<td style="text-align: right;">4.208</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">as.factor(stage)3</td>
+<td style="text-align: right;">1.716</td>
+<td style="text-align: right;">1.069</td>
+<td style="text-align: right;">1.604</td>
+<td style="text-align: right;">0.109</td>
+<td style="text-align: right;">0.017</td>
+<td style="text-align: right;">4.647</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">as.factor(stage)4</td>
+<td style="text-align: right;">2.167</td>
+<td style="text-align: right;">1.075</td>
+<td style="text-align: right;">2.015</td>
+<td style="text-align: right;">0.044</td>
+<td style="text-align: right;">0.450</td>
+<td style="text-align: right;">5.104</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="confidence-intervals-2" class="level2">
+<h2 class="anchored" data-anchor-id="confidence-intervals-2">Confidence intervals</h2>
+<ul>
+<li>For the variable ascites [patient had ascites (1 = yes, 0 = no)]
+<ul>
+<li><span class="math inline">\(\hat{\beta}_{ascites}\)</span> = 2.868</li>
+<li>Standard error of <span class="math inline">\(\hat{\beta}_{ascites}\)</span> = 1.067</li>
+</ul></li>
+<li>We are 95% confident that the true odds ratio comparing patients with ascites to those without ascites lies within the following interval, holding the other variables in the model constant: <span class="math display">\[[\text{exp}(\hat \beta_j - z^*_{1-\alpha/2} \times \widehat {SE} (\hat\beta_j)), \text{exp}(\hat \beta_j + z^*_{1-\alpha/2} \times \widehat {SE} (\hat\beta_j))]\]</span></li>
+</ul>
+</section>
+<section id="in-r-3" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="in-r-3">In R</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get odds ratios and 95% CIs</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(fit2, <span class="at">exponentiate =</span> <span class="cn">TRUE</span>, <span class="at">conf.int =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 24%">
+<col style="width: 12%">
+<col style="width: 13%">
+<col style="width: 13%">
+<col style="width: 10%">
+<col style="width: 12%">
+<col style="width: 13%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+<th style="text-align: right;">conf.low</th>
+<th style="text-align: right;">conf.high</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">0.043</td>
+<td style="text-align: right;">1.054</td>
+<td style="text-align: right;">-2.981</td>
+<td style="text-align: right;">0.003</td>
+<td style="text-align: right;">0.002</td>
+<td style="text-align: right;">0.223</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ascites</td>
+<td style="text-align: right;">17.608</td>
+<td style="text-align: right;">1.067</td>
+<td style="text-align: right;">2.689</td>
+<td style="text-align: right;">0.007</td>
+<td style="text-align: right;">3.213</td>
+<td style="text-align: right;">329.029</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">bili</td>
+<td style="text-align: right;">1.370</td>
+<td style="text-align: right;">0.064</td>
+<td style="text-align: right;">4.886</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">1.219</td>
+<td style="text-align: right;">1.568</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">as.factor(stage)2</td>
+<td style="text-align: right;">3.493</td>
+<td style="text-align: right;">1.095</td>
+<td style="text-align: right;">1.142</td>
+<td style="text-align: right;">0.253</td>
+<td style="text-align: right;">0.591</td>
+<td style="text-align: right;">67.253</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">as.factor(stage)3</td>
+<td style="text-align: right;">5.561</td>
+<td style="text-align: right;">1.069</td>
+<td style="text-align: right;">1.604</td>
+<td style="text-align: right;">0.109</td>
+<td style="text-align: right;">1.017</td>
+<td style="text-align: right;">104.304</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">as.factor(stage)4</td>
+<td style="text-align: right;">8.733</td>
+<td style="text-align: right;">1.075</td>
+<td style="text-align: right;">2.015</td>
+<td style="text-align: right;">0.044</td>
+<td style="text-align: right;">1.568</td>
+<td style="text-align: right;">164.733</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="logistic-regression-model-3" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="logistic-regression-model-3">Logistic regression model</h2>
+<ul>
+<li><p>We can also include interaction terms in logistic regression models</p></li>
+<li><p>This allows us to test whether the association between a predictor and the outcome variable depends on the value of another variable</p></li>
+<li><p>Let’s take for example this <a href="https://pubmed.ncbi.nlm.nih.gov/16112301/">study</a> looking at gene by environment interaction with risk of bladder cancer</p></li>
+</ul>
+</section>
+<section id="without-interaction" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="without-interaction">Without interaction</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-5.394</td>
+<td style="text-align: right;">0.282</td>
+<td style="text-align: right;">-19.139</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NAT2slow</td>
+<td style="text-align: right;">1.425</td>
+<td style="text-align: right;">0.175</td>
+<td style="text-align: right;">8.140</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cigs1-9</td>
+<td style="text-align: right;">0.094</td>
+<td style="text-align: right;">0.380</td>
+<td style="text-align: right;">0.248</td>
+<td style="text-align: right;">0.804</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cigs10-19</td>
+<td style="text-align: right;">0.796</td>
+<td style="text-align: right;">0.307</td>
+<td style="text-align: right;">2.593</td>
+<td style="text-align: right;">0.010</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cigs20-29</td>
+<td style="text-align: right;">1.154</td>
+<td style="text-align: right;">0.301</td>
+<td style="text-align: right;">3.832</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cigs30-39</td>
+<td style="text-align: right;">1.784</td>
+<td style="text-align: right;">0.281</td>
+<td style="text-align: right;">6.348</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cigs40+</td>
+<td style="text-align: right;">2.335</td>
+<td style="text-align: right;">0.283</td>
+<td style="text-align: right;">8.247</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Individuals smoking 20-29 cigarettes per day have exp<span class="math inline">\((\hat \beta_{cigs20-29})\)</span>=exp(1.15) times the odds of having bladder cancer compared to individuals smoking 0 cigarettes per day, <strong>holding NAT2 constant</strong></p>
+</section>
+<section id="interaction-terms" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="interaction-terms">Interaction terms</h2>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">term</th>
+<th style="text-align: right;">estimate</th>
+<th style="text-align: right;">std.error</th>
+<th style="text-align: right;">statistic</th>
+<th style="text-align: right;">p.value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">-4.807</td>
+<td style="text-align: right;">0.410</td>
+<td style="text-align: right;">-11.727</td>
+<td style="text-align: right;">0.000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NAT2slow</td>
+<td style="text-align: right;">0.618</td>
+<td style="text-align: right;">0.510</td>
+<td style="text-align: right;">1.212</td>
+<td style="text-align: right;">0.225</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cigs1-9</td>
+<td style="text-align: right;">-0.140</td>
+<td style="text-align: right;">0.710</td>
+<td style="text-align: right;">-0.197</td>
+<td style="text-align: right;">0.844</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cigs10-19</td>
+<td style="text-align: right;">0.301</td>
+<td style="text-align: right;">0.559</td>
+<td style="text-align: right;">0.538</td>
+<td style="text-align: right;">0.591</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cigs20-29</td>
+<td style="text-align: right;">0.858</td>
+<td style="text-align: right;">0.544</td>
+<td style="text-align: right;">1.578</td>
+<td style="text-align: right;">0.114</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">cigs30-39</td>
+<td style="text-align: right;">1.245</td>
+<td style="text-align: right;">0.497</td>
+<td style="text-align: right;">2.504</td>
+<td style="text-align: right;">0.012</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">cigs40+</td>
+<td style="text-align: right;">0.971</td>
+<td style="text-align: right;">0.582</td>
+<td style="text-align: right;">1.669</td>
+<td style="text-align: right;">0.095</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NAT2slow:cigs1-9</td>
+<td style="text-align: right;">0.358</td>
+<td style="text-align: right;">0.842</td>
+<td style="text-align: right;">0.425</td>
+<td style="text-align: right;">0.671</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NAT2slow:cigs10-19</td>
+<td style="text-align: right;">0.688</td>
+<td style="text-align: right;">0.671</td>
+<td style="text-align: right;">1.026</td>
+<td style="text-align: right;">0.305</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NAT2slow:cigs20-29</td>
+<td style="text-align: right;">0.438</td>
+<td style="text-align: right;">0.654</td>
+<td style="text-align: right;">0.669</td>
+<td style="text-align: right;">0.503</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">NAT2slow:cigs30-39</td>
+<td style="text-align: right;">0.744</td>
+<td style="text-align: right;">0.604</td>
+<td style="text-align: right;">1.232</td>
+<td style="text-align: right;">0.218</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">NAT2slow:cigs40+</td>
+<td style="text-align: right;">1.756</td>
+<td style="text-align: right;">0.674</td>
+<td style="text-align: right;">2.603</td>
+<td style="text-align: right;">0.009</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="interaction-term" class="level2">
+<h2 class="anchored" data-anchor-id="interaction-term">Interaction term</h2>
+<ul>
+<li>With the interaction term in the model:</li>
+</ul>
+<p>Individuals smoking 20-29 cigarettes per day have exp<span class="math inline">\((\hat \beta_{cigs20-29})\)</span>=exp(1.15) times the odds of having bladder cancer compared to individuals smoking 0 cigarettes per day, <strong>when the other predictor (NAT2) is 0</strong></p>
+</section>
+<section id="interaction-terms-1" class="level2">
+<h2 class="anchored" data-anchor-id="interaction-terms-1">Interaction terms</h2>
+<p><img src="images/lect-21/genebye.jpg" class="img-fluid" data-fig.alt="A graph with x-axis labeled Cigarettes per day and y-axis labeled Odds Ratio. The legend says that dark blue indicates NAT2 slow and light blue indicates NAT2 rapid or intermediate. At x=0, the odds ratio for both colors is 0. At x = 0 - 9, the light blue has an odds ratio estimate of 0.6 with confidence interval 0.3 to 1.2 and the dark blue has an odds ratio estimate of 1.1 with confidence interval 0.6 to 2.1. At x = 10 - 19, the light blue has an odds ratio estimate of 1.3 with confidence interval 0.7 to 2.5 and the dark blue has an odds ratio estimate of 2 with confidence interval 1.1 to 3.5. At x = 20 - 29, the light blue has an odds ratio estimate of 1.7 with confidence interval 0.9 to 3 and the dark blue has an odds ratio estimate of 2.6 with confidence interval 1.5 to 4.6. At x = 30 - 39, the light blue has an odds ratio estimate of 1.4 with confidence interval 0.7 to 3 and the dark blue has an odds ratio estimate of 3 with confidence interval 1.5 to 5.8. At x greater than or equal to 40, the light blue has an odds ratio estimate of 1 with confidence interval 0.5 to 2 and the dark blue has an odds ratio estimate of 2 with confidence interval 1.1 to 4."></p>
+</section>
+<section id="next-class" class="level2">
+<h2 class="anchored" data-anchor-id="next-class">Next Class</h2>
+<p>Review for final exam, come prepared with questions!</p>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
