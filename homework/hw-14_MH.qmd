@@ -1,0 +1,84 @@
+---
+title: "HW 14"
+format: docx
+---
+
+Due Wednesday, July 22, at 11:59pm.
+
+## Starting a new Quarto file
+
+For this assignment you will begin a new Quarto file. To do this, go to RStudio and click File > New File > Quarto Document. A pop-up will appear asking for a title, author, and format. You may leave these as the default options for now. Click OK and a new file will open. Update the YAML with your title, name, and date.
+
+## Data
+
+We will be using the `beijing` data set from HW 13. 
+
+Of interest are the following variables:
+
+- `PM2.5`: PM2.5 levels in micrograms per cubic meter
+
+- `TEMP`: temperature in degrees Celsius
+
+- `PRES`: barometric pressure in hPa
+
+- `wd`: wind direction (eight compass points)
+
+You may load the dataset with the code below: (Ensure that you suppress any warnings and messages.)
+
+```{r echo = T}
+#| message: false
+#| warning: false
+beijing <- read.csv("data/beijing.csv", row.names = NULL)
+```
+
+## Exercise 1
+
+a. Fit a linear model that predicts PM2.5 levels based on the temperature, pressure, and wind direction. Write out the fitted model (in words and/or symbols). Do not include interactions. You may have to write your model on multiple lines for it to fit on the page -- please check before submitting!
+
+b. What PM2.5 level would you predict for a day with temperature of 20 degrees C< pressure of 1040 hPa, and wind coming from the south?
+
+c. Provide and interpret the estimates for the slope corresponding to `PRES` and for the slope corresponding to `wdSW`. 
+
+d. Provide and interpret your adjusted $R^2$ value from this model.
+
+## Exercise 2
+
+a. Fit a new linear model that predicts PM2.5 levels based on the temperature, barometric pressure, and their interaction. Write out the fitted model (in words and/or symbols). 
+
+b. Based on your model in Exercise 2a, what would be the expected difference in PM2.5 levels give a one degree increase in temperature?
+
+c. Is there sufficient evidence that the relationship between temperature and PM2.5 depends on the barometric pressure? Briefly explain. 
+
+## AI Attestation
+
+Was AI used on this assignment? If so, describe your prompts below. If not, simply state "AI was not used on this assignment."
+
+## Submission
+
+As you’ve seen previously, we can **Render** into an .html file that can be opened by any web browser. To export it as a .pdf, open the file in your web browser and then print to or save as a .pdf document. Contact me in Ed Discussion if you need help! 
+
+You will submit the PDF documents for labs and homework to Gradescope as part of your final submission.
+
+To submit your assignment:
+
+- Access Gradescope through the menu on the BIOS 600 Canvas site.
+
+- Click on the assignment, and you’ll be prompted to submit it.
+
+- Mark the pages associated with each exercise. All of the pages of your lab should be associated with at least one question (i.e., should be “checked”).
+
+- Select the first page of your .PDF submission to be associated with the "Formatting" section.
+
+## Grading
+
+| Component | Points |
+|----------|--------|
+| Ex 1 | 6 |
+| Ex 2 | 5 |
+| AI Attestation | 1 |
+| Formatting | 3 |
+
+The “Formatting” grade is to assess the document format. This includes having a neatly organized document (no excessive output, warnings/messages when loading packages and/or data) with readable code and your name and the date updated in the YAML.
+
+
+

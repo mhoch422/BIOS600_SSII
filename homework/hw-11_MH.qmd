@@ -1,9 +1,13 @@
 ---
 title: "HW 11"
-format: html
+format: docx
 ---
 
 Due Tuesday, July 14 at 11:59pm.
+
+## AI use
+
+Refer to the syllabus for our AI use policy. You will be asked to include any AI prompts used in this assignment at the end. 
 
 ## Starting a new Quarto file
 
@@ -71,9 +75,13 @@ c. Which assumption does this test NOT require that the paired t-test does requi
 
 d. Does this test take into account the magnitude of the differences between paired values?
 
+## AI Attestation
+
+Was AI used on this assignment? If so, describe your prompts below. If not, simply state "AI was not used on this assignment."
+
 ## Submission
 
-As you’ve seen previously, we can **Render** into an .html file that can be opened by any web browser. To export it as a .pdf, open the file in your web browser and then print to or save as a .pdf document. Contact your TAs in Ed Discussion if you need help! 
+As you’ve seen previously, we can **Render** into an .html file that can be opened by any web browser. To export it as a .pdf, open the file in your web browser and then print to or save as a .pdf document. Contact me in Ed Discussion if you need help! 
 
 You will submit the PDF documents for labs and homework to Gradescope as part of your final submission.
 

@@ -1,0 +1,80 @@
+---
+title: "HW 13"
+format: html
+---
+
+Due Tuesday, July 21, at 11:59pm.
+
+## Starting a new Quarto file
+
+For this assignment you will begin a new Quarto file. To do this, go to RStudio and click File > New File > Quarto Document. A pop-up will appear asking for a title, author, and format. You may leave these as the default options for now. Click OK and a new file will open. Update the YAML with your title, name, and date.
+
+## Data
+
+Atmospheric PM2.5 is fine particulate matter that has a diameter of less than 2.5 micrometers, and is one of the major air pollutants in the atmosphere. Such particles penetrate deep into the lungs due to their small size, and are associated with cardiovascular disease and other health outcomes. Thus, higher PM2.5 levels imply lower air quality. 
+
+Scientists are interested in evaluating whether atmospheric PM2.5 levels can be predicted by weather patterns. Hourly data of PM2.5 readings from 2013-2017 were captured at a weather station at Nongzhanguan in Chaoyang District, Beijing. A modified subet of 1500 of these observations is given in the `beijing` dataset, which has been adapted from data provided by Dr. Songxi Chen at Peking University (Proc. Roy. Soc. A: 473(2205): 2017.0457).
+
+Of interest are the following variables:
+
+- `PM2.5`: PM2.5 levels in micrograms per cubic meter
+
+- `TEMP`: temperature in degrees Celsius
+
+- `RAIN`: hourly precipitation levels in mm
+
+Download `beijing.csv` from the Canvas Assignment page. Save it in your `data` folder within your project folder. You may load the dataset with the code below: (Ensure that you suppress any warnings and messages.)
+
+```{r echo = T}
+#| message: false
+#| warning: false
+beijing <- read.csv("data/beijing.csv", row.names = NULL)
+```
+
+## Exercise 1
+
+a. Fit a linear model that predicts PM2.5 levels based on the temperature. Write out the fitted model (in words and/or symbols). You may have to write your model on multiple lines for it to fit on the page -- please check before submitting!
+
+b. Comprehensively assess whether all assumptions for your linear model in Exercise 1a are satisfied. 
+
+c. What PM2.5 level would you predict for a day with temperature of 11 degrees C?
+
+## Exercise 2
+
+a. Fit a linear model that predicts PM2.5 levels based on the hourly precipitation levels. Write out the fitted model (in words and/or symbols). You may have to write your model on multiple lines for it to fit on the page -- please check before submitting!
+
+b. Conduct a hypothesis test for whether there is sufficient evidence that there is a relationship between hourly rainfall and PM2.5 levels. Include your null hypothesis, alternative hypothesis, and the p-value. What is your conclusion?
+
+## AI Attestation
+
+Was AI used on this assignment? If so, describe your prompts below. If not, simply state "AI was not used on this assignment."
+
+## Submission
+
+As you’ve seen previously, we can **Render** into an .html file that can be opened by any web browser. To export it as a .pdf, open the file in your web browser and then print to or save as a .pdf document. Contact me in Ed Discussion if you need help! 
+
+You will submit the PDF documents for labs and homework to Gradescope as part of your final submission.
+
+To submit your assignment:
+
+- Access Gradescope through the menu on the BIOS 600 Canvas site.
+
+- Click on the assignment, and you’ll be prompted to submit it.
+
+- Mark the pages associated with each exercise. All of the pages of your lab should be associated with at least one question (i.e., should be “checked”).
+
+- Select the first page of your .PDF submission to be associated with the "Formatting" section.
+
+## Grading
+
+| Component | Points |
+|----------|--------|
+| Ex 1 | 6 |
+| Ex 2 | 4 |
+| AI Attestation | 1 |
+| Formatting | 3 |
+
+The “Formatting” grade is to assess the document format. This includes having a neatly organized document (no excessive output, warnings/messages when loading packages and/or data) with readable code and your name and the date updated in the YAML.
+
+
+

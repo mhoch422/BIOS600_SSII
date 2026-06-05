@@ -1,10 +1,14 @@
 ---
 title: "HW 04"
 subtitle: "Lecture 4"
-format: docx
+format: html
 ---
 
 Due: Friday, June 26 at 11:59pm
+
+## AI use
+
+Refer to the syllabus for our AI use policy. You will be asked to include any AI prompts used in this assignment at the end. 
 
 ## Starting a new Quarto file
 
@@ -59,10 +63,14 @@ a. Suppose we are willing to accept a false positive rate of at most 10%. What t
 
 b. Which biomarker, NDKA or S100β, would you rather use to predict bad outcomes? Why? (For this question, do NOT use the phrase “area under the curve”)
 
+## AI Attestation
+
+Was AI used on this assignment? If so, describe your prompts below. If not, simply state "AI was not used on this assignment."
+
 
 ## Submission
 
-As you’ve seen previously, we can **Render** into an .html file that can be opened by any web browser. To export it as a .pdf, open the file in your web browser and then print to or save as a .pdf document. Contact your TAs in Ed Discussion if you need help! 
+As you’ve seen previously, we can **Render** into an .html file that can be opened by any web browser. To export it as a .pdf, open the file in your web browser and then print to or save as a .pdf document. Contact me in Ed Discussion if you need help! 
 
 You will submit the PDF documents for labs and homework to Gradescope as part of your final submission.
 
@@ -84,6 +92,7 @@ To submit your assignment:
 | Ex 2 | 3 |
 | Ex 3 | 3 |
 | Ex 4 | 3 |
+| AI Attestation | 1 |
 | Formatting | 3 |
 
 The “Formatting” grade is to assess the document format. This includes having a neatly organized document (no excessive output, warnings/messages when loading packages and/or data) with readable code and your name and the date updated in the YAML.

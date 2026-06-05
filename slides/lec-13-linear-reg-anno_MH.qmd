@@ -425,7 +425,7 @@ We just have to think through this one, unfortunately.
 
 -   To check equal variances and linearity, we can use a plot of the residuals $\hat ϵ_i$ by the predicted (or fitted) values $\hat y_i$.
 
--   We expect to see evenly-spaced dots along the y axis (equal variances), with symmetrically distributed observations around the y axis (linearity). Patterns or trends are evidence something is wrong. (Drawing on next slide.)
+-   We expect to see evenly-spaced dots along the x axis (equal variances), with symmetrically distributed observations around the y axis (linearity). Patterns or trends are evidence something is wrong. (Drawing on next slide.)
 
 ## Regression diagnostics: equal variances
 
