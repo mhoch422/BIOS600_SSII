@@ -1,0 +1,147 @@
+---
+title: "Lab 01: Basic Data Visualization & Intro to the Tidyverse"
+author: "Your Name Here"
+date: "Today's Date Here"
+format: html
+---
+
+```{r }
+#| label: data-and-packages
+#| warning: false
+#| message: false
+
+install.packages("sf")
+library(tidyverse)
+library(sf)
+
+```
+
+### Exercise 1a
+
+```{r}
+#| echo: true
+# read in the data
+
+```
+
+
+### Exercise 1b
+
+```{r }
+#| label: ex-1b
+#| echo: true
+
+# Use this R chunk to create your visualization for Exercise 1b.
+```
+
+### Exercise 2
+
+```{r }
+#| label: ex-2
+#| echo: true
+
+# Use this R chunk to create your visualization for Exercise 2.
+```
+
+### Exercise 3
+
+```{r }
+#| label: ex-3
+
+# Use this R chunk to create your visualization for Exercise 3.
+```
+
+
+### Exercise 4a
+
+```{r }
+#| label: ex-4a
+
+# Use this R chunk to create your table for Exercise 4a.
+```
+
+### Exercise 4b
+
+```{r }
+#| label: ex-4b
+
+# Use this R chunk to create your table for Exercise 4b.
+```
+
+### Exercise 4c
+
+```{r }
+#| label: ex-4c
+
+# Use this R chunk to create your table for Exercise 4c.
+```
+
+### Exercise 5
+
+Write your narrative to Exercise 5 here.
+
+### Exercise 6
+
+In the code below, check for the following, to make sure the code adheres to good coding style. 
+
+- Ensure comment is on two lines instead of one. Each line should start with a `#`.
+
+- Put spaces after each comma within each set of `()`
+
+- Put spaces before and after each `=`,  `-`, `*`, and `<-`
+
+- Rename the function to something meaningful, adhering to naming guidelines. (For context on the function, see the comment as well as the description below the code. You don't need to understand fully what the function is doing, but see if you can get some clues. The name can be general, but it should be more informative than it is currently.)
+
+- Update the comment with the new name of the function.
+
+- Split the function into three lines, following guidelines for `{}`
+
+```{r}
+#| label: ex-6
+#| eval: FALSE
+
+# f2 is a function that finds a distance between points on two normal distributions that the user specifies.
+
+f2<-function(x,m1,m2,sd1,sd2){0.5*abs(dnorm(x,mean=m1,sd=sd1)-dnorm(x,mean=m2,sd=sd2))}
+
+```
+
+### Exercise 7
+
+In the code below, check for the following, to make sure the code adheres to good coding style:
+
+- Each `+` should be followed by a line break.
+
+- There should be spaces after commas and around `=` and `+`
+
+- Break up `geom_vline()` and `labs()` into multiple lines
+
+- Remove any unnecessary spaces within parentheses
+
+- Indent each label within `labs()` to a new line. Make sure each line below `labs()` is indented by two spaces relative to the first line. (Note: you do not need to change any of the actual titles here.)
+
+```{r}
+#| label: ex-7
+#| eval: FALSE
+
+ggplot( data=boot_dist,aes(x=boot_props))+geom_histogram(binwidth=0.01,color="darkblue",fill="skyblue" ) + 
+
+geom_vline( xintercept=c(ex_5_interval$lower,ex_5_interval$upper),color = "darkred",lwd=2 ) +
+
+labs( x="Bootstrap proportions",y="Count",title="Most Durham residents satisfied with parks and recreation",subtitle = "1,000 bootstrap replicates with 99% CI shown" )
+
+```
+
+### Exercise 8
+
+Now, use what you've learned to edit the code in Exercises 8 so that it adheres to the style guidelines.
+
+```{r}
+#| label: ex-8
+#| eval: false
+d<-data.frame(grp=c("A","A","B","B","C","C"),val=c(3,5,4,6,2,7))
+ggplot(d,aes(x=grp,y=val,fill=grp))+geom_bar(stat="identity")+theme_bw()+labs(title="average value by group")+theme(axis.text.x=element_text(angle=45,hjust=1))
+```
+
+
+**Submission:** Remember to render your lab into an .html file and then save it as a .pdf in a web browser. You must turn in a .pdf file corresponding to the Quarto template to Gradescope in order to receive credit for the labs and homework assignments. You must assign each problem to a page in your PDF. Assign the Formatting portion to your page 1.
