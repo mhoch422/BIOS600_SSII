@@ -1,5 +1,5 @@
 ---
-title: "Lecture 6: Discrete distributions"
+title: "Lecture 5: Discrete distributions"
 subtitle: "BIOS 600 - Summer Session II 2026"
 institute: "UNC - Chapel Hill"
 logo: "images/logo_600.png"
@@ -11,8 +11,6 @@ format: html
 - Lab 1 due **tonight at 11:59pm**.
 
 - HW5 due **tomorrow at 11:59pm**.
-
-- Participation activity for today due **tomorrow at 11:59pm**.
 
 ## Supplemental reading
 
@@ -400,7 +398,7 @@ dbinom(2, size = 3, prob = 0.1)
 ::: {.callout-tip}
 ## Application Exercise in R
 
-- For today's participation, you'll practice some of the functions we learn today using R. 
+- For today's participation, you'll practice some of the functions we learn today using R in groups of 2 or 3. 
 
 - In Canvas, download the Quarto template for the Application Exercise for today. Save the file with a sensible name (`ae-01.qmd`) in your project folder.
 
@@ -548,7 +546,6 @@ $$P(X=k) = \frac{\lambda^k e^{-\lambda}}{k!}$$
 
 In today's participation, continue with Exercise 3.
 
-When you've completed the exercises, render, save to PDF, and submit on Canvas> Assignments. Due Tuesday at 11:59pm.
 :::
 
 

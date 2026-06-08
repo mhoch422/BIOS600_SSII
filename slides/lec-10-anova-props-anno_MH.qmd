@@ -440,9 +440,9 @@ summary(anova_model)
 
 ## Application Exercise
 
-- On Canvas, download today's Application Exercise template. 
+- On Canvas, download today's Application Exercise template (AE03). 
 
-- The application Exercise will be due **tomorrow at 11:59pm**.
+- Work in groups of 2 or 3 to practice using ANOVA tests in R.
 
 
 ## Bonferroni correction

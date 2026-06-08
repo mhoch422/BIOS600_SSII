@@ -1,5 +1,5 @@
 ---
-title: "Lecture 7: Continuous distributions"
+title: "Lecture 6: Continuous distributions"
 subtitle: "BIOS 600 - Summer Session II 2026"
 institute: "UNC - Chapel Hill"
 logo: "images/logo_600.png"
@@ -12,7 +12,7 @@ execute:
 
 ## Announcements
 
-- HW 5 and AE 1 due tonight at 11:59pm
+- HW 5 due tonight at 11:59pm
 
 - HW 6 due tomorrow at 11:59pm.
 

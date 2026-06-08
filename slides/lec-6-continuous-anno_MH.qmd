@@ -1,5 +1,5 @@
 ---
-title: "Lecture 7: Continuous distributions"
+title: "Lecture 6: Continuous distributions"
 subtitle: "BIOS 600 - Summer Session II 2026"
 institute: "UNC - Chapel Hill"
 logo: "images/logo_600.png"
@@ -8,11 +8,11 @@ format: html
 
 ## Announcements
 
-- HW 5 and AE 1 due tonight at 11:59pm
+- HW 5 due tonight at 11:59pm
 
 - HW 6 due tomorrow at 11:59pm.
 
-- Today's lecture marks the end of the content for Exam 01! (Today's lecture is included in Exam 01 content.) 
+- Today's lecture marks the end of the content for Exam 01! (Today's lecture is included in Exam 01 content.)
 
 - Information, topics list and formula sheet have been added on Canvas.
 
