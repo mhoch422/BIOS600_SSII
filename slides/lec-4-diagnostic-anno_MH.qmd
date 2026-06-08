@@ -540,6 +540,6 @@ ggplot(roc_df, aes(x = FPR, y = TPR, color = AUC)) +
 
 ## Participation
 
-How is lab going?
+How is class going?
 
 Answer the 1-question survey on Canvas by tomorrow at 11:59pm. Your feedback is extremely helpful!

@@ -165,7 +165,7 @@ window.Quarto = {
 <section id="exercise-1" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-1">Exercise 1</h2>
 <ol type="a">
-<li><p>Starting with the <code>licorice</code> dataset, use the <code>mutate</code> and <code>case_when</code> functions to create a binary variable (0/1) that corresponds to whether the patient experiences any throat pain 30 minutes after surgery (i.e., any non-zero pain score would be indicative of pain). Choose a sensible name for the new variable, and save the dataset which includes the new variable into a new dataset called <code>licorice_bin</code>. No need to print anything here, just show the code. (Hint: Refer back to Lab 3 for examples of <code>case_when</code>.)</p></li>
+<li><p>Starting with the <code>licorice</code> dataset, use the <code>mutate</code> and <code>case_when</code> functions to create a binary variable (0/1) that corresponds to whether the patient experiences any throat pain 30 minutes after surgery (i.e., any non-zero pain score would be indicative of pain). Choose a sensible name for the new variable, and save the dataset which includes the new variable into a new dataset called <code>licorice_bin</code>. No need to print anything here, just show the code. (Hint: Refer back to Lab 2 for examples of <code>case_when</code>.)</p></li>
 <li><p>Use the <code>table()</code> function to create a new table (call it <code>pain_tab</code>) which tabulates your binary variable created in part (a) against the three pre-operative ASA categories, using your <code>licorice_bin</code> object from part (a). To do this, modify the starter code below. After creating the table, print out the table. You should fill in the <code>____</code> with your new variable name from part (a):</p></li>
 </ol>
 <div class="cell">
@@ -174,7 +174,7 @@ window.Quarto = {
 </div>
 <ol start="3" type="a">
 <li><p>In general, what is the assumption of a chi-square test regarding expected cell counts? (Use the <strong>more conservative</strong> rule of thumb.)</p></li>
-<li><p>Based on your table you created in part (b), what is the expected count of having throat pain 30 minutes after surgery (i.e.&nbsp;those with a <code>1</code> in your newly created binary variable), given an ASA classification of <code>healthy</code>? What is the expected count of NOT having throat pain 30 minutes after surgery, given an ASA classification of <code>healthy</code>? Use R for your calculations. Are either of these expected counts less than 10?</p></li>
+<li><p>Based on your table you created in part (b), what is the expected count of having throat pain 30 minutes after surgery (i.e.&nbsp;those with a <code>1</code> in your newly created binary variable) and the expected count of <strong>not</strong> having throat pain 30 minutes after surgery, given an ASA classification of <code>healthy</code>? What is the expected count of NOT having throat pain 30 minutes after surgery, given an ASA classification of <code>healthy</code>? Use R for your calculations. Are either of these expected counts less than 10?</p></li>
 <li><p>Conduct a Chi-square test on your <code>pain_tab</code> table to evaluate whether there is an association between whether the patient experiences throat pain 30 minutes after surgery (your newly created binary variable) and the ASA classification of the patient prior to surgery.</p>
 <ol type="i">
 <li>State your null and alternative hypotheses in words.</li>

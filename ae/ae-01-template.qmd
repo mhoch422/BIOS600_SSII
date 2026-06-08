@@ -48,7 +48,3 @@ What is the probability that in a given hour, exactly 5 asthma patients arrive? 
 ```
 
 \[type response here\]
-
-## Submission
-
-Render to PDF and submit on Canvas \> Assignments.

@@ -1,6 +1,6 @@
 ---
 title: "HW 10"
-format: docx
+format: html
 ---
 
 Due Friday, July 10, at 11:59pm.
@@ -48,7 +48,7 @@ In Exercise 1, use the `licorice` dataset. You may assume that the pain scores a
 
 ## Exercise 1
 
-a. Starting with the `licorice` dataset, use the `mutate` and `case_when` functions to create a binary variable (0/1) that corresponds to whether the patient experiences any throat pain 30 minutes after surgery (i.e., any non-zero pain score would be indicative of pain). Choose a sensible name for the new variable, and save the dataset which includes the new variable into a new dataset called `licorice_bin`. No need to print anything here, just show the code. (Hint: Refer back to Lab 3 for examples of `case_when`.)
+a. Starting with the `licorice` dataset, use the `mutate` and `case_when` functions to create a binary variable (0/1) that corresponds to whether the patient experiences any throat pain 30 minutes after surgery (i.e., any non-zero pain score would be indicative of pain). Choose a sensible name for the new variable, and save the dataset which includes the new variable into a new dataset called `licorice_bin`. No need to print anything here, just show the code. (Hint: Refer back to Lab 2 for examples of `case_when`.)
 
 b. Use the `table()` function to create a new table (call it `pain_tab`) which tabulates your binary variable created in part (a) against the three pre-operative ASA categories, using your `licorice_bin` object from part (a). To do this, modify the starter code below. After creating the table, print out the table. You should fill in the `____` with your new variable name from part (a):
 
@@ -62,7 +62,7 @@ pain_tab # print out your table
 
 c. In general, what is the assumption of a chi-square test regarding expected cell counts? (Use the **more conservative** rule of thumb.)
 
-d. Based on your table you created in part (b), what is the expected count of having throat pain 30 minutes after surgery (i.e. those with a `1` in your newly created binary variable), given an ASA classification of `healthy`? What is the expected count of NOT having throat pain 30 minutes after surgery, given an ASA classification of `healthy`? Use R for your calculations. Are either of these expected counts less than 10?
+d. Based on your table you created in part (b), what is the expected count of having throat pain 30 minutes after surgery (i.e. those with a `1` in your newly created binary variable) and the expected count of **not** having throat pain 30 minutes after surgery, given an ASA classification of `healthy`? What is the expected count of NOT having throat pain 30 minutes after surgery, given an ASA classification of `healthy`? Use R for your calculations. Are either of these expected counts less than 10?
 
 e. Conduct a Chi-square test on your `pain_tab` table to evaluate whether there is an association between whether the patient experiences throat pain 30 minutes after surgery (your newly created binary variable) and the ASA classification of the patient prior to surgery. 
 

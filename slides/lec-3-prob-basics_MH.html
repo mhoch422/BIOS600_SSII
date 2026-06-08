@@ -6,8 +6,8 @@
 <script src="lec-3-prob-basics_MH_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="lec-3-prob-basics_MH_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="lec-3-prob-basics_MH_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="lec-3-prob-basics_MH_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.36">
+<link href="lec-3-prob-basics_MH_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.37">
 
   <title>Lecture 3: Basics of probability</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -224,7 +224,7 @@
 <h2>Probabilities</h2>
 <ul>
 <li><p><strong>Frequentist</strong> (classical) and <strong>Bayesian</strong> schools of thought</p></li>
-<li><p>Historical analogy: Imagine a medieval coin maker who wants to prove that his coin is fair. He flips the coin thousands of times. If it lands on heads about half the time, he concludes it’s a fair coin.</p></li>
+<li><p>Historical analogy: Imagine a medieval coin maker who wants to prove that their coin is fair. They flip the coin thousands of times. If it lands on heads about half the time, they concludes it’s a fair coin.</p></li>
 <li><p>This approach reflects <strong>long-run frequencies</strong>—the probability is defined by the frequency of an event (heads) occurring in many repeated trials.</p></li>
 </ul>
 </section>
@@ -299,7 +299,7 @@
 </section>
 <section id="events" class="slide level2 smaller">
 <h2>Events</h2>
-<p><strong>Events</strong>: Subsets of the sample space that comprise possible outcomes. Essentially, these are all the ‘plausibly reasonable’ events we’re interested in calculating probabilities for*:</p>
+<p><strong>Events</strong>: Subsets of the sample space that comprise possible outcomes. Essentially, these are all the ‘plausibly reasonable’ events we’re interested in calculating probabilities for:</p>
 <ul>
 <li>Tossing a single fair coin
 <ul>
@@ -480,7 +480,8 @@
 <section id="conditional-probability" class="slide level2">
 <h2>Conditional probability</h2>
 <ul>
-<li><strong>Conditional probability</strong> is the probability an event will occur when another event has already occurred. The <strong>conditional probability</strong> of event <span class="math inline">\(A\)</span> given event <span class="math inline">\(B\)</span> is</li>
+<li><p>In the previous example, we might be curious how the probability of death changes depending on whether or not a person is a high/medium/no coffee drinker.</p></li>
+<li><p><strong>Conditional probability</strong> is the probability an event will occur when another event has already occurred. The <strong>conditional probability</strong> of event <span class="math inline">\(A\)</span> given event <span class="math inline">\(B\)</span> is</p></li>
 </ul>
 <p><span class="math display">\[
 P(A|B) = \frac{P(A\cap B)}{P(B)}
@@ -494,9 +495,8 @@ P(A|B) = \frac{P(A\cap B)}{P(B)}
 <p>Examples come up all the time in the real world:</p>
 <ul>
 <li>Given that a mammogram comes back positive, what is the probability that a woman has breast cancer?</li>
-<li>Given that a 68-year old man has suffered four previous heart attacks, what is the probability he dies in the next five years?</li>
+<li>Given that a 68-year-old man has suffered four previous heart attacks, what is the probability he dies in the next five years?</li>
 <li>Given that a patient has a mutation in the CFTR gene, what is the probability their offspring will have cystic fibrosis?</li>
-<li>Given the storm doesn’t shift north, we have a 60% change of snow</li>
 </ul>
 </section>
 <section id="independence-and-the-multiplicative-rule" class="slide level2 smaller">
@@ -553,27 +553,20 @@ P(A \cap B) = P(A) \times P(B)
 <li><p>What is <span class="math inline">\(P(B | A)\)</span> ?</p></li>
 </ul>
 </section>
-<section id="examples-1" class="slide level2">
-<h2>Examples</h2>
+<section id="example-randomized-clinical-trial" class="slide level2">
+<h2>Example – Randomized Clinical Trial</h2>
 <ul>
-<li>Example #1: Randomized Clinical Trial
-<ul>
-<li>Let <span class="math inline">\(A\)</span> = Participant is on a new treatment</li>
-<li>Let <span class="math inline">\(B\)</span> = Participant is Older than 50</li>
-</ul></li>
-<li>Example #2: Electronic Health Records
-<ul>
-<li>Let <span class="math inline">\(A\)</span> = Participant is taking GLP-1</li>
-<li>Let <span class="math inline">\(B\)</span> = Participant has health insurance</li>
-</ul></li>
+<li><p>Let <span class="math inline">\(A\)</span> = Participant is on a new treatment</p></li>
+<li><p>Let <span class="math inline">\(B\)</span> = Participant is Older than 50</p></li>
+<li><p>Are <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> independent?</p></li>
 </ul>
 </section>
-<section id="recall-disjoint-events" class="slide level2">
-<h2>Recall: disjoint events</h2>
+<section id="example-electronic-health-records" class="slide level2">
+<h2>Example – Electronic Health Records</h2>
 <ul>
-<li><p>Definition: Two outcomes are <strong>disjoint</strong> or <strong>mutually exclusive</strong> if they cannot both happen.</p></li>
-<li><p>For example: If we roll a die, the outcomes 1 and 2 are disjoint since they cannot both occur.</p></li>
-<li><p>On the other hand, the outcomes 1 and “rolling an odd number” are not disjoint since both occur if the outcome of the roll is a 1.</p></li>
+<li><p>Let <span class="math inline">\(A\)</span> = Participant is taking GLP-1</p></li>
+<li><p>Let <span class="math inline">\(B\)</span> = Participant has health insurance</p></li>
+<li><p>Are <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> independent?</p></li>
 </ul>
 </section>
 <section id="disjoint-vs.-independent-events" class="slide level2">

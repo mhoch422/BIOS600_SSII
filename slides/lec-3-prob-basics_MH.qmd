@@ -123,7 +123,7 @@ Before we answer that question, a little bit of history...
 
 -   **Frequentist** (classical) and **Bayesian** schools of thought
 
-- Historical analogy: Imagine a medieval coin maker who wants to prove that his coin is fair. He flips the coin thousands of times. If it lands on heads about half the time, he concludes it's a fair coin. 
+- Historical analogy: Imagine a medieval coin maker who wants to prove that their coin is fair. They flip the coin thousands of times. If it lands on heads about half the time, they concludes it's a fair coin. 
 
 - This approach reflects **long-run frequencies**—the probability is defined by the frequency of an event (heads) occurring in many repeated trials.
 
@@ -198,7 +198,7 @@ Sample spaces depend on the random experiment in question
 
 ## Events {.smaller}
 
-**Events**: Subsets of the sample space that comprise possible outcomes. Essentially, these are all the 'plausibly reasonable' events we're interested in calculating probabilities for\*:
+**Events**: Subsets of the sample space that comprise possible outcomes. Essentially, these are all the 'plausibly reasonable' events we're interested in calculating probabilities for:
 
 -   Tossing a single fair coin
     -   A head
@@ -328,6 +328,8 @@ What was the probability that a randomly selected person in the trial..
 
 ## Conditional probability
 
+- In the previous example, we might be curious how the probability of death changes depending on whether or not a person is a high/medium/no coffee drinker.
+
 - **Conditional probability** is the probability an event will occur when another event has already occurred. The **conditional probability** of event $A$ given event $B$ is
 
 
@@ -342,9 +344,8 @@ $$
 Examples come up all the time in the real world:
 
 -   Given that a mammogram comes back positive, what is the probability that a woman has breast cancer?
--   Given that a 68-year old man has suffered four previous heart attacks, what is the probability he dies in the next five years?
+-   Given that a 68-year-old man has suffered four previous heart attacks, what is the probability he dies in the next five years?
 -   Given that a patient has a mutation in the CFTR gene, what is the probability their offspring will have cystic fibrosis?
--   Given the storm doesn't shift north, we have a 60% change of snow
 
 ## Independence and the multiplicative rule {.smaller}
 
@@ -400,25 +401,22 @@ or equivalently, $P(A|B) = P(A)$ or $P(B|A) = P(B)$
 
 - What is $P(B | A)$ ?
     
-## Examples
+## Example -- Randomized Clinical Trial
 
-- Example #1: Randomized Clinical Trial 
-  - Let $A$ = Participant is on a new treatment
-  - Let $B$ = Participant is Older than 50
+- Let $A$ = Participant is on a new treatment
+- Let $B$ = Participant is Older than 50
 
-- Example #2: Electronic Health Records
-  - Let $A$ = Participant is taking GLP-1 
-  - Let $B$ = Participant has health insurance 
+- Are $A$ and $B$ independent?
+
+
+
+## Example -- Electronic Health Records
+
+- Let $A$ = Participant is taking GLP-1 
+- Let $B$ = Participant has health insurance 
+
+- Are $A$ and $B$ independent?
   
-## Recall: disjoint events
-
-- Definition: Two outcomes are **disjoint** or **mutually exclusive** if they cannot both happen. 
-
-- For example: If we roll a die, the outcomes 1 and 2 are disjoint since they cannot both occur. 
-
-- On the other hand, the outcomes 1 and "rolling an odd number" are not disjoint since both occur if the outcome of the roll is a 1. 
-
-
 ## Disjoint vs. independent events 
 
 - Flipping one coin

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -68,7 +68,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="lec-3-prob-basics-anno_MH_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="lec-3-prob-basics-anno_MH_files/libs/quarto-html/anchor.min.js"></script>
 <link href="lec-3-prob-basics-anno_MH_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="lec-3-prob-basics-anno_MH_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="lec-3-prob-basics-anno_MH_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="lec-3-prob-basics-anno_MH_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="lec-3-prob-basics-anno_MH_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="lec-3-prob-basics-anno_MH_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -286,7 +286,7 @@ window.Quarto = {
 <h2 class="anchored" data-anchor-id="probabilities">Probabilities</h2>
 <ul>
 <li><p><strong>Frequentist</strong> (classical) and <strong>Bayesian</strong> schools of thought</p></li>
-<li><p>Historical analogy: Imagine a medieval coin maker who wants to prove that his coin is fair. He flips the coin thousands of times. If it lands on heads about half the time, he concludes it’s a fair coin.</p></li>
+<li><p>Historical analogy: Imagine a medieval coin maker who wants to prove that their coin is fair. They flip the coin thousands of times. If it lands on heads about half the time, they concludes it’s a fair coin.</p></li>
 <li><p>This approach reflects <strong>long-run frequencies</strong>—the probability is defined by the frequency of an event (heads) occurring in many repeated trials.</p></li>
 </ul>
 </section>
@@ -361,7 +361,7 @@ window.Quarto = {
 </section>
 <section id="events" class="level2 smaller">
 <h2 class="smaller anchored" data-anchor-id="events">Events</h2>
-<p><strong>Events</strong>: Subsets of the sample space that comprise possible outcomes. Essentially, these are all the ‘plausibly reasonable’ events we’re interested in calculating probabilities for*:</p>
+<p><strong>Events</strong>: Subsets of the sample space that comprise possible outcomes. Essentially, these are all the ‘plausibly reasonable’ events we’re interested in calculating probabilities for:</p>
 <ul>
 <li>Tossing a single fair coin
 <ul>
@@ -542,7 +542,8 @@ window.Quarto = {
 <section id="conditional-probability" class="level2">
 <h2 class="anchored" data-anchor-id="conditional-probability">Conditional probability</h2>
 <ul>
-<li><strong>Conditional probability</strong> is the probability an event will occur when another event has already occurred. The <strong>conditional probability</strong> of event <span class="math inline">\(A\)</span> given event <span class="math inline">\(B\)</span> is</li>
+<li><p>In the previous example, we might be curious how the probability of death changes depending on whether or not a person is a high/medium/no coffee drinker.</p></li>
+<li><p><strong>Conditional probability</strong> is the probability an event will occur when another event has already occurred. The <strong>conditional probability</strong> of event <span class="math inline">\(A\)</span> given event <span class="math inline">\(B\)</span> is</p></li>
 </ul>
 <p><span class="math display">\[
 P(A|B) = \frac{P(A\cap B)}{P(B)}
@@ -556,9 +557,8 @@ P(A|B) = \frac{P(A\cap B)}{P(B)}
 <p>Examples come up all the time in the real world:</p>
 <ul>
 <li>Given that a mammogram comes back positive, what is the probability that a woman has breast cancer?</li>
-<li>Given that a 68-year old man has suffered four previous heart attacks, what is the probability he dies in the next five years?</li>
+<li>Given that a 68-year-old man has suffered four previous heart attacks, what is the probability he dies in the next five years?</li>
 <li>Given that a patient has a mutation in the CFTR gene, what is the probability their offspring will have cystic fibrosis?</li>
-<li>Given the storm doesn’t shift north, we have a 60% change of snow</li>
 </ul>
 </section>
 <section id="independence-and-the-multiplicative-rule" class="level2 smaller">
@@ -618,27 +618,20 @@ P(A \cap B) = P(A) \times P(B)
 <li><p>What is <span class="math inline">\(P(B | A)\)</span> ?</p></li>
 </ul>
 </section>
-<section id="examples-1" class="level2">
-<h2 class="anchored" data-anchor-id="examples-1">Examples</h2>
+<section id="example-randomized-clinical-trial" class="level2">
+<h2 class="anchored" data-anchor-id="example-randomized-clinical-trial">Example – Randomized Clinical Trial</h2>
 <ul>
-<li>Example #1: Randomized Clinical Trial
-<ul>
-<li>Let <span class="math inline">\(A\)</span> = Participant is on a new treatment</li>
-<li>Let <span class="math inline">\(B\)</span> = Participant is Older than 50</li>
-</ul></li>
-<li>Example #2: Electronic Health Records
-<ul>
-<li>Let <span class="math inline">\(A\)</span> = Participant is taking GLP-1</li>
-<li>Let <span class="math inline">\(B\)</span> = Participant has health insurance</li>
-</ul></li>
+<li><p>Let <span class="math inline">\(A\)</span> = Participant is on a new treatment</p></li>
+<li><p>Let <span class="math inline">\(B\)</span> = Participant is Older than 50</p></li>
+<li><p>Are <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> independent?</p></li>
 </ul>
 </section>
-<section id="recall-disjoint-events" class="level2">
-<h2 class="anchored" data-anchor-id="recall-disjoint-events">Recall: disjoint events</h2>
+<section id="example-electronic-health-records" class="level2">
+<h2 class="anchored" data-anchor-id="example-electronic-health-records">Example – Electronic Health Records</h2>
 <ul>
-<li><p>Definition: Two outcomes are <strong>disjoint</strong> or <strong>mutually exclusive</strong> if they cannot both happen.</p></li>
-<li><p>For example: If we roll a die, the outcomes 1 and 2 are disjoint since they cannot both occur.</p></li>
-<li><p>On the other hand, the outcomes 1 and “rolling an odd number” are not disjoint since both occur if the outcome of the roll is a 1.</p></li>
+<li><p>Let <span class="math inline">\(A\)</span> = Participant is taking GLP-1</p></li>
+<li><p>Let <span class="math inline">\(B\)</span> = Participant has health insurance</p></li>
+<li><p>Are <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> independent?</p></li>
 </ul>
 </section>
 <section id="disjoint-vs.-independent-events" class="level2">

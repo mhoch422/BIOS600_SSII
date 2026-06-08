@@ -144,6 +144,3 @@ Across different distributions (Bernoulli, Binomial, Poisson), when we look at t
 
 This is the Central Limit Theorem in action!
 
-## Submission
-
-Render to PDF and submit on Canvas > Assignments. 

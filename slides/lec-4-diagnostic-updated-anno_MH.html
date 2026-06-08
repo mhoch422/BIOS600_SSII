@@ -26,17 +26,17 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="lec-4-diagnostic-anno_MH_files/libs/clipboard/clipboard.min.js"></script>
-<script src="lec-4-diagnostic-anno_MH_files/libs/quarto-html/quarto.js" type="module"></script>
-<script src="lec-4-diagnostic-anno_MH_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="lec-4-diagnostic-anno_MH_files/libs/quarto-html/popper.min.js"></script>
-<script src="lec-4-diagnostic-anno_MH_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="lec-4-diagnostic-anno_MH_files/libs/quarto-html/anchor.min.js"></script>
-<link href="lec-4-diagnostic-anno_MH_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="lec-4-diagnostic-anno_MH_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="lec-4-diagnostic-anno_MH_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="lec-4-diagnostic-anno_MH_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="lec-4-diagnostic-anno_MH_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="lec-4-diagnostic-updated-anno_MH_files/libs/clipboard/clipboard.min.js"></script>
+<script src="lec-4-diagnostic-updated-anno_MH_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="lec-4-diagnostic-updated-anno_MH_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="lec-4-diagnostic-updated-anno_MH_files/libs/quarto-html/popper.min.js"></script>
+<script src="lec-4-diagnostic-updated-anno_MH_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="lec-4-diagnostic-updated-anno_MH_files/libs/quarto-html/anchor.min.js"></script>
+<link href="lec-4-diagnostic-updated-anno_MH_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="lec-4-diagnostic-updated-anno_MH_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="lec-4-diagnostic-updated-anno_MH_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="lec-4-diagnostic-updated-anno_MH_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="lec-4-diagnostic-updated-anno_MH_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
@@ -119,252 +119,135 @@ window.Quarto = {
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <ul>
-<li><p>How conditional probabilities relate to sensitivity, specificity, &amp; more!</p></li>
-<li><p>Example with Bayes’ theorem</p></li>
+<li><p>Sensitivity, specificity</p></li>
 <li><p>ROC Curves</p></li>
 </ul>
 </section>
-<section id="the-law-of-total-probability" class="level2">
-<h2 class="anchored" data-anchor-id="the-law-of-total-probability">The law of total probability</h2>
+<section id="conditional-probability-review" class="level2">
+<h2 class="anchored" data-anchor-id="conditional-probability-review">Conditional Probability Review</h2>
 <ul>
-<li>Suppose we partition <span class="math inline">\(B\)</span> into mutually disjoint events <span class="math inline">\(B_1, B_2, \ldots B_k\)</span> that comprise the entire sample space.</li>
-<li>Then the <strong>law of total probability</strong> states that the probability of event <span class="math inline">\(A\)</span> is</li>
-</ul>
-<p><span class="math display">\[
-P(A) = P(A \cap B_1) + P(A \cap B_2) + \cdots + P(A \cap B_k)
-\]</span></p>
-<ul>
-<li>[Drawing]</li>
+<li><p><strong>Conditional probability</strong> is the probability an event will occur when another event has already occurred.</p></li>
+<li><p>Often, knowing information about what has already happened can change the probability of some other event.</p></li>
 </ul>
 </section>
-<section id="rewriting" class="level2">
-<h2 class="anchored" data-anchor-id="rewriting">Rewriting…</h2>
-<ul>
-<li>We can rewrite these probabilities using the multiplicative rule as follows:</li>
-</ul>
-<p><span class="math display">\[
-\begin{aligned}
-P(A) &amp;= P(A \cap B_1) + P(A \cap B_2) + \cdots + P(A \cap B_k) \\
-     &amp;= P(A|B_1) P(B_1) + P(A|B_2)P(B_2) + \cdots + P(A | B_k)P(B_k)
-\end{aligned}
-\]</span></p>
-<ul>
-<li>Why rewrite? Sometimes <span class="math inline">\(P(A|B_1)\)</span>, <span class="math inline">\(P(B_1)\)</span> are easier to find than <span class="math inline">\(P(A \cap B_1)\)</span>, etc. We’ll find out WHY (i.e.&nbsp;what these probabilities represent) in our next lecture.</li>
-</ul>
+<section id="conditional-probability-visualization" class="level2">
+<h2 class="anchored" data-anchor-id="conditional-probability-visualization">Conditional Probability Visualization</h2>
+<p>We can think of the white rectangle as our sample space, and each circle as an event.</p>
+<p>Let <span class="math inline">\(A\)</span> = the larger, blue circle and <span class="math inline">\(B\)</span> = the smaller, red circle.</p>
+<p><img src="images/lec-4/fullprobspace.png" class="img-fluid" alt="A large white rectangle with two circles inside it, a slightly off-center blue one and a red onethat overlaps the blue circle at its top right corner."></p>
 </section>
-<section id="the-law-of-total-probability-in-action" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="the-law-of-total-probability-in-action">The law of total probability in action</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Coffee drinking</th>
-<th style="text-align: center;">Died? Yes</th>
-<th style="text-align: center;">Died? No</th>
-<th style="text-align: center;">Total</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>None</td>
-<td style="text-align: center;">1039</td>
-<td style="text-align: center;">5438</td>
-<td style="text-align: center;">6477</td>
-</tr>
-<tr class="even">
-<td>Med-Low</td>
-<td style="text-align: center;">4440</td>
-<td style="text-align: center;">29712</td>
-<td style="text-align: center;">29809</td>
-</tr>
-<tr class="odd">
-<td>High</td>
-<td style="text-align: center;">3601</td>
-<td style="text-align: center;">24934</td>
-<td style="text-align: center;">28535</td>
-</tr>
-<tr class="even">
-<td><strong>Total</strong></td>
-<td style="text-align: center;">9080</td>
-<td style="text-align: center;">60084</td>
-<td style="text-align: center;">64821</td>
-</tr>
-</tbody>
-</table>
-<p>What was the probability a randomly selected person died? Let’s find this using the law of total probability.</p>
+<section id="probability-of-a" class="level2">
+<h2 class="anchored" data-anchor-id="probability-of-a">Probability of <span class="math inline">\(A\)</span></h2>
+<p>If we’re interested in <span class="math inline">\(P(A)\)</span>, this is the information we have:</p>
+<p><img src="images/lec-4/justblue.png" class="img-fluid" alt="A white rectangle with an off-center blue circle towards the middle."></p>
 </section>
-<section id="the-law-of-total-probability-in-action-1" class="level2">
-<h2 class="anchored" data-anchor-id="the-law-of-total-probability-in-action-1">The law of total probability in action</h2>
-<ul>
-<li><p>In an introductory statistics course, 50% of students were undergrads, 40% were master’s students, and 10% were PhD students.</p></li>
-<li><p>80% of the undergrads didn’t get enough sleep, 40% of the master’s students didn’t get enough sleep, and 10% of the PhD students didn’t get enough sleep.</p></li>
-<li><p>What is the probability that a randomly selected student in this class didn’t get enough sleep? Are sufficient sleep status and year independent?</p></li>
-</ul>
-<p><strong>Let’s solve this using the Law of Total Probability…</strong></p>
-</section>
-<section id="solution" class="level2">
-<h2 class="anchored" data-anchor-id="solution">Solution</h2>
-<p>What is the probability that a randomly selected student in this class didn’t get enough sleep?</p>
-<p><span class="math display">\[\begin{align}
-P(A) &amp;= P(A \cup B_U) + P(A \cup B_M) + P(A \cup B_P)\\
-&amp;= P(A|B_U)P(B_U)+P(A|B_M)P(B_M)+P(A|B_P)P(B_P)\\
-&amp;= 0.8 \times 0.5 + 0.4 \times 0.4 + 0.1 \times 0.1\\
-&amp;= 0.64 + 0.16 + 0.01\\
-&amp;= 0.81
-\end{align}\]</span></p>
-<p>Are sleep status and year independent?</p>
-<p>No, since <span class="math inline">\(0.81 = P(A) \neq P(A|B_P) = 0.1\)</span>!</p>
-</section>
-<section id="order-matters" class="level2">
-<h2 class="anchored" data-anchor-id="order-matters">Order matters!</h2>
-<p>What is the probability that a random person…</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Coffee drinking</th>
-<th style="text-align: center;">Died? Yes</th>
-<th style="text-align: center;">Died? No</th>
-<th style="text-align: center;">Total</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>None</td>
-<td style="text-align: center;">1039</td>
-<td style="text-align: center;">5438</td>
-<td style="text-align: center;">6477</td>
-</tr>
-<tr class="even">
-<td>Med-Low</td>
-<td style="text-align: center;">4440</td>
-<td style="text-align: center;">29712</td>
-<td style="text-align: center;">29809</td>
-</tr>
-<tr class="odd">
-<td>High</td>
-<td style="text-align: center;">3601</td>
-<td style="text-align: center;">24934</td>
-<td style="text-align: center;">28535</td>
-</tr>
-<tr class="even">
-<td><strong>Total</strong></td>
-<td style="text-align: center;">9080</td>
-<td style="text-align: center;">60084</td>
-<td style="text-align: center;">64821</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li><p>…was a high coffee drinker, given that they died?</p></li>
-<li><p>…died, given that they were a high coffee drinker?</p></li>
-</ul>
-<p>Are these two probabilities the same?</p>
-</section>
-<section id="bayes-rule" class="level2">
-<h2 class="anchored" data-anchor-id="bayes-rule">Bayes’ rule</h2>
-<ul>
-<li><p>We can use <strong>Bayes’ rule</strong> to “reverse” the order of conditioning.</p></li>
-<li><p>By definition:</p></li>
-</ul>
-<p><span class="math display">\[P(A | B) = \frac{P(A \cap B)}{P(B)} = \frac{P(B | A) P(A)}{P(B)}\]</span></p>
-</section>
-<section id="bayes-rule-1" class="level2">
-<h2 class="anchored" data-anchor-id="bayes-rule-1">Bayes’ rule</h2>
-<ul>
-<li>Using the definition of conditional probability, the law of total probability, and the multiplicative rule, we have</li>
-</ul>
-<p><span class="math display">\[\begin{align}
-P(A | B) = \frac{P(A \cap B)}{P(B)} &amp;= \frac{P(B | A) P(A)}{P(B)} \\
-&amp;= \frac{P(B | A) P(A) }{P(B | A) P(A) + P(B | A^C) P(A^C)}
-\end{align}\]</span></p>
-</section>
-<section id="what-if-a-is-partitioned-into-mutually-disjoint-events" class="level2">
-<h2 class="anchored" data-anchor-id="what-if-a-is-partitioned-into-mutually-disjoint-events">What if <span class="math inline">\(A\)</span> is partitioned into mutually disjoint events?</h2>
-<p>If instead <span class="math inline">\(A\)</span> is partitioned into <span class="math inline">\(k\)</span> mutually disjoint events that together comprise the entire sample space, Bayes’ rule gives:</p>
-<p><span class="math display">\[\begin{align}
-P(A | B) &amp;= \frac{P(B | A) P(A)}{P(B)} \\
-&amp;= \frac{P(B | A) P(A) }{P(B | A_1) P(A_1) + P(B | A_2) P(A_2) + \cdots P(B | A^k) P(A^k)}
-\end{align}\]</span></p>
-</section>
-<section id="bayes-rule-example" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="bayes-rule-example">Bayes’ rule Example</h2>
-<p>What is the probability that a random person in the coffee study…</p>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Coffee drinking</th>
-<th style="text-align: center;">Died? Yes</th>
-<th style="text-align: center;">Died? No</th>
-<th style="text-align: center;">Total</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>None</td>
-<td style="text-align: center;">1039</td>
-<td style="text-align: center;">5438</td>
-<td style="text-align: center;">6477</td>
-</tr>
-<tr class="even">
-<td>Med-Low</td>
-<td style="text-align: center;">4440</td>
-<td style="text-align: center;">29712</td>
-<td style="text-align: center;">29809</td>
-</tr>
-<tr class="odd">
-<td>High</td>
-<td style="text-align: center;">3601</td>
-<td style="text-align: center;">24934</td>
-<td style="text-align: center;">28535</td>
-</tr>
-<tr class="even">
-<td><strong>Total</strong></td>
-<td style="text-align: center;">9080</td>
-<td style="text-align: center;">60084</td>
-<td style="text-align: center;">64821</td>
-</tr>
-</tbody>
-</table>
-<ul>
-<li>…was a high coffee drinker, given that he died?</li>
-<li>…died, given that he was a high coffee drinker?</li>
-</ul>
-<p>Let’s verify our results using Bayes’ rule.</p>
-</section>
-<section id="solution-1" class="level2">
-<h2 class="anchored" data-anchor-id="solution-1">Solution</h2>
-<p>Probability that a person was a high coffee drinker, given that he died?</p>
-<p><span class="math display">\[\begin{align}
-P(A_H|B) &amp;= \frac{P(B|A_H)P(A_H)}{P(B|A_H)P(A_H)+P(B|A_M)P(A_M)+P(B|A_N)P(A_N)}\\
-&amp;= \frac{\frac{3601}{28535}\times\frac{28535}{64821}}{\frac{3601}{28535}
-\times\frac{28535}{64821}+\frac{1039}{6477}\times\frac{6477}{64821}+\frac{4440}{29809}\times\frac{29809}{64821}}\\
-&amp;= \frac{\frac{3601}{64821}}{\frac{9080}{64821}}\\
-&amp;\approx 0.397
-\end{align}\]</span></p>
-<p>Probability that a person died, given that he was a high coffee drinker?</p>
-<p><span class="math display">\[\begin{align}
-P(B|A_H) &amp;= \frac{P(A_H|B)P(B)}{P(A_H|B)P(B)+P(A_H|B^C)P(B^C)}\\
-&amp;= \frac{\frac{3601}{9080}\times\frac{9080}{64821}}{\frac{3601}{9080}
-\times\frac{9080}{64821}+\frac{25934}{60084}\times\frac{60084}{64821}}\\
-&amp;= \frac{\frac{3601}{64821}}{\frac{28535}{64821}}\\
-&amp;\approx 0.126
-\end{align}\]</span></p>
-</section>
-<section id="why-do-we-need-bayes-rule" class="level2">
-<h2 class="anchored" data-anchor-id="why-do-we-need-bayes-rule">Why do we need Bayes’ rule?</h2>
-<ul>
-<li><p>If we have the row and column totals, we can directly calculate these conditional probabilities from a table.</p></li>
-<li><p>So, why would we even need Bayes’ rule?</p></li>
-<li><p>There are many cases where you would not have row/column totals.</p></li>
-</ul>
-</section>
-<section id="example-medical-diagnosis-with-missing-data" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="example-medical-diagnosis-with-missing-data">Example: Medical diagnosis with missing data</h2>
-<ul>
-<li><p>Imagine a scenario where a rare disease is being studied.</p></li>
-<li><p>You may have detailed information about patients who tested positive for the disease (including their symptoms and demographics), but you might lack comprehensive data on the entire population’s symptom distribution or total number of people tested.</p></li>
-<li><p>In this case, you wouldn’t have the full row or column totals, making it necessary to use Bayes’ Theorem to infer probabilities based on the available conditional probabilities and the prevalence of the disease.</p></li>
-<li><p>This is common in situations where data is incomplete, either due to privacy concerns, lack of resources, or when dealing with emerging diseases.</p></li>
-</ul>
+<section id="probability-of-avert-b" class="level2">
+<h2 class="anchored" data-anchor-id="probability-of-avert-b">Probability of <span class="math inline">\(A\vert B\)</span></h2>
+<p>But if we know that Event <span class="math inline">\(B\)</span> occurred, our sample space “shrinks” down to the red circle:</p>
+<p><img src="images/lec-4/redhappened.png" class="img-fluid" alt="A light red circle, with a blue oval over the bottom left part."> <!-- ## The law of total probability --></p>
+<!-- -   Suppose we partition $B$ into mutually disjoint events $B_1, B_2, \ldots B_k$ that comprise the entire sample space. -->
+<!-- -   Then the **law of total probability** states that the probability of event $A$ is -->
+<!-- $$ -->
+<!-- P(A) = P(A \cap B_1) + P(A \cap B_2) + \cdots + P(A \cap B_k) -->
+<!-- $$ -->
+<!-- - [Drawing] -->
+<!-- ## Rewriting... -->
+<!-- - We can rewrite these probabilities using the multiplicative rule as follows: -->
+<!-- $$ -->
+<!-- \begin{aligned} -->
+<!-- P(A) &= P(A \cap B_1) + P(A \cap B_2) + \cdots + P(A \cap B_k) \\ -->
+<!--      &= P(A|B_1) P(B_1) + P(A|B_2)P(B_2) + \cdots + P(A | B_k)P(B_k) -->
+<!-- \end{aligned} -->
+<!-- $$ -->
+<!-- - Why rewrite? Sometimes $P(A|B_1)$, $P(B_1)$ are easier to find than $P(A \cap B_1)$, etc. We'll find out WHY (i.e. what these probabilities represent) in our next lecture. -->
+<!-- ## The law of total probability in action {.smaller} -->
+<!-- | Coffee drinking | Died? Yes | Died? No | Total | -->
+<!-- |-----------------|:---------:|:--------:|:-----:| -->
+<!-- | None            |   1039    |   5438   | 6477  | -->
+<!-- | Med-Low         |   4440    |  29712   | 29809 | -->
+<!-- | High            |   3601    |  24934   | 28535 | -->
+<!-- | **Total**       |   9080    |  60084   | 64821 | -->
+<!-- What was the probability a randomly selected person died? Let's find this using the law of total probability. -->
+<!-- ## The law of total probability in action -->
+<!-- -   In an introductory statistics course, 50% of students were undergrads, 40% were master's students, and 10% were PhD students. -->
+<!-- -   80% of the undergrads didn't get enough sleep, 40% of the master's students didn't get enough sleep, and 10% of the PhD students didn't get enough sleep. -->
+<!-- -   What is the probability that a randomly selected student in this class didn't get enough sleep? Are sufficient sleep status and year independent? -->
+<!-- **Let's solve this using the Law of Total Probability...** -->
+<!-- ## Solution -->
+<!-- What is the probability that a randomly selected student in this class didn't get enough sleep? -->
+<!-- \begin{align} -->
+<!-- P(A) &= P(A \cup B_U) + P(A \cup B_M) + P(A \cup B_P)\\ -->
+<!-- &= P(A|B_U)P(B_U)+P(A|B_M)P(B_M)+P(A|B_P)P(B_P)\\ -->
+<!-- &= 0.8 \times 0.5 + 0.4 \times 0.4 + 0.1 \times 0.1\\ -->
+<!-- &= 0.64 + 0.16 + 0.01\\ -->
+<!-- &= 0.81 -->
+<!-- \end{align} -->
+<!-- Are sleep status and year independent?  -->
+<!-- No, since $0.81 = P(A) \neq P(A|B_P) = 0.1$! -->
+<!-- ## Order matters! -->
+<!-- What is the probability that a random person... -->
+<!-- | Coffee drinking | Died? Yes | Died? No | Total | -->
+<!-- |-----------------|:---------:|:--------:|:-----:| -->
+<!-- | None            |   1039    |   5438   | 6477  | -->
+<!-- | Med-Low         |   4440    |  29712   | 29809 | -->
+<!-- | High            |   3601    |  24934   | 28535 | -->
+<!-- | **Total**       |   9080    |  60084   | 64821 | -->
+<!-- -   ...was a high coffee drinker, given that they died? -->
+<!-- -   ...died, given that they were a high coffee drinker? -->
+<!-- Are these two probabilities the same? -->
+<!-- ## Bayes' rule -->
+<!-- -   We can use **Bayes' rule** to "reverse" the order of conditioning. -->
+<!-- -   By definition: -->
+<!-- $$P(A | B) = \frac{P(A \cap B)}{P(B)} = \frac{P(B | A) P(A)}{P(B)}$$ -->
+<!-- ## Bayes' rule -->
+<!-- -   Using the definition of conditional probability, the law of total probability, and the multiplicative rule, we have -->
+<!-- \begin{align} -->
+<!-- P(A | B) = \frac{P(A \cap B)}{P(B)} &= \frac{P(B | A) P(A)}{P(B)} \\ -->
+<!--  &= \frac{P(B | A) P(A) }{P(B | A) P(A) + P(B | A^C) P(A^C)} -->
+<!-- \end{align} -->
+<!-- ## What if $A$ is partitioned into mutually disjoint events? -->
+<!-- If instead $A$ is partitioned into $k$ mutually disjoint events that together comprise the entire sample space, Bayes' rule gives: -->
+<!-- \begin{align} -->
+<!-- P(A | B) &= \frac{P(B | A) P(A)}{P(B)} \\ -->
+<!--  &= \frac{P(B | A) P(A) }{P(B | A_1) P(A_1) + P(B | A_2) P(A_2) + \cdots P(B | A^k) P(A^k)} -->
+<!-- \end{align} -->
+<!-- ## Bayes' rule Example {.smaller} -->
+<!-- What is the probability that a random person in the coffee study... -->
+<!-- | Coffee drinking | Died? Yes | Died? No | Total | -->
+<!-- |-----------------|:---------:|:--------:|:-----:| -->
+<!-- | None            |   1039    |   5438   | 6477  | -->
+<!-- | Med-Low         |   4440    |  29712   | 29809 | -->
+<!-- | High            |   3601    |  24934   | 28535 | -->
+<!-- | **Total**       |   9080    |  60084   | 64821 | -->
+<!-- -   ...was a high coffee drinker, given that he died? -->
+<!-- -   ...died, given that he was a high coffee drinker? -->
+<!-- Let's verify our results using Bayes' rule. -->
+<!-- ## Solution -->
+<!-- Probability that a person was a high coffee drinker, given that he died? -->
+<!-- \begin{align} -->
+<!-- P(A_H|B) &= \frac{P(B|A_H)P(A_H)}{P(B|A_H)P(A_H)+P(B|A_M)P(A_M)+P(B|A_N)P(A_N)}\\ -->
+<!-- &= \frac{\frac{3601}{28535}\times\frac{28535}{64821}}{\frac{3601}{28535} -->
+<!-- \times\frac{28535}{64821}+\frac{1039}{6477}\times\frac{6477}{64821}+\frac{4440}{29809}\times\frac{29809}{64821}}\\ -->
+<!-- &= \frac{\frac{3601}{64821}}{\frac{9080}{64821}}\\  -->
+<!-- &\approx 0.397 -->
+<!-- \end{align} -->
+<!-- Probability that a person died, given that he was a high coffee drinker? -->
+<!-- \begin{align} -->
+<!-- P(B|A_H) &= \frac{P(A_H|B)P(B)}{P(A_H|B)P(B)+P(A_H|B^C)P(B^C)}\\ -->
+<!-- &= \frac{\frac{3601}{9080}\times\frac{9080}{64821}}{\frac{3601}{9080} -->
+<!-- \times\frac{9080}{64821}+\frac{25934}{60084}\times\frac{60084}{64821}}\\ -->
+<!-- &= \frac{\frac{3601}{64821}}{\frac{28535}{64821}}\\  -->
+<!-- &\approx 0.126 -->
+<!-- \end{align} -->
+<!-- ## Why do we need Bayes' rule? -->
+<!-- -   If we have the row and column totals, we can directly calculate these conditional probabilities from a table. -->
+<!-- -   So, why would we even need Bayes' rule? -->
+<!-- -   There are many cases where you would not have row/column totals. -->
+<!-- ## Example: Medical diagnosis with missing data {.smaller} -->
+<!-- -   Imagine a scenario where a rare disease is being studied. -->
+<!-- -   You may have detailed information about patients who tested positive for the disease (including their symptoms and demographics), but you might lack comprehensive data on the entire population's symptom distribution or total number of people tested. -->
+<!-- -   In this case, you wouldn’t have the full row or column totals, making it necessary to use Bayes' Theorem to infer probabilities based on the available conditional probabilities and the prevalence of the disease. -->
+<!-- -   This is common in situations where data is incomplete, either due to privacy concerns, lack of resources, or when dealing with emerging diseases. -->
 </section>
 <section id="conditional-probabilities" class="level2 smaller">
 <h2 class="smaller anchored" data-anchor-id="conditional-probabilities">Conditional probabilities</h2>
@@ -419,6 +302,107 @@ P(B|A_H) &amp;= \frac{P(A_H|B)P(B)}{P(A_H|B)P(B)+P(A_H|B^C)P(B^C)}\\
 <li>probability that the condition is not present, given a negative test</li>
 </ul></li>
 </ul>
+</section>
+<section id="example" class="level2">
+<h2 class="anchored" data-anchor-id="example">Example</h2>
+<ul>
+<li>Suppose there is an illness affecting Biostatistics students, and we have access to the “true” illness status and the test result for all students.</li>
+</ul>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">Has Illness</th>
+<th style="text-align: center;">No Illness</th>
+<th style="text-align: center;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Positive Test</td>
+<td style="text-align: center;">54</td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">114</td>
+</tr>
+<tr class="even">
+<td>Negative Test</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">180</td>
+<td style="text-align: center;">186</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">240</td>
+<td style="text-align: center;">300</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-simple callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What is the prevalence of this illness in the population of Biostatistics students?</p>
+<p>What is the sensitivity of the test?</p>
+<p>What is the positive predictive value of the test?</p>
+</div>
+</div>
+</section>
+<section id="example-1" class="level2">
+<h2 class="anchored" data-anchor-id="example-1">Example</h2>
+<ul>
+<li>Suppose there is an illness affecting Biostatistics students, and we have access to the “true” illness status and the test result for all students.</li>
+</ul>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">Has Illness</th>
+<th style="text-align: center;">No Illness</th>
+<th style="text-align: center;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Positive Test</td>
+<td style="text-align: center;">54</td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">114</td>
+</tr>
+<tr class="even">
+<td>Negative Test</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">180</td>
+<td style="text-align: center;">186</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">240</td>
+<td style="text-align: center;">300</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-simple callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What is the specificity of the test?</p>
+<p>What is the negative predictive value of the test?</p>
+</div>
+</div>
 </section>
 <section id="popularization-of-medical-diagnostics" class="level2">
 <h2 class="anchored" data-anchor-id="popularization-of-medical-diagnostics">Popularization of medical diagnostics</h2>
@@ -476,63 +460,53 @@ P(B|A_H) &amp;= \frac{P(A_H|B)P(B)}{P(A_H|B)P(B)+P(A_H|B^C)P(B^C)}\\
 </section>
 <section id="rapid-self-administered-hiv-tests-1" class="level2">
 <h2 class="anchored" data-anchor-id="rapid-self-administered-hiv-tests-1">Rapid self-administered HIV tests</h2>
-<p>Suppose a randomly selected American aged <span class="math inline">\(\geq\)</span> 13 has a positive test on this test. What do you think is the probability they are HIV+?</p>
-</section>
-<section id="steps-to-solve-using-bayes-rule" class="level2">
-<h2 class="anchored" data-anchor-id="steps-to-solve-using-bayes-rule">Steps to solve using Bayes’ Rule</h2>
-<ol type="1">
-<li><p>Define two events of interest as <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>.</p></li>
-<li><p>Write the quantity of interest in terms of Bayes’ Rule.</p></li>
-<li><p>Expand denominator in terms of law of total probability.</p></li>
-<li><p>Identify quantities of interest.</p></li>
-<li><p>Plug in quantities from step 4 and solve.</p></li>
-</ol>
-</section>
-<section id="bayes-rule-2" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="bayes-rule-2">Bayes’ rule</h2>
-<p>Recall Bayes’ rule below.</p>
-<p><span class="math display">\[
-\begin{aligned}
-P(A | B) = \frac{P(A \cap B)}{P(B)} &amp;= \frac{P(B | A) P(A)}{P(B)}
-\end{aligned}
-\]</span></p>
-</section>
-<section id="law-of-total-probability" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="law-of-total-probability">Law of Total Probability</h2>
-<p>Recall we can expand our denominator using Law of Total Probability.</p>
-<p><span class="math display">\[
-\begin{aligned}
-P(A | B) &amp;= \frac{P(B | A) P(A)}{P(B)} \\
-&amp;= \frac{P(B | A) P(A) }{P(B | A) P(A) + P(B | A^C) P(A^C)}
-\end{aligned}
-\]</span></p>
-</section>
-<section id="lets-solve" class="level2">
-<h2 class="anchored" data-anchor-id="lets-solve">Let’s solve!</h2>
-<p><strong>Step 1</strong>: Define events as <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>.</p>
-<p>Let <span class="math inline">\(A\)</span> be the event of being HIV+ and <span class="math inline">\(B\)</span> be testing positive.</p>
-<p><strong>Step 2</strong>: Write out the quantity of interest using Bayes’ Rule.</p>
-<p><span class="math display">\[P(HIV + | Test +) = \frac{P(Test + | HIV +)P(HIV +)}{P(Test +)}\]</span></p>
-</section>
-<section id="lets-solve-continued" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="lets-solve-continued">Let’s Solve! (continued)</h2>
-<p><strong>Step 3</strong>: Expand the denominator using Law of Total Probability. <span class="math display">\[
-=\frac{P(Test + | HIV +)P(HIV +)}{P(Test + | HIV +) P(HIV +) + P(Test + | HIV - ) P(HIV -)}
-\]</span></p>
-<p><strong>Step 4</strong>: Identify quantities of interest.</p>
 <ul>
-<li><p><span class="math inline">\(P(Test + | HIV +)\)</span> = True positive rate = sensitivity = .993</p></li>
-<li><p><span class="math inline">\(P(HIV +)\)</span> = prevalence = .000143</p></li>
-<li><p><span class="math inline">\(P(Test + | HIV - )\)</span> = False positive rate = 1 - specificity = 1-.998</p></li>
-<li><p><span class="math inline">\(P(HIV - )\)</span> = 1 - prevalence = 1-.000143</p></li>
+<li><p>Suppose a randomly selected American aged <span class="math inline">\(\geq\)</span> 13 has a positive test on this test. What do you think is the probability they are HIV+?</p></li>
+<li><p>Let <span class="math inline">\(A\)</span> be the event of being HIV+ and <span class="math inline">\(B\)</span> be the event of testing positive</p></li>
+<li><p>Here, we want to find <span class="math inline">\(P(A \vert B)\)</span>.</p></li>
+<li><p>From the definition of conditional probability, we know <span class="math inline">\(P(A \vert B) = \frac{P(A \cap B)}{P(B)}\)</span>.</p></li>
+<li><p>But we don’t know <span class="math inline">\(P(A \cap B)\)</span> or <span class="math inline">\(P(B)\)</span> – we only know <span class="math inline">\(P(A)\)</span>, <span class="math inline">\(P(B \vert A)\)</span>, and <span class="math inline">\(P(B^C\vert A^C)\)</span>.</p></li>
+<li><p>We need a few more tools to find these unknown values.</p></li>
 </ul>
 </section>
-<section id="lets-solve-continued-1" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="lets-solve-continued-1">Let’s solve! (continued)</h2>
-<p><strong>Step 5:</strong> Plug in quantities from step 4 and solve.</p>
-<p><span class="math display">\[P(HIV + | Test +)\]</span></p>
-<p><span class="math display">\[=\frac{(.993)(.000143)}{(.993)(.000143) + (1-.998)(1-.000143)}\]</span></p>
-<p><span class="math display">\[ = 0.066 = 6.6\%\]</span> Is this result surprising? Why?</p>
+<section id="bayes-rule" class="level2">
+<h2 class="anchored" data-anchor-id="bayes-rule">Bayes’ Rule</h2>
+<ul>
+<li><p>We can use <strong>Bayes’ rule</strong> to “reverse” the order of conditioning.</p></li>
+<li><p>By definition:</p></li>
+</ul>
+<p><span class="math display">\[P(A | B) = \frac{P(A \cap B)}{P(B)} = \frac{P(B | A) P(A)}{P(B)}\]</span></p>
+<ul>
+<li><p>Now our numerator is written in terms of known probabilities – the sensitivity and the prevalence!</p></li>
+<li><p>For the denominator, we need one last tool.</p></li>
+</ul>
+</section>
+<section id="the-law-of-total-probability" class="level2">
+<h2 class="anchored" data-anchor-id="the-law-of-total-probability">The Law of Total Probability</h2>
+<ul>
+<li><p>We know that a person either has HIV (<span class="math inline">\(A\)</span>) or does not have HIV (<span class="math inline">\(A^C\)</span>).</p></li>
+<li><p><span class="math inline">\(A\)</span> and <span class="math inline">\(A^C\)</span> are disjoint, and also <strong><em>partition</em></strong> the sample space – every member of the population falls into one of these two groups</p></li>
+<li><p>Then the <strong>law of total probability</strong> states that the probability of event <span class="math inline">\(B\)</span> is</p></li>
+</ul>
+<p><span class="math display">\[
+P(B) = P(B \cap A) + P(B \cap A^C)
+\]</span></p>
+<ul>
+<li>Of course, we still don’t know <span class="math inline">\(P(B \cap A)\)</span> or <span class="math inline">\(P(B \cap A^C)\)</span>, but we can use the definition of conditional probability to write:</li>
+</ul>
+<p><span class="math display">\[
+P(B) = P(B \vert A)P(A) + P(B \vert A^C)P(A^C)
+\]</span> - Now we know all of these probabilities (since <span class="math inline">\(P(A^C) = 1 - P(A)\)</span>)!</p>
+</section>
+<section id="rapid-self-administered-hiv-tests-2" class="level2">
+<h2 class="anchored" data-anchor-id="rapid-self-administered-hiv-tests-2">Rapid self-administered HIV tests</h2>
+<p>Putting it all together, we have</p>
+<p><span class="math display">\[\begin{align}
+P(B \vert A) &amp;= \frac{P(B\vert A)P(A)}{P(B\vert A)P(A)+P(B\vert A^C)P(A^C)}\\
+&amp;= \frac{(.993)(.000143)}{(.993)(.000143) + (1-.998)(1-.000143)}\\
+&amp;= 0.066 = 6.6\%
+\end{align}\]</span></p>
+<p>Is this result surprising? Why?</p>
 </section>
 <section id="interpretation-of-result-oraquick-test" class="level2">
 <h2 class="anchored" data-anchor-id="interpretation-of-result-oraquick-test">Interpretation of Result: Oraquick test</h2>
@@ -569,25 +543,95 @@ P(A | B) &amp;= \frac{P(B | A) P(A)}{P(B)} \\
 <li><p>With a modest false positive rate, a higher prevalence can help our PPV be higher, yielding a <strong>more useful diagnostic test</strong> for that setting. With lower prevalence, you need to be careful with the conclusions made by a diagnostic test as it could be misleading.</p></li>
 </ul>
 </section>
+<section id="steps-to-solve-using-bayes-rule" class="level2">
+<h2 class="anchored" data-anchor-id="steps-to-solve-using-bayes-rule">Steps to solve using Bayes’ Rule</h2>
+<ol type="1">
+<li><p>Define two events of interest as <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>.</p></li>
+<li><p>Identify what probabilities you already know.</p></li>
+<li><p>Write the probability of interest in terms of Bayes’ Rule.</p></li>
+<li><p>Expand denominator in terms of law of total probability.</p></li>
+<li><p>Plug in probabilities from step 2 and solve.</p></li>
+</ol>
+</section>
+<section id="practice-calculating-npv-with-bayes-rule" class="level2">
+<h2 class="anchored" data-anchor-id="practice-calculating-npv-with-bayes-rule">Practice calculating NPV with Bayes’ Rule</h2>
+<p>Researchers are interested in accurately predicting the development of irreversible brain damage or death (a “bad outcome”) due to brain hemorrhage based on clinical characteristics during the acute phase of the hemorrhage. One diagnostic tool is NDKA, a biomarker for brain damage, with patients classified as being “high” level or “low” level. The specificity and sensitivity of using high NDKA as a diagnostic for bad outcomes at one year are 90% and 20%, respectively. The prevalence of bad outcome is 40%.</p>
+<p>What is the negative predictive value (NPV) of “high NDKA” as a diagnostic for bad outcomes?</p>
+</section>
+<section id="step-1.-define-the-events-of-interest" class="level2">
+<h2 class="anchored" data-anchor-id="step-1.-define-the-events-of-interest">Step 1. Define the events of interest</h2>
+</section>
+<section id="step-1.-define-the-events-of-interest-1" class="level2">
+<h2 class="anchored" data-anchor-id="step-1.-define-the-events-of-interest-1">Step 1. Define the events of interest</h2>
+<p>Let <span class="math inline">\(A\)</span> be having a bad outcome and <span class="math inline">\(B\)</span> be a high NKDA level.</p>
+<p>This means that <span class="math inline">\(A^C\)</span> is having a good outcome and <span class="math inline">\(B^C\)</span> is a low NKDA level.</p>
+<p>We want to find <span class="math inline">\(P(A^C|B^C)\)</span>.</p>
+</section>
+<section id="step-2.-identify-what-probabilities-you-already-know" class="level2">
+<h2 class="anchored" data-anchor-id="step-2.-identify-what-probabilities-you-already-know">Step 2. Identify what probabilities you already know</h2>
+</section>
+<section id="step-2.-identify-what-probabilities-you-already-know-1" class="level2">
+<h2 class="anchored" data-anchor-id="step-2.-identify-what-probabilities-you-already-know-1">Step 2. Identify what probabilities you already know</h2>
+<p><span class="math inline">\(P(B \vert A) = 0.9\)</span> … therefore <span class="math inline">\(P(B^C \vert A) = 1 - 0.9 = 0.1\)</span></p>
+<p><span class="math inline">\(P(B^C \vert A^C) = 0.1\)</span></p>
+<p><span class="math inline">\(P(A) = 0.4\)</span> … therefore <span class="math inline">\(P(A^C) = 1 - 0.4 = 0.6\)</span></p>
+</section>
+<section id="step-3.-bayes-rule" class="level2">
+<h2 class="anchored" data-anchor-id="step-3.-bayes-rule">Step 3. Bayes’ Rule</h2>
+</section>
+<section id="step-3.-bayes-rule-1" class="level2">
+<h2 class="anchored" data-anchor-id="step-3.-bayes-rule-1">Step 3. Bayes’ Rule</h2>
+<p><span class="math display">\[
+\begin{aligned}
+P(A^C \vert B^C) &amp;= \frac{P(A^C \cap B^C)}{P(B^C)}\\
+&amp;= \frac{P(B^C \vert A^C)P(A^C)}{P(B^C)}
+\end{aligned}
+\]</span></p>
+</section>
+<section id="step-4.-law-of-total-probability" class="level2">
+<h2 class="anchored" data-anchor-id="step-4.-law-of-total-probability">Step 4. Law of Total Probability</h2>
+</section>
+<section id="step-4.-law-of-total-probability-1" class="level2">
+<h2 class="anchored" data-anchor-id="step-4.-law-of-total-probability-1">Step 4. Law of Total Probability</h2>
+<p><span class="math display">\[
+\begin{aligned}
+P(A^C \vert B^C) &amp;= \frac{P(B^C \vert A^C)P(A^C)}{P(B^C)}\\
+&amp;= \frac{P(B^C \vert A^C)P(A^C)}{P(B^C \vert A^C)P(A^C)+P(B^C\vert A)P(A)}\\
+\end{aligned}
+\]</span></p>
+</section>
+<section id="plug-in-known-probabilities" class="level2">
+<h2 class="anchored" data-anchor-id="plug-in-known-probabilities">5. Plug in known probabilities</h2>
+</section>
+<section id="plug-in-known-probabilities-1" class="level2">
+<h2 class="anchored" data-anchor-id="plug-in-known-probabilities-1">5. Plug in known probabilities</h2>
+<p><span class="math display">\[
+\begin{aligned}
+P(A^C \vert B^C) &amp;= \frac{P(B^C \vert A^C)P(A^C)}{P(B^C \vert A^C)P(A^C)+P(B^C\vert A)P(A)}\\
+&amp;= \frac{0.1 \times 0.6}{0.1 \times 0.6 + 0.1 \times 0.4}\\
+&amp;= 0.6 = 60\%
+\end{aligned}
+\]</span></p>
+</section>
 <section id="discrimination-thresholds" class="level2">
 <h2 class="anchored" data-anchor-id="discrimination-thresholds">Discrimination thresholds</h2>
-<p>Oral HIV tests give positive or negative results depending on levels of HIV antibodies detected in saliva.</p>
+<p>Returning to our example, oral HIV tests give positive or negative results depending on levels of HIV antibodies detected in saliva.</p>
 <ul>
 <li><p>If antibody levels are above a certain threshold, it is classified as a positive test.</p></li>
-<li><p>Varying the threshold for a positive vs.&nbsp;negative test will result in a test in different characteristics.</p></li>
+<li><p>Varying the threshold for a positive vs.&nbsp;negative test will result in a test with different characteristics.</p></li>
 <li><p>At each threshold value, there is a tradeoff between sensitivity and specificity.</p></li>
 </ul>
 </section>
-<section id="example" class="level2">
-<h2 class="anchored" data-anchor-id="example">Example</h2>
+<section id="example-2" class="level2">
+<h2 class="anchored" data-anchor-id="example-2">Example</h2>
 <ul>
 <li>American Heart Assocation has CVD risk calculator <a href="https://professional.heart.org/en/guidelines-and-statements/prevent-calculator">PREVENT calculator</a> that provides estimates of probabilities of having a CVD event within the next 10-years</li>
 <li>BP guidelines recommend using this calculator to identify individuals at increased risk of CVD and to guide initiation of antihypertensive therapy</li>
 <li><strong>Current guidance</strong>: Individuals at 10-year risk of total CVD ≥ 7.5% are recommended to initiate anti-hypertensive therapy</li>
 </ul>
 </section>
-<section id="example-1" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="example-1">Example</h2>
+<section id="example-3" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="example-3">Example</h2>
 <ul>
 <li><strong>Current guidance: 10-Year Risk ≥ 7.5%</strong>
 <ul>
@@ -633,7 +677,7 @@ P(A | B) &amp;= \frac{P(B | A) P(A)}{P(B)} \\
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="lec-4-diagnostic-anno_MH_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" alt="A graph with title ROC Curves. The x-axis is titled False Positive Rate (1-Specificity) and the y-axis is titled True Positive Rate (Sensitivity). Both axes go from 0 to 1. There are three curves on the graph; the red one is a straight line from (0,0) to (1,1); the green one has higher y-values that the red for all x-values; and the blue one has higher y-values than either the red or green for all x-values." width="576"></p>
+<p><img src="lec-4-diagnostic-updated-anno_MH_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid figure-img" alt="A graph with title ROC Curves. The x-axis is titled False Positive Rate (1-Specificity) and the y-axis is titled True Positive Rate (Sensitivity). Both axes go from 0 to 1. There are three curves on the graph; the red one is a straight line from (0,0) to (1,1); the green one has higher y-values that the red for all x-values; and the blue one has higher y-values than either the red or green for all x-values." width="576"></p>
 </figure>
 </div>
 </div>
@@ -657,7 +701,6 @@ P(A | B) &amp;= \frac{P(B | A) P(A)}{P(B)} \\
 <h2 class="anchored" data-anchor-id="recap">Recap</h2>
 <ul>
 <li><p>How conditional probabilities relate to sensitivity, specificity, &amp; more!</p></li>
-<li><p>Examples, how small sample size affects diagnostic tests</p></li>
 <li><p>Thresholds &amp; how they affect diagnostic tests</p></li>
 <li><p>ROC Curves: show tradeoff between sensitivity and specificity</p></li>
 </ul>
