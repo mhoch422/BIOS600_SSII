@@ -533,7 +533,7 @@ $$
 
 ## Discrimination thresholds
 
-Returning to our example, oral HIV tests give positive or negative results depending on levels of HIV antibodies detected in saliva.
+Returning to our earlier example, oral HIV tests give positive or negative results depending on levels of HIV antibodies detected in saliva.
 
 -   If antibody levels are above a certain threshold, it is classified as a positive test.
 

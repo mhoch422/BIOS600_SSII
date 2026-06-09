@@ -1,6 +1,6 @@
 ---
 title: "Lecture 5: Discrete distributions"
-subtitle: "BIOS 600 - Spring 2026"
+subtitle: "BIOS 600 - Summer Session II 2026"
 institute: "UNC - Chapel Hill"
 logo: "images/logo_600.png"
 format:
@@ -59,7 +59,7 @@ Random variables encountered in this class will be either discrete or continuous
 
 ::: columns
 ::: {.column width="50%"}
-Let $X$ be the random variable for birth status in the US. Its probability distribution may be given by
+Let $X$ be the random variable for birth status in the US. Its probability distribution may be given by:
 :::
 
 ::: {.column width="50%"}
@@ -301,7 +301,7 @@ Thus, the probability distribution of the number of preterm births out of three 
 ::: {.callout-caution appearance="simple"}
 ## Verify
 
-Are these disjoint events, with probabilities in \[0,1\], that all sum to 1?)
+Are these disjoint events, with probabilities in \[0,1\], that all sum to 1?
 :::
 
 ## Extending the Bernoulli distribution
@@ -341,14 +341,14 @@ This expression will always be provided to you if needed.
 :::
 
 
-## N choose K
+## N choose K {.smaller}
 
 - Let's go to our example of preterm births, $P(Z=2)$
-- If I have 3 trials, then there would be a few different ways I could say for example choose 2 of them to be successes
+- If I have 3 trials, then there would be a few different ways I could choose 2 of them to be successes
 
 $${n \choose k} = {3 \choose 2} = \frac{3!}{2!(3-2)!} = 3$$
 
-- For 2 births that could happen several different ways
+- For our 3 births, there are several ways to have 2 premature births:
   - $X_1 = 1, X_2=1, X_3=0$
   - $X_1 = 0, X_2=1, X_3=1$
   - $X_1 = 1, X_2=1, X_3=0$
@@ -386,7 +386,7 @@ $$
   - What if we inspect 20 different companies? 
 
 - Q - microbiome taxa is present in a host
-  - What if we sample 3000 different taxa?
+  - What if we sample 3000 different hosts?
 
 ## In R
 
@@ -575,17 +575,36 @@ This is a property of the **distribution** of $X$, not of the random variable it
 
 -   The expectation is the average value (weighted by the probability of each value occurring)
 
--   The variance describes the expected spread of values around the population expectation (thus, variance is in fact an expectation itself!)A 
+-   The variance describes the expected spread of values around the population expectation (thus, variance is in fact an expectation itself!)
 
-## Properties of Bernoulli and binomial random variables
+## Properties of Bernoulli random variables
 
 -   For $Z \sim Bern(p)$, $E(Z) = p$ and $Var(Z) = p(1-p)$
 
-**Example**: Let Z be a coin toss. $Z \sim Bern(.5)$. $E(Z) = .5$ and $Var(Z) = 0.5 \cdot (0.5) = 0.25$.
+**Example**: Let Z be a coin toss, so  $Z \sim Bern(0.5)$. 
+
+$$E(Z) = 0.5$$ and 
+
+$$Var(Z) = 0.5 \cdot (0.5) = 0.25.$$
+
+## Properties of binomial random variables
 
 -   For $Z \sim Binom(n, p)$, $E(Z) = np$ and $Var(Z) = np(1-p)$
 
+**Example**: Let Z be the number of heads in 10 coin tosses, so $Z \sim Binom(10, 0.5)$.
+
+$$E(Z) = 10 \cdot 0.5 = 5$$ and 
+$$Var(Z) = 10 \cdot 0.5 \cdot 0.5 = 2.5.$$
+
 -   For $Z \sim Pois(\lambda)$, $E(Z) = Var(Z) = \lambda$
+
+## Properties of Poisson random variables
+
+-   For $Z \sim Pois(\lambda)$, $E(Z) = Var(Z) = \lambda$
+
+**Example**: Let Z be the number AD deaths in the town from earlier, so $Z \sim Pois(1.5)$.
+$$E(Z) = 1.5$$ and 
+$$Var(Z) = 1.5.$$
 
 ## Properties of Bernoulli and binomial random variables
 
@@ -594,6 +613,19 @@ This is a property of the **distribution** of $X$, not of the random variable it
 -   For $Z \sim Binom(n, p)$, $E(Z) = np$ and I expect across n trials, I would have $np$ successes
 
 -   For $Z \sim Pois(\lambda)$, $E(Z) = \lambda$ and I expect for this given interval there would be a total of $\lambda$ events
+
+## Practice
+
+Suppose we have the following discrete distribution:
+
+| Event   | Probability |
+|---------|-------------|
+| *X = 2* | 0.35        |
+| *X = 3* | 0.1         |
+| *X = 4* | 0.25        |
+| *X = 5* | 0.3         |
+
+What is the expectation of this distribution?
 
 ## Recap
 

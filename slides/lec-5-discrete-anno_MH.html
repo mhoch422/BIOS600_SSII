@@ -930,7 +930,7 @@ P(\textrm{both preterm}) &amp;= P(\textrm{first preterm and 2nd preterm})\\
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Are these disjoint events, with probabilities in [0,1], that all sum to 1?)</p>
+<p>Are these disjoint events, with probabilities in [0,1], that all sum to 1?</p>
 </div>
 </div>
 </section>
@@ -976,15 +976,15 @@ Note
 </div>
 </div>
 </section>
-<section id="n-choose-k" class="level2">
-<h2 class="anchored" data-anchor-id="n-choose-k">N choose K</h2>
+<section id="n-choose-k" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="n-choose-k">N choose K</h2>
 <ul>
 <li>Let’s go to our example of preterm births, <span class="math inline">\(P(Z=2)\)</span></li>
-<li>If I have 3 trials, then there would be a few different ways I could say for example choose 2 of them to be successes</li>
+<li>If I have 3 trials, then there would be a few different ways I could choose 2 of them to be successes</li>
 </ul>
 <p><span class="math display">\[{n \choose k} = {3 \choose 2} = \frac{3!}{2!(3-2)!} = 3\]</span></p>
 <ul>
-<li>For 2 births that could happen several different ways
+<li>For our 3 births, there are several ways to have 2 premature births:
 <ul>
 <li><span class="math inline">\(X_1 = 1, X_2=1, X_3=0\)</span></li>
 <li><span class="math inline">\(X_1 = 0, X_2=1, X_3=1\)</span></li>
@@ -1023,7 +1023,7 @@ P(Z=2) &amp;= {3 \choose 2} 0.1^2 (1-0.1)^{3-2} \\
 </ul></li>
 <li><p>Q - microbiome taxa is present in a host</p>
 <ul>
-<li>What if we sample 3000 different taxa?</li>
+<li>What if we sample 3000 different hosts?</li>
 </ul></li>
 </ul>
 </section>
@@ -1235,27 +1235,75 @@ P(Z=1) &amp;= \frac{1.5^1 \times e^{-1.5}}{1!}\approx 0.335
 <h2 class="anchored" data-anchor-id="why-are-these-important">Why are these important?</h2>
 <ul>
 <li><p>The expectation is the average value (weighted by the probability of each value occurring)</p></li>
-<li><p>The variance describes the expected spread of values around the population expectation (thus, variance is in fact an expectation itself!)A</p></li>
+<li><p>The variance describes the expected spread of values around the population expectation (thus, variance is in fact an expectation itself!)</p></li>
 </ul>
 </section>
-<section id="properties-of-bernoulli-and-binomial-random-variables" class="level2">
-<h2 class="anchored" data-anchor-id="properties-of-bernoulli-and-binomial-random-variables">Properties of Bernoulli and binomial random variables</h2>
+<section id="properties-of-bernoulli-random-variables" class="level2">
+<h2 class="anchored" data-anchor-id="properties-of-bernoulli-random-variables">Properties of Bernoulli random variables</h2>
 <ul>
 <li>For <span class="math inline">\(Z \sim Bern(p)\)</span>, <span class="math inline">\(E(Z) = p\)</span> and <span class="math inline">\(Var(Z) = p(1-p)\)</span></li>
 </ul>
-<p><strong>Example</strong>: Let Z be a coin toss. <span class="math inline">\(Z \sim Bern(.5)\)</span>. <span class="math inline">\(E(Z) = .5\)</span> and <span class="math inline">\(Var(Z) = 0.5 \cdot (0.5) = 0.25\)</span>.</p>
+<p><strong>Example</strong>: Let Z be a coin toss, so <span class="math inline">\(Z \sim Bern(0.5)\)</span>.</p>
+<p><span class="math display">\[E(Z) = 0.5\]</span> and</p>
+<p><span class="math display">\[Var(Z) = 0.5 \cdot (0.5) = 0.25.\]</span></p>
+</section>
+<section id="properties-of-binomial-random-variables" class="level2">
+<h2 class="anchored" data-anchor-id="properties-of-binomial-random-variables">Properties of binomial random variables</h2>
 <ul>
-<li><p>For <span class="math inline">\(Z \sim Binom(n, p)\)</span>, <span class="math inline">\(E(Z) = np\)</span> and <span class="math inline">\(Var(Z) = np(1-p)\)</span></p></li>
-<li><p>For <span class="math inline">\(Z \sim Pois(\lambda)\)</span>, <span class="math inline">\(E(Z) = Var(Z) = \lambda\)</span></p></li>
+<li>For <span class="math inline">\(Z \sim Binom(n, p)\)</span>, <span class="math inline">\(E(Z) = np\)</span> and <span class="math inline">\(Var(Z) = np(1-p)\)</span></li>
+</ul>
+<p><strong>Example</strong>: Let Z be the number of heads in 10 coin tosses, so <span class="math inline">\(Z \sim Binom(10, 0.5)\)</span>.</p>
+<p><span class="math display">\[E(Z) = 10 \cdot 0.5 = 5\]</span> and <span class="math display">\[Var(Z) = 10 \cdot 0.5 \cdot 0.5 = 2.5.\]</span></p>
+<ul>
+<li>For <span class="math inline">\(Z \sim Pois(\lambda)\)</span>, <span class="math inline">\(E(Z) = Var(Z) = \lambda\)</span></li>
 </ul>
 </section>
-<section id="properties-of-bernoulli-and-binomial-random-variables-1" class="level2">
-<h2 class="anchored" data-anchor-id="properties-of-bernoulli-and-binomial-random-variables-1">Properties of Bernoulli and binomial random variables</h2>
+<section id="properties-of-poisson-random-variables" class="level2">
+<h2 class="anchored" data-anchor-id="properties-of-poisson-random-variables">Properties of Poisson random variables</h2>
+<ul>
+<li>For <span class="math inline">\(Z \sim Pois(\lambda)\)</span>, <span class="math inline">\(E(Z) = Var(Z) = \lambda\)</span></li>
+</ul>
+<p><strong>Example</strong>: Let Z be the number AD deaths in the town from earlier, so <span class="math inline">\(Z \sim Pois(1.5)\)</span>. <span class="math display">\[E(Z) = 1.5\]</span> and <span class="math display">\[Var(Z) = 1.5.\]</span></p>
+</section>
+<section id="properties-of-bernoulli-and-binomial-random-variables" class="level2">
+<h2 class="anchored" data-anchor-id="properties-of-bernoulli-and-binomial-random-variables">Properties of Bernoulli and binomial random variables</h2>
 <ul>
 <li><p>For <span class="math inline">\(Z \sim Bern(p)\)</span>, <span class="math inline">\(E(Z) = p\)</span> and I expect across many trials, the average rate of success would be <span class="math inline">\(p\)</span></p></li>
 <li><p>For <span class="math inline">\(Z \sim Binom(n, p)\)</span>, <span class="math inline">\(E(Z) = np\)</span> and I expect across n trials, I would have <span class="math inline">\(np\)</span> successes</p></li>
 <li><p>For <span class="math inline">\(Z \sim Pois(\lambda)\)</span>, <span class="math inline">\(E(Z) = \lambda\)</span> and I expect for this given interval there would be a total of <span class="math inline">\(\lambda\)</span> events</p></li>
 </ul>
+</section>
+<section id="practice" class="level2">
+<h2 class="anchored" data-anchor-id="practice">Practice</h2>
+<p>Suppose we have the following discrete distribution:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Event</th>
+<th>Probability</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><em>X = 2</em></td>
+<td>0.35</td>
+</tr>
+<tr class="even">
+<td><em>X = 3</em></td>
+<td>0.1</td>
+</tr>
+<tr class="odd">
+<td><em>X = 4</em></td>
+<td>0.25</td>
+</tr>
+<tr class="even">
+<td><em>X = 5</em></td>
+<td>0.3</td>
+</tr>
+</tbody>
+</table>
+<p>What is the expectation of this distribution?</p>
+<p><span class="math display">\[2 * 0.35 + 3* 0.1 + 4* 0.25 + 5 * 0.3 = 0.7 + 0.3 + 1 + 1.5 = 3.5\]</span></p>
 </section>
 <section id="recap" class="level2">
 <h2 class="anchored" data-anchor-id="recap">Recap</h2>
