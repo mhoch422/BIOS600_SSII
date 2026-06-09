@@ -1,5 +1,5 @@
 ---
-title: "Lab 02: Basic Data Visualization & Data Wrangling"
+title: "Lab 1: Basic Data Visualization & Data Wrangling"
 author: "BIOS 600 Summer Session II 2026"
 format: html
 ---
