@@ -6,7 +6,8 @@ logo: "images/logo_600.png"
 format: html
 ---
 
-```{r echo = FALSE}
+```{r include=FALSE}
+knitr::opts_chunk$set(echo = FALSE, message = FALSE, warning = FALSE)
 library(tidyverse)
 ```
 
