@@ -297,7 +297,7 @@ dat_bmi <- dat |>
   mutate(bmi_cat = case_when(
     bmi < 18 ~ "underweight",
     bmi >= 18 & bmi < 25 ~ "normal",
-    bmi >= 25 & bmi < 30 ~ "oberweight",
+    bmi >= 25 & bmi < 30 ~ "overweight",
     bmi > 30 ~ "obese"
   ))
 

@@ -303,10 +303,11 @@ window.Quarto = {
 </ul></li>
 </ul>
 </section>
-<section id="example" class="level2">
-<h2 class="anchored" data-anchor-id="example">Example</h2>
+<section id="example" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="example">Example</h2>
 <ul>
-<li>Suppose there is an illness affecting Biostatistics students, and we have access to the “true” illness status and the test result for all students.</li>
+<li><p>When we have a full table with true status and test results, we can calculate all five of these values.</p></li>
+<li><p>Suppose there is an illness affecting Biostatistics students, and we have access to the “true” illness status and the test result for all students.</p></li>
 </ul>
 <table class="caption-top table">
 <thead>
@@ -349,16 +350,47 @@ window.Quarto = {
 </div>
 <div class="callout-body-container callout-body">
 <p>What is the prevalence of this illness in the population of Biostatistics students?</p>
-<p>What is the sensitivity of the test?</p>
-<p>What is the positive predictive value of the test?</p>
 </div>
 </div>
 </section>
-<section id="example-1" class="level2">
-<h2 class="anchored" data-anchor-id="example-1">Example</h2>
-<ul>
-<li>Suppose there is an illness affecting Biostatistics students, and we have access to the “true” illness status and the test result for all students.</li>
-</ul>
+<section id="example-1" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="example-1">Example</h2>
+<p>What is the prevalence of this illness in the population of Biostatistics students?</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">Has Illness</th>
+<th style="text-align: center;">No Illness</th>
+<th style="text-align: center;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Positive Test</td>
+<td style="text-align: center;">54</td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">114</td>
+</tr>
+<tr class="even">
+<td>Negative Test</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">180</td>
+<td style="text-align: center;">186</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td style="text-align: center;"><u><strong>60</strong></u></td>
+<td style="text-align: center;">240</td>
+<td style="text-align: center;"><u><strong>300</strong></u></td>
+</tr>
+</tbody>
+</table>
+<p><span class="math display">\[\frac{60}{300} = 20\%\]</span></p>
+</section>
+<section id="example-2" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="example-2">Example</h2>
+<p>What is the sensitivity of this test (<span class="math inline">\(P(Test+\vert Sick)\)</span>)?</p>
 <table class="caption-top table">
 <thead>
 <tr class="header">
@@ -389,20 +421,248 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<div class="callout callout-style-simple callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Question
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>What is the specificity of the test?</p>
-<p>What is the negative predictive value of the test?</p>
-</div>
-</div>
+</section>
+<section id="example-3" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="example-3">Example</h2>
+<p>What is the sensitivity of this test (<span class="math inline">\(P(Test+\vert Sick)\)</span>)?</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">Has Illness</th>
+<th style="text-align: center;">No Illness</th>
+<th style="text-align: center;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Positive Test</td>
+<td style="text-align: center;"><u><strong>54</strong></u></td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">114</td>
+</tr>
+<tr class="even">
+<td>Negative Test</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">180</td>
+<td style="text-align: center;">186</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td style="text-align: center;"><u><strong>60</strong></u></td>
+<td style="text-align: center;">240</td>
+<td style="text-align: center;">300</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math display">\[\frac{54}{60} = 90\%\]</span></p>
+</section>
+<section id="example-4" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="example-4">Example</h2>
+<p>What is the specificity of this test (<span class="math inline">\(P(Test-\vert Healthy)\)</span>)?</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">Has Illness</th>
+<th style="text-align: center;">No Illness</th>
+<th style="text-align: center;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Positive Test</td>
+<td style="text-align: center;">54</td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">114</td>
+</tr>
+<tr class="even">
+<td>Negative Test</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">180</td>
+<td style="text-align: center;">186</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">240</td>
+<td style="text-align: center;">300</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="example-5" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="example-5">Example</h2>
+<p>What is the sensitivity of this test (<span class="math inline">\(P(Test-\vert Healthy)\)</span>)?</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">Has Illness</th>
+<th style="text-align: center;">No Illness</th>
+<th style="text-align: center;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Positive Test</td>
+<td style="text-align: center;">54</td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">114</td>
+</tr>
+<tr class="even">
+<td>Negative Test</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;"><u><strong>180</strong></u></td>
+<td style="text-align: center;">186</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;"><u><strong>240</strong></u></td>
+<td style="text-align: center;">300</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math display">\[\frac{180}{240} = 75\%\]</span></p>
+</section>
+<section id="example-6" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="example-6">Example</h2>
+<p>What is the positive predictive value of this test (<span class="math inline">\(P(Sick\vert Test +)\)</span>)?</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">Has Illness</th>
+<th style="text-align: center;">No Illness</th>
+<th style="text-align: center;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Positive Test</td>
+<td style="text-align: center;">54</td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">114</td>
+</tr>
+<tr class="even">
+<td>Negative Test</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">180</td>
+<td style="text-align: center;">186</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">240</td>
+<td style="text-align: center;">300</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="example-7" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="example-7">Example</h2>
+<p>What is the positive predictive value of this test (<span class="math inline">\(P(Sick\vert Test +)\)</span>)?</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">Has Illness</th>
+<th style="text-align: center;">No Illness</th>
+<th style="text-align: center;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Positive Test</td>
+<td style="text-align: center;"><u><strong>54</strong></u></td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;"><u><strong>114</strong></u></td>
+</tr>
+<tr class="even">
+<td>Negative Test</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">180</td>
+<td style="text-align: center;">186</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">240</td>
+<td style="text-align: center;">300</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math display">\[\frac{54}{114} \approx 47\%\]</span></p>
+</section>
+<section id="example-8" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="example-8">Example</h2>
+<p>What is the negative predictive value of this test (<span class="math inline">\(P(Healthy\vert Test -)\)</span>)?</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">Has Illness</th>
+<th style="text-align: center;">No Illness</th>
+<th style="text-align: center;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Positive Test</td>
+<td style="text-align: center;">54</td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">114</td>
+</tr>
+<tr class="even">
+<td>Negative Test</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">180</td>
+<td style="text-align: center;">186</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">240</td>
+<td style="text-align: center;">300</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="example-9" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="example-9">Example</h2>
+<p>What is the negative predictive value of this test (<span class="math inline">\(P(Healthy\vert Test -)\)</span>)?</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">Has Illness</th>
+<th style="text-align: center;">No Illness</th>
+<th style="text-align: center;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Positive Test</td>
+<td style="text-align: center;">54</td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">114</td>
+</tr>
+<tr class="even">
+<td>Negative Test</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;"><u><strong>180</strong></u></td>
+<td style="text-align: center;"><u><strong>186</strong></u></td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">240</td>
+<td style="text-align: center;">300</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math display">\[\frac{180}{186} \approx 97\%\]</span></p>
 </section>
 <section id="popularization-of-medical-diagnostics" class="level2">
 <h2 class="anchored" data-anchor-id="popularization-of-medical-diagnostics">Popularization of medical diagnostics</h2>
@@ -555,16 +815,19 @@ P(B \vert A) &amp;= \frac{P(B\vert A)P(A)}{P(B\vert A)P(A)+P(B\vert A^C)P(A^C)}\
 </section>
 <section id="practice-calculating-npv-with-bayes-rule" class="level2">
 <h2 class="anchored" data-anchor-id="practice-calculating-npv-with-bayes-rule">Practice calculating NPV with Bayes’ Rule</h2>
-<p>Researchers are interested in accurately predicting the development of irreversible brain damage or death (a “bad outcome”) due to brain hemorrhage based on clinical characteristics during the acute phase of the hemorrhage. One diagnostic tool is NDKA, a biomarker for brain damage, with patients classified as being “high” level or “low” level. The specificity and sensitivity of using high NDKA as a diagnostic for bad outcomes at one year are 90% and 20%, respectively. The prevalence of bad outcome is 40%.</p>
-<p>What is the negative predictive value (NPV) of “high NDKA” as a diagnostic for bad outcomes?</p>
+<ul>
+<li><p>Suppose we want to find the NPV of a home COVID-19 test in a population with a 5% prevalence.</p></li>
+<li><p>These tests have sensitivity = 85% and specificity = 99%.</p></li>
+<li><p>What is the probability of someone being COVID-free, having gotten a negative test result?</p></li>
+</ul>
 </section>
 <section id="step-1.-define-the-events-of-interest" class="level2">
 <h2 class="anchored" data-anchor-id="step-1.-define-the-events-of-interest">Step 1. Define the events of interest</h2>
 </section>
 <section id="step-1.-define-the-events-of-interest-1" class="level2">
 <h2 class="anchored" data-anchor-id="step-1.-define-the-events-of-interest-1">Step 1. Define the events of interest</h2>
-<p>Let <span class="math inline">\(A\)</span> be having a bad outcome and <span class="math inline">\(B\)</span> be a high NKDA level.</p>
-<p>This means that <span class="math inline">\(A^C\)</span> is having a good outcome and <span class="math inline">\(B^C\)</span> is a low NKDA level.</p>
+<p>Let <span class="math inline">\(A\)</span> be having COVID and <span class="math inline">\(B\)</span> be a positive test.</p>
+<p>This means that <span class="math inline">\(A^C\)</span> is being COVID-free and <span class="math inline">\(B^C\)</span> is a negative test.</p>
 <p>We want to find <span class="math inline">\(P(A^C|B^C)\)</span>.</p>
 </section>
 <section id="step-2.-identify-what-probabilities-you-already-know" class="level2">
@@ -572,9 +835,9 @@ P(B \vert A) &amp;= \frac{P(B\vert A)P(A)}{P(B\vert A)P(A)+P(B\vert A^C)P(A^C)}\
 </section>
 <section id="step-2.-identify-what-probabilities-you-already-know-1" class="level2">
 <h2 class="anchored" data-anchor-id="step-2.-identify-what-probabilities-you-already-know-1">Step 2. Identify what probabilities you already know</h2>
-<p><span class="math inline">\(P(B \vert A) = 0.9\)</span> … therefore <span class="math inline">\(P(B^C \vert A) = 1 - 0.9 = 0.1\)</span></p>
-<p><span class="math inline">\(P(B^C \vert A^C) = 0.1\)</span></p>
-<p><span class="math inline">\(P(A) = 0.4\)</span> … therefore <span class="math inline">\(P(A^C) = 1 - 0.4 = 0.6\)</span></p>
+<p><span class="math inline">\(P(B \vert A) = 0.85\)</span> … therefore <span class="math inline">\(P(B^C \vert A) = 1 - 0.85 = 0.15\)</span></p>
+<p><span class="math inline">\(P(B^C \vert A^C) = 0.99\)</span></p>
+<p><span class="math inline">\(P(A) = 0.05\)</span> … therefore <span class="math inline">\(P(A^C) = 1 - 0.05 = 0.95\)</span></p>
 </section>
 <section id="step-3.-bayes-rule" class="level2">
 <h2 class="anchored" data-anchor-id="step-3.-bayes-rule">Step 3. Bayes’ Rule</h2>
@@ -608,8 +871,8 @@ P(A^C \vert B^C) &amp;= \frac{P(B^C \vert A^C)P(A^C)}{P(B^C)}\\
 <p><span class="math display">\[
 \begin{aligned}
 P(A^C \vert B^C) &amp;= \frac{P(B^C \vert A^C)P(A^C)}{P(B^C \vert A^C)P(A^C)+P(B^C\vert A)P(A)}\\
-&amp;= \frac{0.1 \times 0.6}{0.1 \times 0.6 + 0.1 \times 0.4}\\
-&amp;= 0.6 = 60\%
+&amp;= \frac{0.99 \times 0.95}{0.99 \times 0.95 + 0.15 \times 0.05}\\
+&amp;= 0.992 = 99.2\%
 \end{aligned}
 \]</span></p>
 </section>
@@ -622,16 +885,16 @@ P(A^C \vert B^C) &amp;= \frac{P(B^C \vert A^C)P(A^C)}{P(B^C \vert A^C)P(A^C)+P(B
 <li><p>At each threshold value, there is a tradeoff between sensitivity and specificity.</p></li>
 </ul>
 </section>
-<section id="example-2" class="level2">
-<h2 class="anchored" data-anchor-id="example-2">Example</h2>
+<section id="example-10" class="level2">
+<h2 class="anchored" data-anchor-id="example-10">Example</h2>
 <ul>
 <li>American Heart Assocation has CVD risk calculator <a href="https://professional.heart.org/en/guidelines-and-statements/prevent-calculator">PREVENT calculator</a> that provides estimates of probabilities of having a CVD event within the next 10-years</li>
 <li>BP guidelines recommend using this calculator to identify individuals at increased risk of CVD and to guide initiation of antihypertensive therapy</li>
 <li><strong>Current guidance</strong>: Individuals at 10-year risk of total CVD ≥ 7.5% are recommended to initiate anti-hypertensive therapy</li>
 </ul>
 </section>
-<section id="example-3" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="example-3">Example</h2>
+<section id="example-11" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="example-11">Example</h2>
 <ul>
 <li><strong>Current guidance: 10-Year Risk ≥ 7.5%</strong>
 <ul>

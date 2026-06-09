@@ -238,6 +238,8 @@ Let's calculate a z-score and find out!
 
 :::
 
+$$z = \frac{x - \mu}{\sigma} = \frac{698 - 809}{140} = \frac{-111}{140} \approx -0.79$$
+
 ## Return to the tidyverse 
 
 In lab, we began to learn how to use dplyr for data manipulation. There are still a few more functions that will prove quite useful in our work in this class.
@@ -293,7 +295,7 @@ dat_bmi <- dat |>
   mutate(bmi_cat = case_when(
     bmi < 18 ~ "underweight",
     bmi >= 18 & bmi < 25 ~ "normal",
-    bmi >= 25 & bmi < 30 ~ "oberweight",
+    bmi >= 25 & bmi < 30 ~ "overweight",
     bmi > 30 ~ "obese"
   ))
 

@@ -268,7 +268,9 @@ Suppose we're interested in the performance of a diagnostic test. Let $A$ be the
 
     - probability that the condition is not present, given a negative test
     
-## Example
+## Example {.smaller}
+
+- When we have a full table with true status and test results, we can calculate all five of these values.
 
 - Suppose there is an illness affecting Biostatistics students, and we have access to the "true" illness status and the test result for all students.
 
@@ -284,15 +286,23 @@ Suppose we're interested in the performance of a diagnostic test. Let $A$ be the
 
 What is the prevalence of this illness in the population of Biostatistics students?
 
-What is the sensitivity of the test? 
-
-What is the positive predictive value of the test?
-
 :::
-    
-## Example
 
-- Suppose there is an illness affecting Biostatistics students, and we have access to the "true" illness status and the test result for all students.
+## Example {.smaller}
+
+What is the prevalence of this illness in the population of Biostatistics students?
+
+|               | Has Illness   | No Illness | Total          |
+|---------------|:-------------:|:----------:|:--------------:|
+| Positive Test |   54          |  60        | 114            |
+| Negative Test |   6           |  180       | 186            |
+| **Total**     | <u>**60**</u> |  240       | <u>**300**</u> |
+
+$$\frac{60}{300} = 20\%$$
+
+## Example {.smaller}
+
+What is the sensitivity of this test ($P(Test+\vert Sick)$)?
 
 
 |               | Has Illness | No Illness | Total |
@@ -301,15 +311,98 @@ What is the positive predictive value of the test?
 | Negative Test |   6         |  180       | 186   |
 | **Total**     |   60        |  240       | 300   |
 
-::: {.callout-tip appearance="simple"}
-## Question
 
-What is the specificity of the test? 
 
-What is the negative predictive value of the test?
 
-:::    
-    
+## Example {.smaller}
+
+What is the sensitivity of this test ($P(Test+\vert Sick)$)?
+
+|               | Has Illness   | No Illness | Total |
+|---------------|:-------------:|:----------:|:-----:|
+| Positive Test | <u>**54**</u> |  60        | 114   |
+| Negative Test |   6           |  180       | 186   |
+| **Total**     | <u>**60**</u> |  240       | 300   |
+
+$$\frac{54}{60} = 90\%$$
+
+## Example {.smaller}
+
+What is the specificity of this test ($P(Test-\vert Healthy)$)?
+
+
+|               | Has Illness | No Illness | Total |
+|---------------|:-----------:|:----------:|:-----:|
+| Positive Test |   54        |  60        | 114   |
+| Negative Test |   6         |  180       | 186   |
+| **Total**     |   60        |  240       | 300   |
+
+
+
+
+## Example {.smaller}
+
+What is the sensitivity of this test ($P(Test-\vert Healthy)$)?
+
+|               | Has Illness | No Illness      | Total |
+|---------------|:-----------:|:---------------:|:-----:|
+| Positive Test | 54          |  60             | 114   |
+| Negative Test | 6           |  <u>**180**</u> | 186   |
+| **Total**     | 60          |  <u>**240**</u> | 300   |
+
+$$\frac{180}{240} = 75\%$$
+
+## Example {.smaller}
+
+What is the positive predictive value of this test ($P(Sick\vert Test +)$)?
+
+
+|               | Has Illness | No Illness | Total |
+|---------------|:-----------:|:----------:|:-----:|
+| Positive Test |   54        |  60        | 114   |
+| Negative Test |   6         |  180       | 186   |
+| **Total**     |   60        |  240       | 300   |
+
+
+
+
+## Example {.smaller}
+
+What is the positive predictive value of this test ($P(Sick\vert Test +)$)?
+
+|               | Has Illness   | No Illness | Total          |
+|---------------|:-------------:|:----------:|:--------------:|
+| Positive Test | <u>**54**</u> |  60        | <u>**114**</u> |
+| Negative Test | 6             |  180       | 186            |
+| **Total**     | 60            |  240       | 300            |
+
+$$\frac{54}{114} \approx 47\%$$
+
+## Example {.smaller}
+
+What is the negative predictive value of this test ($P(Healthy\vert Test -)$)?
+
+
+|               | Has Illness | No Illness | Total |
+|---------------|:-----------:|:----------:|:-----:|
+| Positive Test |   54        |  60        | 114   |
+| Negative Test |   6         |  180       | 186   |
+| **Total**     |   60        |  240       | 300   |
+
+
+
+
+## Example {.smaller}
+
+What is the negative predictive value of this test ($P(Healthy\vert Test -)$)?
+
+|               | Has Illness | No Illness      | Total           |
+|---------------|:-----------:|:---------------:|:---------------:|
+| Positive Test | 54          |  60             | 114             |
+| Negative Test | 6           |  <u>**180**</u> | <u>**186**</u> |
+| **Total**     | 60          |  240            | 300             |
+
+$$\frac{180}{186} \approx 97\%$$
 
 ## Popularization of medical diagnostics 
 
@@ -366,7 +459,7 @@ From the FDA package insert for the OraQuick ADVANCE Rapid HIV-1/2 Antibody test
 
 From CDC statistics for 2016, 14.3/100,000 Americans aged $\geq$ 13 are HIV+.
 
-## Rapid self-administered HIV tests
+## Rapid self-administered HIV tests {.smaller}
 
 - Suppose a randomly selected American aged $\geq$ 13 has a positive test on this test. What do you think is the probability they are HIV+?
 
@@ -392,7 +485,7 @@ $$P(A | B) = \frac{P(A \cap B)}{P(B)} = \frac{P(B | A) P(A)}{P(B)}$$
 
 - For the denominator, we need one last tool.
 
-## The Law of Total Probability
+## The Law of Total Probability {.smaller}
 
 - We know that a person either has HIV ($A$) or does not have HIV ($A^C$).
 
@@ -409,6 +502,7 @@ $$
 $$
 P(B) = P(B \vert A)P(A) + P(B \vert A^C)P(A^C)
 $$
+
 - Now we know all of these probabilities (since $P(A^C) = 1 - P(A)$)!
 
 ## Rapid self-administered HIV tests
@@ -433,11 +527,13 @@ Is this result surprising? Why?
 
 ## PPV for Botswana
 
-$$P(HIV + | Test +)$$
+$$
+\begin{aligned}
+P(HIV + | Test +) &=\frac{(.993)(.25)}{(.993)(.25) + (1-.998)(1-.25)}\\
+&= 0.99 = 99\%
+\end{aligned}
+$$
 
-$$=\frac{(.993)(.25)}{(.993)(.25) + (1-.998)(1-.25)}$$
-
-$$ = .99 = 99\%$$
 
 ## What's going on here?
 
@@ -449,15 +545,15 @@ $$ = .99 = 99\%$$
 
   - This is simply due to the nature of the test, i.e. having some nonzero false positive rate, in our case .002.
 
--   This is something to look out for! Specificity (i.e. FPR) is important to consider.
+-   This is something to look out for! Specificity is important to consider.
 
 ## Takeaway
 
-- In the US, small prevalence + modest false positive rate is causing the PPV to be much lower than we'd want. 
+- In the US, small prevalence + modest false positive rate (FPR) is causing the PPV to be much lower than we'd want. 
 
 - In Botswana, higher prevalence "corrects" this issue, leading to PPV being much higher (meaning more people who test positive actually have the condition.) 
 
-- With a modest false positive rate, a higher prevalence can help our PPV be higher, yielding a **more useful diagnostic test** for that setting. With lower prevalence, you need to be careful with the conclusions made by a diagnostic test as it could be misleading. 
+- With a modest FPR, a higher prevalence can help our PPV be higher, yielding a **more useful diagnostic test** for that setting. With lower prevalence, you need to be careful with the conclusions made by a diagnostic test as it could be misleading. 
 
 ## Steps to solve using Bayes' Rule
 
@@ -471,19 +567,21 @@ $$ = .99 = 99\%$$
 
 5. Plug in probabilities from step 2 and solve. 
 
-## Practice calculating NPV with Bayes' Rule
+## Practice calculating NPV with Bayes' Rule 
 
-Researchers are interested in accurately predicting the development of irreversible brain damage or death (a “bad outcome”) due to brain hemorrhage based on clinical characteristics during the acute phase of the hemorrhage. One diagnostic tool is NDKA, a biomarker for brain damage, with patients classified as being “high” level or “low” level. The specificity and sensitivity of using high NDKA as a diagnostic for bad outcomes at one year are 90% and 20%, respectively. The prevalence of bad outcome is 40%.
+- Suppose we want to find the NPV of a home COVID-19 test in a population with a 5% prevalence.
 
-What is the negative predictive value (NPV) of “high NDKA” as a diagnostic for bad outcomes?
+- These tests have sensitivity = 85% and specificity = 99%.
+
+- What is the probability of someone being COVID-free, having gotten a negative test result?
 
 ## Step 1. Define the events of interest
 
 ## Step 1. Define the events of interest
 
-Let $A$ be having a bad outcome and $B$ be a high NKDA level. 
+Let $A$ be having COVID and $B$ be a positive test. 
 
-This means that $A^C$ is having a good outcome and $B^C$ is a low NKDA level.
+This means that $A^C$ is being COVID-free and $B^C$ is a negative test.
 
 We want to find $P(A^C|B^C)$.
 
@@ -491,11 +589,11 @@ We want to find $P(A^C|B^C)$.
 
 ## Step 2. Identify what probabilities you already know
 
-$P(B \vert A) = 0.9$ ... therefore $P(B^C \vert A) = 1 - 0.9 = 0.1$
+$P(B \vert A) = 0.85$ ... therefore $P(B^C \vert A) = 1 - 0.85 = 0.15$
 
-$P(B^C \vert A^C) = 0.1$
+$P(B^C \vert A^C) = 0.99$
 
-$P(A) = 0.4$ ... therefore $P(A^C) = 1 - 0.4 = 0.6$
+$P(A) = 0.05$ ... therefore $P(A^C) = 1 - 0.05 = 0.95$
 
 ## Step 3. Bayes' Rule
 
@@ -526,8 +624,8 @@ $$
 $$
 \begin{aligned}
 P(A^C \vert B^C) &= \frac{P(B^C \vert A^C)P(A^C)}{P(B^C \vert A^C)P(A^C)+P(B^C\vert A)P(A)}\\
-&= \frac{0.1 \times 0.6}{0.1 \times 0.6 + 0.1 \times 0.4}\\
-&= 0.6 = 60\%
+&= \frac{0.99 \times 0.95}{0.99 \times 0.95 + 0.15 \times 0.05}\\
+&= 0.992 = 99.2\%
 \end{aligned}
 $$
 
@@ -569,9 +667,9 @@ Receiver Operating Characteristic curves show how specificity and sensitivity ch
 
 ![](images/lec-5/roc.jpg){width="400" fig-alt="Woman wearing a headset seated in front of a screen displayed radar information."}
 
-## Haenssle et. al (2018)
+## Haenssle et. al (2018) {.smaller}
 
-![](images/lec-5/man.png){fig-alt= "Article from Annals of Oncology with the title Man against machine: diagnostic performance of a deep learning convolutional neural network for dermoscopic melanoma recognition in comparison to 58 dermatologists."}
+![](images/lec-5/man.png){fig-alt="Article from Annals of Oncology with the title Man against machine: diagnostic performance of a deep learning convolutional neural network for dermoscopic melanoma recognition in comparison to 58 dermatologists."}
 
 [paper link here](https://www.sciencedirect.com/science/article/pii/S0923753419341055?via%3Dihub)
 

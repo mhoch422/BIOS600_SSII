@@ -338,10 +338,11 @@
 </ul></li>
 </ul>
 </section>
-<section id="example" class="slide level2">
+<section id="example" class="slide level2 smaller">
 <h2>Example</h2>
 <ul>
-<li>Suppose there is an illness affecting Biostatistics students, and we have access to the “true” illness status and the test result for all students.</li>
+<li><p>When we have a full table with true status and test results, we can calculate all five of these values.</p></li>
+<li><p>Suppose there is an illness affecting Biostatistics students, and we have access to the “true” illness status and the test result for all students.</p></li>
 </ul>
 <table class="caption-top">
 <thead>
@@ -383,17 +384,48 @@
 </div>
 <div class="callout-content">
 <p>What is the prevalence of this illness in the population of Biostatistics students?</p>
-<p>What is the sensitivity of the test?</p>
-<p>What is the positive predictive value of the test?</p>
 </div>
 </div>
 </div>
 </section>
-<section id="example-1" class="slide level2">
+<section id="example-1" class="slide level2 smaller">
 <h2>Example</h2>
-<ul>
-<li>Suppose there is an illness affecting Biostatistics students, and we have access to the “true” illness status and the test result for all students.</li>
-</ul>
+<p>What is the prevalence of this illness in the population of Biostatistics students?</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">Has Illness</th>
+<th style="text-align: center;">No Illness</th>
+<th style="text-align: center;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Positive Test</td>
+<td style="text-align: center;">54</td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">114</td>
+</tr>
+<tr class="even">
+<td>Negative Test</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">180</td>
+<td style="text-align: center;">186</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td style="text-align: center;"><u><strong>60</strong></u></td>
+<td style="text-align: center;">240</td>
+<td style="text-align: center;"><u><strong>300</strong></u></td>
+</tr>
+</tbody>
+</table>
+<p><span class="math display">\[\frac{60}{300} = 20\%\]</span></p>
+</section>
+<section id="example-2" class="slide level2 smaller">
+<h2>Example</h2>
+<p>What is the sensitivity of this test (<span class="math inline">\(P(Test+\vert Sick)\)</span>)?</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -424,20 +456,248 @@
 </tr>
 </tbody>
 </table>
-<div class="callout callout-tip callout-titled callout-style-simple">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Question</strong></p>
-</div>
-<div class="callout-content">
-<p>What is the specificity of the test?</p>
-<p>What is the negative predictive value of the test?</p>
-</div>
-</div>
-</div>
+</section>
+<section id="example-3" class="slide level2 smaller">
+<h2>Example</h2>
+<p>What is the sensitivity of this test (<span class="math inline">\(P(Test+\vert Sick)\)</span>)?</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">Has Illness</th>
+<th style="text-align: center;">No Illness</th>
+<th style="text-align: center;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Positive Test</td>
+<td style="text-align: center;"><u><strong>54</strong></u></td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">114</td>
+</tr>
+<tr class="even">
+<td>Negative Test</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">180</td>
+<td style="text-align: center;">186</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td style="text-align: center;"><u><strong>60</strong></u></td>
+<td style="text-align: center;">240</td>
+<td style="text-align: center;">300</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math display">\[\frac{54}{60} = 90\%\]</span></p>
+</section>
+<section id="example-4" class="slide level2 smaller">
+<h2>Example</h2>
+<p>What is the specificity of this test (<span class="math inline">\(P(Test-\vert Healthy)\)</span>)?</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">Has Illness</th>
+<th style="text-align: center;">No Illness</th>
+<th style="text-align: center;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Positive Test</td>
+<td style="text-align: center;">54</td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">114</td>
+</tr>
+<tr class="even">
+<td>Negative Test</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">180</td>
+<td style="text-align: center;">186</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">240</td>
+<td style="text-align: center;">300</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="example-5" class="slide level2 smaller">
+<h2>Example</h2>
+<p>What is the sensitivity of this test (<span class="math inline">\(P(Test-\vert Healthy)\)</span>)?</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">Has Illness</th>
+<th style="text-align: center;">No Illness</th>
+<th style="text-align: center;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Positive Test</td>
+<td style="text-align: center;">54</td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">114</td>
+</tr>
+<tr class="even">
+<td>Negative Test</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;"><u><strong>180</strong></u></td>
+<td style="text-align: center;">186</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;"><u><strong>240</strong></u></td>
+<td style="text-align: center;">300</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math display">\[\frac{180}{240} = 75\%\]</span></p>
+</section>
+<section id="example-6" class="slide level2 smaller">
+<h2>Example</h2>
+<p>What is the positive predictive value of this test (<span class="math inline">\(P(Sick\vert Test +)\)</span>)?</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">Has Illness</th>
+<th style="text-align: center;">No Illness</th>
+<th style="text-align: center;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Positive Test</td>
+<td style="text-align: center;">54</td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">114</td>
+</tr>
+<tr class="even">
+<td>Negative Test</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">180</td>
+<td style="text-align: center;">186</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">240</td>
+<td style="text-align: center;">300</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="example-7" class="slide level2 smaller">
+<h2>Example</h2>
+<p>What is the positive predictive value of this test (<span class="math inline">\(P(Sick\vert Test +)\)</span>)?</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">Has Illness</th>
+<th style="text-align: center;">No Illness</th>
+<th style="text-align: center;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Positive Test</td>
+<td style="text-align: center;"><u><strong>54</strong></u></td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;"><u><strong>114</strong></u></td>
+</tr>
+<tr class="even">
+<td>Negative Test</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">180</td>
+<td style="text-align: center;">186</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">240</td>
+<td style="text-align: center;">300</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math display">\[\frac{54}{114} \approx 47\%\]</span></p>
+</section>
+<section id="example-8" class="slide level2 smaller">
+<h2>Example</h2>
+<p>What is the negative predictive value of this test (<span class="math inline">\(P(Healthy\vert Test -)\)</span>)?</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">Has Illness</th>
+<th style="text-align: center;">No Illness</th>
+<th style="text-align: center;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Positive Test</td>
+<td style="text-align: center;">54</td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">114</td>
+</tr>
+<tr class="even">
+<td>Negative Test</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">180</td>
+<td style="text-align: center;">186</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">240</td>
+<td style="text-align: center;">300</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="example-9" class="slide level2 smaller">
+<h2>Example</h2>
+<p>What is the negative predictive value of this test (<span class="math inline">\(P(Healthy\vert Test -)\)</span>)?</p>
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th></th>
+<th style="text-align: center;">Has Illness</th>
+<th style="text-align: center;">No Illness</th>
+<th style="text-align: center;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Positive Test</td>
+<td style="text-align: center;">54</td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">114</td>
+</tr>
+<tr class="even">
+<td>Negative Test</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;"><u><strong>180</strong></u></td>
+<td style="text-align: center;"><u><strong>186</strong></u></td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td style="text-align: center;">60</td>
+<td style="text-align: center;">240</td>
+<td style="text-align: center;">300</td>
+</tr>
+</tbody>
+</table>
+<p><span class="math display">\[\frac{180}{186} \approx 97\%\]</span></p>
 </section>
 <section id="popularization-of-medical-diagnostics" class="slide level2">
 <h2>Popularization of medical diagnostics</h2>
@@ -493,7 +753,7 @@
 </ul>
 <p>From CDC statistics for 2016, 14.3/100,000 Americans aged <span class="math inline">\(\geq\)</span> 13 are HIV+.</p>
 </section>
-<section id="rapid-self-administered-hiv-tests-1" class="slide level2">
+<section id="rapid-self-administered-hiv-tests-1" class="slide level2 smaller">
 <h2>Rapid self-administered HIV tests</h2>
 <ul>
 <li><p>Suppose a randomly selected American aged <span class="math inline">\(\geq\)</span> 13 has a positive test on this test. What do you think is the probability they are HIV+?</p></li>
@@ -516,7 +776,7 @@
 <li><p>For the denominator, we need one last tool.</p></li>
 </ul>
 </section>
-<section id="the-law-of-total-probability" class="slide level2">
+<section id="the-law-of-total-probability" class="slide level2 smaller">
 <h2>The Law of Total Probability</h2>
 <ul>
 <li><p>We know that a person either has HIV (<span class="math inline">\(A\)</span>) or does not have HIV (<span class="math inline">\(A^C\)</span>).</p></li>
@@ -531,7 +791,10 @@ P(B) = P(B \cap A) + P(B \cap A^C)
 </ul>
 <p><span class="math display">\[
 P(B) = P(B \vert A)P(A) + P(B \vert A^C)P(A^C)
-\]</span> - Now we know all of these probabilities (since <span class="math inline">\(P(A^C) = 1 - P(A)\)</span>)!</p>
+\]</span></p>
+<ul>
+<li>Now we know all of these probabilities (since <span class="math inline">\(P(A^C) = 1 - P(A)\)</span>)!</li>
+</ul>
 </section>
 <section id="rapid-self-administered-hiv-tests-2" class="slide level2">
 <h2>Rapid self-administered HIV tests</h2>
@@ -554,9 +817,12 @@ P(B \vert A) &amp;= \frac{P(B\vert A)P(A)}{P(B\vert A)P(A)+P(B\vert A^C)P(A^C)}\
 </section>
 <section id="ppv-for-botswana" class="slide level2">
 <h2>PPV for Botswana</h2>
-<p><span class="math display">\[P(HIV + | Test +)\]</span></p>
-<p><span class="math display">\[=\frac{(.993)(.25)}{(.993)(.25) + (1-.998)(1-.25)}\]</span></p>
-<p><span class="math display">\[ = .99 = 99\%\]</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+P(HIV + | Test +) &amp;=\frac{(.993)(.25)}{(.993)(.25) + (1-.998)(1-.25)}\\
+&amp;= 0.99 = 99\%
+\end{aligned}
+\]</span></p>
 </section>
 <section id="whats-going-on-here" class="slide level2">
 <h2>What’s going on here?</h2>
@@ -567,15 +833,15 @@ P(B \vert A) &amp;= \frac{P(B\vert A)P(A)}{P(B\vert A)P(A)+P(B\vert A^C)P(A^C)}\
 <ul>
 <li>This is simply due to the nature of the test, i.e.&nbsp;having some nonzero false positive rate, in our case .002.</li>
 </ul></li>
-<li><p>This is something to look out for! Specificity (i.e.&nbsp;FPR) is important to consider.</p></li>
+<li><p>This is something to look out for! Specificity is important to consider.</p></li>
 </ul>
 </section>
 <section id="takeaway-1" class="slide level2">
 <h2>Takeaway</h2>
 <ul>
-<li><p>In the US, small prevalence + modest false positive rate is causing the PPV to be much lower than we’d want.</p></li>
+<li><p>In the US, small prevalence + modest false positive rate (FPR) is causing the PPV to be much lower than we’d want.</p></li>
 <li><p>In Botswana, higher prevalence “corrects” this issue, leading to PPV being much higher (meaning more people who test positive actually have the condition.)</p></li>
-<li><p>With a modest false positive rate, a higher prevalence can help our PPV be higher, yielding a <strong>more useful diagnostic test</strong> for that setting. With lower prevalence, you need to be careful with the conclusions made by a diagnostic test as it could be misleading.</p></li>
+<li><p>With a modest FPR, a higher prevalence can help our PPV be higher, yielding a <strong>more useful diagnostic test</strong> for that setting. With lower prevalence, you need to be careful with the conclusions made by a diagnostic test as it could be misleading.</p></li>
 </ul>
 </section>
 <section id="steps-to-solve-using-bayes-rule" class="slide level2">
@@ -590,16 +856,19 @@ P(B \vert A) &amp;= \frac{P(B\vert A)P(A)}{P(B\vert A)P(A)+P(B\vert A^C)P(A^C)}\
 </section>
 <section id="practice-calculating-npv-with-bayes-rule" class="slide level2">
 <h2>Practice calculating NPV with Bayes’ Rule</h2>
-<p>Researchers are interested in accurately predicting the development of irreversible brain damage or death (a “bad outcome”) due to brain hemorrhage based on clinical characteristics during the acute phase of the hemorrhage. One diagnostic tool is NDKA, a biomarker for brain damage, with patients classified as being “high” level or “low” level. The specificity and sensitivity of using high NDKA as a diagnostic for bad outcomes at one year are 90% and 20%, respectively. The prevalence of bad outcome is 40%.</p>
-<p>What is the negative predictive value (NPV) of “high NDKA” as a diagnostic for bad outcomes?</p>
+<ul>
+<li><p>Suppose we want to find the NPV of a home COVID-19 test in a population with a 5% prevalence.</p></li>
+<li><p>These tests have sensitivity = 85% and specificity = 99%.</p></li>
+<li><p>What is the probability of someone being COVID-free, having gotten a negative test result?</p></li>
+</ul>
 </section>
 <section id="step-1.-define-the-events-of-interest" class="slide level2">
 <h2>Step 1. Define the events of interest</h2>
 </section>
 <section id="step-1.-define-the-events-of-interest-1" class="slide level2">
 <h2>Step 1. Define the events of interest</h2>
-<p>Let <span class="math inline">\(A\)</span> be having a bad outcome and <span class="math inline">\(B\)</span> be a high NKDA level.</p>
-<p>This means that <span class="math inline">\(A^C\)</span> is having a good outcome and <span class="math inline">\(B^C\)</span> is a low NKDA level.</p>
+<p>Let <span class="math inline">\(A\)</span> be having COVID and <span class="math inline">\(B\)</span> be a positive test.</p>
+<p>This means that <span class="math inline">\(A^C\)</span> is being COVID-free and <span class="math inline">\(B^C\)</span> is a negative test.</p>
 <p>We want to find <span class="math inline">\(P(A^C|B^C)\)</span>.</p>
 </section>
 <section id="step-2.-identify-what-probabilities-you-already-know" class="slide level2">
@@ -607,9 +876,9 @@ P(B \vert A) &amp;= \frac{P(B\vert A)P(A)}{P(B\vert A)P(A)+P(B\vert A^C)P(A^C)}\
 </section>
 <section id="step-2.-identify-what-probabilities-you-already-know-1" class="slide level2">
 <h2>Step 2. Identify what probabilities you already know</h2>
-<p><span class="math inline">\(P(B \vert A) = 0.9\)</span> … therefore <span class="math inline">\(P(B^C \vert A) = 1 - 0.9 = 0.1\)</span></p>
-<p><span class="math inline">\(P(B^C \vert A^C) = 0.1\)</span></p>
-<p><span class="math inline">\(P(A) = 0.4\)</span> … therefore <span class="math inline">\(P(A^C) = 1 - 0.4 = 0.6\)</span></p>
+<p><span class="math inline">\(P(B \vert A) = 0.85\)</span> … therefore <span class="math inline">\(P(B^C \vert A) = 1 - 0.85 = 0.15\)</span></p>
+<p><span class="math inline">\(P(B^C \vert A^C) = 0.99\)</span></p>
+<p><span class="math inline">\(P(A) = 0.05\)</span> … therefore <span class="math inline">\(P(A^C) = 1 - 0.05 = 0.95\)</span></p>
 </section>
 <section id="step-3.-bayes-rule" class="slide level2">
 <h2>Step 3. Bayes’ Rule</h2>
@@ -643,8 +912,8 @@ P(A^C \vert B^C) &amp;= \frac{P(B^C \vert A^C)P(A^C)}{P(B^C)}\\
 <p><span class="math display">\[
 \begin{aligned}
 P(A^C \vert B^C) &amp;= \frac{P(B^C \vert A^C)P(A^C)}{P(B^C \vert A^C)P(A^C)+P(B^C\vert A)P(A)}\\
-&amp;= \frac{0.1 \times 0.6}{0.1 \times 0.6 + 0.1 \times 0.4}\\
-&amp;= 0.6 = 60\%
+&amp;= \frac{0.99 \times 0.95}{0.99 \times 0.95 + 0.15 \times 0.05}\\
+&amp;= 0.992 = 99.2\%
 \end{aligned}
 \]</span></p>
 </section>
@@ -657,7 +926,7 @@ P(A^C \vert B^C) &amp;= \frac{P(B^C \vert A^C)P(A^C)}{P(B^C \vert A^C)P(A^C)+P(B
 <li><p>At each threshold value, there is a tradeoff between sensitivity and specificity.</p></li>
 </ul>
 </section>
-<section id="example-2" class="slide level2">
+<section id="example-10" class="slide level2">
 <h2>Example</h2>
 <ul>
 <li>American Heart Assocation has CVD risk calculator <a href="https://professional.heart.org/en/guidelines-and-statements/prevent-calculator">PREVENT calculator</a> that provides estimates of probabilities of having a CVD event within the next 10-years</li>
@@ -665,7 +934,7 @@ P(A^C \vert B^C) &amp;= \frac{P(B^C \vert A^C)P(A^C)}{P(B^C \vert A^C)P(A^C)+P(B
 <li><strong>Current guidance</strong>: Individuals at 10-year risk of total CVD ≥ 7.5% are recommended to initiate anti-hypertensive therapy</li>
 </ul>
 </section>
-<section id="example-3" class="slide level2 smaller">
+<section id="example-11" class="slide level2 smaller">
 <h2>Example</h2>
 <ul>
 <li><strong>Current guidance: 10-Year Risk ≥ 7.5%</strong>
@@ -693,10 +962,10 @@ P(A^C \vert B^C) &amp;= \frac{P(B^C \vert A^C)P(A^C)}{P(B^C \vert A^C)P(A^C)+P(B
 </ul>
 
 <img data-src="images/lec-5/roc.jpg" alt="Woman wearing a headset seated in front of a screen displayed radar information." width="400" class="r-stretch"></section>
-<section id="haenssle-et.-al-2018" class="slide level2">
+<section id="haenssle-et.-al-2018" class="slide level2 smaller">
 <h2>Haenssle et. al (2018)</h2>
-<p><img data-src="images/lec-5/man.png">{fig-alt= “Article from Annals of Oncology with the title Man against machine: diagnostic performance of a deep learning convolutional neural network for dermoscopic melanoma recognition in comparison to 58 dermatologists.”}</p>
-<p><a href="https://www.sciencedirect.com/science/article/pii/S0923753419341055?via%3Dihub">paper link here</a></p>
+
+<img data-src="images/lec-5/man.png" alt="Article from Annals of Oncology with the title Man against machine: diagnostic performance of a deep learning convolutional neural network for dermoscopic melanoma recognition in comparison to 58 dermatologists." class="r-stretch"><p><a href="https://www.sciencedirect.com/science/article/pii/S0923753419341055?via%3Dihub">paper link here</a></p>
 <ul>
 <li>Machine learning algorithm outperformed doctors in many cases!</li>
 </ul>

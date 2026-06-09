@@ -57,7 +57,7 @@ format: revealjs
 
 -   **Participate:** Attend and actively participate in lectures and labs, office hours
 -   **Practice:** Practice applying statistical concepts and computing with lab exercises 
-    -   Review course topics with occasional participation exercises, typically a few questions administered via Canvas. Annotated notes will be uploaded after class.
+    -   Review course topics with occasional participation exercises, typically a few questions administered via Canvas or in writing
 -   **Perform:** Put together what you've learned to analyze real-world data
     -   Homework assignments 
     -   Three in-class exams
@@ -67,7 +67,7 @@ format: revealjs
 -   **Lecture:** Monday-Thursday 9:30-11:00am. Approx. 1 hour 10 min of lecture, 20 minutes of homework time/open office hours.
 -   **Labs:** Fridays 9:30-11:00am. Tutorial video and assignment will be posted Wednesday around 5:00 PM. Lab time will be used to answer clarification questions and work on assignment; assignments due following Monday by 11:59pm.
 -   **HWs:** Posted daily, typically due by 11:59pm the next day.
--   **Exams:** 3 in-class exams, more info as semester progresses.
+-   **Exams:** 3 in-class exams, more info as session progresses.
 
 
 ## What to expect in lab
@@ -140,11 +140,10 @@ I (like many people) am still in the process of learning about diverse perspecti
 
 ## Course policies: Late work
 
--   HW & Labs: Deadlines are there to help you stay on track. However, I know that life happens! You have a 12-hour grace period to turn in homework and labs with a 5% penalty. **No HW/Labs will be accepted after the 24-hour grace period**, except in extenuating circumstances.
+-   HW & Labs: Deadlines are there to help you stay on track, especially because this is a fast-paced class. However, I know that life happens! You have a 12-hour grace period to turn in homework and labs with a 5% penalty. **No HW/Labs will be accepted after the 12-hour grace period**, except in extenuating circumstances.
 
 - Lowest HW will be dropped.
 
--   No late work will be accepted for exams.
 
 ## Collaboration policy
 
@@ -408,7 +407,7 @@ Sharing code and data can help identify even accidental mistakes
 - **Turning Data Into Insight**  
   Biostatistics helps us move beyond raw numbers to identify meaningful patterns in health and disease.  
 
-- 🧪 **Evaluating Interventions**  
+- **Evaluating Interventions**  
   From vaccines to health policies, biostatistics allows us to rigorously test what *really works*.  
 
 - **Promoting Health Equity**  
@@ -464,5 +463,4 @@ Sharing code and data can help identify even accidental mistakes
 
 ## Next class
 
-- Probability Basics
-
+- The nature of data

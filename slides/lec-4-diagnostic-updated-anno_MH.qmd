@@ -268,7 +268,9 @@ Suppose we're interested in the performance of a diagnostic test. Let $A$ be the
 
     - probability that the condition is not present, given a negative test
     
-## Example
+## Example {.smaller}
+
+- When we have a full table with true status and test results, we can calculate all five of these values.
 
 - Suppose there is an illness affecting Biostatistics students, and we have access to the "true" illness status and the test result for all students.
 
@@ -284,15 +286,23 @@ Suppose we're interested in the performance of a diagnostic test. Let $A$ be the
 
 What is the prevalence of this illness in the population of Biostatistics students?
 
-What is the sensitivity of the test? 
-
-What is the positive predictive value of the test?
-
 :::
-    
-## Example
 
-- Suppose there is an illness affecting Biostatistics students, and we have access to the "true" illness status and the test result for all students.
+## Example {.smaller}
+
+What is the prevalence of this illness in the population of Biostatistics students?
+
+|               | Has Illness   | No Illness | Total          |
+|---------------|:-------------:|:----------:|:--------------:|
+| Positive Test |   54          |  60        | 114            |
+| Negative Test |   6           |  180       | 186            |
+| **Total**     | <u>**60**</u> |  240       | <u>**300**</u> |
+
+$$\frac{60}{300} = 20\%$$
+
+## Example {.smaller}
+
+What is the sensitivity of this test ($P(Test+\vert Sick)$)?
 
 
 |               | Has Illness | No Illness | Total |
@@ -301,15 +311,99 @@ What is the positive predictive value of the test?
 | Negative Test |   6         |  180       | 186   |
 | **Total**     |   60        |  240       | 300   |
 
-::: {.callout-tip appearance="simple"}
-## Question
 
-What is the specificity of the test? 
 
-What is the negative predictive value of the test?
 
-:::    
-    
+## Example {.smaller}
+
+What is the sensitivity of this test ($P(Test+\vert Sick)$)?
+
+|               | Has Illness   | No Illness | Total |
+|---------------|:-------------:|:----------:|:-----:|
+| Positive Test | <u>**54**</u> |  60        | 114   |
+| Negative Test |   6           |  180       | 186   |
+| **Total**     | <u>**60**</u> |  240       | 300   |
+
+$$\frac{54}{60} = 90\%$$
+
+## Example {.smaller}
+
+What is the specificity of this test ($P(Test-\vert Healthy)$)?
+
+
+|               | Has Illness | No Illness | Total |
+|---------------|:-----------:|:----------:|:-----:|
+| Positive Test |   54        |  60        | 114   |
+| Negative Test |   6         |  180       | 186   |
+| **Total**     |   60        |  240       | 300   |
+
+
+
+
+## Example {.smaller}
+
+What is the sensitivity of this test ($P(Test-\vert Healthy)$)?
+
+|               | Has Illness | No Illness      | Total |
+|---------------|:-----------:|:---------------:|:-----:|
+| Positive Test | 54          |  60             | 114   |
+| Negative Test | 6           |  <u>**180**</u> | 186   |
+| **Total**     | 60          |  <u>**240**</u> | 300   |
+
+$$\frac{180}{240} = 75\%$$
+
+## Example {.smaller}
+
+What is the positive predictive value of this test ($P(Sick\vert Test +)$)?
+
+
+|               | Has Illness | No Illness | Total |
+|---------------|:-----------:|:----------:|:-----:|
+| Positive Test |   54        |  60        | 114   |
+| Negative Test |   6         |  180       | 186   |
+| **Total**     |   60        |  240       | 300   |
+
+
+
+
+## Example {.smaller}
+
+What is the positive predictive value of this test ($P(Sick\vert Test +)$)?
+
+|               | Has Illness   | No Illness | Total          |
+|---------------|:-------------:|:----------:|:--------------:|
+| Positive Test | <u>**54**</u> |  60        | <u>**114**</u> |
+| Negative Test | 6             |  180       | 186            |
+| **Total**     | 60            |  240       | 300            |
+
+$$\frac{54}{114} \approx 47\%$$
+
+## Example {.smaller}
+
+What is the negative predictive value of this test ($P(Healthy\vert Test -)$)?
+
+
+|               | Has Illness | No Illness | Total |
+|---------------|:-----------:|:----------:|:-----:|
+| Positive Test |   54        |  60        | 114   |
+| Negative Test |   6         |  180       | 186   |
+| **Total**     |   60        |  240       | 300   |
+
+
+
+
+## Example {.smaller}
+
+What is the negative predictive value of this test ($P(Healthy\vert Test -)$)?
+
+|               | Has Illness | No Illness      | Total           |
+|---------------|:-----------:|:---------------:|:---------------:|
+| Positive Test | 54          |  60             | 114             |
+| Negative Test | 6           |  <u>**180**</u> | <u>**186**</u> |
+| **Total**     | 60          |  240            | 300             |
+
+$$\frac{180}{186} \approx 97\%$$
+   
 
 ## Popularization of medical diagnostics 
 
@@ -471,19 +565,21 @@ $$ = .99 = 99\%$$
 
 5. Plug in probabilities from step 2 and solve. 
 
-## Practice calculating NPV with Bayes' Rule
+## Practice calculating NPV with Bayes' Rule 
 
-Researchers are interested in accurately predicting the development of irreversible brain damage or death (a “bad outcome”) due to brain hemorrhage based on clinical characteristics during the acute phase of the hemorrhage. One diagnostic tool is NDKA, a biomarker for brain damage, with patients classified as being “high” level or “low” level. The specificity and sensitivity of using high NDKA as a diagnostic for bad outcomes at one year are 90% and 20%, respectively. The prevalence of bad outcome is 40%.
+- Suppose we want to find the NPV of a home COVID-19 test in a population with a 5% prevalence.
 
-What is the negative predictive value (NPV) of “high NDKA” as a diagnostic for bad outcomes?
+- These tests have sensitivity = 85% and specificity = 99%.
+
+- What is the probability of someone being COVID-free, having gotten a negative test result?
 
 ## Step 1. Define the events of interest
 
 ## Step 1. Define the events of interest
 
-Let $A$ be having a bad outcome and $B$ be a high NKDA level. 
+Let $A$ be having COVID and $B$ be a positive test. 
 
-This means that $A^C$ is having a good outcome and $B^C$ is a low NKDA level.
+This means that $A^C$ is being COVID-free and $B^C$ is a negative test.
 
 We want to find $P(A^C|B^C)$.
 
@@ -491,11 +587,11 @@ We want to find $P(A^C|B^C)$.
 
 ## Step 2. Identify what probabilities you already know
 
-$P(B \vert A) = 0.9$ ... therefore $P(B^C \vert A) = 1 - 0.9 = 0.1$
+$P(B \vert A) = 0.85$ ... therefore $P(B^C \vert A) = 1 - 0.85 = 0.15$
 
-$P(B^C \vert A^C) = 0.1$
+$P(B^C \vert A^C) = 0.99$
 
-$P(A) = 0.4$ ... therefore $P(A^C) = 1 - 0.4 = 0.6$
+$P(A) = 0.05$ ... therefore $P(A^C) = 1 - 0.05 = 0.95$
 
 ## Step 3. Bayes' Rule
 
@@ -526,8 +622,8 @@ $$
 $$
 \begin{aligned}
 P(A^C \vert B^C) &= \frac{P(B^C \vert A^C)P(A^C)}{P(B^C \vert A^C)P(A^C)+P(B^C\vert A)P(A)}\\
-&= \frac{0.1 \times 0.6}{0.1 \times 0.6 + 0.1 \times 0.4}\\
-&= 0.6 = 60\%
+&= \frac{0.99 \times 0.95}{0.99 \times 0.95 + 0.15 \times 0.05}\\
+&= 0.992 = 99.2\%
 \end{aligned}
 $$
 
