@@ -1,0 +1,251 @@
+---
+title: "Exam Review"
+date: "September 18, 2025"
+format: html
+---
+
+# Applied
+
+## Q1
+
+Rapid antigen tests are commonly used to detect **COVID-19 infection**. Suppose a new rapid test is compared against the gold standard PCR test.  
+
+For this question, focus on **asymptomatic adults**. About **5% of asymptomatic adults** truly have COVID-19 infection. The test has a **sensitivity of 90%** and a **specificity of 95%** for detecting infection in this population.
+
+
+a. Suppose you administer the rapid test to someone who truly has COVID-19. What is the probability that the test will return a positive result? Circle one.
+
+(A) 5%  
+(B) 90%  
+(C) 10%  
+(D) 95%  
+(E) Not enough information to determine this probability  
+
+**(B).** The probability that the test is positive given that the person truly has COVID-19 is just the **sensitivity**, 90% (0.9).
+
+b. Let $A$ be testing positive and $B$ be having COVID-19. How would you calculate the probability of someone testing positive AND having COVID-19? You can leave your answer in terms of symbols.
+
+$$
+P(A \cap B) = P(B\vert A)P(B)
+$$
+
+\vskip 5cm
+
+## Q2
+
+A new rapid test has been developed to detect **hepatitis B infection**. A study compares the results of the rapid test against the gold standard laboratory test. The results from 200 patients are summarized below:
+
+|                       | Gold Standard Positive | Gold Standard Negative | Total |
+|-----------------------|----------------------|----------------------|-------|
+| **Rapid Test Positive** | 70                   | 25                   | 95    |
+| **Rapid Test Negative** | 10                   | 95                   | 105   |
+| **Total**             | 80                   | 120                  | 200   |
+
+**Question:**  
+Calculate the **sensitivity** of the rapid test. Leave your answer as a fraction.
+
+**From the table:**
+
+**-   Test positive & disease positive = 70**
+
+**-   Disease positive total = 80**
+
+**$\text{Sensitivity} = \frac{70}{80}$**
+
+## Q3
+
+A researcher is studying the number of patients arriving at a hospital emergency room with asthma attacks during a 1-hour period. She proposes using a Poisson distribution to model the number of arrivals per hour.
+
+Describe how you would verify whether each of the assumptions for a Poisson distribution are satisfied in this context. (e.g. what would you need to know/verify for each assumption, specific to this context?)
+
+1.  **Events occur independently** – Each patient’s arrival is assumed independent of others.
+
+    -   In practice, independence may be reasonable, unless e.g., an asthma trigger affects multiple people simultaneously.
+
+2.  **The average rate** $\lambda$ is constant – The expected number of arrivals per hour does not change significantly over time.
+
+3.  **Events occur singly** – Only one event occurs at a particular instant.
+
+4.  **Number of events in non-overlapping intervals is independent** – The number of arrivals in one hour is independent of arrivals in another hour.
+
+\vskip 3cm
+
+## Q4
+
+a. An environmental agency classifies daily air quality in a city into three categories: Good, Moderate, and Unhealthy. The probabilities of each category on a randomly selected day are summarized in the table below:
+
+| Air Quality | Probability |
+|-------------|------------|
+| Good        | 0.5        |
+| Moderate    | 0.3        |
+| Unhealthy   | 0.2        |
+
+
+State the Kolmogorov axioms. Are all axioms true for this example? 
+
+All probabilities are between 0 and 1.
+
+The sum of probabilities for all outcomes is 1.
+
+The probability of the union of disjoint events equals the sum of their probabilities.
+
+\vskip 3cm
+
+## Q5
+
+a. A public health researcher is studying the number of **asthma attacks requiring emergency care per day** in a mid-sized city. She models the number of attacks per day using a Poisson distribution with rate parameter $\lambda = 3$.  
+
+Recall the Poisson PMF:  
+
+$$P(X = k) = \frac{e^{-\lambda} \lambda^k}{k!}, \quad k = 0, 1, 2, \dots$$
+
+
+Write out, in terms of the Poisson PMF, the probability that on a randomly selected day there are **at least 2 asthma attacks**. You do not need to compute the numeric value.  
+
+$P(X \ge 2) = 1 - P(X < 2) = 1 - P(X = 0) - P(X = 1)$
+
+$P(X \ge 2) = 1 - \frac{e^{-3} 3^0}{0!} - \frac{e^{-3} 3^1}{1!}$
+
+b. Continuing part (a) above, Which of the following R commands correctly calculates the probability that on a randomly selected day there are **at least 2 asthma attacks**?
+
+(A) `dbinom(1, lambda = 3)`  
+
+(B) `1 - ppois(1, lambda = 3)`  
+
+(C) `ppois(2, lambda = 3)`  
+
+(D) `1 - dpois(2, lambda = 3)` 
+
+**Answer is (B): `1 - dpois(0, lambda = 3) - dpois(1, lambda = 3)` note this is the same as `1 - ppois(1, lambda = 3)` since when we use ppois, vs dpois, this captures cumulative probability so the probability of X$\leq$ 1. But since we did not go over the difference between ppois or pbinom in class, I will only give you functions with dbinom or dpois - you are welcome though to use both**
+
+## Code
+
+Elena Epidata is an epidemiologist exploring health trends in the U.S. population. She is using a dataset similar to **NHANES**, which includes variables such as **age, BMI, blood pressure, and cholesterol** for a sample of adults. Elena is new to R and is practicing basic data exploration.
+
+## Q6
+
+Elena types the following code in R:
+
+```{r}
+#| echo: true
+#| eval: false
+library(tidyverse)
+nhanes <- read_csv("nhanes_sample.csv")
+View(nhanes)
+glimpse(nhanes)
+names(nhanes)
+```
+
+Which of the following statements are true about the outputs of these commands? Select all that apply.
+
+(A) `View()` opens a spreadsheet-style view of the dataset.
+(B) `glimpse()` prints a concise summary of the dataset to the console.
+(C) `names()` lists the names of the columns.
+(D) `View()` returns a vector of column names.
+
+**A, B, C are correct.**
+
+
+## Q7
+
+Elena wants to examine a subset of the data. She types:
+
+```{r}
+#| echo: true
+#| eval: false
+nhanes_highbp <- nhanes |>
+  filter(age >= 50, sbp > 140)
+```
+
+a. What subset of data has she created?
+
+**those with age at least 50 and sbp greater than 140 mmHg**
+
+\vskip 1cm
+
+b. What does `|>` do?
+
+**pipes the dataset into the filter command**
+
+\vskip 1cm
+
+c. Will anything be printed out by running this code?
+
+**No. She is creating a new dataset but hasn't asked anything to be printed.**
+
+\vskip 1cm
+
+## Q8
+
+Elena wants to create a scatter plot of BMI vs. systolic blood pressure and color points by sex. She writes:
+
+```{r}
+#| echo: true
+#| eval: false
+ggplot(nhanes, aes(x = bmi, y = sbp, color = sex)) +
+  geom_point() +
+  labs(x = "BMI", y = "Systolic Blood Pressure (mmHg)")
+```
+
+Which of the following statements are true? Select all that apply.
+
+(A) `geom_point()` creates a scatter plot.
+(B) Points are colored based on BMI.
+(C) This code produces a boxplot of blood pressure.
+(D) The x-axis represents BMI.
+
+**A and D are correct.**
+
+## Q9
+
+Elena wants to calculate the average BMI by `age_group`. This variable has 3 categories: `young`, `mid`, and `older`. She types:
+
+```{r}
+#| echo: true
+#| eval: false
+nhanes_summary <- nhanes |>
+  group_by(age_group) |>
+  summarize(mean_bmi = mean(bmi, na.rm = TRUE))
+```
+
+What does `nhanes_summary` contain?
+
+**One row per age_group and a column, mean_bmi, containing the mean BMI for each age group, with NAs removed.**
+
+\vskip 2cm
+
+## Conceptual (True/False)
+
+Circle either True or False. 
+
+## Q10
+
+The Poisson distribution is often used to model counts of rare events occurring independently in a fixed time or space interval.
+
+**True**
+
+False 
+
+## Q11
+
+In a discrete probability distribution, all individual probabilities must be greater than 0.
+
+True  
+
+**False**  
+
+## Q12
+
+Bayes’ Rule allows you to compute the probability of an event given some observed evidence: P(A|B) = [P(B|A) * P(A)] / P(B).
+
+**True**  
+
+False  
+
+## Q13
+
+A frequentist interprets probability as a personal degree of belief, while a Bayesian interprets probability as the long-run relative frequency of events.
+
+True  
+
+**False**

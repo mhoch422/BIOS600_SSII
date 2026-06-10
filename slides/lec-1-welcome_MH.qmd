@@ -12,7 +12,7 @@ format: revealjs
 -   5th year PhD student, Department of Biostatistics 
 -   Originally from Connecticut, but lived in Boston for 8 years before moving here
 -   Interests: Spending time outdoors, reading, watching movies
--   Office Hours: Mondays and Wednesdays 1-3pm. 
+-   Office Hours: Mondays and Wednesdays 11am-1pm. 
 
 ## Check out Ed Discussion
 
