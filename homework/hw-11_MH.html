@@ -73,6 +73,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="hw-11_MH_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="hw-11_MH_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -155,6 +184,37 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Does this test take into account the magnitude of the differences between paired values?</p></li>
 </ol>
 </section>
+<section id="cereal" class="level2">
+<h2 class="anchored" data-anchor-id="cereal">Cereal</h2>
+<p>The file <code>cereals.csv</code> contains data for 77 breakfast cereals in terms of their nutritional content per serving and other characteristics. The variables are:</p>
+<ul>
+<li><p><code>name</code>: name of the cereal</p></li>
+<li><p><code>mfr</code>: manufacturer (A: American Home Food Products, G: General Mills, K: Kellogg’s, N: Nabisco, P: Post, Q: Quaker Oats, and R: Ralston Purina)</p></li>
+<li><p><code>type</code>: cold vs.&nbsp;hot</p></li>
+<li><p><code>calories</code>, <code>protein</code>, <code>fat</code>, <code>sodium</code>, <code>fiber</code>, <code>carbo</code>, <code>sugars</code>, <code>potass</code>: the amount of each of these nutrients, per gram, per serving (sodium and potassium are measured in milligrams)</p></li>
+<li><p><code>shelf</code>: where the cereal was physically located (cereals on low aisles may be targeted toward children, for instance).</p></li>
+</ul>
+<p>For the purposes of this homework, you may assume that this is a random sample of cereal types. Download <code>cereal.csv</code> from the Canvas Assignment page. Save it in your <code>data</code> folder within your project folder. You may load the dataset with the code below: (Ensure that you suppress any warnings and messages.)</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>cereal <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/cereal.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="exercise-3" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-3">Exercise 3</h2>
+<p>For this exercise, we’ll be investigating the research question: Is there evidence that there is a relationship between cereal manufacturer and where on the shelf their cereals are placed?</p>
+<ol type="a">
+<li>Use the following code to print the table of cereal placement versus manufacturer. (Yes, just copy and paste the code into your document.)</li>
+</ol>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(cereal<span class="sc">$</span>shelf, cereal<span class="sc">$</span>mfr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p>In general, are cell counts lower or higher compared to ideal counts for a Chi-Square test?</p>
+<ol start="2" type="a">
+<li><p>You decide to conduct a Fisher’s Exact Test. State the null and alternative hypotheses in words.</p></li>
+<li><p>Use R to conduct the test, displaying the code and output. Use <span class="math inline">\(\alpha = 0.05\)</span> To conduct this test, simply use <code>fisher.test(_____)</code>, and fill in the blank with the table code from part 4 (a).</p></li>
+<li><p>State your p-value, whether you reject or fail to reject the null hypothesis, and state your conclusion.</p></li>
+</ol>
+</section>
 <section id="ai-attestation" class="level2">
 <h2 class="anchored" data-anchor-id="ai-attestation">AI Attestation</h2>
 <p>Was AI used on this assignment? If so, describe your prompts below. If not, simply state “AI was not used on this assignment.”</p>
@@ -190,6 +250,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td>2</td>
 </tr>
 <tr class="odd">
+<td>Ex 3</td>
+<td>3</td>
+</tr>
+<tr class="even">
 <td>Formatting</td>
 <td>3</td>
 </tr>

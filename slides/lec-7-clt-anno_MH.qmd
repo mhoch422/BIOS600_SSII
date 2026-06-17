@@ -61,6 +61,9 @@ Suppose we're interested in the resting heart rate of students in BIOS 600, and 
 ::: {.column width="50%"}
 
 ```{r}
+#| echo: false
+#| message: false
+#| warning: false
 #| fig-alt: "A histogram with the title Histogram of Resting Heart Rate (bpm) for Random Sample of 20 people, with bins spread out from 45 to 85"
 
 library(tidyverse)
@@ -82,6 +85,9 @@ h <- hist(
 ::: {.column width="50%"}
 
 ```{r}
+#| echo: false
+#| message: false
+#| warning: false
 #| fig-alt: "A scatterplot titled Sampling Distribution of the Mean resting Heart Rate (BPM) which has one point at 65"
 
 # Blank scatter plot
@@ -119,6 +125,9 @@ points(65, 1, pch = 19, cex = 1.5)
 ## The sampling distribution of the mean 
 
 ```{r}
+#| echo: false
+#| message: false
+#| warning: false
 #| fig-alt: "A scatterplot titled Sampling Distribution of the Mean Resting Heart Rate (BPM) with three points, a blue one at 60, a pink one at 62, and a black one at 65."
 
 # Blank scatter plot
@@ -151,7 +160,9 @@ After repeating this many times, we have a dataset that has the sample averages 
 ## The sampling distribution of the mean
 
 ```{r}
-
+#| echo: false
+#| message: false
+#| warning: false
 #| fig-alt: "A scatterplot with the title Sampling Distribution of the Mean Resting Heart Rate (BPM) - 300 sample means, n = 20 with many blue dots between 58 and 72, appearing almost like a normal distribution curve"
 
 # --- Population parameters ---
@@ -217,6 +228,9 @@ The **central limit theorem** states that for a population with mean $\mu$ and s
 ## The sampling distribution of the mean (Smaller n)
 
 ```{r}
+#| echo: false
+#| message: false
+#| warning: false
 #| fig-alt: "A scatterplot with the title Sampling Distribution of the Mean Resting Heart Rate (BPM) - 300 sample means, n = 5 with many blue dots between 55 and 78, appearing almost like a normal distribution curve"
 
 # --- Population parameters ---
@@ -267,7 +281,9 @@ for (i in seq_along(counts)) {
 ## The sampling distribution of the mean (Larger n)
 
 ```{r}
-
+#| echo: false
+#| message: false
+#| warning: false
 #| fig-alt: "A scatterplot with the title Sampling Distribution of the Mean Resting Heart Rate (BPM) - 300 sample means, n = 100 with many blue dots between 62 and 68, appearing almost like a normal distribution curve"
 
 # --- Population parameters ---

@@ -301,8 +301,10 @@ power.t.test(power = 0.90,
 ## Remember this plot?
 
 ```{r}
+#| echo: false
+#| message: false
+#| warning: false
 #| fig-alt: "A scatterplot with the x-axis labeled Adequate aerobic activity (%) and the y-axis labeled Obesity (%); the dots follow roughly a downward line"
-#| echo: FALSE
 
 library(tidyverse)
 cdc <- read.csv("https://karamccor.github.io/b6002/labs/data/cdc_cleaned.csv")
@@ -348,8 +350,10 @@ What does it mean to have a correlation of -1 or 1?
 ## Visualizing $\rho$
 
 ```{r}
+#| echo: false
+#| message: false
+#| warning: false
 #| fig-alt: "Two scatterplots side-by-side. The one on the left is titled Correlation of 0.6 and the dots are not closely grouped, but generally the y value seems to increase when the x value increases. The one on the right is titled Correlation of 1 and the dots perfectly follow the line x = y."
-#| echo: FALSE
 
 
 # Load the required library
@@ -389,8 +393,10 @@ par(mfrow = c(1, 1))
 ## Visualizing $\rho$
 
 ```{r}
+#| echo: false
+#| message: false
+#| warning: false
 #| fig-alt: "Two scatterplots side-by-side. The one on the left is titled Correlation of -0.2 and the dots are not closely grouped, but there is a slight downward trend. The one on the right is titled Correlation of -0.8 and the dots are more closely grouped than on the left and show a clear downward trend."
-#| echo: FALSE
 
 # Load the required library
 library(MASS)
@@ -429,8 +435,10 @@ par(mfrow = c(1, 1))
 ## Visualizing $\rho$
 
 ```{r}
+#| echo: false
+#| message: false
+#| warning: false
 #| fig-alt: "Two scatterplots side-by-side. The one on the left is titled Correlation of 0 and the dots are randomly scatted. The one on the right is titled Correlation of 0 and the dots follow a parabola."
-#| echo: FALSE
 
 # Load required library
 library(MASS)

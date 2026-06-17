@@ -20,19 +20,225 @@ format: html
 
 ## Overview
 
+- Fisher's Exact Test
+
 - Nonparametric methods
 
 - Sign test, Wilcoxon signed-rank test, Wilcoxon rank-sum test
 
 - Krustal-Wallis test
 
+## Fisher's exact test
+
+- The chi-square test relies on asymptotic results (i.e. large sample size), which might not be appropriate if we have small cell counts (common rules of thumb are \>5 or \>10 observed in each cell).
+
+
+## Fisher's exact test {.smaller}
+
+- **Fisher's exact test** tests the same hypotheses at Chi-squared tests **but** calculates an exact p-value under a specific distributional assumption.
+
+
+
+| Serotype     | Alive | Dead | Total |
+|--------------|--------|------|--------|
+| Serotype 10  | 37     | 7    | 44     |
+| Serotype 31  | 24     | 10   | 34     |
+| Total        | 61     | 17   | 78     |
+
+
+
+
+
+## Fisher's exact test
+
+Fisher's exact test relies on the **hypergeometric distribution** (don't worry about this, seriously).
+
+| Serotype     | Alive | Dead | Total       |
+|---------------|--------|------|-------------|
+| Serotype 10   | a      | c    | a + c       |
+| Serotype 31   | b      | d    | b + d       |
+| Total         | a + b  | c + d| a + b + c + d |
+
+
+
+
+
+Conditionally on the margins (assumed fixed), then each of the individual cells is distributed according to the hypergeometric distribution. We can thus calculate the exact probabilities of obtaining specific *tables*.
+
+## Fisher's exact test
+
+Observed data:
+
+| Serotype     | Alive | Dead | Total |
+|--------------|--------|------|--------|
+| Serotype 10  | 37     | 7    | 44     |
+| Serotype 31  | 24     | 10   | 34     |
+| Total        | 61     | 17   | 78     |
+
+
+
+We could use the hypergeometric distribution to calculate the probability of seeing this table, assuming 61 total alive patients, 17 dead, and 44 and 34 infections of serotypes 10 and 31, respectively (lots of factorials, so you could imagine it wasn't fun before modern computers).
+
+## Fisher's exact test
+
+Another "possible" table:
+
+| Serotype     | Alive | Dead | Total |
+|--------------|--------|------|--------|
+| Serotype 10  | 36     | 8    | 44     |
+| Serotype 31  | 25     | 9    | 34     |
+| Total        | 61     | 17   | 78     |
+
+
+
+
+
+- Here we've displayed another table with the **same margins**, but with some slightly different potential cell counts.
+
+- Again we could use the hypergeometric distribution to calculate the probability of observing the cell counts conditionally on fixed margins.
+
+## Fisher's exact test
+
+Fisher's exact test relies on constructing *all possible* contingency tables with the same margins, and then summing up probabilities of all tables as extreme or more extreme than the observed data.
+
+::: {.callout-tip appearance="simple"}
+## Question
+
+What might "more extreme" mean in the context of contingency tables?
+:::
+
+## Fisher's exact test
+
+$H_0$: The proportion of deaths is the same for Serotype 10 and Serotype 31 (no association between serotype and outcome).
+
+$H_A$: The proportion of deaths differs between serotypes (there *is* an association)
+
+```{r echo = T}
+data <- matrix(c(37, 7, 24, 10), byrow = T, nrow = 2)
+data
+```
+
+## Conducting the Fisher's Exact test
+
+```{r}
+#| echo: true
+fisher.test(data)
+```
+
+
+- What might we conclude at $\alpha = 0.05$?
+
+## Conclusion
+
+- The Fisher’s Exact Test yielded a p-value of 0.17, which is greater than the conventional significance level of 0.05. Therefore, we fail to reject the null hypothesis.
+
+- There is no statistically significant evidence of an association between serotype and survival status in this sample.
+
+## Odds ratios
+
+-   If the probability of an event happening is $p$
+
+-   The odds of an event happening are $\frac{p}{1-p}$
+
+-   For a fair coin flip
+    - $P(heads)=0.5$
+    - Odds of heads = $\frac{0.5}{1-0.5}$ = 1
+    - Heads is equally likely as not-heads (tails)
+
+## Odds ratios
+
+-   For a scenario where 20 people have a disease and 80 people do not
+    - $P(disease)=\frac{20}{100}=0.2$
+    - Odds of having disease = $\frac{.2}{1-0.2}=\frac{0.2}{0.8}=\frac{1}{4}$ = 0.25
+    - Disease occurs 1 time for every 4 times it does not occur
+
+## Odds ratios
+
+| Serotype     | Alive | Dead | Total |
+|--------------|--------|------|--------|
+| Serotype 10  | 37     | 7    | 44     |
+| Serotype 31  | 24     | 10   | 34     |
+| Total        | 61     | 17   | 78     |
+
+-   Odds of death among serotype 10 patient = $\frac{P(death | S_{10})}{P(alive | S_{10})}$
+
+-   Odds of death among serotype 10 patients = $\frac{7/44}{37/44} = 7/37$
+
+## Odds ratios
+
+| Serotype     | Alive | Dead | Total |
+|--------------|--------|------|--------|
+| Serotype 10  | 37     | 7    | 44     |
+| Serotype 31  | 24     | 10   | 34     |
+| Total        | 61     | 17   | 78     |
+
+-   Odds of death among serotype 31 patient = $\frac{P(death | S_{31})}{P(alive | S_{31})}$
+
+-   Odds of death among serotype 31 patients = $\frac{10/34}{24/34} = 10/24$
+
+
+## Odds ratios
+
+-   Odds of death among serotype 10 patients = $\frac{7/44}{37/44} = 7/37$
+
+-   Odds of death among serotype 31 patients = $\frac{10/34}{24/34} = 10/24$
+
+-   **Odds ratio** of death comparing 31 to 10 is thus $\frac{10/24}{7/37} \approx 2.2$
+
+-   The odds of death in the serotype 31 group are about 2.2 times the odds of death in the serotype 10 group
+
+## r by c tables
+
+| Serotype     | Alive | Dead | Total |
+|---------------|-------|------|-------|
+| Serotype 10   | 37    | 7    | 44    |
+| Serotype 15   | 60    | 12   | 72    |
+| Serotype 20   | 97    | 9    | 106   |
+| Serotype 31   | 24    | 10   | 34    |
+| **Total**     | **218** | **38** | **256** |
+
+
+We can also extend the chi-square test and Fisher's exact test to more general contingency tables (although the notion of an odds ratio no longer makes sense here).
+
+## Winter Olympics training
+
+Suppose we were interested in whether a particular training regimen was associated with "success" as measured by whether an athlete qualified for being on the US Winter Olympic Team for giant slalom.
+
+## Winter Olympics training
+
+|                 | Qualified | Did Not Qualify |
+|-----------------|-----------|-----------------|
+| **New Regimen** | 129       | 97              |
+| **Old Regimen** | 112       | 114             |
+
+
+
+```{r}
+#| echo: false
+data <- matrix(c(129, 97, 112, 114), byrow = T, nrow = 2)
+chisq.test(data)
+```
+
+::: callout-tip
+
+## Practice
+
+Write out the code to 1) construct the data matrix and 2) to conduct a chi square test in R. What might we conclude using alpha = .05?
+
+:::
+
+
 ## Why nonparametric methods? {.smaller}
 
+- We use Fisher's exact test when our cell counts are not high enough for the chi-square test. But are there techniques we can use to test means with low sample size?
+
+::: {.fragment}
 -   For the methods we have studied so far, we have assumed the populations from which the data were drawn were either normally distributed or approximately so. This is a necessary property for the tests to be valid.
 
 -   Because the distributional form is assumed known, with only values of $\mu$ and $\sigma$ unknown, these methods are known as **parametric** methods (e.g. t-test, ANOVA).
 
 -   **Nonparametric methods** make fewer assumptions about the nature of the underlying distributions and may be appropriate when some assumptions of parametric methods are not satisfied (small sample size).
+:::
 
 ## Sign test
 
@@ -432,6 +638,10 @@ Using a two-sided test, we get the same p-value.
 ## Kruskal-Wallis test for pet data
 
 ```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
 library(tidyverse)
 # Set seed for reproducibility
 set.seed(123)

@@ -152,6 +152,8 @@ What are the null and alternative hypotheses written out in symbols?
 
 ```{r}
 #| echo: true
+#| message: false
+#| warning: false
 library(tidyverse)
 licorice <- read.csv("data/licorice.csv")
 ```

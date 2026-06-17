@@ -251,7 +251,7 @@ Particularly, these functions can be used to create new variables in a dataset b
 * Suppose we have a dataset named dat, that contains measurements of mass (kg), height (m), and body temperature in fahrenheit (fahrenheit) for study participants. 
 * We want to make new variables for their BMI and body temperature in celsius. We can create these variables as follows (recalling the appropriate formulas):
 
-```{r echo = F}
+```{r echo = F, message = F}
 library(tidyverse)
 ncbikecrash <- read.csv("https://aggreenbean.github.io/Bios600/labs/data/bikecrash.csv")
 

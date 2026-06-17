@@ -153,18 +153,437 @@ window.Quarto = {
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <ul>
+<li><p>Fisher’s Exact Test</p></li>
 <li><p>Nonparametric methods</p></li>
 <li><p>Sign test, Wilcoxon signed-rank test, Wilcoxon rank-sum test</p></li>
 <li><p>Krustal-Wallis test</p></li>
 </ul>
 </section>
+<section id="fishers-exact-test" class="level2">
+<h2 class="anchored" data-anchor-id="fishers-exact-test">Fisher’s exact test</h2>
+<ul>
+<li>The chi-square test relies on asymptotic results (i.e.&nbsp;large sample size), which might not be appropriate if we have small cell counts (common rules of thumb are &gt;5 or &gt;10 observed in each cell).</li>
+</ul>
+</section>
+<section id="fishers-exact-test-1" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="fishers-exact-test-1">Fisher’s exact test</h2>
+<ul>
+<li><strong>Fisher’s exact test</strong> tests the same hypotheses at Chi-squared tests <strong>but</strong> calculates an exact p-value under a specific distributional assumption.</li>
+</ul>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Serotype</th>
+<th>Alive</th>
+<th>Dead</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Serotype 10</td>
+<td>37</td>
+<td>7</td>
+<td>44</td>
+</tr>
+<tr class="even">
+<td>Serotype 31</td>
+<td>24</td>
+<td>10</td>
+<td>34</td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td>61</td>
+<td>17</td>
+<td>78</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="fishers-exact-test-2" class="level2">
+<h2 class="anchored" data-anchor-id="fishers-exact-test-2">Fisher’s exact test</h2>
+<p>Fisher’s exact test relies on the <strong>hypergeometric distribution</strong> (don’t worry about this, seriously).</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Serotype</th>
+<th>Alive</th>
+<th>Dead</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Serotype 10</td>
+<td>a</td>
+<td>c</td>
+<td>a + c</td>
+</tr>
+<tr class="even">
+<td>Serotype 31</td>
+<td>b</td>
+<td>d</td>
+<td>b + d</td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td>a + b</td>
+<td>c + d</td>
+<td>a + b + c + d</td>
+</tr>
+</tbody>
+</table>
+<p>Conditionally on the margins (assumed fixed), then each of the individual cells is distributed according to the hypergeometric distribution. We can thus calculate the exact probabilities of obtaining specific <em>tables</em>.</p>
+</section>
+<section id="fishers-exact-test-3" class="level2">
+<h2 class="anchored" data-anchor-id="fishers-exact-test-3">Fisher’s exact test</h2>
+<p>Observed data:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Serotype</th>
+<th>Alive</th>
+<th>Dead</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Serotype 10</td>
+<td>37</td>
+<td>7</td>
+<td>44</td>
+</tr>
+<tr class="even">
+<td>Serotype 31</td>
+<td>24</td>
+<td>10</td>
+<td>34</td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td>61</td>
+<td>17</td>
+<td>78</td>
+</tr>
+</tbody>
+</table>
+<p>We could use the hypergeometric distribution to calculate the probability of seeing this table, assuming 61 total alive patients, 17 dead, and 44 and 34 infections of serotypes 10 and 31, respectively (lots of factorials, so you could imagine it wasn’t fun before modern computers).</p>
+</section>
+<section id="fishers-exact-test-4" class="level2">
+<h2 class="anchored" data-anchor-id="fishers-exact-test-4">Fisher’s exact test</h2>
+<p>Another “possible” table:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Serotype</th>
+<th>Alive</th>
+<th>Dead</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Serotype 10</td>
+<td>36</td>
+<td>8</td>
+<td>44</td>
+</tr>
+<tr class="even">
+<td>Serotype 31</td>
+<td>25</td>
+<td>9</td>
+<td>34</td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td>61</td>
+<td>17</td>
+<td>78</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>Here we’ve displayed another table with the <strong>same margins</strong>, but with some slightly different potential cell counts.</p></li>
+<li><p>Again we could use the hypergeometric distribution to calculate the probability of observing the cell counts conditionally on fixed margins.</p></li>
+</ul>
+</section>
+<section id="fishers-exact-test-5" class="level2">
+<h2 class="anchored" data-anchor-id="fishers-exact-test-5">Fisher’s exact test</h2>
+<p>Fisher’s exact test relies on constructing <em>all possible</em> contingency tables with the same margins, and then summing up probabilities of all tables as extreme or more extreme than the observed data.</p>
+<div class="callout callout-style-simple callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Question
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>What might “more extreme” mean in the context of contingency tables?</p>
+</div>
+</div>
+</section>
+<section id="fishers-exact-test-6" class="level2">
+<h2 class="anchored" data-anchor-id="fishers-exact-test-6">Fisher’s exact test</h2>
+<p><span class="math inline">\(H_0\)</span>: The proportion of deaths is the same for Serotype 10 and Serotype 31 (no association between serotype and outcome).</p>
+<p><span class="math inline">\(H_A\)</span>: The proportion of deaths differs between serotypes (there <em>is</em> an association)</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">37</span>, <span class="dv">7</span>, <span class="dv">24</span>, <span class="dv">10</span>), <span class="at">byrow =</span> T, <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>data</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]   37    7
+[2,]   24   10</code></pre>
+</div>
+</div>
+</section>
+<section id="conducting-the-fishers-exact-test" class="level2">
+<h2 class="anchored" data-anchor-id="conducting-the-fishers-exact-test">Conducting the Fisher’s Exact test</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fisher.test</span>(data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Fisher's Exact Test for Count Data
+
+data:  data
+p-value = 0.1758
+alternative hypothesis: true odds ratio is not equal to 1
+95 percent confidence interval:
+ 0.6465347 7.7636744
+sample estimates:
+odds ratio 
+  2.179552 </code></pre>
+</div>
+</div>
+<ul>
+<li>What might we conclude at <span class="math inline">\(\alpha = 0.05\)</span>?</li>
+</ul>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<ul>
+<li><p>The Fisher’s Exact Test yielded a p-value of 0.17, which is greater than the conventional significance level of 0.05. Therefore, we fail to reject the null hypothesis.</p></li>
+<li><p>There is no statistically significant evidence of an association between serotype and survival status in this sample.</p></li>
+</ul>
+</section>
+<section id="odds-ratios" class="level2">
+<h2 class="anchored" data-anchor-id="odds-ratios">Odds ratios</h2>
+<ul>
+<li><p>If the probability of an event happening is <span class="math inline">\(p\)</span></p></li>
+<li><p>The odds of an event happening are <span class="math inline">\(\frac{p}{1-p}\)</span></p></li>
+<li><p>For a fair coin flip</p>
+<ul>
+<li><span class="math inline">\(P(heads)=0.5\)</span></li>
+<li>Odds of heads = <span class="math inline">\(\frac{0.5}{1-0.5}\)</span> = 1</li>
+<li>Heads is equally likely as not-heads (tails)</li>
+</ul></li>
+</ul>
+</section>
+<section id="odds-ratios-1" class="level2">
+<h2 class="anchored" data-anchor-id="odds-ratios-1">Odds ratios</h2>
+<ul>
+<li>For a scenario where 20 people have a disease and 80 people do not
+<ul>
+<li><span class="math inline">\(P(disease)=\frac{20}{100}=0.2\)</span></li>
+<li>Odds of having disease = <span class="math inline">\(\frac{.2}{1-0.2}=\frac{0.2}{0.8}=\frac{1}{4}\)</span> = 0.25</li>
+<li>Disease occurs 1 time for every 4 times it does not occur</li>
+</ul></li>
+</ul>
+</section>
+<section id="odds-ratios-2" class="level2">
+<h2 class="anchored" data-anchor-id="odds-ratios-2">Odds ratios</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Serotype</th>
+<th>Alive</th>
+<th>Dead</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Serotype 10</td>
+<td>37</td>
+<td>7</td>
+<td>44</td>
+</tr>
+<tr class="even">
+<td>Serotype 31</td>
+<td>24</td>
+<td>10</td>
+<td>34</td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td>61</td>
+<td>17</td>
+<td>78</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>Odds of death among serotype 10 patient = <span class="math inline">\(\frac{P(death | S_{10})}{P(alive | S_{10})}\)</span></p></li>
+<li><p>Odds of death among serotype 10 patients = <span class="math inline">\(\frac{7/44}{37/44} = 7/37\)</span></p></li>
+</ul>
+</section>
+<section id="odds-ratios-3" class="level2">
+<h2 class="anchored" data-anchor-id="odds-ratios-3">Odds ratios</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Serotype</th>
+<th>Alive</th>
+<th>Dead</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Serotype 10</td>
+<td>37</td>
+<td>7</td>
+<td>44</td>
+</tr>
+<tr class="even">
+<td>Serotype 31</td>
+<td>24</td>
+<td>10</td>
+<td>34</td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td>61</td>
+<td>17</td>
+<td>78</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><p>Odds of death among serotype 31 patient = <span class="math inline">\(\frac{P(death | S_{31})}{P(alive | S_{31})}\)</span></p></li>
+<li><p>Odds of death among serotype 31 patients = <span class="math inline">\(\frac{10/34}{24/34} = 10/24\)</span></p></li>
+</ul>
+</section>
+<section id="odds-ratios-4" class="level2">
+<h2 class="anchored" data-anchor-id="odds-ratios-4">Odds ratios</h2>
+<ul>
+<li><p>Odds of death among serotype 10 patients = <span class="math inline">\(\frac{7/44}{37/44} = 7/37\)</span></p></li>
+<li><p>Odds of death among serotype 31 patients = <span class="math inline">\(\frac{10/34}{24/34} = 10/24\)</span></p></li>
+<li><p><strong>Odds ratio</strong> of death comparing 31 to 10 is thus <span class="math inline">\(\frac{10/24}{7/37} \approx 2.2\)</span></p></li>
+<li><p>The odds of death in the serotype 31 group are about 2.2 times the odds of death in the serotype 10 group</p></li>
+</ul>
+</section>
+<section id="r-by-c-tables" class="level2">
+<h2 class="anchored" data-anchor-id="r-by-c-tables">r by c tables</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Serotype</th>
+<th>Alive</th>
+<th>Dead</th>
+<th>Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Serotype 10</td>
+<td>37</td>
+<td>7</td>
+<td>44</td>
+</tr>
+<tr class="even">
+<td>Serotype 15</td>
+<td>60</td>
+<td>12</td>
+<td>72</td>
+</tr>
+<tr class="odd">
+<td>Serotype 20</td>
+<td>97</td>
+<td>9</td>
+<td>106</td>
+</tr>
+<tr class="even">
+<td>Serotype 31</td>
+<td>24</td>
+<td>10</td>
+<td>34</td>
+</tr>
+<tr class="odd">
+<td><strong>Total</strong></td>
+<td><strong>218</strong></td>
+<td><strong>38</strong></td>
+<td><strong>256</strong></td>
+</tr>
+</tbody>
+</table>
+<p>We can also extend the chi-square test and Fisher’s exact test to more general contingency tables (although the notion of an odds ratio no longer makes sense here).</p>
+</section>
+<section id="winter-olympics-training" class="level2">
+<h2 class="anchored" data-anchor-id="winter-olympics-training">Winter Olympics training</h2>
+<p>Suppose we were interested in whether a particular training regimen was associated with “success” as measured by whether an athlete qualified for being on the US Winter Olympic Team for giant slalom.</p>
+</section>
+<section id="winter-olympics-training-1" class="level2">
+<h2 class="anchored" data-anchor-id="winter-olympics-training-1">Winter Olympics training</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>Qualified</th>
+<th>Did Not Qualify</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>New Regimen</strong></td>
+<td>129</td>
+<td>97</td>
+</tr>
+<tr class="even">
+<td><strong>Old Regimen</strong></td>
+<td>112</td>
+<td>114</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's Chi-squared test with Yates' continuity correction
+
+data:  data
+X-squared = 2.2755, df = 1, p-value = 0.1314</code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Practice
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Write out the code to 1) construct the data matrix and 2) to conduct a chi square test in R. What might we conclude using alpha = .05?</p>
+</div>
+</div>
+</section>
 <section id="why-nonparametric-methods" class="level2 smaller">
 <h2 class="smaller anchored" data-anchor-id="why-nonparametric-methods">Why nonparametric methods?</h2>
+<ul>
+<li>We use Fisher’s exact test when our cell counts are not high enough for the chi-square test. But are there techniques we can use to test means with low sample size?</li>
+</ul>
+<div class="fragment">
 <ul>
 <li><p>For the methods we have studied so far, we have assumed the populations from which the data were drawn were either normally distributed or approximately so. This is a necessary property for the tests to be valid.</p></li>
 <li><p>Because the distributional form is assumed known, with only values of <span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> unknown, these methods are known as <strong>parametric</strong> methods (e.g.&nbsp;t-test, ANOVA).</p></li>
 <li><p><strong>Nonparametric methods</strong> make fewer assumptions about the nature of the underlying distributions and may be appropriate when some assumptions of parametric methods are not satisfied (small sample size).</p></li>
 </ul>
+</div>
 </section>
 <section id="sign-test" class="level2">
 <h2 class="anchored" data-anchor-id="sign-test">Sign test</h2>
@@ -404,7 +823,7 @@ window.Quarto = {
 <p>We can calculate, for <span class="math inline">\(X\sim Binom(12,0.5)\)</span>, <br> <span class="math inline">\(P(X=9) + P(X=10) + P(X=11) + P(X=12)\)</span> <br> <strong>Remember <span class="math inline">\(P(X\geq 9) = 1-P(X&lt;8)\)</span></strong></p>
 <p>and then double it (for the two-sided test).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">pbinom</span>(<span class="dv">8</span>, <span class="dv">12</span>, <span class="fl">0.5</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">pbinom</span>(<span class="dv">8</span>, <span class="dv">12</span>, <span class="fl">0.5</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1459961</code></pre>
 </div>
@@ -872,12 +1291,12 @@ window.Quarto = {
 <section id="calculating-the-p-value" class="level2">
 <h2 class="anchored" data-anchor-id="calculating-the-p-value">Calculating the p-value</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>zt <span class="ot">&lt;-</span> (<span class="dv">19</span><span class="sc">-</span>(<span class="dv">13</span><span class="sc">*</span><span class="dv">14</span><span class="sc">/</span><span class="dv">4</span>))<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">13</span><span class="sc">*</span><span class="dv">14</span><span class="sc">*</span><span class="dv">27</span><span class="sc">/</span><span class="dv">24</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>zt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>zt <span class="ot">&lt;-</span> (<span class="dv">19</span><span class="sc">-</span>(<span class="dv">13</span><span class="sc">*</span><span class="dv">14</span><span class="sc">/</span><span class="dv">4</span>))<span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">13</span><span class="sc">*</span><span class="dv">14</span><span class="sc">*</span><span class="dv">27</span><span class="sc">/</span><span class="dv">24</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>zt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -1.85197</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(zt)<span class="sc">*</span><span class="dv">2</span> <span class="co"># two-sided test</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pnorm</span>(zt)<span class="sc">*</span><span class="dv">2</span> <span class="co"># two-sided test</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.06403015</code></pre>
 </div>
@@ -1057,13 +1476,13 @@ window.Quarto = {
 <section id="in-r" class="level2">
 <h2 class="anchored" data-anchor-id="in-r">In R</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Given data</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="dv">8</span>; n2 <span class="ot">&lt;-</span> <span class="dv">10</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>R1 <span class="ot">&lt;-</span> <span class="dv">101</span>; R2 <span class="ot">&lt;-</span> <span class="dv">70</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>U1 <span class="ot">&lt;-</span> R1 <span class="sc">-</span> n1 <span class="sc">*</span> (n1 <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">/</span> <span class="dv">2</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>U2 <span class="ot">&lt;-</span> R2 <span class="sc">-</span> n2 <span class="sc">*</span> (n2 <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">/</span> <span class="dv">2</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>U1; U2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Given data</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>n1 <span class="ot">&lt;-</span> <span class="dv">8</span>; n2 <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>R1 <span class="ot">&lt;-</span> <span class="dv">101</span>; R2 <span class="ot">&lt;-</span> <span class="dv">70</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>U1 <span class="ot">&lt;-</span> R1 <span class="sc">-</span> n1 <span class="sc">*</span> (n1 <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>U2 <span class="ot">&lt;-</span> R2 <span class="sc">-</span> n2 <span class="sc">*</span> (n2 <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>U1; U2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 65</code></pre>
 </div>
@@ -1075,12 +1494,12 @@ window.Quarto = {
 <section id="in-r-1" class="level2">
 <h2 class="anchored" data-anchor-id="in-r-1">In R</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>mean_U <span class="ot">&lt;-</span> n1 <span class="sc">*</span> n2 <span class="sc">/</span> <span class="dv">2</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>sd_U <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(n1 <span class="sc">*</span> n2 <span class="sc">*</span> (n1 <span class="sc">+</span> n2 <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">/</span> <span class="dv">12</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> (U1 <span class="sc">-</span> mean_U) <span class="sc">/</span> sd_U</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(z))</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>z; p_value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>mean_U <span class="ot">&lt;-</span> n1 <span class="sc">*</span> n2 <span class="sc">/</span> <span class="dv">2</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>sd_U <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(n1 <span class="sc">*</span> n2 <span class="sc">*</span> (n1 <span class="sc">+</span> n2 <span class="sc">+</span> <span class="dv">1</span>) <span class="sc">/</span> <span class="dv">12</span>)</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> (U1 <span class="sc">-</span> mean_U) <span class="sc">/</span> sd_U</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pnorm</span>(z))</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>z; p_value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2.221308</code></pre>
 </div>
@@ -1110,10 +1529,10 @@ window.Quarto = {
 <li>Using <span class="math inline">\(U_2\)</span>:</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> (U2 <span class="sc">-</span> mean_U) <span class="sc">/</span> sd_U</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> (<span class="fu">pnorm</span>(z))</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>z; p_value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>z <span class="ot">&lt;-</span> (U2 <span class="sc">-</span> mean_U) <span class="sc">/</span> sd_U</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">*</span> (<span class="fu">pnorm</span>(z))</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>z; p_value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -2.221308</code></pre>
 </div>
@@ -1139,7 +1558,7 @@ window.Quarto = {
 <li>Note that we can also calculate our p-value using:</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pnorm</span>(<span class="sc">-</span><span class="fu">abs</span>(z))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> <span class="fu">pnorm</span>(<span class="sc">-</span><span class="fu">abs</span>(z))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.02633009</code></pre>
 </div>
@@ -1164,45 +1583,11 @@ window.Quarto = {
 </section>
 <section id="kruskal-wallis-test-for-pet-data" class="level2">
 <h2 class="anchored" data-anchor-id="kruskal-wallis-test-for-pet-data">Kruskal-Wallis test for pet data</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.2.1     ✔ readr     2.2.0
-✔ forcats   1.0.1     ✔ stringr   1.6.0
-✔ ggplot2   4.0.3     ✔ tibble    3.3.1
-✔ lubridate 1.9.5     ✔ tidyr     1.3.2
-✔ purrr     1.2.2     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set seed for reproducibility</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Simulate data: 30 people per group</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>puppies <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="at">mean=</span><span class="dv">78</span>, <span class="at">sd=</span><span class="dv">7</span>)  <span class="co"># lower pulse for those with puppies</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>neither <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="at">mean=</span><span class="dv">82</span>, <span class="at">sd=</span><span class="dv">5</span>)    <span class="co"># pulse for those alone</span></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>friends <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="at">mean=</span><span class="dv">85</span>, <span class="at">sd=</span><span class="dv">5</span>)  <span class="co"># pulse for those chatting with a friend</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Combine into a data frame</span></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>pulse_data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">pulse =</span> <span class="fu">c</span>(friends, neither, puppies),</span>
-<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>  <span class="at">group =</span> <span class="fu">factor</span>(<span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"Friend"</span>, <span class="st">"Neither"</span>, <span class="st">"Puppies"</span>), <span class="at">each=</span><span class="dv">30</span>))</span>
-<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the ranks of the continuous variable (value), group by group, and then summarize</span></span>
-<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>ranked_data <span class="ot">&lt;-</span> pulse_data <span class="sc">%&gt;%</span></span>
-<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">rank</span>(pulse)) <span class="sc">%&gt;%</span>         <span class="co"># Rank the continuous variable</span></span>
-<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(group) <span class="sc">%&gt;%</span>                    <span class="co"># Group by the categorical variable (group)</span></span>
-<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">sum_of_ranks =</span> <span class="fu">sum</span>(rank))    <span class="co"># Summarize the sum of ranks within each group</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
 <ul>
 <li>Calculating the sum of the ranks, we find that in the pet group, out of <span class="math inline">\(n=30\)</span>, the sum of the ranks was 863; out of the <span class="math inline">\(n=30\)</span> in the friend group, the sum of the ranks was 1797, and out of the <span class="math inline">\(n=30\)</span> where neither were present, the sum of the ranks was 1435. Is this enough evidence to reject the null hypothesis? (Ask software).</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(pulse <span class="sc">~</span> group, <span class="at">data =</span> pulse_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kruskal.test</span>(pulse <span class="sc">~</span> group, <span class="at">data =</span> pulse_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Kruskal-Wallis rank sum test

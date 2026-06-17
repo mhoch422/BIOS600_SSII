@@ -183,43 +183,11 @@ window.Quarto = {
 <li>State your p-value. Do we reject or fail to reject <span class="math inline">\(H_0\)</span>?</li>
 <li>Write a 1-sentence conclusion.</li>
 </ol></li>
-<li><p>State 1 reason why (in general) one might choose to use a Fisher Exact Test rather than a chi-square test.</p></li>
 </ol>
 </section>
 <section id="exercise-2" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-2">Exercise 2</h2>
 <p>In your own words, explain why it “makes sense” to evaluate equality of means across groups by examining different types of variances. (2-3 sentences)</p>
-</section>
-<section id="cereal" class="level2">
-<h2 class="anchored" data-anchor-id="cereal">Cereal</h2>
-<p>The file <code>cereals.csv</code> contains data for 77 breakfast cereals in terms of their nutritional content per serving and other characteristics. The variables are:</p>
-<ul>
-<li><p><code>name</code>: name of the cereal</p></li>
-<li><p><code>mfr</code>: manufacturer (A: American Home Food Products, G: General Mills, K: Kellogg’s, N: Nabisco, P: Post, Q: Quaker Oats, and R: Ralston Purina)</p></li>
-<li><p><code>type</code>: cold vs.&nbsp;hot</p></li>
-<li><p><code>calories</code>, <code>protein</code>, <code>fat</code>, <code>sodium</code>, <code>fiber</code>, <code>carbo</code>, <code>sugars</code>, <code>potass</code>: the amount of each of these nutrients, per gram, per serving (sodium and potassium are measured in milligrams)</p></li>
-<li><p><code>shelf</code>: where the cereal was physically located (cereals on low aisles may be targeted toward children, for instance).</p></li>
-</ul>
-<p>For the purposes of this homework, you may assume that this is a random sample of cereal types. Download <code>cereal.csv</code> from the Canvas Assignment page. Save it in your <code>data</code> folder within your project folder. You may load the dataset with the code below: (Ensure that you suppress any warnings and messages.)</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cereal <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"data/cereal.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-</section>
-<section id="exercise-3" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-3">Exercise 3</h2>
-<p>For this exercise, we’ll be investigating the research question: Is there evidence that there is a relationship between cereal manufacturer and where on the shelf their cereals are placed?</p>
-<ol type="a">
-<li>Use the following code to print the table of cereal placement versus manufacturer. (Yes, just copy and paste the code into your document.)</li>
-</ol>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(cereal<span class="sc">$</span>shelf, cereal<span class="sc">$</span>mfr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>In general, are cell counts lower or higher compared to ideal counts for a Chi-Square test?</p>
-<ol start="2" type="a">
-<li><p>You decide to conduct a Fisher’s Exact Test. State the null and alternative hypotheses in words.</p></li>
-<li><p>Use R to conduct the test, displaying the code and output. Use <span class="math inline">\(\alpha = 0.05\)</span> To conduct this test, simply use <code>fisher.test(_____)</code>, and fill in the blank with the table code from part 4 (a).</p></li>
-<li><p>State your p-value, whether you reject or fail to reject the null hypothesis, and state your conclusion.</p></li>
-</ol>
 </section>
 <section id="ai-attestation" class="level2">
 <h2 class="anchored" data-anchor-id="ai-attestation">AI Attestation</h2>
@@ -249,21 +217,17 @@ window.Quarto = {
 <tbody>
 <tr class="odd">
 <td>Ex 1</td>
-<td>8</td>
+<td>7</td>
 </tr>
 <tr class="even">
 <td>Ex 2</td>
 <td>1</td>
 </tr>
 <tr class="odd">
-<td>Ex 3</td>
-<td>3</td>
-</tr>
-<tr class="even">
 <td>AI Attestation</td>
 <td>1</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td>Formatting</td>
 <td>3</td>
 </tr>

@@ -133,7 +133,7 @@ cdc %>%
   theme_bw() +
   labs(x = "Adequate aerobic activity (%)", 
        y = "Obesity (%)") +
-  geom_smooth(method = "lm", se = F) 
+  geom_smooth(method = "lm", se = T) 
 ```
 
 \footnotesize
@@ -141,6 +141,8 @@ cdc %>%
 -   We see the regression line relating exercise and obesity %
 
 -   Points represent actual data values; note that the line is not a perfect fit
+
+-  The shading represents the standard error at each point
 
 ## Code for previous slide
 
@@ -153,7 +155,7 @@ cdc |>
   theme_bw() +
   labs(x = "Adequate aerobic activity (%)", 
        y = "Obesity (%)") +
-  geom_smooth(method = "lm", se = F) 
+  geom_smooth(method = "lm", se = T) 
 ```
 
 ## The linear model

@@ -1,6 +1,6 @@
 ---
 title: "HW 10"
-format: html
+format: docx
 ---
 
 Due Friday, July 10, at 11:59pm.
@@ -59,7 +59,6 @@ pain_tab # print out your table
 ```
 
 
-
 c. In general, what is the assumption of a chi-square test regarding expected cell counts? (Use the **more conservative** rule of thumb.)
 
 d. Based on your table you created in part (b), what is the expected count of having throat pain 30 minutes after surgery (i.e. those with a `1` in your newly created binary variable) and the expected count of **not** having throat pain 30 minutes after surgery, given an ASA classification of `healthy`? What is the expected count of NOT having throat pain 30 minutes after surgery, given an ASA classification of `healthy`? Use R for your calculations. Are either of these expected counts less than 10?
@@ -72,53 +71,10 @@ e. Conduct a Chi-square test on your `pain_tab` table to evaluate whether there 
       iv. State your p-value. Do we reject or fail to reject $H_0$?
       v. Write a 1-sentence conclusion.
 
-f. State 1 reason why (in general) one might choose to use a Fisher Exact Test rather than a chi-square test.
-
 ## Exercise 2
 
 In your own words, explain why it “makes sense” to evaluate equality of means across groups by examining different types of variances. (2-3 sentences)
 
-## Cereal
-
-The file `cereals.csv` contains data for 77 breakfast cereals in terms of their nutritional content per serving and other characteristics. The variables are:
-
-- `name`: name of the cereal
-
-- `mfr`: manufacturer (A: American Home Food Products, G: General Mills, K: Kellogg’s, N: Nabisco, P: Post, Q: Quaker Oats, and R: Ralston Purina)
-
-- `type`: cold vs. hot
-
-- `calories`, `protein`, `fat`, `sodium`, `fiber`, `carbo`, `sugars`, `potass`: the amount of each of these nutrients, per gram, per serving (sodium and potassium are measured in milligrams)
-
-- `shelf`: where the cereal was physically located (cereals on low aisles may be targeted toward children, for instance).
-
-For the purposes of this homework, you may assume that this is a random sample of cereal types. Download `cereal.csv` from the Canvas Assignment page. Save it in your `data` folder within your project folder. You may load the dataset with the code below: (Ensure that you suppress any warnings and messages.)
-
-```{r echo = T}
-#| message: false
-#| warning: false
-cereal <- read.csv("data/cereal.csv")
-```
-
-
-## Exercise 3
-
-For this exercise, we'll be investigating the research question: Is there evidence that there is a relationship between cereal manufacturer and where on the shelf their cereals are placed? 
-
-a. Use the following code to print the table of cereal placement versus manufacturer. (Yes, just copy and paste the code into your document.) 
-
-```{r}
-#| eval: false
-table(cereal$shelf, cereal$mfr)
-```
-
-In general, are cell counts lower or higher compared to ideal counts for a Chi-Square test?
-
-b. You decide to conduct a Fisher's Exact Test. State the null and alternative hypotheses in words. 
-
-c. Use R to conduct the test, displaying the code and output. Use $\alpha = 0.05$ To conduct this test, simply use `fisher.test(_____)`, and fill in the blank with the table code from part 4 (a). 
-
-d. State your p-value, whether you reject or fail to reject the null hypothesis, and state your conclusion.
 
 ## AI Attestation
 
@@ -144,9 +100,8 @@ To submit your assignment:
 
 | Component | Points |
 |----------|--------|
-| Ex 1 | 8 |
+| Ex 1 | 7 |
 | Ex 2 | 1 |
-| Ex 3 | 3 |
 | AI Attestation | 1 |
 | Formatting | 3 |
 

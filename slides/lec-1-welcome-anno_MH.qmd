@@ -81,12 +81,12 @@ format: html
 
 ## Grading {.smaller}
 
-| Category | Percentage |
-|----------|------------|
-| Homework | 40%        |
-| Labs     | 15%        |
-| Exams    | 40%        |
-| Participation   | 5%         |
+| Category      | Percentage |
+|---------------|------------|
+| Homework      | 30%        |
+| Labs          | 10%        |
+| Exams         | 40%        |
+| Participation | 20%        |
 
 See the course syllabus (available on Canvas) for how the final letter grade will be determined.
 

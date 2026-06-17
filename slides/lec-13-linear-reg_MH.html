@@ -296,6 +296,7 @@
 <img data-src="lec-13-linear-reg_MH_files/figure-revealjs/unnamed-chunk-7-1.png" alt="A scatterplot with x-axis labeled Adequate aerobic activity (%) and y-axis labeled Obesity (%). The points have a general downward trend. A negatively-sloped blue line is superimposed over the scatterplot to emphasize this trend." width="960" class="r-stretch"><ul>
 <li><p>We see the regression line relating exercise and obesity %</p></li>
 <li><p>Points represent actual data values; note that the line is not a perfect fit</p></li>
+<li><p>The shading represents the standard error at each point</p></li>
 </ul>
 </section>
 <section id="code-for-previous-slide" class="slide level2">
@@ -307,7 +308,7 @@
 <span id="cb5-4"><a href=""></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
 <span id="cb5-5"><a href=""></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Adequate aerobic activity (%)"</span>, </span>
 <span id="cb5-6"><a href=""></a>       <span class="at">y =</span> <span class="st">"Obesity (%)"</span>) <span class="sc">+</span></span>
-<span id="cb5-7"><a href=""></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> F) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-7"><a href=""></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> T) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="the-linear-model" class="slide level2">
