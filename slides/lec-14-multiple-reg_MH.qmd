@@ -419,6 +419,12 @@ $$FBG_i = \beta_0 + \beta_1 Female_i + \beta_2 BMI_i$$
 
 - This is created simply by multiplying two predictors $x_1$ and $x_2$ to create a new predictor, $x_1x_2$. When interaction terms are in a model, interpretations can become tricky.
 
+- As a rule of thumb, if you are including an interaction term, you need to include both variables on their own as well. For example, you would not fit the model:
+
+$$
+FBG_i = \beta_0 + \beta_1 (BMI_i)(Female_i)
+$$
+
 ## Interactions/Effect Modification {.smaller}
 
 - With interaction terms in the model

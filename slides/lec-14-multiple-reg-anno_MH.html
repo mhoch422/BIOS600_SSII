@@ -825,7 +825,11 @@ Tip
 <ul>
 <li><p>To model a case of effect modification - when the relationship between one predictor and the outcome depends on the value of another predictor variable, we create an <strong>interaction term</strong>.</p></li>
 <li><p>This is created simply by multiplying two predictors <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> to create a new predictor, <span class="math inline">\(x_1x_2\)</span>. When interaction terms are in a model, interpretations can become tricky.</p></li>
+<li><p>As a rule of thumb, if you are including an interaction term, you need to include both variables on their own as well. For example, you would not fit the model:</p></li>
 </ul>
+<p><span class="math display">\[
+FBG_i = \beta_0 + \beta_1 (BMI_i)(Female_i)
+\]</span></p>
 </section>
 <section id="interactionseffect-modification-3" class="level2 smaller">
 <h2 class="smaller anchored" data-anchor-id="interactionseffect-modification-3">Interactions/Effect Modification</h2>
