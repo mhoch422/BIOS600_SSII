@@ -70,7 +70,7 @@ You should get output that looks like
 
 To illustrate, let's load a dataset. Enter the following command into the console (you can directly copy/paste it, but make sure everything is exactly as below):
 
-```{r echo = T}
+```{r echo = T, warning = F}
 cdc <- read.csv("https://mhoch422.github.io/BIOS600_SSII/homework/data/cdc_cleaned.csv")
 ```
 
@@ -84,7 +84,7 @@ We've just loaded a dataset named `cdc`. These data come primarily from the Sort
 
 Coming back to the dataset we loaded in, we can see that it is named `cdc`. We can take a look at this dataset in a spreadsheet-like window by clicking on `cdc` in the Environment tab to the right, or by running the following code in the console:
 
-```{r echo = T}
+```{r echo = T, eval = F}
 View(cdc)
 ```
 

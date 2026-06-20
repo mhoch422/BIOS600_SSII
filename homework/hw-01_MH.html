@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.36">
+<meta name="generator" content="quarto-1.9.37">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -68,7 +68,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="hw-01_MH_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="hw-01_MH_files/libs/quarto-html/anchor.min.js"></script>
 <link href="hw-01_MH_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="hw-01_MH_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="hw-01_MH_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="hw-01_MH_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="hw-01_MH_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="hw-01_MH_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -156,11 +156,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>(For now, ignore the <code>[1]</code>). By typing in <code>3+5</code>, we got the expected answer, <code>8</code>. We can see that R can be used as a calculator directly in the console. Try some other commands that use R as a calculator. For instance, <code>3*25</code>, <code>exp(2)</code>, or <code>(10+5^2)/sqrt(40)</code>. Of course, R is not simply a calculator; other commands may also be entered here.</p>
 <p>To illustrate, let’s load a dataset. Enter the following command into the console (you can directly copy/paste it, but make sure everything is exactly as below):</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cdc <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://github.com/mhoch422/BIOS600_SSII/blob/main/homework/data/cdc_cleaned.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in scan(file = file, what = what, sep = sep, quote = quote, dec = dec,
-: EOF within quoted string</code></pre>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cdc <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://mhoch422.github.io/BIOS600_SSII/homework/data/cdc_cleaned.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We’ve just loaded a dataset named <code>cdc</code>. These data come primarily from the Sortable Risk Factors and Health Indicators dataset from the CDC, which comprises demographic and health indices compiled from various federal sources. This dataset is now part of our <strong>environment</strong>, which is displayed on the top half and right side of the RStudio window.</p>
 <ul>
@@ -170,7 +166,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>Coming back to the dataset we loaded in, we can see that it is named <code>cdc</code>. We can take a look at this dataset in a spreadsheet-like window by clicking on <code>cdc</code> in the Environment tab to the right, or by running the following code in the console:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(cdc)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">View</span>(cdc)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Note that other objects may be added to the environment, either from external data sources from the internet as in today’s example, datasets downloaded to your computer, or even as created as manipulations of existing datasets.</p>
 </section>
@@ -185,7 +181,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>Check your current working directory by running the following in your <strong>Console</strong>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">getwd</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>2. Creating a project</strong></p>
 <p>We’ll create a new project for this course so everything stays in one place. In RStudio, go to the top menu. Click on File → New Project → New Directory → New Project. Name your project something sensible &amp; concise, like: <code>bios600</code>. Choose where on your computer you want this folder saved (e.g., “Documents” or “Desktop”).</p>
@@ -197,9 +193,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="quarto-and-reproducible-research">Quarto and reproducible research</h2>
 <p>Quarto is a system that may be used to create easy-to-write, attractive reports, presentations, or webpages that also serve as reproducible records of the data analysis. These reports have the desirable property of being able to not only display written narratives and figures, but also include any R code and the outputs from these code snippets.</p>
 <p>One of the biggest strengths of Quarto is that everything is in one place, and that other users should be able to reproduce your results exactly, if they have your Quarto document and datasets - the analysis is run from the beginning each time you render the document. As well, formatting is easy! Luckily, RStudio already comes with Quarto support, so there is nothing additional to install. (Again, you need &gt;= version 2022.07 to run Quarto within RStudio!)</p>
-<p>Every homework assignment and lab in this class will be written in Quarto, with a template provided for you to use for the first few assignments. This lab’s template can be downloaded by typing in the following code in the Console:</p>
+<p>Every homework assignment and lab in this class will be written in Quarto, with a template provided for you to use for the first few assignments. This homework’s template can be downloaded by typing in the following code in the Console:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">"https://github.com/mhoch422/BIOS600_SSII/blob/main/homework/hw-1-template_MH.qmd"</span>, <span class="at">destfile=</span><span class="st">"hw-01.qmd"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">download.file</span>(<span class="st">"https://mhoch422.github.io/BIOS600_SSII/homework/hw-01-template.qmd"</span>, <span class="at">destfile=</span><span class="st">"hw-01.qmd"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>You should now see the new file <code>hw-01.qmd</code> under the Files tab in the bottom-right hand side of your RStudio window. Click on <code>hw-01.qmd</code> in this window in order to open it up – it is the template for use in this lab!</p>
 <p>First, put your name in the space at the top where it says “YOUR NAME GOES HERE”.</p>
