@@ -14,13 +14,6 @@ format: html
 -   Interests: Spending time outdoors, reading, watching movies
 -   Office Hours: Mondays and Wednesdays 11am-1pm. 
 
-
-## Check out Ed Discussion
-
--   This semester, you can ask questions about the class in our discussion forum, [Ed Discussion](https://edstem.org/us/join/TaE2wk)
-- The link to join is also posted on our home page in Canvas.
-- Take a moment to introduce yourself in the forum! Name, Year + Program, and a fun fact about yourself. 
-
 ## Course overview: Canvas
 
 -   All course materials by day: syllabus, discussion forum link, class slides, lab materials, assignments
@@ -31,6 +24,12 @@ format: html
 -   RStudio
 -   Assignment submission and feedback: Gradescope
 -   Discussion forum: [Ed Discussion](https://edstem.org/us/join/TaE2wk)
+
+## Check out Ed Discussion
+
+-   This semester, you can ask questions about the class in our discussion forum, [Ed Discussion](https://edstem.org/us/join/TaE2wk)
+- The link to join is also posted on our home page in Canvas.
+- Take a moment to introduce yourself in the forum! Name, Year + Program, and a fun fact about yourself. 
 
 ## What have I gotten myself into?
 
@@ -119,17 +118,10 @@ Optional:
 
 It is my intent that students from all diverse backgrounds and perspectives be well-served by this course, that students' learning needs be addressed both in and out of class, and that the diversity that the students bring to this class be viewed as a resource, strength and benefit.
 
-
 -   If you have a name that differs from those that appear in your official UNC records, please let me know!
--   Please let me know your preferred pronouns. You'll also be able to note this in the Getting to know you survey.
+-   Please feel free to let me know your pronouns. You'll also be able to note this in the Getting to know you survey.
 -   If you feel like your performance in the class is being impacted by your experiences outside of class, please don't hesitate to come and talk with me. I want to be a resource for you.
 -   If you prefer to speak with someone outside of the course, your advisers and deans are excellent resources.
-
-
-## Diversity + Inclusion
-
-I (like many people) am still in the process of learning about diverse perspectives and identities. If something was said in class (by anyone) that made you feel uncomfortable, please talk to me about it.
-
 
 ## Course policies: Late work
 
