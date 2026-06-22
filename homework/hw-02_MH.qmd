@@ -1,7 +1,7 @@
 ---
 title: "HW 02"
 subtitle: "Lecture 2"
-format: docx
+format: html
 ---
 
 Due: Wednesday, June 24 at 11:59pm
@@ -10,33 +10,9 @@ Due: Wednesday, June 24 at 11:59pm
 
 Refer to the syllabus for our AI use policy. You will be asked to include any AI prompts used in this assignment at the end. 
 
-## Starting a new Quarto file
+## Download the template
 
-For this assignment (and all future assignments) you will begin a new Quarto file. To do this, open RStudio and make sure you are inside your course project folder with File > Open Project > .... To create a new Quarto file, go to the top menu and click File > New File > Quarto Document. A pop-up will appear asking for a title, author, and format. You may leave these as the default options for now. Click OK and a new file will open. 
-
-In the document, Quarto automatically adds some starter text and code chunks. You may delete everything below the YAML header (everything under the second set of `---`). You should be left with just a YAML section at the very top, which looks something like this:
-
-```{r}
-#| eval: false
-
----
-title: "Document Title"
-author: "Your Name"
-date: "2026-06-24"
-format: html
----
-
-```
-
-Now, Edit the YAML header. Change
-
-- title -> the assignment name (e.g. `HW 1`)
-
-- author -> your name
-
-- date -> today's date
-
-Now, save your file. Go to File > Save as, and name it something clear like `hw1.qmd`. Keep it in your project folder. You're ready to begin!
+You can find the template for this assignment on Canvas; download it to your project folder.
 
 ## Dementia and eating behaviors
 

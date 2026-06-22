@@ -37,7 +37,7 @@ As mentioned previously, one of the biggest strengths of R is its large userbase
 Once again, let’s load the `cdc` dataset. Enter the following command into the console for now (you can directly copy/paste it, but make sure everything is exactly as below):
 
 ```{r}
-cdc <- read.csv("https://aggreenbean.github.io/Bios600/labs/data/cdc_cleaned.csv")
+cdc <- read.csv("https://mhoch422.github.io/BIOS600_SSII/homework/data/cdc_cleaned.csv")
 ```
 
 First, install the `tidyverse` package by running the following code in your R Studio **console**:
@@ -276,6 +276,8 @@ The `names()` function returns the list of variable names in the dataset, while 
 You can also `View` the dataset by using the `View()` function. Try running the following command in the Console:
 
 ```{r}
+#| eval: FALSE
+
 View(ncbikecrash)
 ```
 

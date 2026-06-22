@@ -17,7 +17,7 @@ library(tidyverse)
 ## Announcements
 
 - **HW #1** due today at 11:59pm.
-- Please reach out to me if you need assistance outside of office hours
+- Please reach out to me if you need assistance outside of office hours, I am happy to schedule a time to meet!
 
 ## Download or print notes to PDF {.smaller}
 
@@ -52,8 +52,24 @@ Consider the following research questions:
 2.  Over the last five years, what is the average time to complete a degree for UNC undergrads?
 3.  Does a new drug reduce the number of deaths in patients with severe heart disease?
 
-In small groups, identify the target population and what represents an individual case for each of the questions above.
+On the provided paper, identify the target population and what represents an individual case for each of the questions above.
 :::
+
+## Quarto recap
+
+Yesterday we discussed using Quarto for producing reports. A couple of notes on Quarto:
+
+- To have Quarto evaluate your code, you use formatting like this:
+
+```{{r}}
+
+10 + 34
+
+```
+
+- In Homework 1, the code chunk for Exercise 4 also included the line `#| lab: ex-4`. When a line begins with `#|`, that signals to Quarto that it contains information about the chunk itself, not the code you are evaluating.
+
+- We will talk more about these different options in lab on Friday!
 
 ## Exploratory data analysis (EDA)
 

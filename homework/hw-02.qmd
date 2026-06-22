@@ -1,0 +1,52 @@
+Due: Wednesday, June 24 at 11:59pm
+
+## Exercise 1
+
+a. Put your answer for Exercise 1a here.
+
+b. Put your answer for Exercise 1b here.
+
+c. Put your answer for Exercise 1c here.
+
+## Exercise 2
+
+Put your answer to Exercise 2 below:
+
+-
+-
+-
+-
+-
+
+## Exercise 3
+
+
+a. Put your answer to Exercise 3a here.
+
+b. Put your answer to Exercise 3b here.
+
+## Exercise 4
+
+a. Put your answer to Exercise 4a here.
+
+b. Put your answer to Exercise 4b here.
+
+## AI Attestation
+
+Was AI used on this assignment? If so, describe your prompts below. If not, simply state "AI was not used on this assignment."
+
+## Submission
+
+As you’ve seen previously, we can **Render** into an .html file that can be opened by any web browser. To export it as a .pdf, open the file in your web browser and then print to or save as a .pdf document. Contact me in Ed Discussion if you need help! 
+
+You will submit the PDF documents for labs and homework to Gradescope as part of your final submission.
+
+To submit your assignment:
+
+- Access Gradescope through the menu on the BIOS 600 Canvas site.
+
+- Click on the assignment, and you’ll be prompted to submit it.
+
+- Mark the pages associated with each exercise. All of the pages of your lab should be associated with at least one question (i.e., should be “checked”).
+
+- Select the first page of your .PDF submission to be associated with the "Formatting" section.
