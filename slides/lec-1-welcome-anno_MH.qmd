@@ -22,7 +22,7 @@ format: html
 ## Course toolkit
 
 -   RStudio
--   Assignment submission and feedback: Gradescope
+-   Assignment submission and feedback: Gradescope (code: B5WXY2)
 -   Discussion forum: [Ed Discussion](https://edstem.org/us/join/TaE2wk)
 
 ## Check out Ed Discussion

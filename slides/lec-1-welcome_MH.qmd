@@ -14,12 +14,6 @@ format: revealjs
 -   Interests: Spending time outdoors, reading, watching movies
 -   Office Hours: Mondays and Wednesdays 11am-1pm. 
 
-## Check out Ed Discussion
-
--   This semester, you can ask questions about the class in our discussion forum, [Ed Discussion](https://edstem.org/us/join/TaE2wk)
-- The link to join is also posted on our home page in Canvas.
-- Take a moment to introduce yourself in the forum! Name, Year + Program, and a fun fact about yourself.
-
 ## Meet each other!
 
 - Turn to the person or people sitting closest to you and share:
@@ -36,8 +30,14 @@ format: revealjs
 ## Course toolkit
 
 -   RStudio
--   Assignment submission and feedback: Gradescope
+-   Assignment submission and feedback: Gradescope (code: B5WXY2)
 -   Discussion forum: [Ed Discussion](https://edstem.org/us/join/TaE2wk)
+
+## Check out Ed Discussion
+
+-   This semester, you can ask questions about the class in our discussion forum, [Ed Discussion](https://edstem.org/us/join/TaE2wk)
+- The link to join is also posted on our home page in Canvas.
+- Take a moment to introduce yourself in the forum! Name, Year + Program, and a fun fact about yourself.
 
 ## What have I gotten myself into?
 
