@@ -55,7 +55,7 @@ Consider the following research questions:
 On the provided paper, identify the target population and what represents an individual case for each of the questions above.
 :::
 
-## Quarto recap
+## Quarto recap {.smaller}
 
 Yesterday we discussed using Quarto for producing reports. A couple of notes on Quarto:
 
@@ -574,7 +574,7 @@ $$s^2 = \frac{1}{n-1} \sum_{i=1}^n(x_i - \bar{x})^2$$
 - **Chebyshev's inequality** tells us the proportion of values in the range "average $\pm$ $k$ SDs" is at least $1-\frac{1}{k^2}$
 :::
 
-## Chevychev's bounds
+## Chebyshev's bounds
 
 |        Range        |           Proportion            |
 |:-------------------:|:-------------------------------:|
