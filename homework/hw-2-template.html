@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="YOUR NAME GOES HERE">
 
-<title>HW 03</title>
+<title>Homework 1</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -23,55 +24,20 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
 </style>
 
 
-<script src="hw-03_MH_files/libs/clipboard/clipboard.min.js"></script>
-<script src="hw-03_MH_files/libs/quarto-html/quarto.js" type="module"></script>
-<script src="hw-03_MH_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="hw-03_MH_files/libs/quarto-html/popper.min.js"></script>
-<script src="hw-03_MH_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="hw-03_MH_files/libs/quarto-html/anchor.min.js"></script>
-<link href="hw-03_MH_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="hw-03_MH_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="hw-03_MH_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="hw-03_MH_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="hw-03_MH_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="hw-2-template_files/libs/clipboard/clipboard.min.js"></script>
+<script src="hw-2-template_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="hw-2-template_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="hw-2-template_files/libs/quarto-html/popper.min.js"></script>
+<script src="hw-2-template_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="hw-2-template_files/libs/quarto-html/anchor.min.js"></script>
+<link href="hw-2-template_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="hw-2-template_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="hw-2-template_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="hw-2-template_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="hw-2-template_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -84,14 +50,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">HW 03</h1>
-<p class="subtitle lead">Lecture 3</p>
+<h1 class="title">Homework 1</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>YOUR NAME GOES HERE </p>
+          </div>
+  </div>
     
   
     
@@ -102,79 +73,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<p>Due: Thursday, June 25 at 11:59pm</p>
-<section id="ai-use" class="level2">
-<h2 class="anchored" data-anchor-id="ai-use">AI use</h2>
-<p>Refer to the syllabus for our AI use policy. You will be asked to include any AI prompts used in this assignment at the end.</p>
-</section>
-<section id="starting-a-new-quarto-file" class="level2">
-<h2 class="anchored" data-anchor-id="starting-a-new-quarto-file">Starting a new Quarto file</h2>
-<p>For this assignment (and all future assignments) you will begin a new Quarto file. To do this, open RStudio and make sure you are inside your course project folder with File &gt; Open Project &gt; …. To create a new Quarto file, go to the top menu and click File &gt; New File &gt; Quarto Document. A pop-up will appear asking for a title, author, and format. You may leave these as the default options for now. Click OK and a new file will open.</p>
-<p>In the document, Quarto automatically adds some starter text and code chunks. You may delete everything below the YAML header (everything under the second set of <code>---</code>). You should be left with just a YAML section at the very top, which looks something like this:</p>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>title<span class="sc">:</span> <span class="st">"Document Title"</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>author<span class="sc">:</span> <span class="st">"Your Name"</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>date<span class="sc">:</span> <span class="st">"2026-06-24"</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>format<span class="sc">:</span> html</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="sc">---</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<p>Now, Edit the YAML header. Change</p>
-<ul>
-<li><p>title -&gt; the assignment name (e.g.&nbsp;<code>HW 1</code>)</p></li>
-<li><p>author -&gt; your name</p></li>
-<li><p>date -&gt; today’s date</p></li>
-</ul>
-<p>Now, save your file. Go to File &gt; Save as, and name it something clear like <code>hw1.qmd</code>. Keep it in your project folder. You’re ready to begin!</p>
-</section>
-<section id="covid-19-vaccine-dataset" class="level2">
-<h2 class="anchored" data-anchor-id="covid-19-vaccine-dataset">Covid-19 vaccine dataset</h2>
-<p>Use the following paper/table to answer Exercise 1.</p>
-<p>Zhu et al.&nbsp;(<em>The Lancet</em>, 2020) conducted the first randomized trial of a recombinant adenovirus COVID-19 vaccine in healthy adults, with the aim of determining an appropriate dose for a larger efficacy study. They had three treatment arms: placebo, low dose (5 × 1010 virus particles), and high dose (1 × 1011 virus particles). The following table depicts the baseline characteristics of their study population:</p>
-<p><img src="images/hw-1/tab1.png" class="img-fluid"></p>
-</section>
+<p>Due: Wednesday, June 24 at 11:59pm</p>
 <section id="exercise-1" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-1">Exercise 1</h2>
-<p>Calculate the following probabilities. It’s ok to express answers as unsimplified fractions). If the probabilities cannot be determined, please state so and what additional information is needed to calculate the quantity of interest. Provide a 1 sentence explanation about how you calculated each value based on the table.</p>
-<p>What is the probability that a randomly selected patient in the trial …</p>
 <ol type="a">
-<li><p>… was assigned to placebo?</p></li>
-<li><p>… was assigned to placebo or was male?</p></li>
-<li><p>… was assigned to placebo and was male?</p></li>
-<li><p>… was not assigned to high dose vaccine and had no underlying diseases?</p></li>
-<li><p>… was female or had underlying diseases?</p></li>
-<li><p>… was female or was not assigned to either vaccine dose?</p></li>
-<li><p>… was aged 18 - 44, given that they were assigned to high dose vaccine?</p></li>
-<li><p>… was not assigned placebo, given that they were aged 45-54?</p></li>
+<li><p>Put your answer for Exercise 1a here.</p></li>
+<li><p>Put your answer for Exercise 1b here.</p></li>
+<li><p>Put your answer for Exercise 1c here.</p></li>
 </ol>
-</section>
-<section id="socioeconomic-factors-and-visual-impairment" class="level2">
-<h2 class="anchored" data-anchor-id="socioeconomic-factors-and-visual-impairment">Socioeconomic factors and visual impairment</h2>
-<p>Use the following paper and figure to answer Exercises 2 and 3.</p>
-<p>Wang et al.&nbsp;(<em>JAMA Opthamology</em>, 2017) examined the association of socioeconomic factors with prevalence of visual impairment and blindness. The following scatterplot depicts the relationship between Human Development Index (HDI) and the age-standardized prevalence of moderate to severe visual impairment (MSVI). The countries highlighted in orange are the 5 countries with the largest number of blind people.</p>
-<p><img src="images/hw-1/hdi.png" class="img-fluid"></p>
 </section>
 <section id="exercise-2" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-2">Exercise 2</h2>
-<ol type="a">
-<li><p>In general, are higher or lower HDIs associated with higher prevalence of MSVI?</p></li>
-<li><p>Among China, India, Pakistan, Nigeria, and Indonesia, which has the lowest HDI?</p></li>
-</ol>
+<p>Put your answer to Exercise 2 below:</p>
+<ul>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+</ul>
 </section>
 <section id="exercise-3" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-3">Exercise 3</h2>
 <ol type="a">
-<li><p>Does India have higher or lower prevalence of MSVI than might be expected given its HDI?</p></li>
-<li><p>In their conclusion, the authors state “Burden of visual impairment and socioeconomic indicators were closely associated and may help to identify countries requiring greater attention to these issues.” Do you think this is a reasonable statement to make from the scatterplot? Why or why not?</p></li>
+<li><p>Put your answer to Exercise 3a here.</p></li>
+<li><p>Put your answer to Exercise 3b here.</p></li>
 </ol>
 </section>
-<section id="exercise-4-seer-data" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-4-seer-data">Exercise 4: SEER Data</h2>
-<p>According to data from the Surveillance, Epidemiology, and End Results (SEER) Program of the National Cancer Institute, U.S. women have approximately a 1 in 8 lifetime chance (12.5%) of developing breast cancer.</p>
-<p>Please provide a numerical answer by using R’s calculator capability (i.e., insert new R chunks, show code calculating the numeric answers). Be careful with parentheses! In addition, provide a 1-sentence explanation of your work.</p>
+<section id="exercise-4" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-4">Exercise 4</h2>
 <ol type="a">
-<li><p>Suppose three unrelated women are randomly selected from the U.S. population. What is the probability that all three will develop breast cancer at some point during their lives?</p></li>
-<li><p>Suppose three unrelated women are randomly selected from the U.S. population. What is the probability that at least one of them will develop breast cancer at some point during their lives?</p></li>
+<li><p>Put your answer to Exercise 4a here.</p></li>
+<li><p>Put your answer to Exercise 4b here.</p></li>
 </ol>
 </section>
 <section id="ai-attestation" class="level2">
@@ -192,44 +122,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p>Mark the pages associated with each exercise. All of the pages of your lab should be associated with at least one question (i.e., should be “checked”).</p></li>
 <li><p>Select the first page of your .PDF submission to be associated with the “Formatting” section.</p></li>
 </ul>
-</section>
-<section id="grading" class="level2">
-<h2 class="anchored" data-anchor-id="grading">Grading</h2>
-<table class="caption-top table">
-<thead>
-<tr class="header">
-<th>Component</th>
-<th>Points</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Ex 1</td>
-<td>4</td>
-</tr>
-<tr class="even">
-<td>Ex 2</td>
-<td>2</td>
-</tr>
-<tr class="odd">
-<td>Ex 3</td>
-<td>2</td>
-</tr>
-<tr class="even">
-<td>Ex 4</td>
-<td>2</td>
-</tr>
-<tr class="odd">
-<td>AI Attestation</td>
-<td>1</td>
-</tr>
-<tr class="even">
-<td>Formatting</td>
-<td>3</td>
-</tr>
-</tbody>
-</table>
-<p>The “Formatting” grade is to assess the document format. This includes having a neatly organized document (no excessive output, warnings/messages when loading packages and/or data) with readable code and your name and the date updated in the YAML.</p>
 </section>
 
 </main>
