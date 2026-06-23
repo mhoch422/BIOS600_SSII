@@ -15,6 +15,9 @@ format: revealjs
 ## Announcements
 
 - HW 2 Due tonight, Jun 23 at 11:59pm
+- Please hand in your getting-to-know you survey if you haven't already!
+- **Office Hours**: Monday 11 AM - 1 PM, Wednesdays 1 - 3 PM in MCG 3126 (across from the restrooms on the third floor)
+- **Today** office hours are from 2 - 4 PM due to a scheduling conflict on my end
 
 
 # Last Class
@@ -25,7 +28,9 @@ format: revealjs
 
 ```{r}
 #| fig-alt: "Histogram plot with most values clustered next to 0 and a long right tail"
+#| message: FALSE
 set.seed(123)
+library(tidyverse)
 
 # Simulate data from a normal distribution
 normal_data <- rnorm(400, mean = 0, sd = 1)
@@ -74,16 +79,21 @@ legend("topright",
 ```{r}
 #| fig-alt: "Histogram plot with values spread evenly around 8 to 12, with a vertical blue line at 10 and a vertical red line at 12"
 
+set.seed(123)
+
+x <- c(runif(50, 4, 8), 9, runif(50, 14, 18))
+#x <- c(1,1,1,1,2,2,2,2,3,3,3,3,4,10,10,10,10,11,11,11,11,12,12,12,12)
+
 # Many typical values
 hist(x, breaks = 30, col = "gray",
      main = "Servings of Fruits and Vegetables",
      ylab= "# of Participants",
      xlab = "# of Servings")
 
-abline(v = mean(x_with_outlier), col = "red", lwd = 2)
-abline(v = median(x_with_outlier), col = "blue", lwd = 2)
+abline(v = mean(x), col = "red", lwd = 2)
+abline(v = median(x), col = "blue", lwd = 2)
 
-legend("topright",
+legend("bottomright",
        legend = c("Mean", "Median"),
        col = c("red", "blue"),
        lwd = 2)
