@@ -1,7 +1,7 @@
 ---
 title: "Lab 01: Basic Data Visualization & Intro to the Tidyverse"
-author: "Your Name Here"
-date: "Today's Date Here"
+author: "YOUR NAME GOES HERE"
+date: "DATE GOES HERE"
 format: html
 ---
 
@@ -15,7 +15,8 @@ library(tidyverse)
 # Load in the dataset in the R chunk here! Note that you MUST load in the dataset
 # in the chunk in order for other R chunks to recognize the dataset, even if
 # you've loaded it in the Console.
-cdc <- read.csv("https://aggreenbean.github.io/Bios600/labs/data/cdc_cleaned.csv")
+cdc <- read.csv("https://mhoch422.github.io/BIOS600_SSII/homework/data/cdc_cleaned.csv")
+
 ```
 
 ### Exercise 1
@@ -28,6 +29,7 @@ Write your narrative to Exercise 1 here.
 #| label: ex-2
 
 # Use this R chunk to create your visualization for Exercise 2.
+
 ```
 
 Write your narrative to Exercise 2 here.
@@ -76,6 +78,8 @@ Write your narrative to Exercise 6 here.
 ```{r }
 #| label: ex-7a
 #| eval: false
+
+ncbikecrash <- read.csv("https://mhoch422.github.io/BIOS600_SSII/labs/data/bikecrash.csv")
 
 # run this code
 ncbikecrash |> 

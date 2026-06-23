@@ -261,8 +261,6 @@ Create a visualization that explores the relationship between death rate per 100
 
 Create boxplots to visualize the infant mortality rate (y-axis) by region (x-axis). Include an informative title, x-axis label, and y-axis label. Comment on the relationship(s) you see.
 
-**Note**: each of the following exercises should be done in “one go” using a series of pipes. Code should be fully shown in your final PDF for each exercise. If you are asked to “create a table,” then there is no need for additional narrative, unless specifically asked to make a conclusion based on the table.
-
 ## Wrangling Data
 
 The second part of today's lab will focus on data wrangling using the `tidyverse` (in particular, basic functions in `dplyr`). There is a lot of material – follow along with the code that is written to familiarize yourself with the commands. You are highly encouraged to ask me or each other for help!
@@ -646,6 +644,8 @@ In your final PDF that you turn in on Gradescope, ensure all code is visible for
 :::
 
 ## Your turn!
+
+**Note**: each of the following exercises should be done in “one go” using a series of pipes. Code should be fully shown in your final PDF for each exercise. If you are asked to “create a table,” then there is no need for additional narrative, unless specifically asked to make a conclusion based on the table.
 
 ## Exercise 7
 
