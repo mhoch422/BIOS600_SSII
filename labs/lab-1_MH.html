@@ -363,12 +363,41 @@ $ Over65              &lt;dbl&gt; 15.3, 9.4, 15.9, 15.7, 12.9, 12.7, 15.5, 16.4,
 </div>
 </div>
 </section>
+<section id="your-turn" class="level2">
+<h2 class="anchored" data-anchor-id="your-turn">Your turn!</h2>
+<p>In each of the following plots, make sure you have informative plot titles and axis labels.</p>
+</section>
+<section id="exercise-2" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-2">Exercise 2</h2>
+<p>Modify the code used for the bar graph that counts the number of US States by Census Region such that the bars are colored pink. Which region has the most states? Which has the least?</p>
+</section>
+<section id="exercise-3" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-3">Exercise 3</h2>
+<p>Create a visualization that explores the distribution of adults who smoke among different levels of the Human Development Index. (Hint: what type of visualization might be appropriate? Try modifying some of the code you see above, changing some of the variable names. Remember to also change any titles as needed. Provide an informative plot title, x-axis label, and y-axis label).</p>
+<ol type="a">
+<li>Describe the distributions among each level of HDI - are they symmetric or skewed? Any outliers?</li>
+<li>How does smoking relate to Human Development Index in this dataset? Describe the pattern you see.</li>
+</ol>
+</section>
+<section id="exercise-4" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-4">Exercise 4</h2>
+<p>Create a visualization that explores the relationship between flu vaccination rate (x-axis) and childhood vaccination rate (y-axis). What relationship(s) do you see? Make sure you have an informative title, x-axis label, and y-axis label.</p>
+</section>
+<section id="exercise-5" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-5">Exercise 5</h2>
+<p>Create a visualization that explores the relationship between death rate per 100,000 due to cardiovascular causes (x-axis) and the percentage of obese residents in a state (y-axis). Color-code your plot based on HDI category. (Hint: Have we done a similar visualization earlier in this lab assignment? Modify the earlier code. You’ll need to add a title, x-axis label, and y-axis label). What relationship(s) do you see?</p>
+</section>
+<section id="exercise-6" class="level2">
+<h2 class="anchored" data-anchor-id="exercise-6">Exercise 6</h2>
+<p>Create boxplots to visualize the infant mortality rate (y-axis) by region (x-axis). Include an informative title, x-axis label, and y-axis label. Comment on the relationship(s) you see.</p>
+<p><strong>Note</strong>: each of the following exercises should be done in “one go” using a series of pipes. Code should be fully shown in your final PDF for each exercise. If you are asked to “create a table,” then there is no need for additional narrative, unless specifically asked to make a conclusion based on the table.</p>
+</section>
 <section id="wrangling-data" class="level2">
 <h2 class="anchored" data-anchor-id="wrangling-data">Wrangling Data</h2>
-<p>The second part of today’s lab will focus on data wrangling using the <code>tidyverse</code> (in particular, basic functions in <code>dplyr</code>). There is a lot of material – follow along with the code that is written to familiarize yourself with the commands. You are highly encouraged to ask your lab TA or each other for help!</p>
-<p>The data are available by typing in the following. Note that we are naming the dataset <code>ncbikecrash</code> - you may may the dataset something else if you wish, but make sure that you are using this name consistently throughout the lab!</p>
+<p>The second part of today’s lab will focus on data wrangling using the <code>tidyverse</code> (in particular, basic functions in <code>dplyr</code>). There is a lot of material – follow along with the code that is written to familiarize yourself with the commands. You are highly encouraged to ask me or each other for help!</p>
+<p>The data are available by typing in the following. Note that we are naming the dataset <code>ncbikecrash</code> - you may name the dataset something else if you wish, but make sure that you are using this name consistently throughout the lab!</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>ncbikecrash <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://aggreenbean.github.io/Bios600/labs/data/bikecrash.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>ncbikecrash <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://mhoch422.github.io/BIOS600_SSII/labs/data/bikecrash.csv"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Since we are using the <code>tidyverse</code> package, we can load the package in the Console.</p>
 <div class="cell">
@@ -662,34 +691,8 @@ $ Over65              &lt;dbl&gt; 15.3, 9.4, 15.9, 15.7, 12.9, 12.7, 15.5, 16.4,
 </div>
 </div>
 </section>
-<section id="your-turn" class="level2">
-<h2 class="anchored" data-anchor-id="your-turn">Your turn!</h2>
-<p>In each of the following plots, make sure you have informative plot titles and axis labels.</p>
-</section>
-<section id="exercise-2" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-2">Exercise 2</h2>
-<p>Modify the code used for the bar graph that counts the number of US States by Census Region such that the bars are colored pink. Which region has the most states? Which has the least?</p>
-</section>
-<section id="exercise-3" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-3">Exercise 3</h2>
-<p>Create a visualization that explores the distribution of adults who smoke among different levels of the Human Development Index. (Hint: what type of visualization might be appropriate? Try modifying some of the code you see above, changing some of the variable names. Remember to also change any titles as needed. Provide an informative plot title, x-axis label, and y-axis label).</p>
-<ol type="a">
-<li>Describe the distributions among each level of HDI - are they symmetric or skewed? Any outliers?</li>
-<li>How does smoking relate to Human Development Index in this dataset? Describe the pattern you see.</li>
-</ol>
-</section>
-<section id="exercise-4" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-4">Exercise 4</h2>
-<p>Create a visualization that explores the relationship between flu vaccination rate (x-axis) and childhood vaccination rate (y-axis). What relationship(s) do you see? Make sure you have an informative title, x-axis label, and y-axis label.</p>
-</section>
-<section id="exercise-5" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-5">Exercise 5</h2>
-<p>Create a visualization that explores the relationship between death rate per 100,000 due to cardiovascular causes (x-axis) and the percentage of obese residents in a state (y-axis). Color-code your plot based on HDI category. (Hint: Have we done a similar visualization earlier in this lab assignment? Modify the earlier code. You’ll need to add a title, x-axis label, and y-axis label). What relationship(s) do you see?</p>
-</section>
-<section id="exercise-6" class="level2">
-<h2 class="anchored" data-anchor-id="exercise-6">Exercise 6</h2>
-<p>Create boxplots to visualize the infant mortality rate (y-axis) by region (x-axis). Include an informative title, x-axis label, and y-axis label. Comment on the relationship(s) you see.</p>
-<p><strong>Note</strong>: each of the following exercises should be done in “one go” using a series of pipes. Code should be fully shown in your final PDF for each exercise. If you are asked to “create a table,” then there is no need for additional narrative, unless specifically asked to make a conclusion based on the table.</p>
+<section id="your-turn-1" class="level2">
+<h2 class="anchored" data-anchor-id="your-turn-1">Your turn!</h2>
 </section>
 <section id="exercise-7" class="level2">
 <h2 class="anchored" data-anchor-id="exercise-7">Exercise 7</h2>

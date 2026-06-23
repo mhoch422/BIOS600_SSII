@@ -234,14 +234,43 @@ ggplot(cdc, aes(x = Exercise, y = Obesity,
   theme_minimal()
 ```
 
+## Your turn!
+
+In each of the following plots, make sure you have informative plot titles and axis labels. 
+
+## Exercise 2
+
+Modify the code used for the bar graph that counts the number of US States by Census Region such that the bars are colored pink. Which region has the most states? Which has the least?
+
+## Exercise 3
+
+Create a visualization that explores the distribution of adults who smoke among different levels of the Human Development Index. (Hint: what type of visualization might be appropriate? Try modifying some of the code you see above, changing some of the variable names. Remember to also change any titles as needed. Provide an informative plot title, x-axis label, and y-axis label).
+
+ a) Describe the distributions among each level of HDI - are they symmetric or skewed? Any outliers?
+ b) How does smoking relate to Human Development Index in this dataset? Describe the pattern you see. 
+
+## Exercise 4
+
+Create a visualization that explores the relationship between flu vaccination rate (x-axis) and childhood vaccination rate (y-axis). What relationship(s) do you see? Make sure you have an informative title, x-axis label, and y-axis label.
+
+## Exercise 5
+
+Create a visualization that explores the relationship between death rate per 100,000 due to cardiovascular causes (x-axis) and the percentage of obese residents in a state (y-axis). Color-code your plot based on HDI category. (Hint: Have we done a similar visualization earlier in this lab assignment? Modify the earlier code. You'll need to add a title, x-axis label, and y-axis label). What relationship(s) do you see?
+
+## Exercise 6
+
+Create boxplots to visualize the infant mortality rate (y-axis) by region (x-axis). Include an informative title, x-axis label, and y-axis label. Comment on the relationship(s) you see.
+
+**Note**: each of the following exercises should be done in “one go” using a series of pipes. Code should be fully shown in your final PDF for each exercise. If you are asked to “create a table,” then there is no need for additional narrative, unless specifically asked to make a conclusion based on the table.
+
 ## Wrangling Data
 
-The second part of today's lab will focus on data wrangling using the `tidyverse` (in particular, basic functions in `dplyr`). There is a lot of material – follow along with the code that is written to familiarize yourself with the commands. You are highly encouraged to ask your lab TA or each other for help!
+The second part of today's lab will focus on data wrangling using the `tidyverse` (in particular, basic functions in `dplyr`). There is a lot of material – follow along with the code that is written to familiarize yourself with the commands. You are highly encouraged to ask me or each other for help!
 
-The data are available by typing in the following. Note that we are naming the dataset `ncbikecrash` - you may may the dataset something else if you wish, but make sure that you are using this name consistently throughout the lab!
+The data are available by typing in the following. Note that we are naming the dataset `ncbikecrash` - you may name the dataset something else if you wish, but make sure that you are using this name consistently throughout the lab!
 
 ```{r}
-ncbikecrash <- read.csv("https://aggreenbean.github.io/Bios600/labs/data/bikecrash.csv")
+ncbikecrash <- read.csv("https://mhoch422.github.io/BIOS600_SSII/labs/data/bikecrash.csv")
 ```
 
 Since we are using the `tidyverse` package, we can load the package in the Console.
@@ -617,33 +646,6 @@ In your final PDF that you turn in on Gradescope, ensure all code is visible for
 :::
 
 ## Your turn!
-
-In each of the following plots, make sure you have informative plot titles and axis labels. 
-
-## Exercise 2
-
-Modify the code used for the bar graph that counts the number of US States by Census Region such that the bars are colored pink. Which region has the most states? Which has the least?
-
-## Exercise 3
-
-Create a visualization that explores the distribution of adults who smoke among different levels of the Human Development Index. (Hint: what type of visualization might be appropriate? Try modifying some of the code you see above, changing some of the variable names. Remember to also change any titles as needed. Provide an informative plot title, x-axis label, and y-axis label).
-
- a) Describe the distributions among each level of HDI - are they symmetric or skewed? Any outliers?
- b) How does smoking relate to Human Development Index in this dataset? Describe the pattern you see. 
-
-## Exercise 4
-
-Create a visualization that explores the relationship between flu vaccination rate (x-axis) and childhood vaccination rate (y-axis). What relationship(s) do you see? Make sure you have an informative title, x-axis label, and y-axis label.
-
-## Exercise 5
-
-Create a visualization that explores the relationship between death rate per 100,000 due to cardiovascular causes (x-axis) and the percentage of obese residents in a state (y-axis). Color-code your plot based on HDI category. (Hint: Have we done a similar visualization earlier in this lab assignment? Modify the earlier code. You'll need to add a title, x-axis label, and y-axis label). What relationship(s) do you see?
-
-## Exercise 6
-
-Create boxplots to visualize the infant mortality rate (y-axis) by region (x-axis). Include an informative title, x-axis label, and y-axis label. Comment on the relationship(s) you see.
-
-**Note**: each of the following exercises should be done in “one go” using a series of pipes. Code should be fully shown in your final PDF for each exercise. If you are asked to “create a table,” then there is no need for additional narrative, unless specifically asked to make a conclusion based on the table.
 
 ## Exercise 7
 
