@@ -326,9 +326,9 @@ How do we interpret these in plain English?
 | Coffee drinking | Died? Yes | Died? No | Total |
 |-----------------|:---------:|:--------:|:-----:|
 | None            |   1039    |   5438   | 6477  |
-| Med-Low         |   4440    |  29712   | 29809 |
+| Med-Low         |   4440    |  29712   | 34152 |
 | High            |   3601    |  24934   | 28535 |
-| Total           |   9080    |  60084   | 64821 |
+| **Total**       |   9080    |  60084   | 69164 |
 
 What was the probability that a randomly selected person in the trial..
 
@@ -446,9 +446,9 @@ or equivalently, $P(A|B) = P(A)$ or $P(B|A) = P(B)$
 | Coffee drinking | Died? Yes | Died? No | Total |
 |-----------------|:---------:|:--------:|:-----:|
 | None            |   1039    |   5438   | 6477  |
-| Med-Low         |   4440    |  29712   | 29809 |
+| Med-Low         |   4440    |  29712   | 34152 |
 | High            |   3601    |  24934   | 28535 |
-| **Total**       |   9080    |  60084   | 64821 |
+| **Total**       |   9080    |  60084   | 69164 |
 
 What was the probability a randomly selected person in the study...
 
