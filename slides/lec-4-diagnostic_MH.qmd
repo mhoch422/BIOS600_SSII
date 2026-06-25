@@ -9,11 +9,13 @@ format: revealjs
 
 ## Announcements
 
-- **Lab 1** posted, will be the focus of lab tomorrow!
+- **Lab 1** posted, will be the focus of lab tomorrow
 
 - Not due until next Monday, Jun 29 at 11:59 pm
 
-- Please take advantage of office hours
+- Please take advantage of office hours if you need help
+
+- **HW 3** due tonight by 11:59 pm
    
 ## Reading
 
@@ -342,7 +344,7 @@ What is the specificity of this test ($P(Test-\vert Healthy)$)?
 
 ## Example {.smaller}
 
-What is the sensitivity of this test ($P(Test-\vert Healthy)$)?
+What is the specificity of this test ($P(Test-\vert Healthy)$)?
 
 |               | Has Illness | No Illness      | Total |
 |---------------|:-----------:|:---------------:|:-----:|
@@ -510,7 +512,7 @@ $$
 Putting it all together, we have
 
 \begin{align}
-P(B \vert A) &= \frac{P(B\vert A)P(A)}{P(B\vert A)P(A)+P(B\vert A^C)P(A^C)}\\
+P(A \vert B) &= \frac{P(B\vert A)P(A)}{P(B\vert A)P(A)+P(B\vert A^C)P(A^C)}\\
 &= \frac{(.993)(.000143)}{(.993)(.000143) + (1-.998)(1-.000143)}\\
 &= 0.066 = 6.6\%
 \end{align}
@@ -749,7 +751,10 @@ ggplot(roc_df, aes(x = FPR, y = TPR, color = AUC)) +
 
 ## Next class
 
-- Discrete distributions
+- Monday: Discrete distributions
+
+- Tomorrow: Lab 1: Data visualization & data wrangling
+
 
 ## Participation
 
