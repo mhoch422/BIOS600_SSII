@@ -512,7 +512,7 @@ $$
 Putting it all together, we have
 
 \begin{align}
-P(B \vert A) &= \frac{P(B\vert A)P(A)}{P(B\vert A)P(A)+P(B\vert A^C)P(A^C)}\\
+P(A \vert B) &= \frac{P(B\vert A)P(A)}{P(B\vert A)P(A)+P(B\vert A^C)P(A^C)}\\
 &= \frac{(.993)(.000143)}{(.993)(.000143) + (1-.998)(1-.000143)}\\
 &= 0.066 = 6.6\%
 \end{align}
