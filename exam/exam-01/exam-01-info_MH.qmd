@@ -1,0 +1,31 @@
+---
+title: "Exam 01 Info"
+format: html
+---
+
+
+- Exam 01 will take place in-person on Thursday, July 2, during class. This exam is an opportunity to demonstrate what you've learned in the course thus far.  
+
+- We will all be in this classroom.
+
+- The exam will be closed-book. 
+
+- You should bring something to write with. Nothing else is permitted (i.e. calculators, cheat sheets not permitted.)
+
+- Content covered: Lectures 1-7, Lab 1, HW 1-6. 
+
+## Types of questions
+
+- The questions may be a mix of multiple choice, true/false, or short answer. 
+
+- To prepare, review the definitions, concepts, and examples in the lectures. Review all lab assignments and homework assignments. 
+
+- There will be three sections: Code, Conceptual, and Applied. Examples of each of these sections have been posted, and solutions will be posted on Wednesday after class.
+
+## Resources for reviewing
+
+- A formula sheet (formulas you would be provided on the exam) has been posted.
+
+- A topics list has been posted. 
+
+- I will prepare a set of review questions for us to complete in class on Wednesday, July 1. We will go over these together and you will have access to the solutions after class. 
