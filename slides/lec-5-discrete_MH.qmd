@@ -16,11 +16,75 @@ execute:
 
 - HW5 due **tomorrow at 11:59pm**.
 
+- Office Hours today from 11-1 on MCG third floor.
+
+- In ROS 235 again tomorrow, then back to ROS 228 for the rest of the session.
+
+## Exam 1 on Thursday, July 2
+
+- Our first midterm exam will be on Thursday of this week; it will be held during class, and no notes or computers may be used during the exam.
+
+- Please reach out to me about any testing accommodations so that I can plan accordingly.
+
+- The exam will cover all material from Lectures 1-6 and Lab 1.
+
+- Practice questions are on Canvas in the Week 2 Module, and Wednesday's class will be dedicated to review for the exam.
+
+## Exam 1
+
+- The exam will have three parts: Coding, Applications, and Theory.
+
+- The coding part will involve understanding and interpreting R code similar to what was covered in Lab 1 and HW 1.
+
+- The applications part will be applying the tools from the class so far to relevant medical/public health questions.
+
+- The theory part will have some probability questions and a true/false section.
+
+## General Homework Notes {.smaller}
+
+- Render your document as you go when working on homeworks and labs -- this is an easy way to catch errors before you hand them in!
+
+- Remember to associate which pages of your document correspond to each question (this will be part of the Formatting grade going forward).
+
+- When you make a new Quarto document, it pre-populates with some text and R chunks -- please delete these before handing in your assignments!
+
+- Include your name and date in your rendered Quarto document.
+
+- If a question says to use include R code for a calculation, make sure that the code chunk appears in your rendered document. 
+
+## Homework 2 -- Experimental vs. Observational {.smaller}
+
+- Looking at the study comparing calories consumed at the breakfast buffet between participants with different forms of dementia, as well as a control group
+
+- This is an observational study, because the researchers are not assigning the participants to their form of dementia
+
+- A little confusing, because the researchers are "running an experiment" using a specific breakfast buffet
+
+- Can ask yourself "what are the differences between the groups in the study?" If those differences are assigned by the researcher, then it is experimental. If not, observational.
+
+## Homework 2 -- Numerical, Count vs. Continuous
+
+- Distinction can be unclear, especially when data is in integer form
+
+- One question you can ask yourself is if it would be possible for the data to be continuous
+
+- As an example, age could be broken down into very small intervals (30 years vs 30.189 years), so we treat it as continuous
+
+- Whereas number of cases of meningitis can only be an integer, so that numerical count data
+
+## AI
+
+- Remember that you can use AI tools to help with the coding portions of assignments, or for conceptual clarification.
+
+- Still, try to use your class and lab notes first for these questions when you can. 
+
+- You may not use AI tools for narrative questions, and this includes using AI tools to check your assignments.
+
+
 ## Supplemental reading
 
 -   Pagano and Gavreau: Section 7.2 and 7.3
 -   [OpenIntro Statistics](https://www.openintro.org/go/?id=os4_for_screen_readers&referrer=/book/os/index.php): 3.4, 4.3, and 4.5
-
 
 ## Overview
 
@@ -463,9 +527,17 @@ Suppose on average, there are 1.5 deaths due to Alzheimer's Disease in a town ea
 
 4.  Two AD deaths cannot occur at the same time (we can always subdivide time intervals such that only one person experiences this event in a given sub-interval)
 
-## The Poisson distribution
+## The Poisson distribution {.smaller}
 
-Thus $Z \sim Pois(1.5)$, and $P(Z=0)$, $P(Z=1)$, and $P(Z\geq 2)$ are disjoint events. So, $P(Z \geq 2) = 1- [P(Z = 0) + P(Z = 1)]$, where
+Thus $Z \sim Pois(1.5)$, since we define the Poisson distribution by the rate (1.5 deaths per year).
+
+. . .
+
+Further, $P(Z=0)$, $P(Z=1)$, and $P(Z\geq 2)$ are disjoint events. 
+
+. . .
+
+So, $P(Z \geq 2) = 1- [P(Z = 0) + P(Z = 1)]$, where
 
 $$
 \begin{aligned}
