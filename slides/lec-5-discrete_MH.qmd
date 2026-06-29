@@ -415,7 +415,7 @@ $${n \choose k} = {3 \choose 2} = \frac{3!}{2!(3-2)!} = 3$$
 - For our 3 births, there are several ways to have 2 premature births:
   - $X_1 = 1, X_2=1, X_3=0$
   - $X_1 = 0, X_2=1, X_3=1$
-  - $X_1 = 1, X_2=1, X_3=0$
+  - $X_1 = 1, X_2=0, X_3=1$
   
 - **Note**: ${n \choose 1} = n, {n \choose 0} = 1$
 

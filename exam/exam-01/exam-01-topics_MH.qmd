@@ -5,7 +5,7 @@ format: html
 
 ## Material covered
 
-- Lectures 1-7, HW 1-6, Lab 1
+- Lectures 1-6, HW 1-6, Lab 1
 
 ## Coding
 
@@ -33,7 +33,7 @@ format: html
 
 - `#| warning: false` and `#| message: false`. What do they do?
 
-- `filter()`, `slice()`, `distinct()`, `select()`, `arrange()`, `summarize()`, `group_by()`, `mutate()`, `sample_n()`, `sample_frac()`, `case_when()`. What are each of these used for?
+- `filter()`, `slice()`, `distinct()`, `select()`, `arrange()`, `summarize()`, `group_by()`, `mutate()`, `case_when()`. What are each of these used for?
 
 - pipe, `|>`, What is it used for?
 
