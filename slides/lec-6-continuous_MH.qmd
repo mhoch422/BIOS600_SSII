@@ -24,8 +24,9 @@ execute:
 
 - Tomorrow's class will be entirely review for exam
 
+- We will be back in Rosenau 228
 
-- Continue to post on Ed Discussion about any questions you have! I am happy to answer any questions, no matter how small. 
+- Post on Ed Discussion about any questions you have! I am happy to answer any questions, no matter how small. 
 
 ## Overview
 
@@ -62,6 +63,63 @@ Random variables encountered in this class will be either discrete or continuous
 - **Binomial** random variable - A random variable $Z$ denotes getting a certain number of $k$ "successes" from a sequence of $n$ independent Bernoulli trials, with probability $p$ of "success"
 
 - **Poisson** random variable - A random variable $X$ that takes on non-zero integer values, used for count data
+
+## Review: Assumptions for binomial distribution
+
+1. A finite number Bernoulli trials $n$.
+
+2. The outcome of each trial is independent.
+
+3. Each trial has the same probability of success.
+
+## Practice: Binomial distribution
+
+Imagine you are interested in studying asthma among UNC students; any given student has a 9% chance of having asthma. You take a random sample of 50 students, and record a "success" when the student has asthma and a "failure" when they do not.
+
+On the provided paper, evaluate the assumptions of using a bionomial distribution to study this.
+
+## Practice: Binomial distribution
+
+Recall that for $X \sim Binom(n, p)$, $P(X=k) = {n\choose k}p^k(1-p)^{n-k}$. Continuing with the study from the previous slide, how would you write the probability of two or fewer students in the sample having asthma?
+
+. . .
+
+How would you calculate the probability of exactly 6 students in this sample having asthma using `dbinom()`?
+
+. . .
+
+What is the expected number of students with asthma in this sample?
+
+## Review: Assumptions for Poisson distribution
+
+1.  Within any interval, $k$ may take on values 0, 1, 2, 3, $\ldots$, $\infty$
+
+2.  Each event occurs independently, both within the same interval, and between intervals
+
+3.  The average rate at which events occur in an interval, $\lambda$, is constant
+
+4.  Two events cannot occur simultaneously
+
+## Practice: Poisson distribution
+
+Suppose you are interested in modelling the number of hurricanes that hit North Carolina over the course of a year. 
+
+On your paper, evaluate each of the assumptions of the Poisson model for this scenario. 
+
+## Review: Assumptions for distributions
+
+It isn't very common for a model to fit a scenario **perfectly** -- often in statistics, we strive to find a model that is "good enough".
+
+::: columns
+::: {.column width="50%"}
+"All models are wrong, but some are useful." - George Box
+:::
+
+::: {.column width="50%"}
+![](images/lec-6/GeorgeEPBox.jpg){fig-alt="A photograph of an older white man with glasses, he is touching his face." height=400}
+:::
+:::
+
 
 # Continuous distributions
 
@@ -203,6 +261,100 @@ You do NOT need to know this formula for the exam.
 ## 68-95-99.7
 
 ![](images/lec-7/empirical.png){fig-alt="A bell-shaped curve designed to show how standard deviation works for normal distribution. States that 99.7% of the data are within 3 standard deviations of the mean; 95% within 2 standard deviations; and 68% within one standard deviation."}
+
+## Impact of changing the variance
+
+Suppose we have three normally-distributed random variables: $X_1 \sim N(0, 1)$, $X_2 \sim N(0,0.5)$, $X_3 \sim N(0, 3)$.
+
+. . .
+
+```{r}
+#| echo: FALSE
+
+library(tidyverse)
+
+set.seed(2026)
+x1 <- rnorm(100000, 0, 1)
+x2 <- rnorm(100000, 0, 0.5)
+x3 <- rnorm(100000, 0, 3)
+
+dat <- c(x1,x2,x3)
+
+findat <- data.frame(dist = c(rep("Variance 1", 100000), rep("Variance 0.5", 100000), rep("Variance 3", 100000)), res = dat)
+
+ggplot(data = findat, aes(x = res, group = dist, color = dist)) +
+  geom_density(kernel = "gaussian") +
+   xlab("") +
+   theme_minimal()
+
+```
+
+## Impact of changing the mean
+
+Suppose we have three normally-distributed random variables: $X_1 \sim N(0, 1)$, $X_2 \sim N(-3, 1)$, $X_3 \sim N(3, 1)$.
+
+. . .
+
+```{r}
+#| echo: FALSE
+
+library(tidyverse)
+
+set.seed(2026)
+x1 <- rnorm(100000, 0, 1)
+x2 <- rnorm(100000, -3, 1)
+x3 <- rnorm(100000, 3, 1)
+
+dat <- c(x1,x2,x3)
+
+findat <- data.frame(dist = c(rep("Mean 0", 100000), rep("Mean -3", 100000), rep("Mean 3", 100000)), res = dat)
+
+#findat <- findat %>% filter(dist == "Mean 0")
+
+ggplot(data = findat, aes(x = res, group = dist, color = dist)) +
+  geom_density(kernel = "gaussian") +
+  xlab("") +
+  theme_minimal()
+
+```
+
+## Example
+
+In the United States, the average height for an adult is 65", with a standard deviation of 3". This distribution has the following probability density function:
+
+```{r}
+#| echo: FALSE
+
+x <- seq(50, 80, length.out = 10000)
+y <- dnorm(x, 65, 3)
+dist1 <- data.frame(x, y)
+
+ggplot(dist1, aes(x=x, y=y)) +
+  geom_line(color = "skyblue3") +
+  xlab("Height (in)") +
+  ylab("Density") + 
+  theme_minimal()
+
+```
+
+## Example
+
+In the United States, the average systolic blood pressure for an adult man classified as pre-hypertensive is 125.7 mmHg, with a standard deviation of 12.2 mmHg. This distribution has the following probability density function:
+
+```{r}
+#| echo: FALSE
+
+x <- seq(80, 170, length.out = 10000)
+y <- dnorm(x, 125.7, 12.2)
+dist2 <- data.frame(x, y)
+
+ggplot(dist2, aes(x=x, y=y)) +
+  geom_line(color = "skyblue3") +
+  xlab("Systolic Blood Pressure (mmHg)") +
+  ylab("Density") + 
+  theme_minimal()
+
+```
 
 ## Standardization
 

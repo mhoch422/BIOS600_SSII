@@ -216,7 +216,8 @@
 <h2>Announcements</h2>
 <ul>
 <li><p>Tomorrow’s class will be entirely review for exam</p></li>
-<li><p>Continue to post on Ed Discussion about any questions you have! I am happy to answer any questions, no matter how small.</p></li>
+<li><p>We will be back in Rosenau 228</p></li>
+<li><p>Post on Ed Discussion about any questions you have! I am happy to answer any questions, no matter how small.</p></li>
 </ul>
 </section>
 <section id="overview" class="slide level2">
@@ -252,6 +253,53 @@
 <li><p><strong>Binomial</strong> random variable - A random variable <span class="math inline">\(Z\)</span> denotes getting a certain number of <span class="math inline">\(k\)</span> “successes” from a sequence of <span class="math inline">\(n\)</span> independent Bernoulli trials, with probability <span class="math inline">\(p\)</span> of “success”</p></li>
 <li><p><strong>Poisson</strong> random variable - A random variable <span class="math inline">\(X\)</span> that takes on non-zero integer values, used for count data</p></li>
 </ul>
+</section>
+<section id="review-assumptions-for-binomial-distribution" class="slide level2">
+<h2>Review: Assumptions for binomial distribution</h2>
+<ol type="1">
+<li><p>A finite number Bernoulli trials <span class="math inline">\(n\)</span>.</p></li>
+<li><p>The outcome of each trial is independent.</p></li>
+<li><p>Each trial has the same probability of success.</p></li>
+</ol>
+</section>
+<section id="practice-binomial-distribution" class="slide level2">
+<h2>Practice: Binomial distribution</h2>
+<p>Imagine you are interested in studying asthma among UNC students; any given student has a 9% chance of having asthma. You take a random sample of 50 students, and record a “success” when the student has asthma and a “failure” when they do not.</p>
+<p>On the provided paper, evaluate the assumptions of using a bionomial distribution to study this.</p>
+</section>
+<section id="practice-binomial-distribution-1" class="slide level2">
+<h2>Practice: Binomial distribution</h2>
+<p>Recall that for <span class="math inline">\(X \sim Binom(n, p)\)</span>, <span class="math inline">\(P(X=k) = {n\choose k}p^k(1-p)^{n-k}\)</span>. Continuing with the study from the previous slide, how would you write the probability of two or fewer students in the sample having asthma?</p>
+<div class="fragment">
+<p>How would you calculate the probability of exactly 6 students in this sample having asthma using <code>dbinom()</code>?</p>
+</div>
+<div class="fragment">
+<p>What is the expected number of students with asthma in this sample?</p>
+</div>
+</section>
+<section id="review-assumptions-for-poisson-distribution" class="slide level2">
+<h2>Review: Assumptions for Poisson distribution</h2>
+<ol type="1">
+<li><p>Within any interval, <span class="math inline">\(k\)</span> may take on values 0, 1, 2, 3, <span class="math inline">\(\ldots\)</span>, <span class="math inline">\(\infty\)</span></p></li>
+<li><p>Each event occurs independently, both within the same interval, and between intervals</p></li>
+<li><p>The average rate at which events occur in an interval, <span class="math inline">\(\lambda\)</span>, is constant</p></li>
+<li><p>Two events cannot occur simultaneously</p></li>
+</ol>
+</section>
+<section id="practice-poisson-distribution" class="slide level2">
+<h2>Practice: Poisson distribution</h2>
+<p>Suppose you are interested in modelling the number of hurricanes that hit North Carolina over the course of a year.</p>
+<p>On your paper, evaluate each of the assumptions of the Poisson model for this scenario.</p>
+</section>
+<section id="review-assumptions-for-distributions" class="slide level2">
+<h2>Review: Assumptions for distributions</h2>
+<p>It isn’t very common for a model to fit a scenario <strong>perfectly</strong> – often in statistics, we strive to find a model that is “good enough”.</p>
+<div class="columns">
+<div class="column" style="width:50%;">
+<p>“All models are wrong, but some are useful.” - George Box</p>
+</div><div class="column" style="width:50%;">
+<p><img data-src="images/lec-6/GeorgeEPBox.jpg" alt="A photograph of an older white man with glasses, he is touching his face." height="400"></p>
+</div></div>
 </section>
 <section>
 <section id="continuous-distributions" class="title-slide slide level1 center">
@@ -375,6 +423,46 @@ f(x) = \frac{1}{\sqrt{2\pi \sigma^2}} \textrm{exp}\Bigl\{-\frac{1}{2} \frac{(x -
 <h2>68-95-99.7</h2>
 
 <img data-src="images/lec-7/empirical.png" alt="A bell-shaped curve designed to show how standard deviation works for normal distribution. States that 99.7% of the data are within 3 standard deviations of the mean; 95% within 2 standard deviations; and 68% within one standard deviation." class="r-stretch"></section>
+<section id="impact-of-changing-the-variance" class="slide level2">
+<h2>Impact of changing the variance</h2>
+<p>Suppose we have three normally-distributed random variables: <span class="math inline">\(X_1 \sim N(0, 1)\)</span>, <span class="math inline">\(X_2 \sim N(0,0.5)\)</span>, <span class="math inline">\(X_3 \sim N(0, 3)\)</span>.</p>
+<div class="fragment">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="lec-6-continuous_MH_files/figure-revealjs/unnamed-chunk-3-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="impact-of-changing-the-mean" class="slide level2">
+<h2>Impact of changing the mean</h2>
+<p>Suppose we have three normally-distributed random variables: <span class="math inline">\(X_1 \sim N(0, 1)\)</span>, <span class="math inline">\(X_2 \sim N(-3, 1)\)</span>, <span class="math inline">\(X_3 \sim N(3, 1)\)</span>.</p>
+<div class="fragment">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="lec-6-continuous_MH_files/figure-revealjs/unnamed-chunk-4-1.png" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="example" class="slide level2">
+<h2>Example</h2>
+<p>In the United States, the average height for an adult is 65”, with a standard deviation of 3”. This distribution has the following probability density function:</p>
+
+<img data-src="lec-6-continuous_MH_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"></section>
+<section id="example-1" class="slide level2">
+<h2>Example</h2>
+<p>In the United States, the average systolic blood pressure for an adult man classified as pre-hypertensive is 125.7 mmHg, with a standard deviation of 12.2 mmHg. This distribution has the following probability density function:</p>
+
+<img data-src="lec-6-continuous_MH_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch"></section>
 <section id="standardization" class="slide level2">
 <h2>Standardization</h2>
 <ul>

@@ -21,7 +21,7 @@ format: html
 - Tomorrow's class will be entirely review for exam
 
 
-- Continue to post on Ed Discussion about any questions you have! I am happy to answer any questions, no matter how small. 
+- Post on Ed Discussion about any questions you have! I am happy to answer any questions, no matter how small. 
 
 ## Overview
 
@@ -113,6 +113,7 @@ Probability density functions may be given graphically, satisfying the following
 #| fig-height: 3
 #| fig-width: 8
 #| fig-alt: "Three graphs side-by-side. The one on the left is titled Normal Distribution, with a bell-shaped curve. The one in the middle is titled Uniform Distribution, with a straight line for a curve. The one on the right is titled Exponential Distribution, with a curve that starts at 1 near zero and steeply declines as the x-value increases."
+#| echo: FALSE
 
 # Set up the plotting area to have 1 row and 3 columns
 par(mfrow = c(1, 3))
@@ -153,6 +154,7 @@ par(mfrow = c(1, 1))
 ```{r}
 #| fig-height: 5
 #| fig-alt: "A graph titled Standard Normal Distribution with a bell-shaped curve centered at x=0; there is a shaded area under the curve from about x = 0.5 to x=1.5."
+#| echo: FALSE
 
 # Set up the x-axis values
 x <- seq(-4, 4, length = 1000)
@@ -199,6 +201,100 @@ You do NOT need to know this formula for the exam.
 ## 68-95-99.7
 
 ![](images/lec-7/empirical.png){fig-alt="A bell-shaped curve designed to show how standard deviation works for normal distribution. States that 99.7% of the data are within 3 standard deviations of the mean; 95% within 2 standard deviations; and 68% within one standard deviation."}
+
+## Impact of changing the variance
+
+Suppose we have three normally-distributed random variables: $X_1 \sim N(0, 1)$, $X_2 \sim N(0,0.5)$, $X_3 \sim N(0, 3)$.
+
+. . .
+
+```{r}
+#| echo: FALSE
+
+library(tidyverse)
+
+set.seed(2026)
+x1 <- rnorm(100000, 0, 1)
+x2 <- rnorm(100000, 0, 0.5)
+x3 <- rnorm(100000, 0, 3)
+
+dat <- c(x1,x2,x3)
+
+findat <- data.frame(dist = c(rep("Variance 1", 100000), rep("Variance 0.5", 100000), rep("Variance 3", 100000)), res = dat)
+
+ggplot(data = findat, aes(x = res, group = dist, color = dist)) +
+  geom_density(kernel = "gaussian") +
+   xlab("") +
+   theme_minimal()
+
+```
+
+## Impact of changing the mean
+
+Suppose we have three normally-distributed random variables: $X_1 \sim N(0, 1)$, $X_2 \sim N(-3, 1)$, $X_3 \sim N(3, 1)$.
+
+. . .
+
+```{r}
+#| echo: FALSE
+
+library(tidyverse)
+
+set.seed(2026)
+x1 <- rnorm(100000, 0, 1)
+x2 <- rnorm(100000, -3, 1)
+x3 <- rnorm(100000, 3, 1)
+
+dat <- c(x1,x2,x3)
+
+findat <- data.frame(dist = c(rep("Mean 0", 100000), rep("Mean -3", 100000), rep("Mean 3", 100000)), res = dat)
+
+#findat <- findat %>% filter(dist == "Mean 0")
+
+ggplot(data = findat, aes(x = res, group = dist, color = dist)) +
+  geom_density(kernel = "gaussian") +
+  xlab("") +
+  theme_minimal()
+
+```
+
+## Example
+
+In the United States, the average height for an adult is 65", with a standard deviation of 3". This distribution has the following probability density function:
+
+```{r}
+#| echo: FALSE
+
+x <- seq(50, 80, length.out = 10000)
+y <- dnorm(x, 65, 3)
+dist1 <- data.frame(x, y)
+
+ggplot(dist1, aes(x=x, y=y)) +
+  geom_line(color = "skyblue3") +
+  xlab("Height (in)") +
+  ylab("Density") + 
+  theme_minimal()
+
+```
+
+## Example
+
+In the United States, the average systolic blood pressure for an adult man classified as pre-hypertensive is 125.7 mmHg, with a standard deviation of 12.2 mmHg. This distribution has the following probability density function:
+
+```{r}
+#| echo: FALSE
+
+x <- seq(80, 170, length.out = 10000)
+y <- dnorm(x, 125.7, 12.2)
+dist2 <- data.frame(x, y)
+
+ggplot(dist2, aes(x=x, y=y)) +
+  geom_line(color = "skyblue3") +
+  xlab("Systolic Blood Pressure (mmHg)") +
+  ylab("Density") + 
+  theme_minimal()
+
+```
 
 ## Standardization
 
