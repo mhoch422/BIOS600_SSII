@@ -183,7 +183,7 @@ window.Quarto = {
 <li><p><strong>Discrete</strong> random variables are those that can take on a countable number of potential values (could be countably infinite!), each associated with a probability of occurring.</p></li>
 <li><p><strong>Bernoulli</strong> random variable - A dichotomous (two-level) random variable <span class="math inline">\(X\)</span> (e.g.&nbsp;dead or alive) with a probability of “success” denoted by <span class="math inline">\(p\)</span>.</p></li>
 <li><p><strong>Binomial</strong> random variable - A random variable <span class="math inline">\(Z\)</span> denotes getting a certain number of <span class="math inline">\(k\)</span> “successes” from a sequence of <span class="math inline">\(n\)</span> independent Bernoulli trials, with probability <span class="math inline">\(p\)</span> of “success”</p></li>
-<li><p><strong>Poisson</strong> random variable - A random variable <span class="math inline">\(X\)</span> that takes on non-zero integer values, used for count data</p></li>
+<li><p><strong>Poisson</strong> random variable - A random variable <span class="math inline">\(X\)</span> that takes on non-negative integer values, used for count data</p></li>
 </ul>
 </section>
 <section id="continuous-distributions" class="level1">
@@ -326,24 +326,11 @@ f(x) = \frac{1}{\sqrt{2\pi \sigma^2}} \textrm{exp}\Bigl\{-\frac{1}{2} \frac{(x -
 <section id="impact-of-changing-the-variance" class="level2">
 <h2 class="anchored" data-anchor-id="impact-of-changing-the-variance">Impact of changing the variance</h2>
 <p>Suppose we have three normally-distributed random variables: <span class="math inline">\(X_1 \sim N(0, 1)\)</span>, <span class="math inline">\(X_2 \sim N(0,0.5)\)</span>, <span class="math inline">\(X_3 \sim N(0, 3)\)</span>.</p>
-<p>. . .</p>
 <div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.2.1     ✔ readr     2.2.0
-✔ forcats   1.0.1     ✔ stringr   1.6.0
-✔ ggplot2   4.0.3     ✔ tibble    3.3.1
-✔ lubridate 1.9.5     ✔ tidyr     1.3.2
-✔ purrr     1.2.2     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="lec-6-continuous-anno_MH_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="lec-6-continuous-anno_MH_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" alt="A graph containing three bell curves, all centered on 0. The red curve, labelled Variance 0.5, is tall and skinny; the green curve, labelled Variance 1, is shorter than the red curve and wider; and the blue curve, labelled Variance 3, is shorter than both other curves and much wider." width="672"></p>
 </figure>
 </div>
 </div>
@@ -357,7 +344,7 @@ f(x) = \frac{1}{\sqrt{2\pi \sigma^2}} \textrm{exp}\Bigl\{-\frac{1}{2} \frac{(x -
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="lec-6-continuous-anno_MH_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="lec-6-continuous-anno_MH_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" alt="A graph containing three bell curves, all with the same height and width. The red curve, labelled Mean negative 3, is centered on negative 3; the green curve, labelled Mean 0, is centered on 0; and the blue curve, labelled Mean 3, is centered on 3." width="672"></p>
 </figure>
 </div>
 </div>
@@ -370,7 +357,7 @@ f(x) = \frac{1}{\sqrt{2\pi \sigma^2}} \textrm{exp}\Bigl\{-\frac{1}{2} \frac{(x -
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="lec-6-continuous-anno_MH_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="lec-6-continuous-anno_MH_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" alt="A graph with one bell curve. The x axis is labelled Height (inches), and the curve is centered on 65, and reaches approximately zero at 55 and 75." width="672"></p>
 </figure>
 </div>
 </div>
@@ -383,7 +370,7 @@ f(x) = \frac{1}{\sqrt{2\pi \sigma^2}} \textrm{exp}\Bigl\{-\frac{1}{2} \frac{(x -
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="lec-6-continuous-anno_MH_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="lec-6-continuous-anno_MH_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" alt="A graph with one bell curve. The x axis is labelled Systolic Blood Pressure millimeters mercury, and the curve is centered on 125, and reaches approximately zero at 81 and 169." width="672"></p>
 </figure>
 </div>
 </div>
@@ -442,11 +429,11 @@ f(x) = \frac{1}{\sqrt{2\pi \sigma^2}} \textrm{exp}\Bigl\{-\frac{1}{2} \frac{(x -
 <li>We want to make new variables for their BMI and body temperature in celsius. We can create these variables as follows (recalling the appropriate formulas):</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">|&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bmi =</span> kg<span class="sc">/</span>m<span class="sc">^</span><span class="dv">2</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">|&gt;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">celsius =</span> (fahrenheit <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">*</span> <span class="dv">5</span><span class="sc">/</span><span class="dv">9</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">|&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bmi =</span> kg<span class="sc">/</span>m<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>dat <span class="sc">|&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">celsius =</span> (fahrenheit <span class="sc">-</span> <span class="dv">32</span>) <span class="sc">*</span> <span class="dv">5</span><span class="sc">/</span><span class="dv">9</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="saving-the-dataframe" class="level2">
@@ -456,8 +443,8 @@ f(x) = \frac{1}{\sqrt{2\pi \sigma^2}} \textrm{exp}\Bigl\{-\frac{1}{2} \frac{(x -
 <li><p>In this case, you’d want to save the resulting dataframe, often by overwriting the original one. As an example:</p></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat <span class="sc">|&gt;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bmi =</span> kg<span class="sc">/</span>m<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> dat <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bmi =</span> kg<span class="sc">/</span>m<span class="sc">^</span><span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li><p>In this case, we’ve saved over the <code>dat</code> dataframe, which now contains the new variable <code>bmi</code>.</p></li>
@@ -472,15 +459,15 @@ f(x) = \frac{1}{\sqrt{2\pi \sigma^2}} \textrm{exp}\Bigl\{-\frac{1}{2} \frac{(x -
 <li><p>Consider the following code, which utilizes the bmi variable we saved previously:</p></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dat_bmi <span class="ot">&lt;-</span> dat <span class="sc">|&gt;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bmi_cat =</span> <span class="fu">case_when</span>(</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    bmi <span class="sc">&lt;</span> <span class="dv">18</span> <span class="sc">~</span> <span class="st">"underweight"</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    bmi <span class="sc">&gt;=</span> <span class="dv">18</span> <span class="sc">&amp;</span> bmi <span class="sc">&lt;</span> <span class="dv">25</span> <span class="sc">~</span> <span class="st">"normal"</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    bmi <span class="sc">&gt;=</span> <span class="dv">25</span> <span class="sc">&amp;</span> bmi <span class="sc">&lt;</span> <span class="dv">30</span> <span class="sc">~</span> <span class="st">"overweight"</span>,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    bmi <span class="sc">&gt;</span> <span class="dv">30</span> <span class="sc">~</span> <span class="st">"obese"</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  ))</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Be sure all parentheses are closed!</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dat_bmi <span class="ot">&lt;-</span> dat <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">bmi_cat =</span> <span class="fu">case_when</span>(</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    bmi <span class="sc">&lt;</span> <span class="dv">18</span> <span class="sc">~</span> <span class="st">"underweight"</span>,</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    bmi <span class="sc">&gt;=</span> <span class="dv">18</span> <span class="sc">&amp;</span> bmi <span class="sc">&lt;</span> <span class="dv">25</span> <span class="sc">~</span> <span class="st">"normal"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    bmi <span class="sc">&gt;=</span> <span class="dv">25</span> <span class="sc">&amp;</span> bmi <span class="sc">&lt;</span> <span class="dv">30</span> <span class="sc">~</span> <span class="st">"overweight"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    bmi <span class="sc">&gt;</span> <span class="dv">30</span> <span class="sc">~</span> <span class="st">"obese"</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  ))</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Be sure all parentheses are closed!</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li>We have used the <code>case_when</code> function to create a new variable. The individual cases are separated by commas, and within each case, the condition (e.g., BMI &gt; 30) is on the left and the outcome for the new variable (e.g., “obese”) is on the right of a tilde (~).</li>
@@ -490,23 +477,23 @@ f(x) = \frac{1}{\sqrt{2\pi \sigma^2}} \textrm{exp}\Bigl\{-\frac{1}{2} \frac{(x -
 <h2 class="smaller anchored" data-anchor-id="nc-bike-crash-example">NC Bike Crash Example</h2>
 <p>Let’s walk through a concrete example using the ncbikecrash data. Suppose we want to classify whether a crash occurred on a weekend or on a weekday. We will use case_when in combination with the logical operator %in% to do so (the c() function tells R that there is a list of things coming up):</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ncbikecrash <span class="ot">&lt;-</span> ncbikecrash <span class="sc">|&gt;</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">weekend =</span> <span class="fu">case_when</span>(</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    crash_day <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Saturday"</span>, <span class="st">"Sunday"</span>) <span class="sc">~</span> <span class="st">"Weekend"</span>,</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    crash_day <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Monday"</span>,</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Tuesday"</span>,</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Wednesday"</span>,</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Thursday"</span>,</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Friday"</span>) <span class="sc">~</span> <span class="st">"Weekday"</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ncbikecrash <span class="ot">&lt;-</span> ncbikecrash <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">weekend =</span> <span class="fu">case_when</span>(</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    crash_day <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Saturday"</span>, <span class="st">"Sunday"</span>) <span class="sc">~</span> <span class="st">"Weekend"</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    crash_day <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Monday"</span>,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Tuesday"</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Wednesday"</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Thursday"</span>,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                     <span class="st">"Friday"</span>) <span class="sc">~</span> <span class="st">"Weekday"</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  ))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="nc-bike-crash-example-1" class="level2">
 <h2 class="anchored" data-anchor-id="nc-bike-crash-example-1">NC Bike Crash Example</h2>
 <p>Let’s check our work by counting the number of observations in each of our categories:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ncbikecrash <span class="sc">|&gt;</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(weekend)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>ncbikecrash <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(weekend)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  weekend    n
 1 Weekday 5658

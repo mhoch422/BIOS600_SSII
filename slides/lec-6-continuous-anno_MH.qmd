@@ -57,7 +57,7 @@ Random variables encountered in this class will be either discrete or continuous
 
 - **Binomial** random variable - A random variable $Z$ denotes getting a certain number of $k$ "successes" from a sequence of $n$ independent Bernoulli trials, with probability $p$ of "success"
 
-- **Poisson** random variable - A random variable $X$ that takes on non-zero integer values, used for count data
+- **Poisson** random variable - A random variable $X$ that takes on non-negative integer values, used for count data
 
 # Continuous distributions
 
@@ -206,10 +206,10 @@ You do NOT need to know this formula for the exam.
 
 Suppose we have three normally-distributed random variables: $X_1 \sim N(0, 1)$, $X_2 \sim N(0,0.5)$, $X_3 \sim N(0, 3)$.
 
-. . .
-
 ```{r}
 #| echo: FALSE
+#| message: FALSE
+#| fig-alt: "A graph containing three bell curves, all centered on 0. The red curve, labelled Variance 0.5, is tall and skinny; the green curve, labelled Variance 1, is shorter than the red curve and wider; and the blue curve, labelled Variance 3, is shorter than both other curves and much wider."
 
 library(tidyverse)
 
@@ -237,8 +237,7 @@ Suppose we have three normally-distributed random variables: $X_1 \sim N(0, 1)$,
 
 ```{r}
 #| echo: FALSE
-
-library(tidyverse)
+#| fig-alt: "A graph containing three bell curves, all with the same height and width. The red curve, labelled Mean negative 3, is centered on negative 3; the green curve, labelled Mean 0, is centered on 0; and the blue curve, labelled Mean 3, is centered on 3."
 
 set.seed(2026)
 x1 <- rnorm(100000, 0, 1)
@@ -264,6 +263,7 @@ In the United States, the average height for an adult is 65", with a standard de
 
 ```{r}
 #| echo: FALSE
+#| fig-alt: "A graph with one bell curve. The x axis is labelled Height (inches), and the curve is centered on 65, and reaches approximately zero at 55 and 75."
 
 x <- seq(50, 80, length.out = 10000)
 y <- dnorm(x, 65, 3)
@@ -283,6 +283,7 @@ In the United States, the average systolic blood pressure for an adult man class
 
 ```{r}
 #| echo: FALSE
+#| fig-alt: "A graph with one bell curve. The x axis is labelled Systolic Blood Pressure millimeters mercury, and the curve is centered on 125, and reaches approximately zero at 81 and 169."
 
 x <- seq(80, 170, length.out = 10000)
 y <- dnorm(x, 125.7, 12.2)

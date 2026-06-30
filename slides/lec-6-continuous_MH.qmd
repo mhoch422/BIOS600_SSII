@@ -62,7 +62,7 @@ Random variables encountered in this class will be either discrete or continuous
 
 - **Binomial** random variable - A random variable $Z$ denotes getting a certain number of $k$ "successes" from a sequence of $n$ independent Bernoulli trials, with probability $p$ of "success"
 
-- **Poisson** random variable - A random variable $X$ that takes on non-zero integer values, used for count data
+- **Poisson** random variable - A random variable $X$ that takes on non-negative integer values, used for count data
 
 ## Review: Assumptions for binomial distribution
 
