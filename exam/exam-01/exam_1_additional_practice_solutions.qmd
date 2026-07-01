@@ -1,0 +1,82 @@
+---
+title: "Exam 1 Combined Practice Problems Solutions"
+format: html
+---
+
+### Code
+
+## Q1
+
+`install.packages()` is when you need to install a package on your computer. You only need to do this one time per machine. In contrast, `library()` simply loads the package into your current workspace. You would include `library()` in your Quarto document, but not `install.packages()`.
+
+## Q2
+
+If she completes her analysis in excel and simply shares her results, there will not be a record of the steps she took to complete her analysis. In this way, it will be difficult (perhaps impossible) to reproduce her analysis. Using R and typing code into a document (such as Quarto), we can keep a record of all steps taken in the analysis, improving the possibility of reproducing the results.
+
+## Q3
+
+`###` in front of text makes a header.
+
+## Q4
+
+`#` in front of code creates a comment. This tells R not to run this line of code.
+
+## Q5
+
+There is an extra parentheses at the end of her code. This is causing an error. To fix it, she should delete this parentheses.
+
+## Q6
+
+`geom_point()` produces a scatterplot.
+
+## Q7
+
+a.  `summarize()` is creating a new variable called `avg_exercise` representing the mean of the `Exercise` variable within the dataset.
+
+b.  `na.rm = T` is telling R to remove any `NA` values within the `Exercise` variable.
+
+## Q8
+
+Correct answer: C
+
+### Conceptual
+
+## Q9
+
+Reproducibility: taking original data and code to reproduce all numerical findings. Replicability: being able to independently repeat an entire study without use of original data.
+
+## Q10
+
+Quota sampling is sampling until you have reached a particular number of participants. This type of sampling is not as generalizable as a probability sampling scheme.
+
+## Q11
+
+In the COVID-19 seroprevalence paper, the recruitment strategy followed a "snowball" sampling scheme via Facebook ads. This may have introduced sampling bias because it may have attracted people concerned about COVID-19 or those who thought they were already exposed. This may have led to an overestimation of seroprevalence, and it could have been made worse since these individuals may have recruited others in their network.
+
+## Q12
+
+Population: Adults aged 65 or older.
+
+## Q13
+
+True
+
+
+### Applied
+
+## Q14
+
+a.  z-score = (165-135)/20
+
+b.  Since different variables follow different normal distributions (i.e. with different means and variances), it's helpful to standardize in order to create a unitless measure of the number of standard deviations away from the mean. This way, we can more easily see how extreme a particular value is.
+
+## Q15
+
+a.  Sensitivity is the probability the rapid test is positive given disease is present. Sensitivity = $\frac{72}{72 + 8} = \frac{72}{80}$
+
+b.  Specificity is the probability the rapid test is negative given disease is absent. $\text{Specificity} = P(\text{Test –} \mid \text{Disease –}) = \frac{\text{True Negatives}}{\text{True Negatives + False Positives}} = \frac{102}{102 + 18} = \frac{102}{120}$
+
+c.  In this context, specificity means: Among patients who truly **do not** have influenza (PCR negative), the rapid test **correctly identifies** about 85% as negative.
+
+
+
