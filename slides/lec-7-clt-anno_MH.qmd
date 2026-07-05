@@ -41,6 +41,15 @@ format: html
 
 -   The basic idea is called the **central limit theorem**, which states that for **any** distribution with a well-defined mean and variance, the distribution of the means computed from samples of size *n* will be approximately Gaussian (normally distributed).
 
+## Review: Normal distributions
+
+- The normal (or Gaussian) distribution is a type of continuous distribution, which is defined in terms of its mean and standard deviation.
+
+- For example, if a random variable $X$ follows a normal distribution with mean 4 and standard deviation 1, we write $X \sim N(4,1)$.
+
+- We refer to the $N(0,1)$ distribution as the _standard_ normal distribution.
+
+- The normal distribution is the distribution behind the famous "bell curve".
 ## Recall: What is statistical inference?
 
 -   Statistical inference is the act of generalizing from a **sample** in order to make conclusions regarding a **population** while quantifying the degree of certainty we have.
@@ -51,7 +60,7 @@ format: html
 
 ## The sampling distribution of the mean {.smaller}
 
-Suppose we're interested in the resting heart rate of students in BIOS 600, and are able to do the following:
+Suppose we're interested in the resting heart rate of Gillings students, and are able to do the following:
 
 1.  Take a random sample of size *n* from this population
 
@@ -65,6 +74,7 @@ Suppose we're interested in the resting heart rate of students in BIOS 600, and 
 #| message: false
 #| warning: false
 #| fig-alt: "A histogram with the title Histogram of Resting Heart Rate (bpm) for Random Sample of 20 people, with bins spread out from 45 to 85"
+#| fig-width: 7.3
 
 library(tidyverse)
 set.seed(123)
@@ -164,6 +174,7 @@ After repeating this many times, we have a dataset that has the sample averages 
 #| message: false
 #| warning: false
 #| fig-alt: "A scatterplot with the title Sampling Distribution of the Mean Resting Heart Rate (BPM) - 300 sample means, n = 20 with many blue dots between 58 and 72, appearing almost like a normal distribution curve"
+#| fig-width: 9
 
 # --- Population parameters ---
 N_pop <- 1000
@@ -223,7 +234,9 @@ The **central limit theorem** states that for a population with mean $\mu$ and s
 
 -   The central limit theorem tells us that **sample averages** are normally distributed, if we have enough data.
 
--   This is true **even if** our original variables are not normally distributed.
+-   This is true **even if** our original variables are not normally distributed, as long as $n$ is large enough (a classic rule of thumb is $n \ge 30$).
+
+- If the original variable is normally distributed, a smaller $n$ might suffice; likewise, if it is extremely skewed, a higher $n$ might be required.
 
 ## The sampling distribution of the mean (Smaller n)
 
@@ -232,6 +245,7 @@ The **central limit theorem** states that for a population with mean $\mu$ and s
 #| message: false
 #| warning: false
 #| fig-alt: "A scatterplot with the title Sampling Distribution of the Mean Resting Heart Rate (BPM) - 300 sample means, n = 5 with many blue dots between 55 and 78, appearing almost like a normal distribution curve"
+#| fig-width: 9
 
 # --- Population parameters ---
 N_pop <- 1000
@@ -285,6 +299,7 @@ for (i in seq_along(counts)) {
 #| message: false
 #| warning: false
 #| fig-alt: "A scatterplot with the title Sampling Distribution of the Mean Resting Heart Rate (BPM) - 300 sample means, n = 100 with many blue dots between 62 and 68, appearing almost like a normal distribution curve"
+#| fig-width: 9
 
 # --- Population parameters ---
 N_pop <- 1000
@@ -330,6 +345,55 @@ for (i in seq_along(counts)) {
   }
 }
 ```
+
+## Specifics for the heart rate example {.smaller}
+
+- Here, our population data is derived from a $N(65, 10)$ distribution -- that is, $\mu = 65$ and $\sigma = 10$.
+
+- What is the approximate distribution of the sample mean for $n = 20$?
+
+. . . 
+
+$$N(65, 10/\sqrt{20})$$
+
+. . .
+
+- How about for $n = 5$?
+
+. . . 
+
+$$N(65, 10/\sqrt{5})$$
+
+. . . 
+
+- And for $n=100$, we have $$N(65, 10/\sqrt{100})$$.
+
+## Visualizing
+
+```{r}
+#| message: FALSE
+#| echo: FALSE
+#| fig-alt: "A plot with three bell curves; a tall, thin one labelled n = 100; a shorter, wider one labelled n = 20; and an even shorter, wider one labelled n = 5. The x-axis is labelled Sample Average and the y-axis is labelled Density."
+
+library(ggplot2)
+
+ggplot(data = data.frame(x = c(53, 77)), aes(x)) +
+  stat_function(fun = dnorm, n = 1001, args = list(mean = 65, sd = 1), aes(color = "n = 100")) +
+  stat_function(fun = dnorm, n = 1001, args = list(mean = 65, sd = 10/sqrt(20)), aes(color = "n = 20")) +
+  stat_function(fun = dnorm, n = 1001, args = list(mean = 65, sd = 10/sqrt(5)), aes(color = "n = 5")) +
+  ylab("Density") + 
+  xlab("Sample Average") +
+  theme_bw() +
+  scale_color_manual(name = "Sample Average Distribution",
+                     breaks = c("n = 100", 
+                                "n = 20",
+                                "n = 5"),
+                     values = c("n = 5" = "darkred",
+                                "n = 20" = "red",
+                                "n = 100" = "pink2"))
+
+```
+
 ## Application Exercise
 
 ::: {.callout-tip}
@@ -376,9 +440,9 @@ Working in groups of 2 or 3, use this exercise to get a sense of intuition for t
 
 ## Example
 
--   Suppose I give a random sample of $n = 30$ BIOS 600 students an IQ test\*, and the sample average score is 120.
+-   Suppose I give a random sample of $n = 30$ Gillings students an IQ test\*, and the sample average score is 120.
 
--   Does this mean that BIOS 600 students are smarter than average?
+-   Does this mean that Gillings students are smarter than average?
 
 -   I know there are many problems with IQ and IQ testing...bear with me here!
 
@@ -633,3 +697,161 @@ How would you interpret this confidence interval?
 ## Next class
 
 - Finish confidence intervals and start talking about hypothesis testing!
+
+## Exam 1 - `#| eval: FALSE` vs `| message: FALSE` {.smaller}
+
+- Technically speaking, `#| eval: FALSE` would suppress the messages that appear when you load tidyverse. 
+
+- However, it would also prevent tidyverse from actually loading, since any code chunk with `#| eval: false` would not be evaluated by Quarto.
+
+- If you then tried to reference a tidyverse function in a later chunk of your document, you would get an error message.
+
+- `#| message: FALSE` allows tidyverse still to load, without showing the messages in your final document.
+
+. . .
+
+- For your Quarto documents in this class, you should suppress messages and warnings.
+
+## Exam 1 - `summary()` {.smaller}
+
+- Question 1 was all about a dataset which might look something like this:
+
+```{r}
+#| echo: FALSE
+
+unchealth <- data.frame(age = c(rnorm(50, 19, 0.5), rnorm(50, 20, 0.7), rnorm(50, 21, 0.9), rnorm(50, 22, 1.2)), year = c(rep("fresh", 50), rep("soph", 50), rep("jun", 50), rep("sen", 50)), exercise = rnorm(200, 2, 1), sleep = rnorm(200, 8, 1), veg_serving = sample(0:10, 200, replace = TRUE))
+
+unchealth <- unchealth %>% mutate(exercise = case_when(exercise < 0 ~ 0, TRUE ~ exercise),
+                                  sleep = case_when(sleep < 0 ~ 0, TRUE ~ sleep)) %>% arrange(exercise)
+
+head(unchealth)
+
+```
+
+- It's specified that the column `year` takes on four distinct values: "fresh", "soph", "jun", and "sen". 
+
+- In part d, the following code chunk was provided:
+
+```{r}
+#| eval: FALSE
+#| echo: TRUE
+
+unchealth |> 
+  filter(age >= 18 & age < 24) |>
+  group_by(year) |>
+  summarize(mean_veg = mean(veg_serving, na.rm = TRUE))
+
+
+```
+
+- How many rows and columns will this output have?
+
+## Exam 1 - `summary()` {.smaller}
+
+```{r}
+#| eval: FALSE
+#| echo: TRUE
+
+unchealth |> 
+  filter(age >= 18 & age < 24) |>
+  group_by(year) |>
+  summarize(mean_veg = mean(veg_serving, na.rm = TRUE))
+
+```
+
+- What this is doing is taking the `unchealth` data set and then:
+
+  - Removing all rows where `age` is less than 18 or greater than or equal to 24
+  
+  - Grouping the data by `year` (leading to 4 groups)
+  
+  - And calculating the mean number of vegetable servings per year, removing any rows with `NA` for veg_serving beforehand
+  
+. . .
+  
+- `summary()` produces a data table with as many rows as there are "groups", and a column for each component of the group and each summary statistic.
+
+. . .
+
+```{r}
+#| eval: TRUE
+#| echo: FALSE
+
+unchealth |> 
+  filter(age >= 18 & age < 24) |>
+  group_by(year) |>
+  summarize(mean_veg = mean(veg_serving, na.rm = TRUE))
+
+```
+
+## Exam 1 - parentheses {.smaller}
+
+- Within `ggplot` and `dplyr`, all parentheses pairs are "contained" within a given line of code
+
+- As an example, suppose we have this ggplot:
+
+```{r}
+#| eval: FALSE
+#| echo: TRUE
+
+ggplot(unchealth, aes(x = year, y = sleep)) +
+  geom_boxplot() +
+  theme_minimal()
+
+```
+
+- Notice that in the first line, both sets of parentheses are completed before the `+` that brings in the next layer of the plot.
+
+- This code would trigger an error, because you wouldn't ever want the `+` to be contained in a set of parentheses:
+
+```{r}
+#| eval: FALSE
+#| echo: TRUE
+
+ggplot(unchealth, aes(x = year, y = sleep) +
+  geom_boxplot() +
+  theme_minimal())
+
+```
+
+## Exam 1 -- Observational v Experimental
+
+- Question 2 went well overall! But a couple small notes:
+
+  - The reason this study was observational was that the participants were not assigned to a treatment; they all had two measurements taken for their blood pressure, and these results were compared by sex (not assigned by the researchers).
+  
+  - Some people pointed out that there was no control group in this study, which is true! But not all experimental studies have a control group (although this is common practice). 
+  
+## Exam 1 -- Probability expressions {.smaller}
+
+- Question 6 asked you to state the question being asked by this expression in the context of the scenario: 
+
+$$
+1 - \sum_{k = 0}^2 {30\choose k} \cdot(0.1)^k \cdot (0.9)^{30-k}
+$$
+
+. . .
+
+- The $\sum_{k=0}^2$ tells us that we are adding ${30 \choose k}\cdot (0.1)^k(0.9)^{30-k}$ for $k = 0, 1, 2$.
+
+. . .
+
+- So we have that $\sum_{k = 0}^2 {30\choose k} \cdot(0.1)^k \cdot (0.9)^{30-k}$ is the probability that 0, 1, or 2 people test positive out of 30.
+
+. . .
+
+- The $1 -$ tells us that we are calculating the probability of the complement of this, which is
+
+. . .
+
+- That 3 or more (or _at least_ 3) people out of 30 test positive.
+
+## Test corrections
+
+- **For this exam**, you can come to my office hours today or Wednesday to talk about the concepts/questions that you lost points on.
+
+- By doing this, you can get 25% of the points lost added back to your exam score.
+
+- For example, if you received a 30/37, your grade would change to 31.75/37 (about a 4.7% increase).
+
+- If you can't come to office hours, we can schedule a time in the next 3 days to meet.

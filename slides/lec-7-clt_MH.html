@@ -6,8 +6,8 @@
 <script src="lec-7-clt_MH_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="lec-7-clt_MH_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="lec-7-clt_MH_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="lec-7-clt_MH_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.37">
+<link href="lec-7-clt_MH_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
 
   <title>Lecture 7: The central limit theorem and confidence intervals</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -241,6 +241,15 @@
 <li><p>The basic idea is called the <strong>central limit theorem</strong>, which states that for <strong>any</strong> distribution with a well-defined mean and variance, the distribution of the means computed from samples of size <em>n</em> will be approximately Gaussian (normally distributed).</p></li>
 </ul>
 </section>
+<section id="review-normal-distributions" class="slide level2">
+<h2>Review: Normal distributions</h2>
+<ul>
+<li><p>The normal (or Gaussian) distribution is a type of continuous distribution, which is defined in terms of its mean and standard deviation.</p></li>
+<li><p>For example, if a random variable <span class="math inline">\(X\)</span> follows a normal distribution with mean 4 and standard deviation 1, we write <span class="math inline">\(X \sim N(4,1)\)</span>.</p></li>
+<li><p>We refer to the <span class="math inline">\(N(0,1)\)</span> distribution as the <em>standard</em> normal distribution.</p></li>
+<li><p>The normal distribution is the distribution behind the famous “bell curve”.</p></li>
+</ul>
+</section>
 <section id="recall-what-is-statistical-inference" class="slide level2">
 <h2>Recall: What is statistical inference?</h2>
 <ul>
@@ -251,7 +260,7 @@
 </section>
 <section id="the-sampling-distribution-of-the-mean" class="slide level2 smaller">
 <h2>The sampling distribution of the mean</h2>
-<p>Suppose we’re interested in the resting heart rate of students in BIOS 600, and are able to do the following:</p>
+<p>Suppose we’re interested in the resting heart rate of Gillings students, and are able to do the following:</p>
 <ol type="1">
 <li>Take a random sample of size <em>n</em> from this population</li>
 </ol>
@@ -325,7 +334,8 @@
 <h2>What is this really saying?</h2>
 <ul>
 <li><p>The central limit theorem tells us that <strong>sample averages</strong> are normally distributed, if we have enough data.</p></li>
-<li><p>This is true <strong>even if</strong> our original variables are not normally distributed.</p></li>
+<li><p>This is true <strong>even if</strong> our original variables are not normally distributed, as long as <span class="math inline">\(n\)</span> is large enough (a classic rule of thumb is <span class="math inline">\(n \ge 30\)</span>).</p></li>
+<li><p>If the original variable is normally distributed, a smaller <span class="math inline">\(n\)</span> might suffice; likewise, if it is extremely skewed, a higher <span class="math inline">\(n\)</span> might be required.</p></li>
 </ul>
 </section>
 <section id="the-sampling-distribution-of-the-mean-smaller-n" class="slide level2">
@@ -336,6 +346,33 @@
 <h2>The sampling distribution of the mean (Larger n)</h2>
 
 <img data-src="lec-7-clt_MH_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch"></section>
+<section id="specifics-for-the-heart-rate-example" class="slide level2 smaller">
+<h2>Specifics for the heart rate example</h2>
+<ul>
+<li><p>Here, our population data is derived from a <span class="math inline">\(N(65, 10)\)</span> distribution – that is, <span class="math inline">\(\mu = 65\)</span> and <span class="math inline">\(\sigma = 10\)</span>.</p></li>
+<li><p>What is the approximate distribution of the sample mean for <span class="math inline">\(n = 20\)</span>?</p></li>
+</ul>
+<div class="fragment">
+<p><span class="math display">\[N(65, 10/\sqrt{20})\]</span></p>
+</div>
+<div class="fragment">
+<ul>
+<li>How about for <span class="math inline">\(n = 5\)</span>?</li>
+</ul>
+</div>
+<div class="fragment">
+<p><span class="math display">\[N(65, 10/\sqrt{5})\]</span></p>
+</div>
+<div class="fragment">
+<ul>
+<li>And for <span class="math inline">\(n=100\)</span>, we have <span class="math display">\[N(65, 10/\sqrt{100})\]</span>.</li>
+</ul>
+</div>
+</section>
+<section id="visualizing" class="slide level2">
+<h2>Visualizing</h2>
+
+<img data-src="lec-7-clt_MH_files/figure-revealjs/unnamed-chunk-7-1.png" alt="A plot with three bell curves; a tall, thin one labelled n = 100; a shorter, wider one labelled n = 20; and an even shorter, wider one labelled n = 5. The x-axis is labelled Sample Average and the y-axis is labelled Density." width="960" class="r-stretch"></section>
 <section id="application-exercise" class="slide level2">
 <h2>Application Exercise</h2>
 <div class="callout callout-tip callout-titled callout-style-default">
@@ -396,8 +433,8 @@ sample averages will still tend toward a bell curve.</li>
 <section id="example" class="slide level2">
 <h2>Example</h2>
 <ul>
-<li><p>Suppose I give a random sample of <span class="math inline">\(n = 30\)</span> BIOS 600 students an IQ test*, and the sample average score is 120.</p></li>
-<li><p>Does this mean that BIOS 600 students are smarter than average?</p></li>
+<li><p>Suppose I give a random sample of <span class="math inline">\(n = 30\)</span> Gillings students an IQ test*, and the sample average score is 120.</p></li>
+<li><p>Does this mean that Gillings students are smarter than average?</p></li>
 <li><p>I know there are many problems with IQ and IQ testing…bear with me here!</p></li>
 </ul>
 </section>
@@ -676,6 +713,154 @@ sample averages will still tend toward a bell curve.</li>
 <h2>Next class</h2>
 <ul>
 <li>Finish confidence intervals and start talking about hypothesis testing!</li>
+</ul>
+</section>
+<section id="exam-1---eval-false-vs-message-false" class="slide level2 smaller">
+<h2>Exam 1 - <code>#| eval: FALSE</code> vs <code>| message: FALSE</code></h2>
+<ul>
+<li><p>Technically speaking, <code>#| eval: FALSE</code> would suppress the messages that appear when you load tidyverse.</p></li>
+<li><p>However, it would also prevent tidyverse from actually loading, since any code chunk with <code>#| eval: false</code> would not be evaluated by Quarto.</p></li>
+<li><p>If you then tried to reference a tidyverse function in a later chunk of your document, you would get an error message.</p></li>
+<li><p><code>#| message: FALSE</code> allows tidyverse still to load, without showing the messages in your final document.</p></li>
+</ul>
+<div class="fragment">
+<ul>
+<li>For your Quarto documents in this class, you should suppress messages and warnings.</li>
+</ul>
+</div>
+</section>
+<section id="exam-1---summary" class="slide level2 smaller">
+<h2>Exam 1 - <code>summary()</code></h2>
+<ul>
+<li>Question 1 was all about a dataset which might look something like this:</li>
+</ul>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>       age  year   exercise    sleep veg_serving
+1 20.18111 fresh 0.00000000 6.919619           8
+2 19.98939  soph 0.00000000 9.658155           9
+3 21.20793   jun 0.00000000 7.888570           2
+4 23.52391   sen 0.00000000 6.639164          10
+5 22.00371   jun 0.02635131 7.975174           7
+6 18.69696  soph 0.08967426 7.116655           5</code></pre>
+</div>
+</div>
+<ul>
+<li><p>It’s specified that the column <code>year</code> takes on four distinct values: “fresh”, “soph”, “jun”, and “sen”.</p></li>
+<li><p>In part d, the following code chunk was provided:</p></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a>unchealth <span class="sc">|&gt;</span> </span>
+<span id="cb15-2"><a href=""></a>  <span class="fu">filter</span>(age <span class="sc">&gt;=</span> <span class="dv">18</span> <span class="sc">&amp;</span> age <span class="sc">&lt;</span> <span class="dv">24</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-3"><a href=""></a>  <span class="fu">group_by</span>(year) <span class="sc">|&gt;</span></span>
+<span id="cb15-4"><a href=""></a>  <span class="fu">summarize</span>(<span class="at">mean_veg =</span> <span class="fu">mean</span>(veg_serving, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li>How many rows and columns will this output have?</li>
+</ul>
+</section>
+<section id="exam-1---summary-1" class="slide level2 smaller">
+<h2>Exam 1 - <code>summary()</code></h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a>unchealth <span class="sc">|&gt;</span> </span>
+<span id="cb16-2"><a href=""></a>  <span class="fu">filter</span>(age <span class="sc">&gt;=</span> <span class="dv">18</span> <span class="sc">&amp;</span> age <span class="sc">&lt;</span> <span class="dv">24</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-3"><a href=""></a>  <span class="fu">group_by</span>(year) <span class="sc">|&gt;</span></span>
+<span id="cb16-4"><a href=""></a>  <span class="fu">summarize</span>(<span class="at">mean_veg =</span> <span class="fu">mean</span>(veg_serving, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li><p>What this is doing is taking the <code>unchealth</code> data set and then:</p>
+<ul>
+<li><p>Removing all rows where <code>age</code> is less than 18 or greater than or equal to 24</p></li>
+<li><p>Grouping the data by <code>year</code> (leading to 4 groups)</p></li>
+<li><p>And calculating the mean number of vegetable servings per year, removing any rows with <code>NA</code> for veg_serving beforehand</p></li>
+</ul></li>
+</ul>
+<div class="fragment">
+<ul>
+<li><code>summary()</code> produces a data table with as many rows as there are “groups”, and a column for each component of the group and each summary statistic.</li>
+</ul>
+</div>
+<div class="fragment">
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+  year  mean_veg
+  &lt;chr&gt;    &lt;dbl&gt;
+1 fresh     5.37
+2 jun       4.36
+3 sen       5.23
+4 soph      5.14</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="exam-1---parentheses" class="slide level2 smaller">
+<h2>Exam 1 - parentheses</h2>
+<ul>
+<li><p>Within <code>ggplot</code> and <code>dplyr</code>, all parentheses pairs are “contained” within a given line of code</p></li>
+<li><p>As an example, suppose we have this ggplot:</p></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a><span class="fu">ggplot</span>(unchealth, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> sleep)) <span class="sc">+</span></span>
+<span id="cb18-2"><a href=""></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb18-3"><a href=""></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li><p>Notice that in the first line, both sets of parentheses are completed before the <code>+</code> that brings in the next layer of the plot.</p></li>
+<li><p>This code would trigger an error, because you wouldn’t ever want the <code>+</code> to be contained in a set of parentheses:</p></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="fu">ggplot</span>(unchealth, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> sleep) <span class="sc">+</span></span>
+<span id="cb19-2"><a href=""></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb19-3"><a href=""></a>  <span class="fu">theme_minimal</span>())</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="exam-1-observational-v-experimental" class="slide level2">
+<h2>Exam 1 – Observational v Experimental</h2>
+<ul>
+<li><p>Question 2 went well overall! But a couple small notes:</p>
+<ul>
+<li><p>The reason this study was observational was that the participants were not assigned to a treatment; they all had two measurements taken for their blood pressure, and these results were compared by sex (not assigned by the researchers).</p></li>
+<li><p>Some people pointed out that there was no control group in this study, which is true! But not all experimental studies have a control group (although this is common practice).</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="exam-1-probability-expressions" class="slide level2 smaller">
+<h2>Exam 1 – Probability expressions</h2>
+<ul>
+<li>Question 6 asked you to state the question being asked by this expression in the context of the scenario:</li>
+</ul>
+<p><span class="math display">\[
+1 - \sum_{k = 0}^2 {30\choose k} \cdot(0.1)^k \cdot (0.9)^{30-k}
+\]</span></p>
+<div class="fragment">
+<ul>
+<li>The <span class="math inline">\(\sum_{k=0}^2\)</span> tells us that we are adding <span class="math inline">\({30 \choose k}\cdot (0.1)^k(0.9)^{30-k}\)</span> for <span class="math inline">\(k = 0, 1, 2\)</span>.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>So we have that <span class="math inline">\(\sum_{k = 0}^2 {30\choose k} \cdot(0.1)^k \cdot (0.9)^{30-k}\)</span> is the probability that 0, 1, or 2 people test positive out of 30.</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>The <span class="math inline">\(1 -\)</span> tells us that we are calculating the probability of the complement of this, which is</li>
+</ul>
+</div>
+<div class="fragment">
+<ul>
+<li>That 3 or more (or <em>at least</em> 3) people out of 30 test positive.</li>
+</ul>
+</div>
+</section>
+<section id="test-corrections" class="slide level2">
+<h2>Test corrections</h2>
+<ul>
+<li><p><strong>For this exam</strong>, you can come to my office hours today or Wednesday to talk about the concepts/questions that you lost points on.</p></li>
+<li><p>By doing this, you can get 25% of the points lost added back to your exam score.</p></li>
+<li><p>For example, if you received a 30/37, your grade would change to 31.75/37 (about a 4.7% increase).</p></li>
+<li><p>If you can’t come to office hours, we can schedule a time in the next 3 days to meet.</p></li>
 </ul>
 
 </section>
