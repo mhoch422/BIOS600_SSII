@@ -6,8 +6,8 @@
 <script src="lec-8-ci-hypo_MH_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="lec-8-ci-hypo_MH_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="lec-8-ci-hypo_MH_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="lec-8-ci-hypo_MH_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.37">
+<link href="lec-8-ci-hypo_MH_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
 
   <title>Lecture 8: Confidence Intervals and Hypothesis Testing</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -208,6 +208,8 @@
 <ul>
 <li><p>HW 7 is due <strong>tonight</strong> at 11:59 PM</p></li>
 <li><p>HW 8 will be due <strong>tomorrow</strong> at 11:59 PM</p></li>
+<li><p>Reminder to come to office hours tomorrow 1-3 or make an appointment to go over the test for 25% of lost points back</p></li>
+<li><p>Hand in application exercise 2 if you haven’t already!</p></li>
 </ul>
 </section>
 <section id="overview" class="slide level2">
@@ -258,6 +260,7 @@
 <li><p>Let’ say I <strong>know</strong> 54% of the population of NC is going to vote for Candidate A, and two polls of 400 individuals are done. One poll estimates 50% with a 95% CI of (0.45, 0.55) and a second poll estimates 60% with a 95% CI of (0.55, 0.65)</p></li>
 <li><p>The <strong>true proportion</strong> voting for Candidate A does not change it is either included or not included in each interval - there isn’t a chance of this being in either interval</p></li>
 <li><p>But. . . if I did this poll many many times, constructing a 95% confidence interval each time in the same way, then about 95% of those intervals would contain the true proportion of the population voting for candidate A</p></li>
+<li><p><a href="https://www.stapplet.com/confint.html">Interactive CI Applet</a></p></li>
 </ul>
 </section>
 <section id="when-can-we-use-this-ci" class="slide level2">
@@ -410,14 +413,14 @@
 <h2>Remember IQ example?</h2>
 <ul>
 <li><p>IQ tests have a distribution with <span class="math inline">\(\mu\)</span> = 100 and <strong>known</strong> <span class="math inline">\(\sigma\)</span> = 15</p></li>
-<li><p>For a random sample of <span class="math inline">\(n = 30\)</span>, BIOS 600 students, the sample average IQ score is 120</p></li>
+<li><p>For a random sample of <span class="math inline">\(n = 30\)</span> Gillings students, the sample average IQ score is 120</p></li>
 <li><p>The central limit theorem tells us that the distribution of means of samples of size 30 from this population is also normal, with mean <span class="math inline">\(\mu = 100\)</span> and <span class="math inline">\(SE = \sigma/ \sqrt{n} = 15 \sqrt{30} \approx 2.7\)</span></p></li>
 </ul>
 </section>
 <section id="remember-iq-example-1" class="slide level2 smaller">
 <h2>Remember IQ example?</h2>
 <ul>
-<li>Remember here I <strong>know</strong> <span class="math inline">\(\sigma\)</span>, I can derive 95% confidence interval for the BIOS 600 students’ average IQ</li>
+<li>Remember here I <strong>know</strong> <span class="math inline">\(\sigma\)</span>, I can derive 95% confidence interval for the Gillings students’ average IQ</li>
 </ul>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
@@ -428,13 +431,13 @@
 </div>
 <p><span class="math display">\[(120 - 1.96 *\frac{15}{\sqrt 30}, 120 + 1.96 * \frac{15}{\sqrt 30}) = (114.6, 125.4)\]</span></p>
 <ul>
-<li>I am 95% confident the true mean IQ for Bios 600 students falls between 114.6 and 125.4</li>
+<li>I am 95% confident the true mean IQ for Gillings students falls between 114.6 and 125.4</li>
 </ul>
 </section>
 <section id="lets-say-i-dont-know-sigma" class="slide level2">
 <h2>Let’s say I don’t know sigma</h2>
 <ul>
-<li>Let’s say for a random sample of <span class="math inline">\(n = 30\)</span>, BIOS 600 students, the sample average IQ score is 120 with <strong>sample</strong> standard deviation of 15. I can still derive 95% confidence interval for the BIOS 600 students average IQ using the t-distribution:</li>
+<li>Let’s say for a random sample of <span class="math inline">\(n = 30\)</span> Gillings students, the sample average IQ score is 120 with <strong>sample</strong> standard deviation of 15. I can still derive 95% confidence interval for the BIOS 600 students average IQ using the t-distribution:</li>
 </ul>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
@@ -454,14 +457,14 @@
 <section id="remember-iq-example-2" class="slide level2">
 <h2>Remember IQ example?</h2>
 <ul>
-<li>I have 95% confidence that the true mean IQ for BIOS 600 students is between 114.4 and 125.6</li>
+<li>I have 95% confidence that the true mean IQ for Gillings students is between 114.4 and 125.6</li>
 </ul>
 <p><span class="math display">\[(120 - 2.045 *\frac{15}{\sqrt 30}, 120 + 2.045 * \frac{15}{\sqrt 30}) = (114.4, 125.6)\]</span></p>
 </section>
 <section id="remember-iq-example-3" class="slide level2">
 <h2>Remember IQ example?</h2>
 <ul>
-<li><p>Let’s go back to knowing <span class="math inline">\(\sigma\)</span>, what if I want to test whether BIOS 600 students are smarter than average?</p></li>
+<li><p>Let’s go back to knowing <span class="math inline">\(\sigma\)</span>, what if I want to test whether Gillings students have higher IQs than average?</p></li>
 <li><p><span class="math inline">\(Z = \frac{\bar{X} - \mu}{SE}\)</span> is a standard normal random variable</p></li>
 <li><p><span class="math inline">\(Z \approx 7.3\)</span></p></li>
 </ul>
@@ -674,7 +677,7 @@ sample estimates:
 <section id="back-to-iq-example" class="slide level2">
 <h2>Back to IQ example</h2>
 <ul>
-<li><p>Here a sample of 30 students with IQs on average of 120 points. Can we test if the average IQ score for BIOS 600 students is the same as that in the larger population?</p></li>
+<li><p>Here a sample of 30 students with IQs on average of 120 points. Can we test if the average IQ score for Gillings students is the same as that in the larger population?</p></li>
 <li><p><span class="math inline">\(H_0\)</span> =</p></li>
 </ul>
 <div class="cell">
@@ -815,12 +818,12 @@ mean of x
 <h2>Different types of hypotheses</h2>
 <ul>
 <li><p>Let’s go back to the IQ example</p></li>
-<li><p>Are BIOS 600 students smarter than average?</p>
+<li><p>Do Gillings students have higher IQs than average?</p>
 <ul>
 <li><span class="math inline">\(H_0\)</span> =</li>
 <li><span class="math inline">\(H_A\)</span> =</li>
 </ul></li>
-<li><p>Are BIOS 600 students IQs different than the average?</p>
+<li><p>Are Gillings students’ IQs different than the average?</p>
 <ul>
 <li><span class="math inline">\(H_0\)</span> =</li>
 <li><span class="math inline">\(H_A\)</span> =</li>

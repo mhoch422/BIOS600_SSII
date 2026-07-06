@@ -462,7 +462,7 @@ Working in groups of 2 or 3, use this exercise to get a sense of intuition for t
 
 -   For now, let's assume that we know $\sigma$, the population standard deviation (this rarely ever happens)
 
--   Recall from last lecture: Given a random variable $X$ with mean $\mu$ and standard deviation $\sigma$, the CLT tells us that
+-   Recall from earlier: Given a random variable $X$ with mean $\mu$ and standard deviation $\sigma$, the CLT tells us that
 
 $$Z = \frac{\bar X - \mu}{\sigma / \sqrt{n}}$$
 
@@ -512,7 +512,7 @@ qnorm(.975, mean = 0, sd = 1)
 
 ## What is `qnorm` doing in words? {.smaller}
 
-- In words: `qnorm(p, mean, sd)` is finding the quantile of the normal distribution distribution corresponding to $(p \times 100)\%$ of the area under the curve falling to the left of this value, assuming a normal distribution with `mean` and `sd`. 
+- In words: `qnorm(p, mean, sd)` is finding the quantile of the normal distribution corresponding to $(p \times 100)\%$ of the area under the curve falling to the left of this value, assuming a normal distribution with `mean` and `sd`. 
 
 ::: callout-tip
 
@@ -525,8 +525,11 @@ What quantile of the normal distribution corresponds to 50% of the area under th
 qnorm(.5, mean = 0, sd = 1)
 ```
 
-Answer: 0
 :::
+
+. . . 
+
+Answer: 0
 
 ## Alternatively in R
 
@@ -696,7 +699,7 @@ How would you interpret this confidence interval?
 
 - For your Quarto documents in this class, you should suppress messages and warnings.
 
-## Exam 1 - `summary()` {.smaller}
+## Exam 1 - `summarize()` {.smaller}
 
 - Question 1 was all about a dataset which might look something like this:
 
@@ -730,7 +733,7 @@ unchealth |>
 
 - How many rows and columns will this output have?
 
-## Exam 1 - `summary()` {.smaller}
+## Exam 1 - `summarize()` {.smaller}
 
 ```{r}
 #| eval: FALSE
@@ -753,7 +756,7 @@ unchealth |>
   
 . . .
   
-- `summary()` produces a data table with as many rows as there are "groups", and a column for each component of the group and each summary statistic.
+- `summarize()` produces a data table with as many rows as there are "groups", and a column for each component of the group and each summary statistic.
 
 . . .
 

@@ -468,7 +468,7 @@ sample averages will still tend toward a bell curve.</li>
 <h2>Two-sided confidence intervals</h2>
 <ul>
 <li><p>For now, let’s assume that we know <span class="math inline">\(\sigma\)</span>, the population standard deviation (this rarely ever happens)</p></li>
-<li><p>Recall from last lecture: Given a random variable <span class="math inline">\(X\)</span> with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>, the CLT tells us that</p></li>
+<li><p>Recall from earlier: Given a random variable <span class="math inline">\(X\)</span> with mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>, the CLT tells us that</p></li>
 </ul>
 <p><span class="math display">\[Z = \frac{\bar X - \mu}{\sigma / \sqrt{n}}\]</span></p>
 <p>where <span class="math inline">\(Z\)</span> has a standard normal distribution if <span class="math inline">\(X\)</span> is normal, and <span class="math inline">\(Z\)</span> is approximately normal if <span class="math inline">\(X\)</span> is not normal, but <span class="math inline">\(n\)</span> is large enough.</p>
@@ -516,7 +516,7 @@ sample averages will still tend toward a bell curve.</li>
 <section id="what-is-qnorm-doing-in-words" class="slide level2 smaller">
 <h2>What is <code>qnorm</code> doing in words?</h2>
 <ul>
-<li>In words: <code>qnorm(p, mean, sd)</code> is finding the quantile of the normal distribution distribution corresponding to <span class="math inline">\((p \times 100)\%\)</span> of the area under the curve falling to the left of this value, assuming a normal distribution with <code>mean</code> and <code>sd</code>.</li>
+<li>In words: <code>qnorm(p, mean, sd)</code> is finding the quantile of the normal distribution corresponding to <span class="math inline">\((p \times 100)\%\)</span> of the area under the curve falling to the left of this value, assuming a normal distribution with <code>mean</code> and <code>sd</code>.</li>
 </ul>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
@@ -534,9 +534,11 @@ sample averages will still tend toward a bell curve.</li>
 <pre><code>[1] 0</code></pre>
 </div>
 </div>
+</div>
+</div>
+</div>
+<div class="fragment">
 <p>Answer: 0</p>
-</div>
-</div>
 </div>
 </section>
 <section id="alternatively-in-r" class="slide level2">
@@ -729,8 +731,8 @@ sample averages will still tend toward a bell curve.</li>
 </ul>
 </div>
 </section>
-<section id="exam-1---summary" class="slide level2 smaller">
-<h2>Exam 1 - <code>summary()</code></h2>
+<section id="exam-1---summarize" class="slide level2 smaller">
+<h2>Exam 1 - <code>summarize()</code></h2>
 <ul>
 <li>Question 1 was all about a dataset which might look something like this:</li>
 </ul>
@@ -759,8 +761,8 @@ sample averages will still tend toward a bell curve.</li>
 <li>How many rows and columns will this output have?</li>
 </ul>
 </section>
-<section id="exam-1---summary-1" class="slide level2 smaller">
-<h2>Exam 1 - <code>summary()</code></h2>
+<section id="exam-1---summarize-1" class="slide level2 smaller">
+<h2>Exam 1 - <code>summarize()</code></h2>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a>unchealth <span class="sc">|&gt;</span> </span>
 <span id="cb16-2"><a href=""></a>  <span class="fu">filter</span>(age <span class="sc">&gt;=</span> <span class="dv">18</span> <span class="sc">&amp;</span> age <span class="sc">&lt;</span> <span class="dv">24</span>) <span class="sc">|&gt;</span></span>
@@ -777,7 +779,7 @@ sample averages will still tend toward a bell curve.</li>
 </ul>
 <div class="fragment">
 <ul>
-<li><code>summary()</code> produces a data table with as many rows as there are “groups”, and a column for each component of the group and each summary statistic.</li>
+<li><code>summarize()</code> produces a data table with as many rows as there are “groups”, and a column for each component of the group and each summary statistic.</li>
 </ul>
 </div>
 <div class="fragment">
