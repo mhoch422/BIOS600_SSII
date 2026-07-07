@@ -1,5 +1,5 @@
 ---
-title: "Lab 01: Basic Data Visualization & Intro to the Tidyverse"
+title: "Lab 02: Spatial Data and Coding Style"
 author: "Your Name Here"
 date: "Today's Date Here"
 format: html
@@ -10,7 +10,6 @@ format: html
 #| warning: false
 #| message: false
 
-install.packages("sf")
 library(tidyverse)
 library(sf)
 

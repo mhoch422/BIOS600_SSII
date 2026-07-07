@@ -148,7 +148,7 @@ Note that in the example above, the colors were listed as HEX codes (# followed 
 
 As said previously, simple features work well with the tidyverse. For instance, we can use `dplyr()` functions to manipulate data. 
 
-Let’s filter for observations with over 10,000 births in 1979, and select only the county name and number of birth variables:
+Let’s filter for observations with over 10,000 births in 1974, and select only the county name and number of birth variables:
 
 ```{r}
 nc |> 
