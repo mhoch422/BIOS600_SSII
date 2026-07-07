@@ -6,8 +6,8 @@
 <script src="lec-9-compare-means_MH_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="lec-9-compare-means_MH_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="lec-9-compare-means_MH_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="lec-9-compare-means_MH_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.37">
+<link href="lec-9-compare-means_MH_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
 
   <title>Lecture 9: Comparing Two Means</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -208,6 +208,15 @@
 <ul>
 <li><p>HW 8 due <strong>tonight</strong> at 11:59 pm.</p></li>
 <li><p>HW 9 due <strong>tomorrow</strong> at 11:59 pm.</p></li>
+<li><p>Come to my office hours <strong>today</strong> from 1-3 or make an appointment to go over your exam!</p></li>
+<li><p>Fill out yesterday’s participation survey by the end of today.</p></li>
+</ul>
+</section>
+<section id="announcements-1" class="slide level2">
+<h2>Announcements</h2>
+<ul>
+<li><p>Lab 2 tutorial posted and assignment is available on Canvas.</p></li>
+<li><p>For this week’s lab, I will also be going through the tutorial during the lab session on Friday; the video tutorial is available as a reference when working on the assignment.</p></li>
 </ul>
 </section>
 <section id="overview" class="slide level2">
@@ -215,8 +224,8 @@
 <ul>
 <li><p>Review hypothesis test framework</p></li>
 <li><p>Independent 2-sample t-test vs.&nbsp;paired t-test</p></li>
-<li><p>Example: independent 2-sample t-test, licorice treatment</p></li>
-<li><p>Example: paired t-test, exercise plan</p></li>
+<li><p>Example: licorice treatment</p></li>
+<li><p>Example: exercise plan</p></li>
 </ul>
 </section>
 <section id="reading" class="slide level2">
@@ -282,11 +291,11 @@
 <ul>
 <li>If you lower <span class="math inline">\(\alpha\)</span> for example from 0.05 to 0.01
 <ul>
-<li>Lowers chance of <strong>Type I</strong> error (rejecting <span class="math inline">\(H_0\)</span> when it is actually true) but since its now harder in general to reject <span class="math inline">\(H_0\)</span> I am increasing the chance of a <strong>Type II</strong> error (not rejecting <span class="math inline">\(H_0\)</span> when it is false)</li>
+<li>Lowers chance of <strong>Type I</strong> error (rejecting <span class="math inline">\(H_0\)</span> when it is actually true) but since it’s now harder in general to reject <span class="math inline">\(H_0\)</span> I am increasing the chance of a <strong>Type II</strong> error (not rejecting <span class="math inline">\(H_0\)</span> when it is false)</li>
 </ul></li>
 <li>If you increase <span class="math inline">\(\alpha\)</span> for example from 0.10 to 0.15
 <ul>
-<li>Increases change of <strong>Type I</strong> error (rejecting <span class="math inline">\(H_0\)</span> when it is actually true) but since its now easier in general to reject <span class="math inline">\(H_0\)</span> I am decreasing the chance of a <strong>Type II</strong> error (not rejecting <span class="math inline">\(H_0\)</span> when it is false)</li>
+<li>Increases change of <strong>Type I</strong> error (rejecting <span class="math inline">\(H_0\)</span> when it is actually true) but since it’s now easier in general to reject <span class="math inline">\(H_0\)</span> I am decreasing the chance of a <strong>Type II</strong> error (not rejecting <span class="math inline">\(H_0\)</span> when it is false)</li>
 </ul></li>
 </ul>
 </section>
@@ -521,7 +530,7 @@ mean in group 0 mean in group 1
 <section id="case-study-athletic-training" class="slide level2">
 <h2>Case study: athletic training</h2>
 <ul>
-<li>A school athletics department wants to test the effectiveness of the new type of training proposed by comparing the average times of 10 runners in the 100 meters in seconds before and after the new training is implemented.</li>
+<li>A school athletics department wants to test the effectiveness of the new type of training proposed by comparing the average times of 30 runners in the 100 meters in seconds before and after the new training is implemented.</li>
 </ul>
 <div class="callout callout-tip callout-style-simple">
 <div class="callout-body">
@@ -537,11 +546,15 @@ mean in group 0 mean in group 1
 </div>
 </div>
 </section>
+<section id="application-exercise" class="slide level2">
+<h2>Application Exercise</h2>
+<ul>
+<li><p>For this example, you will work with a partner (try for someone you haven’t worked with before!) on Application Exercise 3.</p></li>
+<li><p>Start by working on Questions 1 and 2.</p></li>
+</ul>
+</section>
 <section id="in-r" class="slide level2">
 <h2>In R</h2>
-<ul>
-<li>Our dataset in R is called <code>training</code>:</li>
-</ul>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a>training</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -555,7 +568,27 @@ mean in group 0 mean in group 1
 7        7   12.6  12.2
 8        8   15.3  13.4
 9        9   14.4  12.9
-10      10   11.3  11.0</code></pre>
+10      10   11.3  11.0
+11      11   11.6  12.1
+12      12   12.8  12.0
+13      13   11.0  11.5
+14      14   20.4  18.3
+15      15   15.2  14.5
+16      16   20.1  17.1
+17      17   14.5  12.9
+18      18   14.0  13.5
+19      19   13.1  12.8
+20      20   10.9  10.9
+21      21   12.3  12.5
+22      22   11.8  11.4
+23      23   15.0  15.3
+24      24   13.9  13.2
+25      25   17.5  15.9
+26      26   16.1  15.4
+27      27   14.3  12.5
+28      28   13.5  13.1
+29      29   14.9  13.1
+30      30   11.8  11.5</code></pre>
 </div>
 </div>
 </section>
@@ -574,13 +607,13 @@ mean in group 0 mean in group 1
     Paired t-test
 
 data:  training$before and training$after
-t = 5.2671, df = 9, p-value = 0.0005158
+t = 5.6023, df = 29, p-value = 4.766e-06
 alternative hypothesis: true mean difference is not equal to 0
 95 percent confidence interval:
- 0.9185294 2.3014706
+ 0.662446 1.424221
 sample estimates:
 mean difference 
-           1.61 </code></pre>
+       1.043333 </code></pre>
 </div>
 </div>
 </section>
@@ -600,6 +633,10 @@ mean difference
 </div>
 </div>
 </section>
+<section id="application-exercise-1" class="slide level2">
+<h2>Application Exercise</h2>
+<p>Continue with today’s application exercise by completing Question 3.</p>
+</section>
 <section id="but-wait" class="slide level2">
 <h2>But wait…</h2>
 <div class="cell">
@@ -617,7 +654,27 @@ mean difference
 7        7   12.6  12.2 -0.4
 8        8   15.3  13.4 -1.9
 9        9   14.4  12.9 -1.5
-10      10   11.3  11.0 -0.3</code></pre>
+10      10   11.3  11.0 -0.3
+11      11   11.6  12.1  0.5
+12      12   12.8  12.0 -0.8
+13      13   11.0  11.5  0.5
+14      14   20.4  18.3 -2.1
+15      15   15.2  14.5 -0.7
+16      16   20.1  17.1 -3.0
+17      17   14.5  12.9 -1.6
+18      18   14.0  13.5 -0.5
+19      19   13.1  12.8 -0.3
+20      20   10.9  10.9  0.0
+21      21   12.3  12.5  0.2
+22      22   11.8  11.4 -0.4
+23      23   15.0  15.3  0.3
+24      24   13.9  13.2 -0.7
+25      25   17.5  15.9 -1.6
+26      26   16.1  15.4 -0.7
+27      27   14.3  12.5 -1.8
+28      28   13.5  13.1 -0.4
+29      29   14.9  13.1 -1.8
+30      30   11.8  11.5 -0.3</code></pre>
 </div>
 </div>
 </section>
@@ -633,13 +690,13 @@ mean difference
     One Sample t-test
 
 data:  training_diff$diff
-t = -5.2671, df = 9, p-value = 0.0005158
+t = -5.6023, df = 29, p-value = 4.766e-06
 alternative hypothesis: true mean is not equal to 0
 95 percent confidence interval:
- -2.3014706 -0.9185294
+ -1.424221 -0.662446
 sample estimates:
 mean of x 
-    -1.61 </code></pre>
+-1.043333 </code></pre>
 </div>
 </div>
 </section>
@@ -664,13 +721,13 @@ mean of x
     One Sample t-test
 
 data:  training_diff$diff
-t = -5.2671, df = 9, p-value = 0.0005158
+t = -5.6023, df = 29, p-value = 4.766e-06
 alternative hypothesis: true mean is not equal to 0
 80 percent confidence interval:
- -2.032749 -1.187251
+ -1.2875643 -0.7991024
 sample estimates:
 mean of x 
-    -1.61 </code></pre>
+-1.043333 </code></pre>
 </div>
 </div>
 </section>

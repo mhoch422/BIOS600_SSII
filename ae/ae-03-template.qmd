@@ -1,0 +1,87 @@
+---
+title: "Application Exercise 3 - t-Tests"
+author: "YOUR NAME HERE"
+date: "Today's Date Here"
+format: html
+---
+
+## Setup
+
+Update your name and the date in the YAML above.
+
+## Learning Goal
+
+Today you will practice using `t.test()` in R. You will analyze data from a school athletics department, which wants to test the effectiveness of a new type of training by comparing the average times of 10 runners in the 100 meters in seconds before and after the new training is implemented.
+
+Our dataset in R is called `training`, which can be loaded with the following code chunk. Here, `echo = F` means that this chunk will be evaluated when you render your Quarto document, but it won't be visible in the final document.
+
+```{r}
+#| echo: FALSE
+#| message: FALSE
+#| warning: FALSE
+
+library(tidyverse)
+subject <- 1:30
+before <- c(12.9, 13.5, 12.8, 15.6, 17.2, 19.2, 12.6, 15.3, 14.4, 11.3,
+            11.6, 12.8, 11, 20.4, 15.2, 20.1, 14.5, 14, 13.1, 10.9,
+            12.3, 11.8, 15, 13.9, 17.5, 16.1, 14.3, 13.5, 14.9, 11.8)
+after <- c(12, 12.2, 11.2, 13.0, 15, 15.8, 12.2, 13.4, 12.9, 11,
+           12.1, 12, 11.5, 18.3, 14.5, 17.1, 12.9, 13.5, 12.8, 10.9,
+           12.5, 11.4, 15.3, 13.2, 15.9, 15.4, 12.5, 13.1, 13.1, 11.5)
+training <- data.frame(subject, before, after)
+
+```
+
+## Question 1
+
+To run a paired t-test of the before and after times, you use the same function as for a two-sample t-test, with the additional parameter `paired = TRUE`.
+
+```{r}
+
+## complete the function as appropriate to run a paired t-test between 
+## the before and after times
+
+t.test(training$before,
+       training$after, 
+       mu = ,
+       alternative = ,
+       paired = ,
+       var.equal = ,
+       conf.level = 
+       )
+
+```
+
+What conclusion can you make from this t-test?
+
+## Question 2
+
+### a. 
+
+Now, create a new variable in `training` called `diff`, which is the difference between `before` and `after`.
+
+```{r}
+
+## Complete the code to create the new variable
+
+training <- training %>%
+  
+
+```
+
+### b. 
+
+Run a one-sample t-test on `training$diff`, where the null hypothesis is $H_0$: $\mu_{diff} = 0$.
+
+```{r}
+
+
+
+```
+
+What conclusion can you make from this t-test?
+
+### c. 
+
+Compare your results from the test in Question 1 to your results from the test in Question 2b. What do you observe?
+
