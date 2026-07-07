@@ -54,7 +54,7 @@ This is **incorrect**!
 
 - Since $\mu$ is a parameter, it's either in our confidence interval or not
 
-## CI interpretation
+## CI interpretation {.smaller}
 
 - Let' say I **know** 54% of the population of NC is going to vote for Candidate A, and two polls of 400 individuals are done. One poll estimates 50% with a 95% CI of (0.45, 0.55) and a second poll estimates 60% with a 95% CI of (0.55, 0.65)
 
@@ -305,7 +305,7 @@ $$(\bar X - 2.09 \frac{s}{\sqrt n}, \bar X + 2.09 \frac{s}{\sqrt n})$$
 
 - For a random sample of $n = 30$ Gillings students, the sample average IQ score is 120
 
-- The central limit theorem tells us that the distribution of means of samples of size 30 from this population is also normal, with mean $\mu = 100$ and $SE = \sigma/ \sqrt{n} = 15 \sqrt{30} \approx 2.7$
+- The central limit theorem tells us that the distribution of means of samples of size 30 from this population is also normal, with mean $\mu = 100$ and $SE = \sigma/ \sqrt{n} = 15 /\sqrt{30} \approx 2.7$
 
 ## Remember IQ example? {.smaller}
 
@@ -323,7 +323,7 @@ $$(120 - 1.96 *\frac{15}{\sqrt 30}, 120 + 1.96 * \frac{15}{\sqrt 30}) = (114.6, 
 
 ## Let's say I don't know sigma
 
-- Let's say for a random sample of $n = 30$ Gillings students, the sample average IQ score is 120 with **sample** standard deviation of 15. I can still derive 95% confidence interval for the BIOS 600 students average IQ using the t-distribution:
+- Let's say for a random sample of $n = 30$ Gillings students, the sample average IQ score is 120 with **sample** standard deviation of 15. I can still derive 95% confidence interval for the Gillings student's average IQ using the t-distribution:
 
 ```{r}
 #| echo: true
@@ -378,7 +378,7 @@ $$(120 - 2.045 *\frac{15}{\sqrt 30}, 120 + 2.045 * \frac{15}{\sqrt 30}) = (114.4
 
 - A certain contraceptive pill is supposed to contain precisely 0.020 $\mu g$ of estrogen.
 
-- During quality control, 50 randomly selected pills are tested, with a sample mean dose 0.017 $\mu g$ and **sample SD** 0.0008 $\mu g$.
+- During quality control, 50 randomly selected pills are tested, with a sample mean dose 0.017 $\mu g$ and **sample SD** 0.008 $\mu g$.
 
 ::: {.callout-caution appearance="simple"}
 ## Question
@@ -486,16 +486,6 @@ Thus, the test statistic $t$ is an estimate of how many SDs apart $\mu_0$ and $\
 
 ## Breaking down the test statistic
 
-## Example: Conclusion {.smaller}
-
-- If the true average estrogen level really were 0.020 $\mu$g, the chance of seeing data this far off just by random luck is about 1 in 100. (P-value = .01225)
-
-- Since that’s very unlikely, we have good evidence the pills’ average estrogen level is not actually 0.020 $\mu$g.
-
-- **Conclusion**: At an alpha level of 0.05, we calculated a p-value of 0.012, which is less than 0.05. There is statistically significant evidence that the mean estrogen level of the manufactured pills is different than 0.020 $\mu$g.
-
-- In other words: the pills are probably being made with a slightly different average amount of estrogen than intended.
-
 ## Getting the p-value graphically (drawing)
 
 ## Breaking down the test statistic
@@ -516,6 +506,16 @@ p_high
 
 2*p_high
 ```
+
+## Example: Conclusion {.smaller}
+
+- If the true average estrogen level really were 0.020 $\mu$g, the chance of seeing data this far off just by random luck is about 1 in 100. (P-value = .01225)
+
+- Since that’s very unlikely, we have good evidence the pills’ average estrogen level is not actually 0.020 $\mu$g.
+
+- **Conclusion**: At an alpha level of 0.05, we calculated a p-value of 0.012, which is less than 0.05. There is statistically significant evidence that the mean estrogen level of the manufactured pills is different than 0.020 $\mu$g.
+
+- In other words: the pills are probably being made with a slightly different average amount of estrogen than intended.
 
 ## Reflection
 

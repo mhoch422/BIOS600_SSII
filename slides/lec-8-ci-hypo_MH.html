@@ -254,7 +254,7 @@
 <li><p>Since <span class="math inline">\(\mu\)</span> is a parameter, it’s either in our confidence interval or not</p></li>
 </ul>
 </section>
-<section id="ci-interpretation-1" class="slide level2">
+<section id="ci-interpretation-1" class="slide level2 smaller">
 <h2>CI interpretation</h2>
 <ul>
 <li><p>Let’ say I <strong>know</strong> 54% of the population of NC is going to vote for Candidate A, and two polls of 400 individuals are done. One poll estimates 50% with a 95% CI of (0.45, 0.55) and a second poll estimates 60% with a 95% CI of (0.55, 0.65)</p></li>
@@ -414,7 +414,7 @@
 <ul>
 <li><p>IQ tests have a distribution with <span class="math inline">\(\mu\)</span> = 100 and <strong>known</strong> <span class="math inline">\(\sigma\)</span> = 15</p></li>
 <li><p>For a random sample of <span class="math inline">\(n = 30\)</span> Gillings students, the sample average IQ score is 120</p></li>
-<li><p>The central limit theorem tells us that the distribution of means of samples of size 30 from this population is also normal, with mean <span class="math inline">\(\mu = 100\)</span> and <span class="math inline">\(SE = \sigma/ \sqrt{n} = 15 \sqrt{30} \approx 2.7\)</span></p></li>
+<li><p>The central limit theorem tells us that the distribution of means of samples of size 30 from this population is also normal, with mean <span class="math inline">\(\mu = 100\)</span> and <span class="math inline">\(SE = \sigma/ \sqrt{n} = 15 /\sqrt{30} \approx 2.7\)</span></p></li>
 </ul>
 </section>
 <section id="remember-iq-example-1" class="slide level2 smaller">
@@ -437,7 +437,7 @@
 <section id="lets-say-i-dont-know-sigma" class="slide level2">
 <h2>Let’s say I don’t know sigma</h2>
 <ul>
-<li>Let’s say for a random sample of <span class="math inline">\(n = 30\)</span> Gillings students, the sample average IQ score is 120 with <strong>sample</strong> standard deviation of 15. I can still derive 95% confidence interval for the BIOS 600 students average IQ using the t-distribution:</li>
+<li>Let’s say for a random sample of <span class="math inline">\(n = 30\)</span> Gillings students, the sample average IQ score is 120 with <strong>sample</strong> standard deviation of 15. I can still derive 95% confidence interval for the Gillings student’s average IQ using the t-distribution:</li>
 </ul>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
@@ -496,7 +496,7 @@
 <h2>Ultra-low dose contraception</h2>
 <ul>
 <li><p>A certain contraceptive pill is supposed to contain precisely 0.020 <span class="math inline">\(\mu g\)</span> of estrogen.</p></li>
-<li><p>During quality control, 50 randomly selected pills are tested, with a sample mean dose 0.017 <span class="math inline">\(\mu g\)</span> and <strong>sample SD</strong> 0.0008 <span class="math inline">\(\mu g\)</span>.</p></li>
+<li><p>During quality control, 50 randomly selected pills are tested, with a sample mean dose 0.017 <span class="math inline">\(\mu g\)</span> and <strong>sample SD</strong> 0.008 <span class="math inline">\(\mu g\)</span>.</p></li>
 </ul>
 <div class="callout callout-caution callout-titled callout-style-simple">
 <div class="callout-body">
@@ -615,15 +615,6 @@ sample estimates:
 <section id="breaking-down-the-test-statistic-1" class="slide level2">
 <h2>Breaking down the test statistic</h2>
 </section>
-<section id="example-conclusion" class="slide level2 smaller">
-<h2>Example: Conclusion</h2>
-<ul>
-<li><p>If the true average estrogen level really were 0.020 <span class="math inline">\(\mu\)</span>g, the chance of seeing data this far off just by random luck is about 1 in 100. (P-value = .01225)</p></li>
-<li><p>Since that’s very unlikely, we have good evidence the pills’ average estrogen level is not actually 0.020 <span class="math inline">\(\mu\)</span>g.</p></li>
-<li><p><strong>Conclusion</strong>: At an alpha level of 0.05, we calculated a p-value of 0.012, which is less than 0.05. There is statistically significant evidence that the mean estrogen level of the manufactured pills is different than 0.020 <span class="math inline">\(\mu\)</span>g.</p></li>
-<li><p>In other words: the pills are probably being made with a slightly different average amount of estrogen than intended.</p></li>
-</ul>
-</section>
 <section id="getting-the-p-value-graphically-drawing" class="slide level2">
 <h2>Getting the p-value graphically (drawing)</h2>
 </section>
@@ -653,6 +644,15 @@ sample estimates:
 <pre><code>[1] 0.01224927</code></pre>
 </div>
 </div>
+</section>
+<section id="example-conclusion" class="slide level2 smaller">
+<h2>Example: Conclusion</h2>
+<ul>
+<li><p>If the true average estrogen level really were 0.020 <span class="math inline">\(\mu\)</span>g, the chance of seeing data this far off just by random luck is about 1 in 100. (P-value = .01225)</p></li>
+<li><p>Since that’s very unlikely, we have good evidence the pills’ average estrogen level is not actually 0.020 <span class="math inline">\(\mu\)</span>g.</p></li>
+<li><p><strong>Conclusion</strong>: At an alpha level of 0.05, we calculated a p-value of 0.012, which is less than 0.05. There is statistically significant evidence that the mean estrogen level of the manufactured pills is different than 0.020 <span class="math inline">\(\mu\)</span>g.</p></li>
+<li><p>In other words: the pills are probably being made with a slightly different average amount of estrogen than intended.</p></li>
+</ul>
 </section>
 <section id="reflection" class="slide level2">
 <h2>Reflection</h2>
