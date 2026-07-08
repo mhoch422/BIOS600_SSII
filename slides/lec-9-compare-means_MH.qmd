@@ -78,10 +78,10 @@ For $H_{0}$: Patient does not have a disease
 ## Review: Type I and Type II error rates
 
 - If you lower $\alpha$ for example from 0.05 to 0.01
-  - Lowers chance of **Type I** error (rejecting $H_0$ when it is actually true) but since it's now harder in general to reject $H_0$ I am increasing the chance of a **Type II** error (not rejecting $H_0$ when it is false)
+  - Lowers chance of **Type I** error (rejecting $H_0$ when it is actually true) but since it's now harder in general to reject $H_0$ you are increasing the chance of a **Type II** error (not rejecting $H_0$ when it is false)
 
 - If you increase $\alpha$ for example from 0.10 to 0.15
-  - Increases change of **Type I** error (rejecting $H_0$ when it is actually true) but since it's now easier in general to reject $H_0$ I am decreasing the chance of a **Type II** error (not rejecting $H_0$ when it is false)
+  - Increases change of **Type I** error (rejecting $H_0$ when it is actually true) but since it's now easier in general to reject $H_0$ you are decreasing the chance of a **Type II** error (not rejecting $H_0$ when it is false)
  
 ## Review: Hypothesis testing steps
 
@@ -174,7 +174,7 @@ Variables of interest:
 
 - `treat`: Treatment given (0 = Sugar placebo; 1 = Licorice solution)
 
-- `pacu30min_swallowPain`: Swallow pain score 4 hours after surgery (11-point scale:
+- `pacu30min_swallowPain`: Swallow pain score 30 minutes after surgery (11-point scale:
 0 = No pain; 10 = worst pain)
 
 ## Looking at some data
