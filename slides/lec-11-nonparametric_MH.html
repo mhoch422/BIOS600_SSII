@@ -6,8 +6,8 @@
 <script src="lec-11-nonparametric_MH_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="lec-11-nonparametric_MH_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="lec-11-nonparametric_MH_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="lec-11-nonparametric_MH_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.37">
+<link href="lec-11-nonparametric_MH_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
 
   <title>Lecture 11: Non-Parametric tests</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -239,8 +239,22 @@
 <section id="fishers-exact-test" class="slide level2">
 <h2>Fisher’s exact test</h2>
 <ul>
-<li>The chi-square test relies on asymptotic results (i.e.&nbsp;large sample size), which might not be appropriate if we have small cell counts (common rules of thumb are &gt;5 or &gt;10 observed in each cell).</li>
+<li><p>The chi-square test relies on asymptotic results (i.e.&nbsp;large sample size), which might not be appropriate if we have small cell counts (common rules of thumb are &gt;5 or &gt;10 observed in each cell).</p></li>
+<li><p>In cases where we have small cell counts, we can use Fisher’s exact test instead.</p></li>
 </ul>
+</section>
+<section id="a-note-on-ronald-fisher" class="slide level2 smaller">
+<h2>A note on Ronald Fisher</h2>
+<ul>
+<li><p>Ronald Fisher was a British statistician who developed a lot of the tools we still use today.</p></li>
+<li><p>He was the first person to use the word “variance” in the context of statistics, and came up with the concept of ANOVA (the F in F-test stands for Fisher).</p></li>
+</ul>
+<div class="fragment">
+<ul>
+<li><p>He also was a proponent of eugenics in Great Britain, advocating for incentivizing the “most valuable classes” to have children and for the voluntary sterilization of the “feeble-minded”.</p></li>
+<li><p>Over the last decade, his name has been removed from several centers, at Cambridge University and at University College London, due to his work in eugenics.</p></li>
+</ul>
+</div>
 </section>
 <section id="fishers-exact-test-1" class="slide level2 smaller">
 <h2>Fisher’s exact test</h2>

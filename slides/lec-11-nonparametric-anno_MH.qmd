@@ -32,6 +32,21 @@ format: html
 
 - The chi-square test relies on asymptotic results (i.e. large sample size), which might not be appropriate if we have small cell counts (common rules of thumb are \>5 or \>10 observed in each cell).
 
+- In cases where we have small cell counts, we can use Fisher's exact test instead.
+
+## A note on Ronald Fisher {.smaller}
+
+- Ronald Fisher was a British statistician who developed a lot of the tools we still use today.
+
+- He was the first person to use the word "variance" in the context of statistics, and came up with the concept of ANOVA (the F in F-test stands for Fisher).
+
+. . . 
+
+- He also was a proponent of eugenics in Great Britain, advocating for incentivizing the "most valuable classes" to have children and for the voluntary sterilization of the "feeble-minded".
+
+- Over the last decade, his name has been removed from several centers, at Cambridge University and at University College London, due to his work in eugenics.
+
+
 
 ## Fisher's exact test {.smaller}
 

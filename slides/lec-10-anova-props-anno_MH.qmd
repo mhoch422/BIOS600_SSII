@@ -14,6 +14,8 @@ format: html
 
 - Lab 2 assignment and tutorial have been posted and due on **July 13th** at 11:59 pm
 
+- Hand in Application Exercise 3 if you haven't already!
+
 
 <!-- # ```{r echo = F} -->
 <!-- # library(tidyverse) -->
@@ -80,8 +82,6 @@ format: html
 
 - Bonferroni Correction
 
-- Tests of proportions
-
 
 ## Very optional reading
 
@@ -89,29 +89,29 @@ format: html
 
 -   OI: 5.2, 5.3, 6.1, 6.2, 6.4, 7.5
 
-## Puppies
+## Kittens
 
-![](images/lec-12/puppies.jpg){width="300" fig-alt="Two puppies sleeping in each other's arms; one is light brown and the other is black"} 
+![](images/lec-12/kittens.jpeg){width="150" fig-alt="Five kittens lying in the sunlight."} 
 
 ## Experiment: Pets and Stress Level {.smaller}
 
 - For today's topic, we will consider an experiment where heart rates were measured (as a proxy for stress level) for a group of $n=90$ students after 10 minutes of being under certain conditions. 
 
-- **The 3 Conditions/Groups**: Of the 90 total students, 30 students spent time holding puppies, 30 students sat alone, and 30 students chatted with a friend. 
+- **The 3 Conditions/Groups**: Of the 90 total students, 30 students spent time holding kittens, 30 students sat alone, and 30 students chatted with a friend. 
 
 - After 10 minutes, each student's **heart rate** was measured. 
 
-- **Research Question**: Is there a group (puppies, friend, alone/neither) associated with lower heart rate compared to the others?
+- **Research Question**: Is there a group (kittens, friend, alone/neither) associated with lower heart rate compared to the others?
 
 - Let's take a look at the data on the next slide. 
 
 ## Distribution of heart rate data
 
 ```{r}
-#| echo: false
-#| message: false
-#| warning: false
-#| fig-alt: "A boxplot with three boxes titled Heart Rate by Group, where the x-axis is labelled Group with three categories: Friend, Neither, and Puppies. The y-axis is labelled Heart Rate and ranges from 72 to 97. The box above Friend goes from 82.5 to 87.5, with its mean at 85; the lines go from 79 to 91 and there are two outliers at about 91 and 74. The box above Neither goes from 80 to 86, with its mean at 82; the lines go from 74 to 93 and there are no outliers. THe box above Puppies goes from 74 to 81 with its mean at 78; the lines go from 66 to 91 and there are no outliers."
+#| fig-alt: "A boxplot with three boxes titled Heart Rate by Group, where the x-axis is labelled Group with three categories: Friend, Neither, and Kittens. The y-axis is labelled Heart Rate and ranges from 72 to 97. The box above Friend goes from 82.5 to 87.5, with its mean at 85; the lines go from 79 to 91 and there are two outliers at about 91 and 74. The box above Neither goes from 80 to 86, with its mean at 82; the lines go from 74 to 93 and there are no outliers. The box above Kittens goes from 74 to 81 with its mean at 78; the lines go from 66 to 91 and there are no outliers."
+#| message: FALSE
+#| warning: FALSE
+#| echo: FALSE
 
 library(tidyverse)
 library(ggplot2)
@@ -120,14 +120,14 @@ library(ggplot2)
 set.seed(123)
 
 # Simulate data: 30 people per group
-puppies <- rnorm(30, mean=78, sd=7)  # lower pulse for those with puppies
+kittens <- rnorm(30, mean=78, sd=7)  # lower pulse for those with kittens
 neither <- rnorm(30, mean=82, sd=5)    # pulse for those alone
 friends <- rnorm(30, mean=85, sd=5)  # pulse for those chatting with a friend
 
 # Combine into a data frame
 pulse_data <- data.frame(
-  pulse = c(friends, neither, puppies),
-  group = factor(rep(c("Friend", "Neither", "Puppies"), each=30))
+  pulse = c(friends, neither, kittens),
+  group = factor(rep(c("Friend", "Neither", "Kittens"), each=30))
 )
 
 ggplot(data = pulse_data, mapping = aes(x = group, y = pulse)) +
@@ -146,7 +146,7 @@ How do we compare across three groups? Which groups are different?
 
 We are interested in testing
 
-$$H_0: \mu_P = \mu_F = \mu_N$$
+$$H_0: \mu_K = \mu_F = \mu_N$$
 
 against the alternative that at least one mean is different from the others.
 
@@ -209,9 +209,9 @@ Consider our pets / stress example, where we had three pairwise comparisons.
 
 -   Suppose all means are truly equal and we conduct all three pairwise tests
 
-1. $H_0$: $\mu_P = \mu_F$ vs. $H_A$: $\mu_P \neq \mu_F$
+1. $H_0$: $\mu_K = \mu_F$ vs. $H_A$: $\mu_K \neq \mu_F$
 
-2. $H_0$: $\mu_P = \mu_N$ vs. $H_A$: $\mu_P \neq \mu_N$
+2. $H_0$: $\mu_K = \mu_N$ vs. $H_A$: $\mu_K \neq \mu_N$
 
 3. $H_0$: $\mu_N = \mu_F$ vs. $H_A$: $\mu_N \neq \mu_F$
 
@@ -258,15 +258,15 @@ In ANOVA, we typically follow this testing procedure:
 
 ## ANOVA alternative hypothesis
 
-For ANOVA with three groups, our null hypothesis is $H_0: \mu_P = \mu_F = \mu_N$. What could happen under the alternative?
+For ANOVA with three groups, our null hypothesis is $H_0: \mu_K = \mu_F = \mu_N$. What could happen under the alternative?
 
--   $μ_P≠μ_F≠μ_N$
+-   $\mu_K≠μ_F≠μ_N$
 
--   $μ_P=μ_F$, but $μ_N$ is different
+-   $\mu_K=μ_F$, but $μ_N$ is different
 
--   $μ_P=μ_N$, but $μ_F$ is different
+-   $\mu_K=μ_N$, but $μ_F$ is different
 
--   $μ_F=μ_N$, but $μ_P$ is different
+-   $μ_F=μ_N$, but $\mu_K$ is different
 
 The alternative hypothesis for ANOVA is that at least one of the means is different from the others.
 
@@ -285,7 +285,7 @@ If these assumptions are violated, then results from ANOVA may not be valid. We 
 ```{r echo = T}
 #| echo: true
 #| eval: false
-#| fig-alt: "Three histograms, all with pulse on the x-axis. The leftmost is titled Friend and seems normally distributed; the center is titled Neither and seems normally distributed; the rightmost is titled Puppies and seems like it might not be normally distributed." 
+#| fig-alt: "Three histograms, all with pulse on the x-axis. The leftmost is titled Friend and seems normally distributed; the center is titled Neither and seems normally distributed; the rightmost is titled Kittens and seems like it might not be normally distributed." 
 pulse_data |>
   ggplot(mapping = aes(x = pulse)) + 
   geom_histogram(bins=10) +
@@ -352,6 +352,83 @@ Within-group variance - $s^2_{within}$
   
 ANOVA asks: **Is the variation between groups larger than the variation within groups?**
 
+## F-test for pet data
+
+```{r}
+#| fig-alt: "A boxplot with three boxes titled Heart Rate by Group, where the x-axis is labelled Group with three categories: Friend, Neither, and Kittens. The y-axis is labelled Heart Rate and ranges from 72 to 97. The box above Friend goes from 82.5 to 87.5, with its mean at 85; the lines go from 79 to 91 and there are two outliers at about 91 and 74. The box above Neither goes from 80 to 86, with its mean at 82; the lines go from 74 to 93 and there are no outliers. THe box above Kittens goes from 74 to 81 with its mean at 78; the lines go from 66 to 91 and there are no outliers. There is a red dashed line at y=82."
+#| echo: FALSE
+#| warning: FALSE
+#| message: FALSE
+
+# calculate grand mean
+grand_mean <- mean(pulse_data$pulse)
+
+ggplot(data = pulse_data, mapping = aes(x = group, y = pulse)) +
+  geom_boxplot() + 
+  geom_hline(yintercept = grand_mean, linetype = "dashed", color = "red", size = 1) +
+  scale_colour_brewer(palette = "Set1") +
+  labs(
+   y="Heart Rate",
+   x="Group",
+   title="Heart Rate by Group"
+  )
+```
+
+## Different Example Data
+
+```{r}
+#| echo: false
+#| fig-alt: "A boxplot with three boxes titled Heart Rate by Group, where the x-axis is labelled Group with three categories: Friend, Neither, and Kittens. The y-axis is labelled Heart Rate and ranges from 16 to 24. The box above Friend goes from 18 to 21, with its mean at 19.5; the lines go from 17 to 22 and there are two no outliers. The box above Neither goes from 19 to 21, with its mean at 20; the lines go from 18 to 24 and there are no outliers. The box above Kittens goes from 19 to 21 with its mean at 20; the lines go from 17 to 23 and there is an outlier at 16. There is a red dashed line at y=19.5."
+set.seed(343)
+
+n <- 25
+
+dog  <- rnorm(n, mean = 20.05, sd = 2)
+cat  <- rnorm(n, mean = 19.75, sd = 2)
+none <- rnorm(n, mean = 20, sd = 2)
+
+pulse_data_v2 <- data.frame(
+  pulse = c(dog, cat, none),
+  group = factor(rep(c("Friend","Neither","Kittens"), each = n))
+)
+
+# calculate grand mean
+grand_mean <- mean(pulse_data_v2$pulse)
+
+ggplot(pulse_data_v2, aes(x = group, y = pulse)) +
+  geom_boxplot() +
+  geom_hline(yintercept = grand_mean, linetype = "dashed", color = "red", size = 1) +
+  labs(
+   y="Heart Rate",
+   x="Group",
+   title="Heart Rate by Group"
+  )
+```
+
+## Visualization of F Distributions
+
+```{r}
+#| fig-alt: "A plot with three probability density functions. One is dark red and labelled numerator degrees of freedom 2, denominator degrees of freedom 87 and looks like a half of a concave-up parabola; one is labelled numerator degrees of freedom 3, denominator degrees of freedom 86 and looks like a right-skewed distribution with a vertical ascent on the left; and one is labelled numerator degrees of freedom 9, denominator degrees of freedom 80 and looks like a right-skewed distribution with a more gradual ascent on the left that the previous one."
+#| echo: FALSE
+
+ggplot(data = data.frame(x = c(0, 5)), aes(x)) +
+  stat_function(fun = df, n = 1001, args = list(df1 = 2, df2 = 87), aes(color = "dfn = 2, dfd = 87")) +
+  stat_function(fun = df, n = 1001, args = list(df1 = 3, df2 = 86), aes(color = "dfn = 3, dfd = 86")) +
+  stat_function(fun = df, n = 1001, args = list(df1 = 4, df2 = 85), aes(color = "dfn = 9, dfd = 80")) +
+  ylab("Density") + 
+  xlab("Sample Average") +
+  theme_bw() +
+  scale_color_manual(name = "Sample Average Distribution",
+                     breaks = c("dfn = 2, dfd = 87", 
+                                "dfn = 3, dfd = 86",
+                                "dfn = 9, dfd = 80"),
+                     values = c("dfn = 2, dfd = 87" = "darkred",
+                                "dfn = 3, dfd = 86" = "red",
+                                "dfn = 9, dfd = 80" = "pink2"))
+
+```
+
+
 ## F-test
 
 -   The F-test for ANOVA is inherently one-tailed, rejecting $H_0$ only if F is considerably larger than one.
@@ -388,10 +465,8 @@ Which rows correspond to the between-group and within-group variances here, resp
 ## F-test for pet data
 
 ```{r}
-#| echo: false
-#| message: false
-#| warning: false
-#| fig-alt: "A boxplot with three boxes titled Heart Rate by Group, where the x-axis is labelled Group with three categories: Friend, Neither, and Puppies. The y-axis is labelled Heart Rate and ranges from 72 to 97. The box above Friend goes from 82.5 to 87.5, with its mean at 85; the lines go from 79 to 91 and there are two outliers at about 91 and 74. The box above Neither goes from 80 to 86, with its mean at 82; the lines go from 74 to 93 and there are no outliers. THe box above Puppies goes from 74 to 81 with its mean at 78; the lines go from 66 to 91 and there are no outliers. There is a red dashed line at y=82."
+#| fig-alt: "A boxplot with three boxes titled Heart Rate by Group, where the x-axis is labelled Group with three categories: Friend, Neither, and Kittens. The y-axis is labelled Heart Rate and ranges from 72 to 97. The box above Friend goes from 82.5 to 87.5, with its mean at 85; the lines go from 79 to 91 and there are two outliers at about 91 and 74. The box above Neither goes from 80 to 86, with its mean at 82; the lines go from 74 to 93 and there are no outliers. THe box above Kittens goes from 74 to 81 with its mean at 78; the lines go from 66 to 91 and there are no outliers. There is a red dashed line at y=82."
+#| echo: FALSE
 
 # calculate grand mean
 grand_mean <- mean(pulse_data$pulse)
@@ -411,7 +486,7 @@ ggplot(data = pulse_data, mapping = aes(x = group, y = pulse)) +
 
 ```{r}
 #| echo: false
-#|fig-alt: "A boxplot with three boxes titled Heart Rate by Group, where the x-axis is labelled Group with three categories: Friend, Neither, and Puppies. The y-axis is labelled Heart Rate and ranges from 16 to 24. The box above Friend goes from 18 to 21, with its mean at 19.5; the lines go from 17 to 22 and there are two no outliers. The box above Neither goes from 19 to 21, with its mean at 20; the lines go from 18 to 24 and there are no outliers. THe box above Puppies goes from 19 to 21 with its mean at 20; the lines go from 17 to 23 and there is an outlier at 16. There is a red dashed line at y=19.5."
+#|fig-alt: "A boxplot with three boxes titled Heart Rate by Group, where the x-axis is labelled Group with three categories: Friend, Neither, and Kittens. The y-axis is labelled Heart Rate and ranges from 16 to 24. The box above Friend goes from 18 to 21, with its mean at 19.5; the lines go from 17 to 22 and there are two no outliers. The box above Neither goes from 19 to 21, with its mean at 20; the lines go from 18 to 24 and there are no outliers. The box above Kittens goes from 19 to 21 with its mean at 20; the lines go from 17 to 23 and there is an outlier at 16. There is a red dashed line at y=19.5."
 set.seed(343)
 
 n <- 25
@@ -422,7 +497,7 @@ none <- rnorm(n, mean = 20, sd = 2)
 
 pulse_data_v2 <- data.frame(
   pulse = c(dog, cat, none),
-  group = factor(rep(c("Friend","Neither","Puppies"), each = n))
+  group = factor(rep(c("Friend","Neither","Kittens"), each = n))
 )
 
 # calculate grand mean
@@ -448,7 +523,7 @@ summary(anova_model)
 
 ## Application Exercise
 
-- On Canvas, download today's Application Exercise template (AE03). 
+- On Canvas, download today's Application Exercise template (Application exercise 4). 
 
 - Work in groups of 2 or 3 to practice using ANOVA tests in R.
 
@@ -529,9 +604,8 @@ Several recent studies have identified associations between pneumococcal serotyp
 ## Pneumococcal disease
 
 ```{r}
-#| echo: false
-#| message: false
-#| warning: false
+#| echo: FALSE
+#| message: FALSE
 
 # Load necessary packages
 library(knitr)
@@ -566,10 +640,7 @@ $H_1$: There is an association between serotype and mortality
 Under $H_0$, we have independence between serotype and mortality, implying that joint probabilities should be equal to products of marginal distributions:
 
 ```{r}
-#| echo: false
-#| message: false
-#| warning: false
-
+#| echo: FALSE
 
 # Example data
 data <- data.frame(
@@ -677,7 +748,7 @@ Let's visualize how the **observed** counts compare to the **expected** counts u
 
 ```{r}
 #| fig-alt: "A figure with two panels, titled Observed vs Expected Counts by Serotype. The y-axis is labelled Count and the x-axis for each panel is labeled Outcome with options Alive and Dead. In the left panel, the subtitle is Serotype 10; above Alive there is a red bar with count 34 and a blue bar with count 37 and above Dead there is a red bar with count 9 and a blue bar with count 7. In the right panel, the subtitle is Serotype 31; above Alive there is a red bar with count 26 and a blue bar with count 24 and above Dead there is a red bar with count 7 and a blue bar with count 10."
-#| echo: false
+#| echo: FALSE
 
 
 library(dplyr)
@@ -730,11 +801,6 @@ ggplot(plot_data, aes(x = Outcome, y = Count, fill = Type)) +
   )
 ```
 
-## Visualizing Observed vs Expected Counts
-
-What if we do not assume independence?
-
-
 ## Chi-square tests
 
 The **chi-square test** compares the observed frequencies in each cell to the expected count under $H_0$; if the total differences are large enough, we reject $H_0$:
@@ -745,8 +811,54 @@ which has a $\chi^2_{(r - 1) \times (c-1)}$ distribution, with $r$ = Number of r
 
 **General rules of thumb for when you can use the chi-square test are >5 or >10 observations in each cell.**
 
+## Visualization of Chi-Square Distributions
+
+```{r}
+#| fig-alt: "A plot with three probability density functions. One is dark red and labelled numerator degrees of freedom 2, denominator degrees of freedom 87 and looks like a half of a concave-up parabola; one is labelled numerator degrees of freedom 3, denominator degrees of freedom 86 and looks like a right-skewed distribution with a vertical ascent on the left; and one is labelled numerator degrees of freedom 9, denominator degrees of freedom 80 and looks like a right-skewed distribution with a more gradual ascent on the left that the previous one."
+#| echo: FALSE
+
+ggplot(data = data.frame(x = c(0, 3)), aes(x)) +
+  stat_function(fun = dchisq, n = 1001, args = list(df = 1), aes(color = "df = 1")) +
+  stat_function(fun = dchisq, n = 1001, args = list(df = 2), aes(color = "df = 2")) +
+  stat_function(fun = dchisq, n = 1001, args = list(df = 3), aes(color = "df = 3")) +
+  stat_function(fun = dchisq, n = 1001, args = list(df = 6), aes(color = "df = 6")) +
+  ylim(0, 2) +
+  ylab("Density") + 
+  xlab("Sample Average") +
+  theme_bw() +
+  scale_color_manual(name = "Sample Average Distribution",
+                     breaks = c("df = 1", 
+                                "df = 2",
+                                "df = 3",
+                                "df = 6"),
+                     values = c("df = 1" = "darkred",
+                                "df = 2" = "red",
+                                "df = 3" = "pink3",
+                                "df = 6" = "pink2"))
+
+```
+
 
 ## Chi-square tests
+
+Expected counts: 
+
+```{r echo = F}
+
+plot_data_exp <- plot_data %>% filter(Type == "Expected")
+
+exp_dat <- matrix(c((plot_data_exp %>% filter(Serotype == "Serotype 10" &
+                                               Outcome == "Alive"))$Count,
+                    (plot_data_exp %>% filter(Serotype == "Serotype 10" &
+                                               Outcome == "Dead"))$Count,
+                    (plot_data_exp %>% filter(Serotype == "Serotype 31" &
+                                               Outcome == "Alive"))$Count,
+                    (plot_data_exp %>% filter(Serotype == "Serotype 31" &
+                                               Outcome == "Dead"))$Count),
+                  byrow = T, nrow = 2)
+
+exp_dat
+```
 
 ```{r echo = T}
 data <- matrix(c(37, 7, 24, 10), 
@@ -786,204 +898,6 @@ Is the **proportion who die** different between serotypes?
   - $P(\text{death}|S_{10}) = 7/44 = 0.16$
   - $P(\text{death}|S_{31}) = 10/34 = 0.29$
 
-<!-- ## Fisher's exact test  -->
-
-<!-- - The chi-square test relies on asymptotic results (i.e. large sample size), which might not be appropriate if we have small cell counts (common rules of thumb are \>5 or \>10 observed in each cell).  -->
-
-
-<!-- ## Fisher's exact test {.smaller} -->
-
-<!-- - **Fisher's exact test** tests the same hypotheses at Chi-squared tests **but** calculates an exact p-value under a specific distributional assumption. -->
-
-
-
-<!-- | Serotype     | Alive | Dead | Total | -->
-<!-- |--------------|--------|------|--------| -->
-<!-- | Serotype 10  | 37     | 7    | 44     | -->
-<!-- | Serotype 31  | 24     | 10   | 34     | -->
-<!-- | Total        | 61     | 17   | 78     | -->
-
-
-
-
-
-<!-- ## Fisher's exact test -->
-
-<!-- Fisher's exact test relies on the **hypergeometric distribution** (don't worry about this, seriously). -->
-
-<!-- | Serotype     | Alive | Dead | Total       | -->
-<!-- |---------------|--------|------|-------------| -->
-<!-- | Serotype 10   | a      | c    | a + c       | -->
-<!-- | Serotype 31   | b      | d    | b + d       | -->
-<!-- | Total         | a + b  | c + d| a + b + c + d | -->
-
-
-
-
-
-<!-- Conditionally on the margins (assumed fixed), then each of the individual cells is distributed according to the hypergeometric distribution. We can thus calculate the exact probabilities of obtaining specific *tables*. -->
-
-<!-- ## Fisher's exact test -->
-
-<!-- Observed data: -->
-
-<!-- | Serotype     | Alive | Dead | Total | -->
-<!-- |--------------|--------|------|--------| -->
-<!-- | Serotype 10  | 37     | 7    | 44     | -->
-<!-- | Serotype 31  | 24     | 10   | 34     | -->
-<!-- | Total        | 61     | 17   | 78     | -->
-
-
-
-<!-- We could use the hypergeometric distribution to calculate the probability of seeing this table, assuming 61 total alive patients, 17 dead, and 44 and 34 infections of serotypes 10 and 31, respectively (lots of factorials, so you could imagine it wasn't fun before modern computers). -->
-
-<!-- ## Fisher's exact test -->
-
-<!-- Another "possible" table: -->
-
-<!-- | Serotype     | Alive | Dead | Total | -->
-<!-- |--------------|--------|------|--------| -->
-<!-- | Serotype 10  | 36     | 8    | 44     | -->
-<!-- | Serotype 31  | 25     | 9    | 34     | -->
-<!-- | Total        | 61     | 17   | 78     | -->
-
-
-
-
-
-<!-- - Here we've displayed another table with the **same margins**, but with some slightly different potential cell counts.  -->
-
-<!-- - Again we could use the hypergeometric distribution to calculate the probability of observing the cell counts conditionally on fixed margins. -->
-
-<!-- ## Fisher's exact test -->
-
-<!-- Fisher's exact test relies on constructing *all possible* contingency tables with the same margins, and then summing up probabilities of all tables as extreme or more extreme than the observed data. -->
-
-<!-- ::: {.callout-tip appearance="simple"} -->
-<!-- ## Question -->
-
-<!-- What might "more extreme" mean in the context of contingency tables? -->
-<!-- ::: -->
-
-<!-- ## Fisher's exact test -->
-
-<!-- $H_0$: The proportion of deaths is the same for Serotype 10 and Serotype 31 (no association between serotype and outcome).  -->
-
-<!-- $H_A$: The proportion of deaths differs between serotypes (there *is* an association) -->
-
-<!-- ```{r echo = T} -->
-<!-- data <- matrix(c(37, 7, 24, 10), byrow = T, nrow = 2) -->
-<!-- data -->
-<!-- ``` -->
-
-<!-- ## Conducting the Fisher's Exact test -->
-
-<!-- ```{r} -->
-<!-- #| echo: true -->
-<!-- fisher.test(data) -->
-<!-- ``` -->
-
-
-<!-- - What might we conclude at $\alpha = 0.05$? -->
-
-<!-- ## Conclusion -->
-
-<!-- - The Fisher’s Exact Test yielded a p-value of 0.17, which is greater than the conventional significance level of 0.05. Therefore, we fail to reject the null hypothesis. -->
-
-<!-- - There is no statistically significant evidence of an association between serotype and survival status in this sample. -->
-
-<!-- ## Odds ratios  -->
-
-<!-- -   If the probability of an event happening is $p$ -->
-
-<!-- -   The odds of an event happening are $\frac{p}{1-p}$ -->
-
-<!-- -   For a fair coin flip -->
-<!--     - $P(heads)=0.5$  -->
-<!--     - Odds of heads = $\frac{0.5}{1-0.5}$ = 1 -->
-<!--     - Heads is equally likely as not-heads (tails) -->
-
-<!-- ## Odds ratios  -->
-
-<!-- -   For a scenario where 20 people have a disease and 80 people do not -->
-<!--     - $P(disease)=\frac{20}{100}=0.2$  -->
-<!--     - Odds of having disease = $\frac{.2}{1-0.2}=\frac{0.2}{0.8}=\frac{1}{4}$ = 0.25 -->
-<!--     - Disease occurs 1 time for every 4 times it does not occur -->
-
-<!-- ## Odds ratios  -->
-
-<!-- | Serotype     | Alive | Dead | Total | -->
-<!-- |--------------|--------|------|--------| -->
-<!-- | Serotype 10  | 37     | 7    | 44     | -->
-<!-- | Serotype 31  | 24     | 10   | 34     | -->
-<!-- | Total        | 61     | 17   | 78     | -->
-
-<!-- -   Odds of death among serotype 10 patient = $\frac{P(death | S_{10})}{P(alive | S_{10})}$ -->
-
-<!-- -   Odds of death among serotype 10 patients = $\frac{7/44}{37/44} = 7/37$ -->
-
-<!-- ## Odds ratios  -->
-
-<!-- | Serotype     | Alive | Dead | Total | -->
-<!-- |--------------|--------|------|--------| -->
-<!-- | Serotype 10  | 37     | 7    | 44     | -->
-<!-- | Serotype 31  | 24     | 10   | 34     | -->
-<!-- | Total        | 61     | 17   | 78     | -->
-
-<!-- -   Odds of death among serotype 31 patient = $\frac{P(death | S_{31})}{P(alive | S_{31})}$ -->
-
-<!-- -   Odds of death among serotype 31 patients = $\frac{10/34}{24/34} = 10/24$ -->
-
-
-<!-- ## Odds ratios  -->
-
-<!-- -   Odds of death among serotype 10 patients = $\frac{7/44}{37/44} = 7/37$ -->
-
-<!-- -   Odds of death among serotype 31 patients = $\frac{10/34}{24/34} = 10/24$ -->
-
-<!-- -   **Odds ratio** of death comparing 31 to 10 is thus $\frac{10/24}{7/37} \approx 2.2$ -->
-
-<!-- -   The odds of death in the serotype 31 group are about 2.2 times the odds of death in the serotype 10 group -->
-
-<!-- ## r by c tables -->
-
-<!-- | Serotype     | Alive | Dead | Total | -->
-<!-- |---------------|-------|------|-------| -->
-<!-- | Serotype 10   | 37    | 7    | 44    | -->
-<!-- | Serotype 15   | 60    | 12   | 72    | -->
-<!-- | Serotype 20   | 97    | 9    | 106   | -->
-<!-- | Serotype 31   | 24    | 10   | 34    | -->
-<!-- | **Total**     | **218** | **38** | **256** | -->
-
-
-<!-- We can also extend the chi-square test and Fisher's exact test to more general contingency tables (although the notion of an odds ratio no longer makes sense here). -->
-
-<!-- ## Winter Olympics training -->
-
-<!-- Suppose we were interested in whether a particular training regimen was associated with "success" as measured by whether an athlete qualified for being on the US Winter Olympic Team for giant slalom. -->
-
-<!-- ## Winter Olympics training -->
-
-<!-- |                 | Qualified | Did Not Qualify | -->
-<!-- |-----------------|-----------|-----------------| -->
-<!-- | **New Regimen** | 129       | 97              | -->
-<!-- | **Old Regimen** | 112       | 114             | -->
-
-
-
-<!-- ```{r} -->
-<!-- #| echo: false -->
-<!-- data <- matrix(c(129, 97, 112, 114), byrow = T, nrow = 2) -->
-<!-- chisq.test(data) -->
-<!-- ``` -->
-
-<!-- ::: callout-tip -->
-
-<!-- ## Practice -->
-
-<!-- Write out the code to 1) construct the data matrix and 2) to conduct a chi square test in R. What might we conclude using alpha = .05?  -->
-
-<!-- ::: -->
 
 ## Overview
 
@@ -993,9 +907,9 @@ Is the **proportion who die** different between serotypes?
 
 - Chi-square test and example
 
-- Fisher exact test and example (use if sample sizes aren't large enough)
-
 ## Next Class
+
+- Fisher's Exact Test
 
 - Non-Parametric Methods
 

@@ -294,7 +294,7 @@ Carrying out the two sample t-test for independent samples with unequal variance
 
 - For this example, you will work with a partner (try for someone you haven't worked with before!) on Application Exercise 3.
 
-- Start by working on Questions 1 and 2.
+- Start by working on Question 1.
 
 ## In R
 
@@ -341,7 +341,7 @@ What is your conclusion?
 
 ## Application Exercise
 
-Continue with today's application exercise by completing Question 3.
+Continue with today's application exercise by completing Question 2.
 
 ## But wait...
 

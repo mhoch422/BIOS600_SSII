@@ -6,8 +6,8 @@
 <script src="lec-10-anova-props_MH_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="lec-10-anova-props_MH_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="lec-10-anova-props_MH_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="lec-10-anova-props_MH_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.37">
+<link href="lec-10-anova-props_MH_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
 
   <title>Lecture 10: ANOVA and Tests for Proportion</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -209,6 +209,7 @@
 <li><p>HW 9 due <strong>today</strong> at 11:59 pm.</p></li>
 <li><p>HW 10 due <strong>tomorrow</strong> at 11:59 pm.</p></li>
 <li><p>Lab 2 assignment and tutorial have been posted and due on <strong>July 13th</strong> at 11:59 pm</p></li>
+<li><p>Hand in Application Exercise 3 if you haven’t already!</p></li>
 </ul>
 <!-- # ```{r echo = F} -->
 <!-- # library(tidyverse) -->
@@ -280,17 +281,17 @@
 <li><p>OI: 5.2, 5.3, 6.1, 6.2, 6.4, 7.5</p></li>
 </ul>
 </section>
-<section id="puppies" class="slide level2">
-<h2>Puppies</h2>
+<section id="kittens" class="slide level2">
+<h2>Kittens</h2>
 
-<img data-src="images/lec-12/puppies.jpg" alt="Two puppies sleeping in each other's arms; one is light brown and the other is black" width="300" class="r-stretch"></section>
+<img data-src="images/lec-12/kittens.jpeg" alt="Five kittens lying in the sunlight." width="150" class="r-stretch"></section>
 <section id="experiment-pets-and-stress-level" class="slide level2 smaller">
 <h2>Experiment: Pets and Stress Level</h2>
 <ul>
 <li><p>For today’s topic, we will consider an experiment where heart rates were measured (as a proxy for stress level) for a group of <span class="math inline">\(n=90\)</span> students after 10 minutes of being under certain conditions.</p></li>
-<li><p><strong>The 3 Conditions/Groups</strong>: Of the 90 total students, 30 students spent time holding puppies, 30 students sat alone, and 30 students chatted with a friend.</p></li>
+<li><p><strong>The 3 Conditions/Groups</strong>: Of the 90 total students, 30 students spent time holding kittens, 30 students sat alone, and 30 students chatted with a friend.</p></li>
 <li><p>After 10 minutes, each student’s <strong>heart rate</strong> was measured.</p></li>
-<li><p><strong>Research Question</strong>: Is there a group (puppies, friend, alone/neither) associated with lower heart rate compared to the others?</p></li>
+<li><p><strong>Research Question</strong>: Is there a group (kittens, friend, alone/neither) associated with lower heart rate compared to the others?</p></li>
 <li><p>Let’s take a look at the data on the next slide.</p></li>
 </ul>
 </section>
@@ -302,7 +303,7 @@
 <section id="example-pets-and-stress" class="slide level2">
 <h2>Example: pets and stress</h2>
 <p>We are interested in testing</p>
-<p><span class="math display">\[H_0: \mu_P = \mu_F = \mu_N\]</span></p>
+<p><span class="math display">\[H_0: \mu_K = \mu_F = \mu_N\]</span></p>
 <p>against the alternative that at least one mean is different from the others.</p>
 <ul>
 <li><p>One way to do this would be to use t-tests on all possible pairs of tests (here there are just three - how many pairs of tests would this be?). However, if we have more groups, this becomes quite complicated.</p></li>
@@ -385,8 +386,8 @@
 <li>Suppose all means are truly equal and we conduct all three pairwise tests</li>
 </ul>
 <ol type="1">
-<li><p><span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu_P = \mu_F\)</span> vs.&nbsp;<span class="math inline">\(H_A\)</span>: <span class="math inline">\(\mu_P \neq \mu_F\)</span></p></li>
-<li><p><span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu_P = \mu_N\)</span> vs.&nbsp;<span class="math inline">\(H_A\)</span>: <span class="math inline">\(\mu_P \neq \mu_N\)</span></p></li>
+<li><p><span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu_K = \mu_F\)</span> vs.&nbsp;<span class="math inline">\(H_A\)</span>: <span class="math inline">\(\mu_K \neq \mu_F\)</span></p></li>
+<li><p><span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu_K = \mu_N\)</span> vs.&nbsp;<span class="math inline">\(H_A\)</span>: <span class="math inline">\(\mu_K \neq \mu_N\)</span></p></li>
 <li><p><span class="math inline">\(H_0\)</span>: <span class="math inline">\(\mu_N = \mu_F\)</span> vs.&nbsp;<span class="math inline">\(H_A\)</span>: <span class="math inline">\(\mu_N \neq \mu_F\)</span></p></li>
 </ol>
 <ul>
@@ -435,12 +436,12 @@
 </section>
 <section id="anova-alternative-hypothesis" class="slide level2">
 <h2>ANOVA alternative hypothesis</h2>
-<p>For ANOVA with three groups, our null hypothesis is <span class="math inline">\(H_0: \mu_P = \mu_F = \mu_N\)</span>. What could happen under the alternative?</p>
+<p>For ANOVA with three groups, our null hypothesis is <span class="math inline">\(H_0: \mu_K = \mu_F = \mu_N\)</span>. What could happen under the alternative?</p>
 <ul>
-<li><p><span class="math inline">\(μ_P≠μ_F≠μ_N\)</span></p></li>
-<li><p><span class="math inline">\(μ_P=μ_F\)</span>, but <span class="math inline">\(μ_N\)</span> is different</p></li>
-<li><p><span class="math inline">\(μ_P=μ_N\)</span>, but <span class="math inline">\(μ_F\)</span> is different</p></li>
-<li><p><span class="math inline">\(μ_F=μ_N\)</span>, but <span class="math inline">\(μ_P\)</span> is different</p></li>
+<li><p><span class="math inline">\(\mu_K≠μ_F≠μ_N\)</span></p></li>
+<li><p><span class="math inline">\(\mu_K=μ_F\)</span>, but <span class="math inline">\(μ_N\)</span> is different</p></li>
+<li><p><span class="math inline">\(\mu_K=μ_N\)</span>, but <span class="math inline">\(μ_F\)</span> is different</p></li>
+<li><p><span class="math inline">\(μ_F=μ_N\)</span>, but <span class="math inline">\(\mu_K\)</span> is different</p></li>
 </ul>
 <p>The alternative hypothesis for ANOVA is that at least one of the means is different from the others.</p>
 </section>
@@ -478,7 +479,9 @@
 <section id="validity-of-anova-for-pet-data-2" class="slide level2">
 <h2>Validity of ANOVA for pet data</h2>
 
-<img data-src="lec-10-anova-props_MH_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"><p>Variances appear to be similar, but normality may be slightly questionable. For now, let’s proceed despite this.</p>
+<img data-src="lec-10-anova-props_MH_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"><div class="fragment">
+<p>Variances appear to be similar, but normality may be slightly questionable. For now, let’s proceed despite this.</p>
+</div>
 </section>
 <section id="why-analyze-variance-when-we-want-means" class="slide level2">
 <h2>Why analyze variance when we want means?</h2>
@@ -511,6 +514,18 @@
 </ul>
 <p>ANOVA asks: <strong>Is the variation between groups larger than the variation within groups?</strong></p>
 </section>
+<section id="f-test-for-pet-data" class="slide level2">
+<h2>F-test for pet data</h2>
+
+<img data-src="lec-10-anova-props_MH_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"></section>
+<section id="different-example-data" class="slide level2">
+<h2>Different Example Data</h2>
+
+<img data-src="lec-10-anova-props_MH_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch"></section>
+<section id="visualization-of-f-distributions" class="slide level2">
+<h2>Visualization of F Distributions</h2>
+
+<img data-src="lec-10-anova-props_MH_files/figure-revealjs/unnamed-chunk-7-1.png" alt="A plot with three probability density functions. One is dark red and labelled numerator degrees of freedom 2, denominator degrees of freedom 87 and looks like a half of a concave-up parabola; one is labelled numerator degrees of freedom 3, denominator degrees of freedom 86 and looks like a right-skewed distribution with a vertical ascent on the left; and one is labelled numerator degrees of freedom 9, denominator degrees of freedom 80 and looks like a right-skewed distribution with a more gradual ascent on the left that the previous one." width="960" class="r-stretch"></section>
 <section id="f-test-1" class="slide level2">
 <h2>F-test</h2>
 <ul>
@@ -546,7 +561,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="output-1" class="slide level2">
 <h2>Output</h2>
 </section>
-<section id="f-test-for-pet-data" class="slide level2">
+<section id="f-test-for-pet-data-1" class="slide level2">
 <h2>F-test for pet data</h2>
 <ul>
 <li><p>Note that <span class="math inline">\(F = s^2_B / s^2_W = \frac{(877.7/2)}{(2421.7/87)} = 15.77\)</span>, with ndf = <span class="math inline">\(3-1 = 2\)</span> and ddf <span class="math inline">\(90-3=87\)</span>.</p></li>
@@ -555,14 +570,14 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li><p>Which groups might be different?</p></li>
 </ul>
 </section>
-<section id="f-test-for-pet-data-1" class="slide level2">
+<section id="f-test-for-pet-data-2" class="slide level2">
 <h2>F-test for pet data</h2>
 
-<img data-src="lec-10-anova-props_MH_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch"></section>
-<section id="different-example-data" class="slide level2">
+<img data-src="lec-10-anova-props_MH_files/figure-revealjs/unnamed-chunk-9-1.png" width="960" class="r-stretch"></section>
+<section id="different-example-data-1" class="slide level2">
 <h2>Different Example Data</h2>
 
-<img data-src="lec-10-anova-props_MH_files/figure-revealjs/unnamed-chunk-7-1.png" width="960" class="r-stretch"></section>
+<img data-src="lec-10-anova-props_MH_files/figure-revealjs/unnamed-chunk-10-1.png" width="960" class="r-stretch"></section>
 <section id="section" class="slide level2">
 <h2></h2>
 <div class="cell">
@@ -578,7 +593,7 @@ Residuals   72 198.42   2.756               </code></pre>
 <section id="application-exercise" class="slide level2">
 <h2>Application Exercise</h2>
 <ul>
-<li><p>On Canvas, download today’s Application Exercise template (AE03).</p></li>
+<li><p>On Canvas, download today’s Application Exercise template (Application exercise 4).</p></li>
 <li><p>Work in groups of 2 or 3 to practice using ANOVA tests in R.</p></li>
 </ul>
 </section>
@@ -883,11 +898,7 @@ P(\text{Serotype 10}) = \frac{44}{78}, \quad P(\text{Alive}) = \frac{61}{78}, \q
 <h2>Visualizing Observed vs Expected Counts</h2>
 <p>Let’s visualize how the <strong>observed</strong> counts compare to the <strong>expected</strong> counts under independence.</p>
 
-<img data-src="lec-10-anova-props_MH_files/figure-revealjs/unnamed-chunk-12-1.png" alt="A figure with two panels, titled Observed vs Expected Counts by Serotype. The y-axis is labelled Count and the x-axis for each panel is labeled Outcome with options Alive and Dead. In the left panel, the subtitle is Serotype 10; above Alive there is a red bar with count 34 and a blue bar with count 37 and above Dead there is a red bar with count 9 and a blue bar with count 7. In the right panel, the subtitle is Serotype 31; above Alive there is a red bar with count 26 and a blue bar with count 24 and above Dead there is a red bar with count 7 and a blue bar with count 10." width="960" class="r-stretch"></section>
-<section id="visualizing-observed-vs-expected-counts-1" class="slide level2">
-<h2>Visualizing Observed vs Expected Counts</h2>
-<p>What if we do not assume independence?</p>
-</section>
+<img data-src="lec-10-anova-props_MH_files/figure-revealjs/unnamed-chunk-15-1.png" alt="A figure with two panels, titled Observed vs Expected Counts by Serotype. The y-axis is labelled Count and the x-axis for each panel is labeled Outcome with options Alive and Dead. In the left panel, the subtitle is Serotype 10; above Alive there is a red bar with count 34 and a blue bar with count 37 and above Dead there is a red bar with count 9 and a blue bar with count 7. In the right panel, the subtitle is Serotype 31; above Alive there is a red bar with count 26 and a blue bar with count 24 and above Dead there is a red bar with count 7 and a blue bar with count 10." width="960" class="r-stretch"></section>
 <section id="chi-square-tests-1" class="slide level2">
 <h2>Chi-square tests</h2>
 <p>The <strong>chi-square test</strong> compares the observed frequencies in each cell to the expected count under <span class="math inline">\(H_0\)</span>; if the total differences are large enough, we reject <span class="math inline">\(H_0\)</span>:</p>
@@ -895,18 +906,30 @@ P(\text{Serotype 10}) = \frac{44}{78}, \quad P(\text{Alive}) = \frac{61}{78}, \q
 <p>which has a <span class="math inline">\(\chi^2_{(r - 1) \times (c-1)}\)</span> distribution, with <span class="math inline">\(r\)</span> = Number of rows, <span class="math inline">\(c\)</span> = number of columns, under <span class="math inline">\(H_0\)</span>.</p>
 <p><strong>General rules of thumb for when you can use the chi-square test are &gt;5 or &gt;10 observations in each cell.</strong></p>
 </section>
+<section id="visualization-of-chi-square-distributions" class="slide level2">
+<h2>Visualization of Chi-Square Distributions</h2>
+
+<img data-src="lec-10-anova-props_MH_files/figure-revealjs/unnamed-chunk-16-1.png" alt="A plot with three probability density functions. One is dark red and labelled numerator degrees of freedom 2, denominator degrees of freedom 87 and looks like a half of a concave-up parabola; one is labelled numerator degrees of freedom 3, denominator degrees of freedom 86 and looks like a right-skewed distribution with a vertical ascent on the left; and one is labelled numerator degrees of freedom 9, denominator degrees of freedom 80 and looks like a right-skewed distribution with a more gradual ascent on the left that the previous one." width="960" class="r-stretch"></section>
 <section id="chi-square-tests-2" class="slide level2">
 <h2>Chi-square tests</h2>
+<p>Expected counts:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a>data <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">37</span>, <span class="dv">7</span>, <span class="dv">24</span>, <span class="dv">10</span>), </span>
-<span id="cb9-2"><a href=""></a>               <span class="at">byrow =</span> T, <span class="at">nrow =</span> <span class="dv">2</span>)</span>
-<span id="cb9-3"><a href=""></a>data</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>         [,1]     [,2]
+[1,] 34.41026 9.589744
+[2,] 26.58974 7.410256</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a>data <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">37</span>, <span class="dv">7</span>, <span class="dv">24</span>, <span class="dv">10</span>), </span>
+<span id="cb10-2"><a href=""></a>               <span class="at">byrow =</span> T, <span class="at">nrow =</span> <span class="dv">2</span>)</span>
+<span id="cb10-3"><a href=""></a>data</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2]
 [1,]   37    7
 [2,]   24   10</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">chisq.test</span>(data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a><span class="fu">chisq.test</span>(data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's Chi-squared test with Yates' continuity correction
@@ -915,7 +938,7 @@ data:  data
 X-squared = 1.3359, df = 1, p-value = 0.2478</code></pre>
 </div>
 </div>
-<p>What might we conclude at <span class="math inline">\(\alpha = .05\)</span>?</p>
+<p>What might we conclude at <span class="math inline">\(\alpha = 0.05\)</span>?</p>
 </section>
 <section id="conclusion" class="slide level2">
 <h2>Conclusion</h2>
@@ -968,120 +991,6 @@ X-squared = 1.3359, df = 1, p-value = 0.2478</code></pre>
 <li><span class="math inline">\(P(\text{death}|S_{10}) = 7/44 = 0.16\)</span></li>
 <li><span class="math inline">\(P(\text{death}|S_{31}) = 10/34 = 0.29\)</span></li>
 </ul>
-<!-- ## Fisher's exact test  -->
-<!-- - The chi-square test relies on asymptotic results (i.e. large sample size), which might not be appropriate if we have small cell counts (common rules of thumb are \>5 or \>10 observed in each cell).  -->
-<!-- ## Fisher's exact test {.smaller} -->
-<!-- - **Fisher's exact test** tests the same hypotheses at Chi-squared tests **but** calculates an exact p-value under a specific distributional assumption. -->
-<!-- | Serotype     | Alive | Dead | Total | -->
-<!-- |--------------|--------|------|--------| -->
-<!-- | Serotype 10  | 37     | 7    | 44     | -->
-<!-- | Serotype 31  | 24     | 10   | 34     | -->
-<!-- | Total        | 61     | 17   | 78     | -->
-<!-- ## Fisher's exact test -->
-<!-- Fisher's exact test relies on the **hypergeometric distribution** (don't worry about this, seriously). -->
-<!-- | Serotype     | Alive | Dead | Total       | -->
-<!-- |---------------|--------|------|-------------| -->
-<!-- | Serotype 10   | a      | c    | a + c       | -->
-<!-- | Serotype 31   | b      | d    | b + d       | -->
-<!-- | Total         | a + b  | c + d| a + b + c + d | -->
-<!-- Conditionally on the margins (assumed fixed), then each of the individual cells is distributed according to the hypergeometric distribution. We can thus calculate the exact probabilities of obtaining specific *tables*. -->
-<!-- ## Fisher's exact test -->
-<!-- Observed data: -->
-<!-- | Serotype     | Alive | Dead | Total | -->
-<!-- |--------------|--------|------|--------| -->
-<!-- | Serotype 10  | 37     | 7    | 44     | -->
-<!-- | Serotype 31  | 24     | 10   | 34     | -->
-<!-- | Total        | 61     | 17   | 78     | -->
-<!-- We could use the hypergeometric distribution to calculate the probability of seeing this table, assuming 61 total alive patients, 17 dead, and 44 and 34 infections of serotypes 10 and 31, respectively (lots of factorials, so you could imagine it wasn't fun before modern computers). -->
-<!-- ## Fisher's exact test -->
-<!-- Another "possible" table: -->
-<!-- | Serotype     | Alive | Dead | Total | -->
-<!-- |--------------|--------|------|--------| -->
-<!-- | Serotype 10  | 36     | 8    | 44     | -->
-<!-- | Serotype 31  | 25     | 9    | 34     | -->
-<!-- | Total        | 61     | 17   | 78     | -->
-<!-- - Here we've displayed another table with the **same margins**, but with some slightly different potential cell counts.  -->
-<!-- - Again we could use the hypergeometric distribution to calculate the probability of observing the cell counts conditionally on fixed margins. -->
-<!-- ## Fisher's exact test -->
-<!-- Fisher's exact test relies on constructing *all possible* contingency tables with the same margins, and then summing up probabilities of all tables as extreme or more extreme than the observed data. -->
-<!-- ::: {.callout-tip appearance="simple"} -->
-<!-- ## Question -->
-<!-- What might "more extreme" mean in the context of contingency tables? -->
-<!-- ::: -->
-<!-- ## Fisher's exact test -->
-<!-- $H_0$: The proportion of deaths is the same for Serotype 10 and Serotype 31 (no association between serotype and outcome).  -->
-<!-- $H_A$: The proportion of deaths differs between serotypes (there *is* an association) -->
-<!-- ```{r echo = T} -->
-<!-- data <- matrix(c(37, 7, 24, 10), byrow = T, nrow = 2) -->
-<!-- data -->
-<!-- ``` -->
-<!-- ## Conducting the Fisher's Exact test -->
-<!-- ```{r} -->
-<!-- #| echo: true -->
-<!-- fisher.test(data) -->
-<!-- ``` -->
-<!-- - What might we conclude at $\alpha = 0.05$? -->
-<!-- ## Conclusion -->
-<!-- - The Fisher’s Exact Test yielded a p-value of 0.17, which is greater than the conventional significance level of 0.05. Therefore, we fail to reject the null hypothesis. -->
-<!-- - There is no statistically significant evidence of an association between serotype and survival status in this sample. -->
-<!-- ## Odds ratios  -->
-<!-- -   If the probability of an event happening is $p$ -->
-<!-- -   The odds of an event happening are $\frac{p}{1-p}$ -->
-<!-- -   For a fair coin flip -->
-<!--     - $P(heads)=0.5$  -->
-<!--     - Odds of heads = $\frac{0.5}{1-0.5}$ = 1 -->
-<!--     - Heads is equally likely as not-heads (tails) -->
-<!-- ## Odds ratios  -->
-<!-- -   For a scenario where 20 people have a disease and 80 people do not -->
-<!--     - $P(disease)=\frac{20}{100}=0.2$  -->
-<!--     - Odds of having disease = $\frac{.2}{1-0.2}=\frac{0.2}{0.8}=\frac{1}{4}$ = 0.25 -->
-<!--     - Disease occurs 1 time for every 4 times it does not occur -->
-<!-- ## Odds ratios  -->
-<!-- | Serotype     | Alive | Dead | Total | -->
-<!-- |--------------|--------|------|--------| -->
-<!-- | Serotype 10  | 37     | 7    | 44     | -->
-<!-- | Serotype 31  | 24     | 10   | 34     | -->
-<!-- | Total        | 61     | 17   | 78     | -->
-<!-- -   Odds of death among serotype 10 patient = $\frac{P(death | S_{10})}{P(alive | S_{10})}$ -->
-<!-- -   Odds of death among serotype 10 patients = $\frac{7/44}{37/44} = 7/37$ -->
-<!-- ## Odds ratios  -->
-<!-- | Serotype     | Alive | Dead | Total | -->
-<!-- |--------------|--------|------|--------| -->
-<!-- | Serotype 10  | 37     | 7    | 44     | -->
-<!-- | Serotype 31  | 24     | 10   | 34     | -->
-<!-- | Total        | 61     | 17   | 78     | -->
-<!-- -   Odds of death among serotype 31 patient = $\frac{P(death | S_{31})}{P(alive | S_{31})}$ -->
-<!-- -   Odds of death among serotype 31 patients = $\frac{10/34}{24/34} = 10/24$ -->
-<!-- ## Odds ratios  -->
-<!-- -   Odds of death among serotype 10 patients = $\frac{7/44}{37/44} = 7/37$ -->
-<!-- -   Odds of death among serotype 31 patients = $\frac{10/34}{24/34} = 10/24$ -->
-<!-- -   **Odds ratio** of death comparing 31 to 10 is thus $\frac{10/24}{7/37} \approx 2.2$ -->
-<!-- -   The odds of death in the serotype 31 group are about 2.2 times the odds of death in the serotype 10 group -->
-<!-- ## r by c tables -->
-<!-- | Serotype     | Alive | Dead | Total | -->
-<!-- |---------------|-------|------|-------| -->
-<!-- | Serotype 10   | 37    | 7    | 44    | -->
-<!-- | Serotype 15   | 60    | 12   | 72    | -->
-<!-- | Serotype 20   | 97    | 9    | 106   | -->
-<!-- | Serotype 31   | 24    | 10   | 34    | -->
-<!-- | **Total**     | **218** | **38** | **256** | -->
-<!-- We can also extend the chi-square test and Fisher's exact test to more general contingency tables (although the notion of an odds ratio no longer makes sense here). -->
-<!-- ## Winter Olympics training -->
-<!-- Suppose we were interested in whether a particular training regimen was associated with "success" as measured by whether an athlete qualified for being on the US Winter Olympic Team for giant slalom. -->
-<!-- ## Winter Olympics training -->
-<!-- |                 | Qualified | Did Not Qualify | -->
-<!-- |-----------------|-----------|-----------------| -->
-<!-- | **New Regimen** | 129       | 97              | -->
-<!-- | **Old Regimen** | 112       | 114             | -->
-<!-- ```{r} -->
-<!-- #| echo: false -->
-<!-- data <- matrix(c(129, 97, 112, 114), byrow = T, nrow = 2) -->
-<!-- chisq.test(data) -->
-<!-- ``` -->
-<!-- ::: callout-tip -->
-<!-- ## Practice -->
-<!-- Write out the code to 1) construct the data matrix and 2) to conduct a chi square test in R. What might we conclude using alpha = .05?  -->
-<!-- ::: -->
 </section>
 <section id="overview-1" class="slide level2">
 <h2>Overview</h2>
@@ -1090,12 +999,12 @@ X-squared = 1.3359, df = 1, p-value = 0.2478</code></pre>
 <li><p>Bonferroni correction</p></li>
 <li><p>Chi-square test and example</p></li>
 </ul>
-<p>#- Fisher exact test and example (use if sample sizes aren’t large enough)</p>
 </section>
 <section id="next-class" class="slide level2">
 <h2>Next Class</h2>
 <ul>
-<li>Non-Parametric Methods</li>
+<li><p>Fisher’s Exact Test</p></li>
+<li><p>Non-Parametric Methods</p></li>
 </ul>
 
 </section>
