@@ -1,5 +1,5 @@
 ---
-title: "Topics List: Exam 2, Spring 2026"
+title: "Topics List: Exam 2, Summer Session II 2026"
 format: 
   html:
     embed-resources: false
@@ -7,7 +7,7 @@ format:
 
 ## Material covered
 
--   Lectures 8-15, HW 4-6, Labs 4-6, AE 2-4
+-   Lectures 7-12, HW 7-12, Lab 2, AE 2-4
 
 ## Coding
 

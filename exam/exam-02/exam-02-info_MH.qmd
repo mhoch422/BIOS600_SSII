@@ -1,0 +1,28 @@
+---
+title: "Exam 02 Info"
+format: html
+---
+
+- Exam 02 will take place in-person on Thursday, July 16 during class (9:30 AM - 11:00 AM). This exam is an opportunity to demonstrate what you've learned in the course, primarily on content **since the last exam** (but not completely excluding material you learned previously - it's difficult to completely separate out certain topics as they build on each other).  
+
+- You should bring something to write with. Nothing else is permitted (i.e. calculators/slide rules/abaci not permitted, cheat sheets not permitted.)
+
+- Content covered: Lectures 7-12, Lab 2, HW 7-12, Application exercises 2-4. 
+
+## Types of questions
+
+- The questions may be a mix of multiple choice, true/false, or short answer (same format as Exam 01. 
+
+- To prepare, review the definitions, concepts, and examples in the lectures. Review all lab assignments, homework assignments, and AEs listed above. With each question, ask yourself "Why?" Why does this matter? Why might this concept be helpful when doing biostatistics in the real world? Can I explain this question to someone else who does not have statistics experience?
+
+- There will be three sections: Code, Applied, and Conceptual.
+
+## Resources for reviewing
+
+- A formula sheet (formulas **you will** be provided on the exam) has been posted
+
+- A topics list is available as `exam-02-topics`.
+
+- There are review questions available on Canvas, and I will post solutions for these after class on Wednesday the 15th.
+
+- We will use class on the 15th for review for the test.

@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.26">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Exam 02 Info</title>
+<title>Exam 02 Formula Sheet</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -23,19 +26,47 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="exam-02-info_AGH_files/libs/clipboard/clipboard.min.js"></script>
-<script src="exam-02-info_AGH_files/libs/quarto-html/quarto.js" type="module"></script>
-<script src="exam-02-info_AGH_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="exam-02-info_AGH_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="exam-02-info_AGH_files/libs/quarto-html/popper.min.js"></script>
-<script src="exam-02-info_AGH_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="exam-02-info_AGH_files/libs/quarto-html/anchor.min.js"></script>
-<link href="exam-02-info_AGH_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="exam-02-info_AGH_files/libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="exam-02-info_AGH_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="exam-02-info_AGH_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="exam-02-info_AGH_files/libs/bootstrap/bootstrap-9e3ffae467580fdb927a41352e75a2e0.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="exam-02-formulas_MH_files/libs/clipboard/clipboard.min.js"></script>
+<script src="exam-02-formulas_MH_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="exam-02-formulas_MH_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="exam-02-formulas_MH_files/libs/quarto-html/popper.min.js"></script>
+<script src="exam-02-formulas_MH_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="exam-02-formulas_MH_files/libs/quarto-html/anchor.min.js"></script>
+<link href="exam-02-formulas_MH_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="exam-02-formulas_MH_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="exam-02-formulas_MH_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="exam-02-formulas_MH_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="exam-02-formulas_MH_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -47,7 +78,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Exam 02 Info</h1>
+<h1 class="title">Exam 02 Formula Sheet</h1>
 </div>
 
 
@@ -64,30 +95,30 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<p>If needed, you would be provided any of the following formulas on the exam.</p>
 <ul>
-<li><p>Exam 02 will take place in-person on Tuesday, March 31, during class (8:00 AM - 9:15 AM). This exam is an opportunity to demonstrate what you’ve learned in the course, primarily on content <strong>since the last exam</strong> (but not completely excluding material you learned previously - it’s difficult to completely separate out certain topics as they build on each other).</p></li>
-<li><p>If your last name starts with A-K you will be in McGavran-Greenberg Hall 2301, if your last name starts with L-Z you will be in this classroom (same rooms as last exam)</p></li>
-<li><p>The exam will be closed-book.</p></li>
-<li><p>You should bring something to write with. Nothing else is permitted (i.e.&nbsp;calculators not permitted, cheat sheets not permitted.)</p></li>
-<li><p>Content covered: Lectures 8-15, Labs 4-6, HW 4-5, AE 2-4.</p></li>
+<li><p><strong>CLT</strong>: Given <span class="math inline">\(X \sim N(\mu, \sigma)\)</span>, <span class="math inline">\(Z = \frac{\bar{X}-\mu}{\sigma / \sqrt{n}}\)</span> follows <span class="math inline">\(N(0,1)\)</span>. <span class="math inline">\(Z\)</span> is approximately normal if <span class="math inline">\(X\)</span> is not normal, as long as <span class="math inline">\(n\)</span> is large enough.</p></li>
+<li><p>Standard format of a confidence interval: point estimate <span class="math inline">\(\pm\)</span> confidence multiplier <span class="math inline">\(\times\)</span> standard error.</p></li>
+<li><p>The confidence multiplier <span class="math inline">\(z^*_{\alpha/2}\)</span> is the z-score that cuts off the upper 100% <span class="math inline">\(\times \alpha/2\)</span> of the distribution.</p></li>
+<li><p><span class="math inline">\(\frac{\bar{X} - \mu_0}{s/\sqrt{n}} \sim t_{n-1}\)</span>, where <span class="math inline">\(\mu_0\)</span> is the mean under the null hypothesis.</p></li>
+<li><p>When we do not know <span class="math inline">\(\sigma\)</span>, we estimate it with <span class="math inline">\(s\)</span>, and can use the following confidence interval: <span class="math inline">\(\bar{X} \pm t^*_{n-1;1-\alpha/2}\frac{s}{\sqrt{n}}\)</span></p></li>
+<li><p>The two-sample t-test for independent samples is given by:</p></li>
 </ul>
-<section id="types-of-questions" class="level2">
-<h2 class="anchored" data-anchor-id="types-of-questions">Types of questions</h2>
+<p><span class="math display">\[t = \frac{(\bar{x_1} - \bar{x_2}) - (\bar{\mu_1} - \bar{\mu_2})}{\sqrt{\frac{s_1^2}{n_1} + \frac{s_2^2}{n_2}}}\]</span></p>
 <ul>
-<li><p>The questions may be a mix of multiple choice, true/false, or short answer (same format as Exam 01.</p></li>
-<li><p>To prepare, review the definitions, concepts, and examples in the lectures. Review all lab assignments, homework assignments, and AEs listed above. With each question, ask yourself “Why?” Why does this matter? Why might this concept be helpful when doing biostatistics in the real world? Can I explain this question to someone else who does not have statistics experience?</p></li>
-<li><p>There will be three sections: Code, Applied, and Conceptual.</p></li>
-</ul>
-</section>
-<section id="resources-for-reviewing" class="level2">
-<h2 class="anchored" data-anchor-id="resources-for-reviewing">Resources for reviewing</h2>
+<li><p>The <span class="math inline">\(F\)</span> statistic is given by <span class="math inline">\(F = \frac{s^2_{between}}{s^2_{within}}\)</span>. (You need to know how to get the degrees of freedom!)</p></li>
+<li><p><span class="math inline">\(\chi^2 = \sum_{i=1}^{r \times c}\frac{(O_i - E_i)^2}{E_i}\)</span> and this has a <span class="math inline">\(\chi^2_{(r-1) \times (c-1)}\)</span> distribution under <span class="math inline">\(H_0\)</span>.</p></li>
+<li><p>In the Wilcoxon Rank Sum test, let <span class="math inline">\(T\)</span> be the smaller sum of (either positive or negative) ranks. Then <span class="math inline">\(z_T = \frac{T - \frac{n(n+1)}{4}}{\sqrt{\frac{n(n+1)(2n+1)}{24}}}\)</span> follows an approximately <span class="math inline">\(N(0,1)\)</span> distribution.</p></li>
+<li><p>In the Mann-Whitney U-Test, <span class="math inline">\(U_1 = R_1 - \frac{n_1(n_1+1)}{2}, \quad U_2 = R_2 - \frac{n_2(n_2+1)}{2}\)</span> where <span class="math inline">\(R_1\)</span> and <span class="math inline">\(R_2\)</span> are the sums of ranks in groups 1 and 2, respectively, and <span class="math inline">\(n_1\)</span> and <span class="math inline">\(n_2\)</span> are group sample sizes.</p>
 <ul>
-<li><p>A formula sheet (formulas <strong>you will</strong> be provided on the exam) has been posted</p></li>
-<li><p>A topics list is available as <code>exam-02-topics</code>.</p></li>
-<li><p>I will prepare a set of review questions for us to complete in class on Thursday March 26. We will go over these together and you will have access to the solutions after class.</p></li>
-<li><p>I will post additional problems to work this week for you to try on your own</p></li>
+<li>With sufficient sample sizes in each group, the sampling distribution of U is approximately normal with mean and standard deviation:</li>
+</ul></li>
 </ul>
-</section>
+<p><span class="math display">\[\text{mean}_U = \frac{n_1 n_2}{2}, \quad \text{sd}_U = \sqrt{\frac{n_1 n_2 (n_1 + n_2 + 1)}{12}}\]</span></p>
+<ul>
+<li>To calculate sample size given <span class="math inline">\(\sigma\)</span>, <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(\beta\)</span>, and <span class="math inline">\(\mu_1-\mu_0\)</span>:</li>
+</ul>
+<p><span class="math display">\[n = \left[\frac{\sigma(z^*_{1-\alpha/2} + z^*_{1-\beta})}{\mu_1-\mu_0}\right]^2\]</span></p>
 
 </main>
 <!-- /main column -->

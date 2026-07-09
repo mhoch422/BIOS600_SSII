@@ -1,5 +1,5 @@
 ---
-title: "In-Class Review Questions"
+title: "Review Questions"
 subtitle: "Exam 02 Preparation"
 format: html
 ---
