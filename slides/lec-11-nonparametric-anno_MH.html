@@ -141,6 +141,80 @@ window.Quarto = {
 <ul>
 <li><p>Lab 2 due <strong>tonight</strong> at 11:59pm.</p></li>
 <li><p>HW 11 is due <strong>tomorrow</strong> at 11:59 pm.</p></li>
+<li><p>Exam 2 will be during class on Thursday.</p></li>
+</ul>
+</section>
+<section id="exam-2" class="level2">
+<h2 class="anchored" data-anchor-id="exam-2">Exam 2</h2>
+<ul>
+<li><p>Review materials, including the formula sheet and some practice questions are on Canvas in the Week 4 module.</p></li>
+<li><p>Like on Exam 1, no calculators (or slide rules, or abacuses) are allowed (or needed). This exam will be closed-book and closed-note, just bring a pen or pencil.</p></li>
+<li><p>Wednesday’s class will be for review for the exam.</p></li>
+</ul>
+</section>
+<section id="revisiting-some-hw-questions" class="level2">
+<h2 class="anchored" data-anchor-id="revisiting-some-hw-questions">Revisiting some HW questions</h2>
+<ul>
+<li><p>On Homework 9, Question 1 asked you to conduct a hypothesis test on the mean throat pain score 30 minutes after surgery among patients who received the placebo.</p></li>
+<li><p>For the one-sample t-test, the two-sample t-test, and the paired t-test, the test statistic follows what kind of distribution?</p></li>
+</ul>
+<p>. . .</p>
+<ul>
+<li><p>A t distribution!</p></li>
+<li><p>How are t distributions defined?</p></li>
+</ul>
+<p>. . .</p>
+<ul>
+<li>By their degrees of freedom!</li>
+</ul>
+</section>
+<section id="calculating-degrees-of-freedom" class="level2">
+<h2 class="anchored" data-anchor-id="calculating-degrees-of-freedom">Calculating degrees of freedom</h2>
+<ul>
+<li><p>One-sample t-test:</p>
+<ul>
+<li>Degrees of freedom = <span class="math inline">\(n-1\)</span>, where <span class="math inline">\(n\)</span> is the number in the sample</li>
+</ul></li>
+<li><p>Two-sample t-test:</p>
+<ul>
+<li><p>If the population variances are equal between groups, degrees of freedom = <span class="math inline">\(n_1 + n_2 -2\)</span>, where <span class="math inline">\(n_1\)</span> is the number of observations in Group 1 and <span class="math inline">\(n_2\)</span> is the number of observations in Group 2.</p></li>
+<li><p>If the population variances are not equal, the calculation is complicated, but if you have R output for the test, you can see the degrees of freedom there.</p></li>
+</ul></li>
+<li><p>Paired t-test:</p>
+<ul>
+<li>Degrees of freedom = <span class="math inline">\(n - 1\)</span>, the same as the one-sample test.</li>
+</ul></li>
+</ul>
+</section>
+<section id="other-test-statistic-distributions" class="level2">
+<h2 class="anchored" data-anchor-id="other-test-statistic-distributions">Other test statistic distributions</h2>
+<ul>
+<li><p>ANOVA test statistics follow an <span class="math inline">\(F_{k-1, n-k}\)</span> distribution, where <span class="math inline">\(n\)</span> is the total number of samples and <span class="math inline">\(k\)</span> is the number of groups.</p></li>
+<li><p>Chi-square test statistics follow a <span class="math inline">\(\chi^2_{(c-1)\times(r-1)}\)</span> distribution, where <span class="math inline">\(c\)</span> is the number of columns and <span class="math inline">\(r\)</span> is the number of rows in the table.</p></li>
+</ul>
+</section>
+<section id="precision-of-language" class="level2">
+<h2 class="anchored" data-anchor-id="precision-of-language">Precision of Language</h2>
+<ul>
+<li><p>When asked to interpret a confidence interval, remember that you can say something like “We can say with 95% confidence that . . .” but cannot say “There is a 95% chance that . . .”</p></li>
+<li><p>Similarly, for coming to conclusions after conducting a hypothesis test, if the p-value is greater than the preset significance level <span class="math inline">\(\alpha\)</span>, you may say “We fail to reject the null hypothesis and do not have statistically significant evidence that the alternative hypothesis is true” but cannot say “We fail to reject the null hypothesis and conclude that the null hypothesis is true.”</p></li>
+</ul>
+</section>
+<section id="example" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="example">Example</h2>
+<p>Let’s say that we run a chi-square test on the following set of hypotheses:</p>
+<ul>
+<li><p><span class="math inline">\(H_0\)</span>: There is no association between being born in July and being in BIOS 600.</p></li>
+<li><p><span class="math inline">\(H_A\)</span>: There is an association between being born in July and being in BIOS 600.</p></li>
+</ul>
+<p>. . .</p>
+<p>If after running our test, we have a p-value of 0.4952:</p>
+<ul>
+<li>We conclude that there is not statistically significant evidence for an association between being born in July and being in BIOS 600.</li>
+</ul>
+<p>. . .</p>
+<ul>
+<li>We <em>do not</em> conclude that there is no association between being born in July and being in BIOS 600.</li>
 </ul>
 </section>
 <section id="very-optional-reading" class="level2">
@@ -153,16 +227,26 @@ window.Quarto = {
 <section id="overview" class="level2">
 <h2 class="anchored" data-anchor-id="overview">Overview</h2>
 <ul>
-<li><p>Fisher’s Exact Test</p></li>
+<li><p>Fisher’s exact test</p></li>
 <li><p>Nonparametric methods</p></li>
 <li><p>Sign test, Wilcoxon signed-rank test, Wilcoxon rank-sum test</p></li>
-<li><p>Krustal-Wallis test</p></li>
+<li><p>Kruskal-Wallis test</p></li>
 </ul>
+</section>
+<section id="review" class="level2">
+<h2 class="anchored" data-anchor-id="review">Review</h2>
+<ul>
+<li><p>Recall that on Thursday we were discussing tests of the association between two categorical variables.</p></li>
+<li><p>Instead of comparing means, we compare counts or proportions.</p></li>
+<li><p>The chi-square test is one way to test these hypotheses:</p></li>
+</ul>
+<p><span class="math inline">\(H_0\)</span>: There is no association between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span></p>
+<p><span class="math inline">\(H_1\)</span>: There is an association between <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span></p>
 </section>
 <section id="fishers-exact-test" class="level2">
 <h2 class="anchored" data-anchor-id="fishers-exact-test">Fisher’s exact test</h2>
 <ul>
-<li><p>The chi-square test relies on asymptotic results (i.e.&nbsp;large sample size), which might not be appropriate if we have small cell counts (common rules of thumb are &gt;5 or &gt;10 observed in each cell).</p></li>
+<li><p>The chi-square test relies on asymptotic results (i.e.&nbsp;large sample size), which might not be appropriate if we have small cell counts (common rules of thumb are &gt;5 or &gt;10 expected in each cell).</p></li>
 <li><p>In cases where we have small cell counts, we can use Fisher’s exact test instead.</p></li>
 </ul>
 </section>
@@ -697,6 +781,89 @@ X-squared = 2.2755, df = 1, p-value = 0.1314</code></pre>
 <li><p>Count the number of + signs</p></li>
 <li><p>Test using the binomial distribution with <span class="math inline">\(n =\)</span> number of pairs with nonzero differences and <span class="math inline">\(p=0.5\)</span>, as we would expect the <strong>same number of positive and negative signs</strong> under <span class="math inline">\(H_0\)</span>.</p></li>
 </ul>
+</section>
+<section id="participation" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="participation">Participation</h2>
+<p>On the provided paper, execute the first three steps of the sign test for this data set:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 6%">
+</colgroup>
+<thead>
+<tr class="header">
+<th># Colds</th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Before</td>
+<td>3</td>
+<td>4</td>
+<td>2</td>
+<td>1</td>
+<td>3</td>
+<td>6</td>
+<td>4</td>
+<td>5</td>
+<td>2</td>
+<td>0</td>
+<td>2</td>
+<td>5</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr class="even">
+<td>After</td>
+<td>2</td>
+<td>1</td>
+<td>0</td>
+<td>3</td>
+<td>1</td>
+<td>3</td>
+<td>3</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>2</td>
+<td>3</td>
+<td>4</td>
+<td>3</td>
+</tr>
+</tbody>
+</table>
+<ol type="1">
+<li><p>Take the difference of each pair of observations (e.g., before-after)</p></li>
+<li><p>Record the sign of each difference (+, –, or 0)</p></li>
+<li><p>Count the number of + signs</p></li>
+</ol>
 </section>
 <section id="sign-test-2" class="level2 smaller">
 <h2 class="smaller anchored" data-anchor-id="sign-test-2">Sign test</h2>
@@ -1442,8 +1609,8 @@ X-squared = 2.2755, df = 1, p-value = 0.1314</code></pre>
 <li><p>Sum of ranks in 3VD group, <span class="math inline">\(n=10\)</span>: 70</p></li>
 </ul>
 </section>
-<section id="example" class="level2">
-<h2 class="anchored" data-anchor-id="example">Example</h2>
+<section id="example-1" class="level2">
+<h2 class="anchored" data-anchor-id="example-1">Example</h2>
 <ul>
 <li>The sum of the ranks in the SD group with <span class="math inline">\(n=8\)</span> was 101, and the 3VD group had 10 subjects with sum of ranks 70. Is this enough evidence to reject the null hypothesis?</li>
 </ul>

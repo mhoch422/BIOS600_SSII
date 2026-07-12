@@ -16,6 +16,82 @@ execute:
 
 -   HW 11 is due **tomorrow** at 11:59 pm.
 
+- Exam 2 will be during class on Thursday.
+
+## Exam 2
+
+- Review materials, including the formula sheet and some practice questions are on Canvas in the Week 4 module.
+
+- Like on Exam 1, no calculators (or slide rules, or abacuses) are allowed (or needed). This exam will be closed-book and closed-note, just bring a pen or pencil.
+
+- Wednesday's class will be for review for the exam.
+
+## Revisiting some HW questions
+
+- On Homework 9, Question 1 asked you to conduct a hypothesis test on the mean throat pain score 30 minutes after surgery among patients who received the placebo.
+
+- For the one-sample t-test, the two-sample t-test, and the paired t-test, the test statistic follows what kind of distribution?
+
+. . .
+
+- A t distribution!
+
+- How are t distributions defined?
+
+. . .
+
+- By their degrees of freedom!
+
+## Calculating degrees of freedom {.smaller}
+
+- One-sample t-test:
+
+  - Degrees of freedom = $n-1$, where $n$ is the number in the sample
+  
+- Two-sample t-test:
+
+  - If the population variances are equal between groups, degrees of freedom = $n_1 + n_2 -2$, where $n_1$ is the number of observations in Group 1 and $n_2$ is the number of observations in Group 2.
+  
+  - If the population variances are not equal, the calculation is complicated, but if you have R output for the test, you can see the degrees of freedom there.
+  
+- Paired t-test:
+
+  - Degrees of freedom = $n - 1$, the same as the one-sample test.
+  
+. . . 
+
+If a question asks you for the degrees of freedom and you have access to the number in the sample, give a specific number.
+
+## Other test statistic distributions
+
+- ANOVA test statistics follow an $F_{k-1, n-k}$ distribution, where $n$ is the total number of samples and $k$ is the number of groups.
+
+- Chi-square test statistics follow a $\chi^2_{(c-1)\times(r-1)}$ distribution, where $c$ is the number of columns and $r$ is the number of rows in the table.
+
+## Precision of Language
+
+- When asked to interpret a confidence interval, remember that you can say something like "We can say with 95% confidence that . . ." but cannot say "There is a 95% chance that . . ."
+
+- Similarly, for coming to conclusions after conducting a hypothesis test, if the p-value is greater than the preset significance level $\alpha$, you may say "We fail to reject the null hypothesis and do not have statistically significant evidence that the alternative hypothesis is true" but cannot say "We fail to reject the null hypothesis and conclude that the null hypothesis is true."
+
+## Example {.smaller}
+
+Let's say that we run a chi-square test on the following set of hypotheses:
+
+- $H_0$: There is no association between being born in July and being in BIOS 600.
+
+- $H_A$: There is an association between being born in July and being in BIOS 600.
+
+. . .
+
+If after running our test, we have a p-value of 0.4952:
+
+-  We conclude that there is not statistically significant evidence for an association between being born in July and being in BIOS 600.
+
+. . .
+
+- We *do not* conclude that there is no association between being born in July and being in BIOS 600.
+
 ## Very optional reading
 
 -   P&G Chapters 13
@@ -30,11 +106,11 @@ execute:
 
 - Sign test, Wilcoxon signed-rank test, Wilcoxon rank-sum test
 
-- Krustal-Wallis test
+- Kruskal-Wallis test
 
 ## Review
 
-- Recall that yesterday we were discussing tests of the association between two categorical variables.
+- Recall that on Thursday we were discussing tests of the association between two categorical variables.
 
 - Instead of comparing means, we compare counts or proportions.
 
@@ -46,7 +122,7 @@ $H_1$: There is an association between $X$ and $Y$
 
 ## Fisher's exact test
 
-- The chi-square test relies on asymptotic results (i.e. large sample size), which might not be appropriate if we have small cell counts (common rules of thumb are \>5 or \>10 observed in each cell).
+- The chi-square test relies on asymptotic results (i.e. large sample size), which might not be appropriate if we have small cell counts (common rules of thumb are \>5 or \>10 expected in each cell).
 
 - In cases where we have small cell counts, we can use Fisher's exact test instead.
 
@@ -301,6 +377,22 @@ The sign test has just a few simple steps:
 -   Count the number of + signs
 
 -   Test using the binomial distribution with $n =$ number of pairs with nonzero differences and $p=0.5$, as we would expect the **same number of positive and negative signs** under $H_0$.
+
+## Participation {.smaller}
+
+On the provided paper, execute the first three steps of the sign test for this data set:
+
+| # Colds  |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
+|----------|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|
+| Before   | 3   | 4   | 2   | 1   | 3   | 6   | 4   | 5   | 2   | 0   | 2   | 5   | 3   | 3   |
+| After    | 2   | 1   | 0   | 3   | 1   | 3   | 3   | 2   | 2   | 2   | 2   | 3   | 4   | 3   |
+
+1.  Take the difference of each pair of observations (e.g., before-after)
+
+2.  Record the sign of each difference (+, --, or 0)
+
+3.  Count the number of + signs
+
 
 ## Sign test {.smaller}
 
