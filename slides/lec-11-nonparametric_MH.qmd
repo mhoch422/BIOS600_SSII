@@ -400,15 +400,15 @@ The differences do NOT look very normal and we have a relatively small sample si
 
 \footnotesize
 
-| \# Colds |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
+| \# Colds  |     |     |     |     |     |     |     |     |     |     |     |     |     |     |
 |----------|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|-----|
 | Before   | 3   | 4   | 2   | 1   | 3   | 6   | 4   | 5   | 2   | 0   | 2   | 5   | 3   | 3   |
-| After    | 2   | 1   | 0   | 3   | 1   | 3   | 3   | 2   | 2   | 2   | 3   | 4   | 3   | 2   |
-| Diff.    | 1   | 3   | 2   | -2  | 2   | 3   | 1   | 3   | 0   | -2  | -1  | 1   | 0   | 1   |
-| Sign     | \+  | \+  | \+  | --  | \+  | \+  | \+  | \+  | 0   | --  | --  | \+  | 0   | \+  |
+| After    | 2   | 1   | 0   | 3   | 1   | 3   | 3   | 2   | 2   | 2   | 2   | 3   | 4   | 3   |
+| Diff.    | 1   | 3   | 2   | -2  | 2   | 3   | 1   | 3   | 0   | -2  | 0   | 2   | -1  | 0   |
+| Sign     | \+  | \+  | \+  | --  | \+  | \+  | \+  | \+  | 0   | --  | --  | \+  | 0   | 0   |
 
 ::: table-striped
-12 non-zero differences, with 9 + signs
+11 non-zero differences, with 8 + signs
 :::
 
 ## Sign test for cold data
@@ -427,31 +427,31 @@ $H_0$: Median difference in colds = 0 (i.e. same number of positive and negative
 
 $H_A$: Median difference in colds $\neq$ 0 (i.e. different number of positive and negative signs)
 
--   Remember, we had 9 successes out of 12 trials.
+-   Remember, we had 8 successes out of 11 trials.
 
--   What is the probability we see 9 successes out of 12 trials in a binomial distribution (or more extreme, *in either direction*), if the null hypothesis that $p=0.5$ is true?
+-   What is the probability we see 8 successes out of 11 trials in a binomial distribution (or more extreme, *in either direction*), if the null hypothesis that $p=0.5$ is true?
 
 ## Conducting the sign test
 
-We can calculate, for $X\sim Binom(12,0.5)$,
+We can calculate, for $X\sim Binom(11,0.5)$,
 <br>
-$P(X=9) + P(X=10) + P(X=11) + P(X=12)$
+$P(X = 8) + P(X=9) + P(X=10) + P(X=11)$
 <br>
-**Remember $P(X\geq 9) = 1-P(X\leq8)$**
+**Remember $P(X\geq 8) = 1-P(X\leq7)$**
 
 and then double it (for the two-sided test).
 
 ```{r echo = T}
-2*(1-pbinom(8, 12, 0.5))
+2*(1-pbinom(7, 11, 0.5))
 ```
 
 . . .
 
-Note that `pbinom()` behaves like `pnorm()` -- it calculates the probability to the left (inclusive) of the first value (here, 8).
+Note that `pbinom()` behaves like `pnorm()` -- it calculates the probability to the left (inclusive) of the first value (here, 7).
 
 ## Conducting the sign test
 
--   **Conclusion**: With p = .145, we fail to reject $H_0$ and hence conclude that there is not enough evidence to suggest there is a difference in the median number of colds in the years before and after vaccine administration.
+-   **Conclusion**: With p = .227, we fail to reject $H_0$ and hence conclude that there is not enough evidence to suggest there is a difference in the median number of colds in the years before and after vaccine administration.
 
 ## Wilcoxon signed-rank test {.smaller}
 

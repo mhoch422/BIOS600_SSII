@@ -935,10 +935,10 @@ X-squared = 2.2755, df = 1, p-value = 0.1314</code></pre>
 <td>2</td>
 <td>2</td>
 <td>2</td>
+<td>2</td>
 <td>3</td>
 <td>4</td>
 <td>3</td>
-<td>2</td>
 </tr>
 <tr class="odd">
 <td>Diff.</td>
@@ -952,10 +952,10 @@ X-squared = 2.2755, df = 1, p-value = 0.1314</code></pre>
 <td>3</td>
 <td>0</td>
 <td>-2</td>
-<td>-1</td>
-<td>1</td>
 <td>0</td>
-<td>1</td>
+<td>2</td>
+<td>-1</td>
+<td>0</td>
 </tr>
 <tr class="even">
 <td>Sign</td>
@@ -972,12 +972,12 @@ X-squared = 2.2755, df = 1, p-value = 0.1314</code></pre>
 <td>–</td>
 <td>+</td>
 <td>0</td>
-<td>+</td>
+<td>0</td>
 </tr>
 </tbody>
 </table>
 <div class="table-striped">
-<p>12 non-zero differences, with 9 + signs</p>
+<p>11 non-zero differences, with 8 + signs</p>
 </div>
 </section>
 <section id="sign-test-for-cold-data" class="level2">
@@ -994,25 +994,27 @@ X-squared = 2.2755, df = 1, p-value = 0.1314</code></pre>
 <p><span class="math inline">\(H_0\)</span>: Median difference in colds = 0 (i.e.&nbsp;same number of positive and negative signs)</p>
 <p><span class="math inline">\(H_A\)</span>: Median difference in colds <span class="math inline">\(\neq\)</span> 0 (i.e.&nbsp;different number of positive and negative signs)</p>
 <ul>
-<li><p>Remember, we had 9 successes out of 12 trials.</p></li>
-<li><p>What is the probability we see 9 successes out of 12 trials in a binomial distribution (or more extreme, <em>in either direction</em>), if the null hypothesis that <span class="math inline">\(p=0.5\)</span> is true?</p></li>
+<li><p>Remember, we had 8 successes out of 11 trials.</p></li>
+<li><p>What is the probability we see 8 successes out of 11 trials in a binomial distribution (or more extreme, <em>in either direction</em>), if the null hypothesis that <span class="math inline">\(p=0.5\)</span> is true?</p></li>
 </ul>
 </section>
 <section id="conducting-the-sign-test" class="level2">
 <h2 class="anchored" data-anchor-id="conducting-the-sign-test">Conducting the sign test</h2>
-<p>We can calculate, for <span class="math inline">\(X\sim Binom(12,0.5)\)</span>, <br> <span class="math inline">\(P(X=9) + P(X=10) + P(X=11) + P(X=12)\)</span> <br> <strong>Remember <span class="math inline">\(P(X\geq 9) = 1-P(X&lt;8)\)</span></strong></p>
+<p>We can calculate, for <span class="math inline">\(X\sim Binom(11,0.5)\)</span>, <br> <span class="math inline">\(P(X = 8) + P(X=9) + P(X=10) + P(X=11)\)</span> <br> <strong>Remember <span class="math inline">\(P(X\geq 8) = 1-P(X\leq7)\)</span></strong></p>
 <p>and then double it (for the two-sided test).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">pbinom</span>(<span class="dv">8</span>, <span class="dv">12</span>, <span class="fl">0.5</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">pbinom</span>(<span class="dv">7</span>, <span class="dv">11</span>, <span class="fl">0.5</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.1459961</code></pre>
+<pre><code>[1] 0.2265625</code></pre>
 </div>
 </div>
+<p>. . .</p>
+<p>Note that <code>pbinom()</code> behaves like <code>pnorm()</code> – it calculates the probability to the left (inclusive) of the first value (here, 7).</p>
 </section>
 <section id="conducting-the-sign-test-1" class="level2">
 <h2 class="anchored" data-anchor-id="conducting-the-sign-test-1">Conducting the sign test</h2>
 <ul>
-<li><strong>Conclusion</strong>: With p = .145, we fail to reject <span class="math inline">\(H_0\)</span> and hence conclude that there is not enough evidence to suggest there is a difference in the median number of colds in the years before and after vaccine administration.</li>
+<li><strong>Conclusion</strong>: With p = .227, we fail to reject <span class="math inline">\(H_0\)</span> and hence conclude that there is not enough evidence to suggest there is a difference in the median number of colds in the years before and after vaccine administration.</li>
 </ul>
 </section>
 <section id="wilcoxon-signed-rank-test" class="level2 smaller">
@@ -1073,7 +1075,7 @@ X-squared = 2.2755, df = 1, p-value = 0.1314</code></pre>
 <ul>
 <li><p>A common symptom of otitis media in young children is the prolonged presence of fluid in the middle ear, known as middle-ear effusion. The presence of fluid may result in temporary hearing loss and interfere with normal learning skills in the first 2 years of life.</p></li>
 <li><p>One hypothesis is that babies who are breastfed for at least one month build some immunity and have less prolonged effusion than their bottle-fed counterparts.</p></li>
-<li><p>A small study of 14 babies is set up, with babies matched one-to-one by age, sex, socioeconomic status, and health condition. One member of the pair is a breastfed baby, and the other member is a bottle-fed baby. The outcome is the duration (days) of middle-ear effusion after the first episode of otitis media.</p></li>
+<li><p>A small study of 28 babies is set up, with babies matched one-to-one by age, sex, socioeconomic status, and health condition. One member of the pair is a breastfed baby, and the other member is a bottle-fed baby. The outcome is the duration (days) of middle-ear effusion after the first episode of otitis media.</p></li>
 </ul>
 </section>
 <section id="example-middle-ear-effusion-1" class="level2 smaller">
