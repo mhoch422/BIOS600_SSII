@@ -34,6 +34,81 @@ execute:
 
 -   OI: Section 8.1
 
+## T-tests in R {.smaller}
+
+- The one-sample, two-sample, and paired t-tests all are run in R using the function `t.test()`, but with slightly different syntax for each.
+
+- For the one-sample t-test:
+
+```{r}
+#| eval: FALSE
+#| echo: TRUE
+
+# one-sample t-test
+
+t.test(dataset$outcome,           # variable whose mean we are testing
+       mu = 0)                    # mean under the null (defaults to 0)
+
+```
+
+- We can also specify the alternative hypothesis (the default is a two-sided test) and the confidence level (the default is 0.95).
+
+- We do not need to specify `paired` or `var.equal`, because we only have one sample.
+
+## T-tests in R {.smaller}
+
+- For the two-sample t-test:
+
+```{r}
+#| eval: FALSE
+#| echo: TRUE
+
+# two-sample t-test
+
+t.test(outcome ~ group,           # variable whose mean we are testing ~
+                                  # variable differentiating the two groups
+       data = dataset,            # name of the dataset
+       mu = 0,                    # difference in means under the null (default 0)
+       var.equal = FALSE)         # is the variance the same between two populations
+
+```
+
+- We can also specify the alternative hypothesis (the default is a two-sided test) and the confidence level (the default is 0.95).
+
+- The default for `var.equal` is false and we do not specify `paired`.
+
+## T-tests in R {.smaller}
+
+- For the paired t-test:
+
+```{r}
+#| eval: FALSE
+#| echo: TRUE
+
+# paired t-test
+
+t.test(dataset$baseline,          # variable with first part of paired data
+       dataset$final,             # variable with second part of paired data
+       data = dataset,            # name of the dataset
+       mu = 0,                    # difference in means under the null (default 0)
+       paired = TRUE)             # indicates a paired test
+
+```
+
+- We can also specify the alternative hypothesis (the default is a two-sided test) and the confidence level (the default is 0.95).
+
+- We do not need to specify `var.equal()`.
+
+- The two columns with the data can be in either order; if you flip them, the test statistic will change sign but have the same magnitude.
+
+## T-tests in R 
+
+- For the one-sample t-test and the paired t-test, you have the option to specify `data = dataset` as input to the function.
+
+- If you do this, you shouldn't include `data$` before the column names you are testing.
+
+- The last three slides are good examples of commenting your code; commenting makes it easier for you to understand your thought process while coding, and also will make it easier for anyone else reading your code to understand what it does.
+
 ## Mapping Parametric to Non‑Parametric Tests  {.smaller}
 
 | Non‑Parametric Test | Parametric Test | Key Features |
@@ -48,7 +123,36 @@ execute:
 | **Mann–Whitney U/** <br> **Wilcoxon rank‑sum** | Two‑sample t‑test | Rank‑based comparison of two independent groups |
 | **Kruskal–Wallis** | One‑way ANOVA | Rank‑based comparison of 3+ independent groups 
 
+## Non-parametric alternative for one-sample test {.smaller}
 
+- Much like how the paired t-test and one-sample t-test are equivalent in the parametric case, you can use the sign test or the Wilcoxon signed-rank test for a one-sample test of the median.
+
+- As an example, suppose we have a small sample of systolic blood pressures and want to test if the median blood pressure in this population is equal to 110 mmHg.
+
+|                       | 1  | 2   | 3   | 4   | 5  | 6   | 7  | 8   |
+|-----------------------|----|-----|-----|-----|----|-----|----|-----|
+| Blood Pressure (mmHg) | 97 | 113 | 100 | 128 | 96 | 105 | 86 | 110 |
+
+- Instead of taking a difference between before/after values, we would conduct the sign test by first subtracting 110 from each of these blood pressures.
+
+## Non-parametric alternative for one-sample test {.smaller}
+
+|          |  1  | 2 |  3  | 4  | 5   | 6  | 7   | 8  |
+|----------|-----|---|-----|----|-----|----|-----|----|
+| BP - 110 | -13 | 3 | -10 | 18 | -14 | -5 | -24 |  0 |
+| Sign     | -   | + | -   | +  | -   | -  | -   | 0  |
+
+We have 7 non-zero differences, and 2 "successes". From here, we follow the same procedure as with the paired case:
+
+```{r}
+#| echo: TRUE
+
+p_value <- 2*(pbinom(2, 7, 0.5))
+p_value
+
+```
+
+With this p-value, we fail to reject the null hypothesis and do not have statistically significant evidence that the median blood pressure in this population is **not equal** to 110 mmHg.
 
 ## Why calculate sample size and power?
 
@@ -235,19 +339,19 @@ Using the t-distribution, we need 128 pills sampled to detect the desired differ
 
 **Question:** What statistical *power* will they have to detect this difference?
 
-## In R
+## In R {.smaller}
 
-\footnotesize
 
 ```{r}
 #| echo: true
+
 # Power calculation for two-sample t-test
-power.t.test(n = 20, 
-             delta = 8, 
-             sd = 10, 
-             sig.level = 0.05, 
-             type = "two.sample", 
-             alternative = "two.sided")
+power.t.test(n = 20,                            # sample size of 20 per group
+             delta = 8,                         # difference between means
+             sd = 10,                           # pop. standard deviation
+             sig.level = 0.05,                  # alpha
+             type = "two.sample",               # two-sample t test
+             alternative = "two.sided")         # two-sided alt. hypothesis
 ```
 ## Interpretation
 
@@ -613,6 +717,18 @@ ggcorrplot(p.mat)
 
 - Along with many other types of plots. 
 
+
+## A Note on Karl Pearson
+
+- Karl Pearson was an English biostatistician who established the field of mathematical statistics as we know it today.
+
+- The correlation coefficient we talked about today is named after him; you may have also noticed that the chi-squared test is sometimes called Pearson's chi-squared test (like it is in R output).
+
+. . .
+
+- Pearson, like Fisher, was a eugenicist (he founded the journal _The Annals of Eugenics_), and many of his beliefs are what is now categorized as scientific racism. 
+
+- In 2020, University College London renamed two buildings previously named in his honor. 
 
 ## Next Class
 

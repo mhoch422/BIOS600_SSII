@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -68,7 +68,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="lec-12-power-anno_MH_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="lec-12-power-anno_MH_files/libs/quarto-html/anchor.min.js"></script>
 <link href="lec-12-power-anno_MH_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="lec-12-power-anno_MH_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="lec-12-power-anno_MH_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="lec-12-power-anno_MH_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="lec-12-power-anno_MH_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="lec-12-power-anno_MH_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -159,6 +159,70 @@ window.Quarto = {
 <li><p>OI: Section 8.1</p></li>
 </ul>
 </section>
+<section id="t-tests-in-r" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="t-tests-in-r">T-tests in R</h2>
+<ul>
+<li><p>The one-sample, two-sample, and paired t-tests all are run in R using the function <code>t.test()</code>, but with slightly different syntax for each.</p></li>
+<li><p>For the one-sample t-test:</p></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># one-sample t-test</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(dataset<span class="sc">$</span>outcome,           <span class="co"># variable whose mean we are testing</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">mu =</span> <span class="dv">0</span>)                    <span class="co"># mean under the null (defaults to 0)</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li><p>We can also specify the alternative hypothesis (the default is a two-sided test) and the confidence level (the default is 0.95).</p></li>
+<li><p>We do not need to specify <code>paired</code> or <code>var.equal</code>, because we only have one sample.</p></li>
+</ul>
+</section>
+<section id="t-tests-in-r-1" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="t-tests-in-r-1">T-tests in R</h2>
+<ul>
+<li>For the two-sample t-test:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># two-sample t-test</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(outcome <span class="sc">~</span> group,           <span class="co"># variable whose mean we are testing ~</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                                  <span class="co"># variable differentiating the two groups</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> dataset,            <span class="co"># name of the dataset</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">mu =</span> <span class="dv">0</span>,                    <span class="co"># difference in means under the null (default 0)</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">var.equal =</span> <span class="cn">FALSE</span>)         <span class="co"># is the variance the same between two populations</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li><p>We can also specify the alternative hypothesis (the default is a two-sided test) and the confidence level (the default is 0.95).</p></li>
+<li><p>The default for <code>var.equal</code> is false and we do not specify <code>paired</code>.</p></li>
+</ul>
+</section>
+<section id="t-tests-in-r-2" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="t-tests-in-r-2">T-tests in R</h2>
+<ul>
+<li>For the paired t-test:</li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># paired t-test</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(dataset<span class="sc">$</span>baseline,          <span class="co"># variable with first part of paired data</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>       dataset<span class="sc">$</span>final,             <span class="co"># variable with second part of paired data</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> dataset,            <span class="co"># name of the dataset</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">mu =</span> <span class="dv">0</span>,                    <span class="co"># difference in means under the null (default 0)</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">paired =</span> <span class="cn">TRUE</span>)             <span class="co"># indicates a paired test</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<ul>
+<li><p>We can also specify the alternative hypothesis (the default is a two-sided test) and the confidence level (the default is 0.95).</p></li>
+<li><p>We do not need to specify <code>var.equal()</code>.</p></li>
+<li><p>The two columns with the data can be in either order; if you flip them, the test statistic will change sign but have the same magnitude.</p></li>
+</ul>
+</section>
+<section id="t-tests-in-r-3" class="level2">
+<h2 class="anchored" data-anchor-id="t-tests-in-r-3">T-tests in R</h2>
+<ul>
+<li><p>For the one-sample t-test and the paired t-test, you have the option to specify <code>data = dataset</code> as input to the function.</p></li>
+<li><p>If you do this, you shouldn’t include <code>data$</code> before the column names you are testing.</p></li>
+<li><p>The last three slides are good examples of commenting your code; commenting makes it easier for you to understand your thought process while coding, and also will make it easier for anyone else reading your code to understand what it does.</p></li>
+</ul>
+</section>
 <section id="mapping-parametric-to-nonparametric-tests" class="level2 smaller">
 <h2 class="smaller anchored" data-anchor-id="mapping-parametric-to-nonparametric-tests">Mapping Parametric to Non‑Parametric Tests</h2>
 <table class="caption-top table">
@@ -216,6 +280,92 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
+</section>
+<section id="non-parametric-alternative-for-one-sample-test" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="non-parametric-alternative-for-one-sample-test">Non-parametric alternative for one-sample test</h2>
+<ul>
+<li><p>Much like how the paired t-test and one-sample t-test are equivalent in the parametric case, you can use the sign test or the Wilcoxon signed-rank test for a one-sample test of the median.</p></li>
+<li><p>As an example, suppose we have a small sample of systolic blood pressures and want to test if the median blood pressure in this population is equal to 110 mmHg.</p></li>
+</ul>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Blood Pressure (mmHg)</td>
+<td>97</td>
+<td>113</td>
+<td>100</td>
+<td>128</td>
+<td>96</td>
+<td>105</td>
+<td>86</td>
+<td>110</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Instead of taking a difference between before/after values, we would conduct the sign test by first subtracting 110 from each of these blood pressures.</li>
+</ul>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th></th>
+<th>1</th>
+<th>2</th>
+<th>3</th>
+<th>4</th>
+<th>5</th>
+<th>6</th>
+<th>7</th>
+<th>8</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>BP - 110</td>
+<td>-13</td>
+<td>3</td>
+<td>-10</td>
+<td>18</td>
+<td>-14</td>
+<td>-5</td>
+<td>-24</td>
+<td>0</td>
+</tr>
+<tr class="even">
+<td>Sign</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>+</td>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>0</td>
+</tr>
+</tbody>
+</table>
+<p>We have 7 non-zero differences, and 2 “successes”. From here, we follow the same procedure as with the paired case:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>p_value <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span>(<span class="fu">pbinom</span>(<span class="dv">2</span>, <span class="dv">7</span>, <span class="fl">0.5</span>))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>p_value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.453125</code></pre>
+</div>
+</div>
+<p>With this p-value, we fail to reject the null hypothesis and do not have statistically significant evidence that the median blood pressure in this population is <strong>not equal</strong> to 110 mmHg.</p>
 </section>
 <section id="why-calculate-sample-size-and-power" class="level2">
 <h2 class="anchored" data-anchor-id="why-calculate-sample-size-and-power">Why calculate sample size and power?</h2>
@@ -403,9 +553,9 @@ window.Quarto = {
 <li><p>Power = 80%, so Type 2 error rate is 1-.80 = .20 = <span class="math inline">\(\beta\)</span>.</p></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span> <span class="co"># type 1 error rate</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> .<span class="dv">20</span> <span class="co"># type 2 error rate</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>alpha<span class="sc">/</span><span class="dv">2</span>); <span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>beta)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span> <span class="co"># type 1 error rate</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>beta <span class="ot">&lt;-</span> .<span class="dv">20</span> <span class="co"># type 2 error rate</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>alpha<span class="sc">/</span><span class="dv">2</span>); <span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>beta)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.959964</code></pre>
 </div>
@@ -435,11 +585,11 @@ window.Quarto = {
 <section id="in-r" class="level2">
 <h2 class="anchored" data-anchor-id="in-r">In R</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">power.t.test</span>(<span class="at">delta =</span> <span class="fl">0.002</span>,</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">sd =</span> <span class="fl">0.008</span>,</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">sig.level =</span> <span class="fl">0.05</span>,</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">power =</span> <span class="fl">0.8</span>,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">type =</span> <span class="st">"one.sample"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">power.t.test</span>(<span class="at">delta =</span> <span class="fl">0.002</span>,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">sd =</span> <span class="fl">0.008</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">sig.level =</span> <span class="fl">0.05</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">power =</span> <span class="fl">0.8</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">type =</span> <span class="st">"one.sample"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
      One-sample t test power calculation 
@@ -466,13 +616,13 @@ window.Quarto = {
 <section id="in-r-1" class="level2">
 <h2 class="anchored" data-anchor-id="in-r-1">In R</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Power calculation for two-sample t-test</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">power.t.test</span>(<span class="at">n =</span> <span class="dv">20</span>, </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">delta =</span> <span class="dv">8</span>, </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">sd =</span> <span class="dv">10</span>, </span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">sig.level =</span> <span class="fl">0.05</span>, </span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">type =</span> <span class="st">"two.sample"</span>, </span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Power calculation for two-sample t-test</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">power.t.test</span>(<span class="at">n =</span> <span class="dv">20</span>, </span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">delta =</span> <span class="dv">8</span>, </span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">sd =</span> <span class="dv">10</span>, </span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">sig.level =</span> <span class="fl">0.05</span>, </span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">type =</span> <span class="st">"two.sample"</span>, </span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
      Two-sample t test power calculation 
@@ -507,12 +657,12 @@ NOTE: n is number in *each* group</code></pre>
 <section id="in-r-2" class="level2">
 <h2 class="anchored" data-anchor-id="in-r-2">In R</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">power.t.test</span>(<span class="at">power =</span> <span class="fl">0.90</span>,</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">delta =</span> <span class="dv">15</span>,</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">sd =</span> <span class="dv">20</span>,</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">sig.level =</span> <span class="fl">0.05</span>,</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">type =</span> <span class="st">"two.sample"</span>,</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">power.t.test</span>(<span class="at">power =</span> <span class="fl">0.90</span>,</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>             <span class="at">delta =</span> <span class="dv">15</span>,</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">sd =</span> <span class="dv">20</span>,</span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>             <span class="at">sig.level =</span> <span class="fl">0.05</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>             <span class="at">type =</span> <span class="st">"two.sample"</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>             <span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
      Two-sample t test power calculation 
@@ -588,7 +738,7 @@ NOTE: n is number in *each* group</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="lec-12-power-anno_MH_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" alt="A scatterplot with the x-axis labeled Adequate aerobic activity (%) and the y-axis labeled Obesity (%); the dots follow roughly a downward line" width="672"></p>
+<p><img src="lec-12-power-anno_MH_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" alt="A scatterplot with the x-axis labeled Adequate aerobic activity (%) and the y-axis labeled Obesity (%); the dots follow roughly a downward line" width="672"></p>
 </figure>
 </div>
 </div>
@@ -627,7 +777,7 @@ NOTE: n is number in *each* group</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="lec-12-power-anno_MH_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" alt="Two scatterplots side-by-side. The one on the left is titled Correlation of 0.6 and the dots are not closely grouped, but generally the y value seems to increase when the x value increases. The one on the right is titled Correlation of 1 and the dots perfectly follow the line x = y." width="672"></p>
+<p><img src="lec-12-power-anno_MH_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" alt="Two scatterplots side-by-side. The one on the left is titled Correlation of 0.6 and the dots are not closely grouped, but generally the y value seems to increase when the x value increases. The one on the right is titled Correlation of 1 and the dots perfectly follow the line x = y." width="672"></p>
 </figure>
 </div>
 </div>
@@ -639,7 +789,7 @@ NOTE: n is number in *each* group</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="lec-12-power-anno_MH_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" alt="Two scatterplots side-by-side. The one on the left is titled Correlation of -0.2 and the dots are not closely grouped, but there is a slight downward trend. The one on the right is titled Correlation of -0.8 and the dots are more closely grouped than on the left and show a clear downward trend." width="672"></p>
+<p><img src="lec-12-power-anno_MH_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" alt="Two scatterplots side-by-side. The one on the left is titled Correlation of -0.2 and the dots are not closely grouped, but there is a slight downward trend. The one on the right is titled Correlation of -0.8 and the dots are more closely grouped than on the left and show a clear downward trend." width="672"></p>
 </figure>
 </div>
 </div>
@@ -651,7 +801,7 @@ NOTE: n is number in *each* group</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="lec-12-power-anno_MH_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" alt="Two scatterplots side-by-side. The one on the left is titled Correlation of 0 and the dots are randomly scatted. The one on the right is titled Correlation of 0 and the dots follow a parabola." width="672"></p>
+<p><img src="lec-12-power-anno_MH_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" alt="Two scatterplots side-by-side. The one on the left is titled Correlation of 0 and the dots are randomly scatted. The one on the right is titled Correlation of 0 and the dots follow a parabola." width="672"></p>
 </figure>
 </div>
 </div>
@@ -713,7 +863,7 @@ NOTE: n is number in *each* group</code></pre>
 <li><p>This function is in the <code>ggcorrplot</code> package.</p></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggcorrplot)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggcorrplot)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li>Let’s check out <a href="https://cran.r-project.org/web/packages/ggcorrplot/readme/README.html">some examples</a>.</li>
@@ -726,10 +876,10 @@ NOTE: n is number in *each* group</code></pre>
 <li><p><code>mtcars</code> is built <strong>into</strong> R, and I can just load the dataset</p></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Loading the dataset mtcars</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(mtcars)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Looking at first 5 variables for the first few observations</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mtcars[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Loading the dataset mtcars</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(mtcars)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co">#Looking at first 5 variables for the first few observations</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(mtcars[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                   mpg cyl disp  hp drat
 Mazda RX4         21.0   6  160 110 3.90
@@ -747,10 +897,10 @@ Valiant           18.1   6  225 105 2.76</code></pre>
 <li><code>mtcars</code> is a built-in R dataset, taken from the 1974 Motor Trend US magazine. It has fuel consumption and 10 aspects of automobile design/performance for 32 automobiles.</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute a correlation matrix</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(mtcars)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>corr <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">cor</span>(mtcars), <span class="dv">1</span>) <span class="co"># round to 1 decimal</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(corr[, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute a correlation matrix</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(mtcars)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>corr <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">cor</span>(mtcars), <span class="dv">1</span>) <span class="co"># round to 1 decimal</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(corr[, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      mpg  cyl disp   hp drat   wt
 mpg   1.0 -0.9 -0.8 -0.8  0.7 -0.9
@@ -765,10 +915,10 @@ wt   -0.9  0.8  0.9  0.7 -0.7  1.0</code></pre>
 <section id="plotting-the-correlation-code" class="level2">
 <h2 class="anchored" data-anchor-id="plotting-the-correlation-code">Plotting the correlation: code</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the correlation matrix</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="co"># --------------------------------</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="co"># method = "square" (default)</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorrplot</span>(corr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the correlation matrix</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># --------------------------------</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="co"># method = "square" (default)</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorrplot</span>(corr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="plotting-the-correlation-output" class="level2">
@@ -784,7 +934,7 @@ wt   -0.9  0.8  0.9  0.7 -0.7  1.0</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="lec-12-power-anno_MH_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" alt="An 11 by 11 grid, with the rows and columns of the grid labeled with the eleven variables in the m t cars data set. The squares of the grid are colored on a gradient from -1 to 1, where dark blue corresponds to -1, white corresponds to 0, and red corresponds to 1; this is shown in the legend labeled Correlation. The squares where the row and column have the same label are bright red." width="672"></p>
+<p><img src="lec-12-power-anno_MH_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" alt="An 11 by 11 grid, with the rows and columns of the grid labeled with the eleven variables in the m t cars data set. The squares of the grid are colored on a gradient from -1 to 1, where dark blue corresponds to -1, white corresponds to 0, and red corresponds to 1; this is shown in the legend labeled Correlation. The squares where the row and column have the same label are bright red." width="672"></p>
 </figure>
 </div>
 </div>
@@ -797,9 +947,9 @@ wt   -0.9  0.8  0.9  0.7 -0.7  1.0</code></pre>
 </ul>
 <p><span class="math display">\[H_0: \rho = 0 \quad \text{vs.} \quad H_A: \rho \neq 0\]</span></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute a matrix of correlation p-values</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>p.mat <span class="ot">&lt;-</span> <span class="fu">cor_pmat</span>(mtcars)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(p.mat[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute a matrix of correlation p-values</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>p.mat <span class="ot">&lt;-</span> <span class="fu">cor_pmat</span>(mtcars)</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(p.mat[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              mpg          cyl         disp           hp
 mpg  0.000000e+00 6.112687e-10 9.380327e-10 1.787835e-07
@@ -814,11 +964,11 @@ wt   1.293959e-10 1.217567e-07 1.222320e-11 4.145827e-05</code></pre>
 <section id="example-code" class="level2">
 <h2 class="anchored" data-anchor-id="example-code">Example: code</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorrplot</span>(p.mat)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorrplot</span>(p.mat)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="lec-12-power-anno_MH_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" alt="An 11 by 11 grid as before, but with mostly white squares, with a scattering of light red and medium red squares in the upper righthand corner." width="672"></p>
+<p><img src="lec-12-power-anno_MH_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" alt="An 11 by 11 grid as before, but with mostly white squares, with a scattering of light red and medium red squares in the upper righthand corner." width="672"></p>
 </figure>
 </div>
 </div>
@@ -829,6 +979,18 @@ wt   1.293959e-10 1.217567e-07 1.222320e-11 4.145827e-05</code></pre>
 <p><a href="https://r-graph-gallery.com/">R Graph Gallery</a> has lots of examples, with code!</p>
 <ul>
 <li>Along with many other types of plots.</li>
+</ul>
+</section>
+<section id="a-note-on-karl-pearson" class="level2">
+<h2 class="anchored" data-anchor-id="a-note-on-karl-pearson">A Note on Karl Pearson</h2>
+<ul>
+<li><p>Karl Pearson was an English biostatistician who established the field of mathematical statistics as we know it today.</p></li>
+<li><p>The correlation coefficient we talked about today is named after him; you may have also noticed that the chi-squared test is sometimes called Pearson’s chi-squared test (like it is in R output).</p></li>
+</ul>
+<p>. . .</p>
+<ul>
+<li><p>Pearson, like Fisher, was a eugenicist (he founded the journal <em>The Annals of Eugenics</em>), and many of his beliefs are what is now categorized as scientific racism.</p></li>
+<li><p>In 2020, University College London renamed two buildings previously named in his honor.</p></li>
 </ul>
 </section>
 <section id="next-class" class="level2">
