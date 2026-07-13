@@ -1075,13 +1075,16 @@ X-squared = 2.2755, df = 1, p-value = 0.1314</code></pre>
 </section>
 <section id="conducting-the-sign-test" class="slide level2">
 <h2>Conducting the sign test</h2>
-<p>We can calculate, for <span class="math inline">\(X\sim Binom(12,0.5)\)</span>, <br> <span class="math inline">\(P(X=9) + P(X=10) + P(X=11) + P(X=12)\)</span> <br> <strong>Remember <span class="math inline">\(P(X\geq 9) = 1-P(X&lt;8)\)</span></strong></p>
+<p>We can calculate, for <span class="math inline">\(X\sim Binom(12,0.5)\)</span>, <br> <span class="math inline">\(P(X=9) + P(X=10) + P(X=11) + P(X=12)\)</span> <br> <strong>Remember <span class="math inline">\(P(X\geq 9) = 1-P(X\leq8)\)</span></strong></p>
 <p>and then double it (for the two-sided test).</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="dv">2</span><span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span><span class="fu">pbinom</span>(<span class="dv">8</span>, <span class="dv">12</span>, <span class="fl">0.5</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1459961</code></pre>
 </div>
+</div>
+<div class="fragment">
+<p>Note that <code>pbinom()</code> behaves like <code>pnorm()</code> – it calculates the probability to the left (inclusive) of the first value (here, 8).</p>
 </div>
 </section>
 <section id="conducting-the-sign-test-1" class="slide level2">
@@ -1148,7 +1151,7 @@ X-squared = 2.2755, df = 1, p-value = 0.1314</code></pre>
 <ul>
 <li><p>A common symptom of otitis media in young children is the prolonged presence of fluid in the middle ear, known as middle-ear effusion. The presence of fluid may result in temporary hearing loss and interfere with normal learning skills in the first 2 years of life.</p></li>
 <li><p>One hypothesis is that babies who are breastfed for at least one month build some immunity and have less prolonged effusion than their bottle-fed counterparts.</p></li>
-<li><p>A small study of 14 babies is set up, with babies matched one-to-one by age, sex, socioeconomic status, and health condition. One member of the pair is a breastfed baby, and the other member is a bottle-fed baby. The outcome is the duration (days) of middle-ear effusion after the first episode of otitis media.</p></li>
+<li><p>A small study of 28 babies is set up, with babies matched one-to-one by age, sex, socioeconomic status, and health condition. One member of the pair is a breastfed baby, and the other member is a bottle-fed baby. The outcome is the duration (days) of middle-ear effusion after the first episode of otitis media.</p></li>
 </ul>
 </section>
 <section id="example-middle-ear-effusion-1" class="slide level2 smaller">
@@ -1762,9 +1765,11 @@ X-squared = 2.2755, df = 1, p-value = 0.1314</code></pre>
 <pre><code>[1] 0.02633009</code></pre>
 </div>
 </div>
+<div class="fragment">
 <ul>
 <li>As it turns out, we reject <span class="math inline">\(H_0\)</span> and conclude the two groups do not have the same median. The median exercise time in the SD group is higher compared to the 3VD group.</li>
 </ul>
+</div>
 </section>
 <section id="why-do-we-use-u_1-when-computing-z" class="slide level2 smaller">
 <h2>Why do we use <span class="math inline">\(U_1\)</span> when computing <span class="math inline">\(z\)</span>?</h2>

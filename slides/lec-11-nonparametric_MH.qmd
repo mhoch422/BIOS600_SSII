@@ -437,13 +437,17 @@ We can calculate, for $X\sim Binom(12,0.5)$,
 <br>
 $P(X=9) + P(X=10) + P(X=11) + P(X=12)$
 <br>
-**Remember $P(X\geq 9) = 1-P(X<8)$**
+**Remember $P(X\geq 9) = 1-P(X\leq8)$**
 
 and then double it (for the two-sided test).
 
 ```{r echo = T}
 2*(1-pbinom(8, 12, 0.5))
 ```
+
+. . .
+
+Note that `pbinom()` behaves like `pnorm()` -- it calculates the probability to the left (inclusive) of the first value (here, 8).
 
 ## Conducting the sign test
 
@@ -511,7 +515,7 @@ Don't do this by hand -- we will use R.
 
 -   One hypothesis is that babies who are breastfed for at least one month build some immunity and have less prolonged effusion than their bottle-fed counterparts.
 
--   A small study of 14 babies is set up, with babies matched one-to-one by age, sex, socioeconomic status, and health condition. One member of the pair is a breastfed baby, and the other member is a bottle-fed baby. The outcome is the duration (days) of middle-ear effusion after the first episode of otitis media.
+-   A small study of 28 babies is set up, with babies matched one-to-one by age, sex, socioeconomic status, and health condition. One member of the pair is a breastfed baby, and the other member is a bottle-fed baby. The outcome is the duration (days) of middle-ear effusion after the first episode of otitis media.
 
 ## Example: middle ear effusion {.smaller}
 
@@ -698,6 +702,8 @@ p_value <- 2 * (1 - pnorm(z))
 
 z; p_value
 ```
+
+. . . 
 
 -   As it turns out, we reject $H_0$ and conclude the two groups do not have the same median. The median exercise time in the SD group is higher compared to the 3VD group.
 
