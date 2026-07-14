@@ -205,9 +205,8 @@ window.Quarto = {
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(dataset<span class="sc">$</span>baseline,          <span class="co"># variable with first part of paired data</span></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>       dataset<span class="sc">$</span>final,             <span class="co"># variable with second part of paired data</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">data =</span> dataset,            <span class="co"># name of the dataset</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">mu =</span> <span class="dv">0</span>,                    <span class="co"># difference in means under the null (default 0)</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">paired =</span> <span class="cn">TRUE</span>)             <span class="co"># indicates a paired test</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">mu =</span> <span class="dv">0</span>,                    <span class="co"># difference in means under the null (default 0)</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">paired =</span> <span class="cn">TRUE</span>)             <span class="co"># indicates a paired test</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li><p>We can also specify the alternative hypothesis (the default is a two-sided test) and the confidence level (the default is 0.95).</p></li>
@@ -544,7 +543,7 @@ window.Quarto = {
 <li><p>How many pills do you need to sample in a shipment in order to ensure 80% power to detect a difference of 10% at <span class="math inline">\(\alpha\)</span>=0.05, assuming <span class="math inline">\(\sigma\)</span>=0.008? (10% of 0.02 is 0.002)</p></li>
 </ul>
 <p><span class="math display">\[n = \left[\frac{\sigma(z^*_{1-\alpha/2} + z^*_{1-\beta})}{\mu_1-\mu_0}\right]^2\]</span></p>
-<p>What are <span class="math inline">\(z^*_{1-\alpha/2}\)</span> and <span class="math inline">\(z^*_{1-\beta}\)</span>? These are the <span class="math inline">\(1-\alpha\)</span> and <span class="math inline">\(1-\beta\)</span> quantile cutoffs of a Z-distribution.</p>
+<p>What are <span class="math inline">\(z^*_{1-\alpha/2}\)</span> and <span class="math inline">\(z^*_{1-\beta}\)</span>? These are the <span class="math inline">\(1-\alpha/2\)</span> and <span class="math inline">\(1-\beta\)</span> quantile cutoffs of a Z-distribution.</p>
 </section>
 <section id="z-cutoffs-in-r" class="level2">
 <h2 class="anchored" data-anchor-id="z-cutoffs-in-r">Z cutoffs in R</h2>
@@ -843,6 +842,18 @@ NOTE: n is number in *each* group</code></pre>
 </div>
 <p>Also, <a href="https://github.com/jumpingrivers/datasauRus">Datasaurus Dozen</a>!</p>
 </section>
+<section id="datasaurus-bakers-dozen" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="datasaurus-bakers-dozen">Datasaurus (Baker’s Dozen)</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lec-12-power-anno_MH_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
 <section id="correlation-does-not-imply-causation" class="level2">
 <h2 class="anchored" data-anchor-id="correlation-does-not-imply-causation">Correlation does not imply causation</h2>
 <p><img src="images/lec-16/spur.png" class="img-fluid" alt="A graph with the title Solar power generated in Belize correlates with The number of fire inspectors in Fdlorida. The lefthand y-axis is labeled Billion kilowatt hours, the righthand y-axis is labeled Laborers, and the x-axis has the years 2003 to 2021. A black line shows the total solar power generated in belize, which is very low for 2003- 2018, then jumps to 0.01 billion kwh in 2019. A red line shows the number of fire inspectors in Florida, which is relatively constant at about 900 from 2003 to 2018, then jumps to 2400 in 2019. The lines closely overlap."></p>
@@ -934,7 +945,7 @@ wt   -0.9  0.8  0.9  0.7 -0.7  1.0</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="lec-12-power-anno_MH_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" alt="An 11 by 11 grid, with the rows and columns of the grid labeled with the eleven variables in the m t cars data set. The squares of the grid are colored on a gradient from -1 to 1, where dark blue corresponds to -1, white corresponds to 0, and red corresponds to 1; this is shown in the legend labeled Correlation. The squares where the row and column have the same label are bright red." width="672"></p>
+<p><img src="lec-12-power-anno_MH_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" alt="An 11 by 11 grid, with the rows and columns of the grid labeled with the eleven variables in the m t cars data set. The squares of the grid are colored on a gradient from -1 to 1, where dark blue corresponds to -1, white corresponds to 0, and red corresponds to 1; this is shown in the legend labeled Correlation. The squares where the row and column have the same label are bright red." width="672"></p>
 </figure>
 </div>
 </div>
@@ -968,7 +979,7 @@ wt   1.293959e-10 1.217567e-07 1.222320e-11 4.145827e-05</code></pre>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="lec-12-power-anno_MH_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" alt="An 11 by 11 grid as before, but with mostly white squares, with a scattering of light red and medium red squares in the upper righthand corner." width="672"></p>
+<p><img src="lec-12-power-anno_MH_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" alt="An 11 by 11 grid as before, but with mostly white squares, with a scattering of light red and medium red squares in the upper righthand corner." width="672"></p>
 </figure>
 </div>
 </div>
@@ -981,8 +992,8 @@ wt   1.293959e-10 1.217567e-07 1.222320e-11 4.145827e-05</code></pre>
 <li>Along with many other types of plots.</li>
 </ul>
 </section>
-<section id="a-note-on-karl-pearson" class="level2">
-<h2 class="anchored" data-anchor-id="a-note-on-karl-pearson">A Note on Karl Pearson</h2>
+<section id="a-note-on-karl-pearson" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="a-note-on-karl-pearson">A Note on Karl Pearson</h2>
 <ul>
 <li><p>Karl Pearson was an English biostatistician who established the field of mathematical statistics as we know it today.</p></li>
 <li><p>The correlation coefficient we talked about today is named after him; you may have also noticed that the chi-squared test is sometimes called Pearson’s chi-squared test (like it is in R output).</p></li>

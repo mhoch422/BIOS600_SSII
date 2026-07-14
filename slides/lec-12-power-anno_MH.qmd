@@ -85,7 +85,6 @@ t.test(outcome ~ group,           # variable whose mean we are testing ~
 
 t.test(dataset$baseline,          # variable with first part of paired data
        dataset$final,             # variable with second part of paired data
-       data = dataset,            # name of the dataset
        mu = 0,                    # difference in means under the null (default 0)
        paired = TRUE)             # indicates a paired test
 
@@ -274,7 +273,7 @@ $$n = \left[ \frac{\sigma (z^*_{1-\alpha/2} + z^*_{1-\beta})}{\mu_1-\mu_0}\right
 
 $$n = \left[\frac{\sigma(z^*_{1-\alpha/2} + z^*_{1-\beta})}{\mu_1-\mu_0}\right]^2$$
 
-What are $z^*_{1-\alpha/2}$ and $z^*_{1-\beta}$? These are the $1-\alpha$ and $1-\beta$ quantile cutoffs of a Z-distribution.
+What are $z^*_{1-\alpha/2}$ and $z^*_{1-\beta}$? These are the $1-\alpha/2$ and $1-\beta$ quantile cutoffs of a Z-distribution.
 
 ## Z cutoffs in R
 
@@ -610,6 +609,24 @@ In each of the datasets the following statistical summaries hold:
 
 Also, [Datasaurus Dozen](https://github.com/jumpingrivers/datasauRus)!
 
+## Datasaurus (Baker's Dozen) {.smaller}
+
+
+```{r}
+#| message: FALSE
+#| echo: FALSE
+
+library("ggplot2")
+library("datasauRus")
+ggplot(datasaurus_dozen, aes(x = x, y = y, colour = dataset))+
+  geom_point() +
+  theme_void() +
+  theme(legend.position = "none")+
+  facet_wrap(~dataset, ncol = 3)
+
+
+```
+
 ## Correlation does not imply causation
 
 ![](images/lec-16/spur.png){fig-alt="A graph with the title Solar power generated in Belize correlates with The number of fire inspectors in Fdlorida. The lefthand y-axis is labeled Billion kilowatt hours, the righthand y-axis is labeled Laborers, and the x-axis has the years 2003 to 2021. A black line shows the total solar power generated in belize, which is very low for 2003- 2018, then jumps to 0.01 billion kwh in 2019. A red line shows the number of fire inspectors in Florida, which is relatively constant at about 900 from 2003 to 2018, then jumps to 2400 in 2019. The lines closely overlap."}
@@ -719,7 +736,7 @@ ggcorrplot(p.mat)
 
 - Along with many other types of plots. 
 
-## A Note on Karl Pearson
+## A Note on Karl Pearson {.smaller}
 
 - Karl Pearson was an English biostatistician who established the field of mathematical statistics as we know it today.
 

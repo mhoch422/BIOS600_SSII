@@ -272,9 +272,8 @@
 <span id="cb3-2"><a href=""></a></span>
 <span id="cb3-3"><a href=""></a><span class="fu">t.test</span>(dataset<span class="sc">$</span>baseline,          <span class="co"># variable with first part of paired data</span></span>
 <span id="cb3-4"><a href=""></a>       dataset<span class="sc">$</span>final,             <span class="co"># variable with second part of paired data</span></span>
-<span id="cb3-5"><a href=""></a>       <span class="at">data =</span> dataset,            <span class="co"># name of the dataset</span></span>
-<span id="cb3-6"><a href=""></a>       <span class="at">mu =</span> <span class="dv">0</span>,                    <span class="co"># difference in means under the null (default 0)</span></span>
-<span id="cb3-7"><a href=""></a>       <span class="at">paired =</span> <span class="cn">TRUE</span>)             <span class="co"># indicates a paired test</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb3-5"><a href=""></a>       <span class="at">mu =</span> <span class="dv">0</span>,                    <span class="co"># difference in means under the null (default 0)</span></span>
+<span id="cb3-6"><a href=""></a>       <span class="at">paired =</span> <span class="cn">TRUE</span>)             <span class="co"># indicates a paired test</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li><p>We can also specify the alternative hypothesis (the default is a two-sided test) and the confidence level (the default is 0.95).</p></li>
@@ -282,26 +281,7 @@
 <li><p>The two columns with the data can be in either order; if you flip them, the test statistic will change sign but have the same magnitude.</p></li>
 </ul>
 </section>
-<section id="t-tests-in-r-3" class="slide level2 smaller">
-<h2>T-tests in R</h2>
-<ul>
-<li>For the two-sample t-test:</li>
-</ul>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="co"># two-sample t-test</span></span>
-<span id="cb4-2"><a href=""></a></span>
-<span id="cb4-3"><a href=""></a><span class="fu">t.test</span>(outcome <span class="sc">~</span> group,           <span class="co"># variable whose mean we are testing ~</span></span>
-<span id="cb4-4"><a href=""></a>                                  <span class="co"># variable differentiating the two groups</span></span>
-<span id="cb4-5"><a href=""></a>       <span class="at">data =</span> dataset,            <span class="co"># name of the dataset</span></span>
-<span id="cb4-6"><a href=""></a>       <span class="at">mu =</span> <span class="dv">0</span>,                    <span class="co"># difference in means under the null (default 0)</span></span>
-<span id="cb4-7"><a href=""></a>       <span class="at">var.equal =</span> <span class="cn">FALSE</span>)         <span class="co"># is the variance the same between two populations</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</div>
-<ul>
-<li><p>We can also specify the alternative hypothesis (the default is a two-sided test) and the confidence level (the default is 0.95).</p></li>
-<li><p>The default for <code>var.equal</code> is false and we do not specify <code>paired</code>.</p></li>
-</ul>
-</section>
-<section id="t-tests-in-r-4" class="slide level2">
+<section id="t-tests-in-r-3" class="slide level2">
 <h2>T-tests in R</h2>
 <ul>
 <li><p>For the one-sample t-test and the paired t-test, you have the option to specify <code>data = dataset</code> as input to the function.</p></li>
@@ -448,8 +428,8 @@
 </table>
 <p>We have 7 non-zero differences, and 2 “successes”. From here, we follow the same procedure as with the paired case:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a>p_value <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span>(<span class="fu">pbinom</span>(<span class="dv">2</span>, <span class="dv">7</span>, <span class="fl">0.5</span>))</span>
-<span id="cb5-2"><a href=""></a>p_value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a>p_value <span class="ot">&lt;-</span> <span class="dv">2</span><span class="sc">*</span>(<span class="fu">pbinom</span>(<span class="dv">2</span>, <span class="dv">7</span>, <span class="fl">0.5</span>))</span>
+<span id="cb4-2"><a href=""></a>p_value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.453125</code></pre>
 </div>
@@ -633,7 +613,7 @@
 <li><p>How many pills do you need to sample in a shipment in order to ensure 80% power to detect a difference of 10% at <span class="math inline">\(\alpha\)</span>=0.05, assuming <span class="math inline">\(\sigma\)</span>=0.008? (10% of 0.02 is 0.002)</p></li>
 </ul>
 <p><span class="math display">\[n = \left[\frac{\sigma(z^*_{1-\alpha/2} + z^*_{1-\beta})}{\mu_1-\mu_0}\right]^2\]</span></p>
-<p>What are <span class="math inline">\(z^*_{1-\alpha/2}\)</span> and <span class="math inline">\(z^*_{1-\beta}\)</span>? These are the <span class="math inline">\(1-\alpha\)</span> and <span class="math inline">\(1-\beta\)</span> quantile cutoffs of a Z-distribution.</p>
+<p>What are <span class="math inline">\(z^*_{1-\alpha/2}\)</span> and <span class="math inline">\(z^*_{1-\beta}\)</span>? These are the <span class="math inline">\(1-\alpha/2\)</span> and <span class="math inline">\(1-\beta\)</span> quantile cutoffs of a Z-distribution.</p>
 </section>
 <section id="z-cutoffs-in-r" class="slide level2">
 <h2>Z cutoffs in R</h2>
@@ -642,9 +622,9 @@
 <li><p>Power = 80%, so Type 2 error rate is 1-.80 = .20 = <span class="math inline">\(\beta\)</span>.</p></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span> <span class="co"># type 1 error rate</span></span>
-<span id="cb7-2"><a href=""></a>beta <span class="ot">&lt;-</span> .<span class="dv">20</span> <span class="co"># type 2 error rate</span></span>
-<span id="cb7-3"><a href=""></a><span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>alpha<span class="sc">/</span><span class="dv">2</span>); <span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>beta)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span> <span class="co"># type 1 error rate</span></span>
+<span id="cb6-2"><a href=""></a>beta <span class="ot">&lt;-</span> .<span class="dv">20</span> <span class="co"># type 2 error rate</span></span>
+<span id="cb6-3"><a href=""></a><span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>alpha<span class="sc">/</span><span class="dv">2</span>); <span class="fu">qnorm</span>(<span class="dv">1</span><span class="sc">-</span>beta)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.959964</code></pre>
 </div>
@@ -674,11 +654,11 @@
 <section id="in-r" class="slide level2">
 <h2>In R</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="fu">power.t.test</span>(<span class="at">delta =</span> <span class="fl">0.002</span>,</span>
-<span id="cb10-2"><a href=""></a>             <span class="at">sd =</span> <span class="fl">0.008</span>,</span>
-<span id="cb10-3"><a href=""></a>             <span class="at">sig.level =</span> <span class="fl">0.05</span>,</span>
-<span id="cb10-4"><a href=""></a>             <span class="at">power =</span> <span class="fl">0.8</span>,</span>
-<span id="cb10-5"><a href=""></a>             <span class="at">type =</span> <span class="st">"one.sample"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="fu">power.t.test</span>(<span class="at">delta =</span> <span class="fl">0.002</span>,</span>
+<span id="cb9-2"><a href=""></a>             <span class="at">sd =</span> <span class="fl">0.008</span>,</span>
+<span id="cb9-3"><a href=""></a>             <span class="at">sig.level =</span> <span class="fl">0.05</span>,</span>
+<span id="cb9-4"><a href=""></a>             <span class="at">power =</span> <span class="fl">0.8</span>,</span>
+<span id="cb9-5"><a href=""></a>             <span class="at">type =</span> <span class="st">"one.sample"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
      One-sample t test power calculation 
@@ -705,13 +685,13 @@
 <section id="in-r-1" class="slide level2 smaller">
 <h2>In R</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a><span class="co"># Power calculation for two-sample t-test</span></span>
-<span id="cb12-2"><a href=""></a><span class="fu">power.t.test</span>(<span class="at">n =</span> <span class="dv">20</span>,                            <span class="co"># sample size of 20 per group</span></span>
-<span id="cb12-3"><a href=""></a>             <span class="at">delta =</span> <span class="dv">8</span>,                         <span class="co"># difference between means</span></span>
-<span id="cb12-4"><a href=""></a>             <span class="at">sd =</span> <span class="dv">10</span>,                           <span class="co"># pop. standard deviation</span></span>
-<span id="cb12-5"><a href=""></a>             <span class="at">sig.level =</span> <span class="fl">0.05</span>,                  <span class="co"># alpha</span></span>
-<span id="cb12-6"><a href=""></a>             <span class="at">type =</span> <span class="st">"two.sample"</span>,               <span class="co"># two-sample t test</span></span>
-<span id="cb12-7"><a href=""></a>             <span class="at">alternative =</span> <span class="st">"two.sided"</span>)         <span class="co"># two-sided alt. hypothesis</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="co"># Power calculation for two-sample t-test</span></span>
+<span id="cb11-2"><a href=""></a><span class="fu">power.t.test</span>(<span class="at">n =</span> <span class="dv">20</span>,                            <span class="co"># sample size of 20 per group</span></span>
+<span id="cb11-3"><a href=""></a>             <span class="at">delta =</span> <span class="dv">8</span>,                         <span class="co"># difference between means</span></span>
+<span id="cb11-4"><a href=""></a>             <span class="at">sd =</span> <span class="dv">10</span>,                           <span class="co"># pop. standard deviation</span></span>
+<span id="cb11-5"><a href=""></a>             <span class="at">sig.level =</span> <span class="fl">0.05</span>,                  <span class="co"># alpha</span></span>
+<span id="cb11-6"><a href=""></a>             <span class="at">type =</span> <span class="st">"two.sample"</span>,               <span class="co"># two-sample t test</span></span>
+<span id="cb11-7"><a href=""></a>             <span class="at">alternative =</span> <span class="st">"two.sided"</span>)         <span class="co"># two-sided alt. hypothesis</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
      Two-sample t test power calculation 
@@ -746,12 +726,12 @@ NOTE: n is number in *each* group</code></pre>
 <section id="in-r-2" class="slide level2">
 <h2>In R</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a><span class="fu">power.t.test</span>(<span class="at">power =</span> <span class="fl">0.90</span>,</span>
-<span id="cb14-2"><a href=""></a>             <span class="at">delta =</span> <span class="dv">15</span>,</span>
-<span id="cb14-3"><a href=""></a>             <span class="at">sd =</span> <span class="dv">20</span>,</span>
-<span id="cb14-4"><a href=""></a>             <span class="at">sig.level =</span> <span class="fl">0.05</span>,</span>
-<span id="cb14-5"><a href=""></a>             <span class="at">type =</span> <span class="st">"two.sample"</span>,</span>
-<span id="cb14-6"><a href=""></a>             <span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="fu">power.t.test</span>(<span class="at">power =</span> <span class="fl">0.90</span>,</span>
+<span id="cb13-2"><a href=""></a>             <span class="at">delta =</span> <span class="dv">15</span>,</span>
+<span id="cb13-3"><a href=""></a>             <span class="at">sd =</span> <span class="dv">20</span>,</span>
+<span id="cb13-4"><a href=""></a>             <span class="at">sig.level =</span> <span class="fl">0.05</span>,</span>
+<span id="cb13-5"><a href=""></a>             <span class="at">type =</span> <span class="st">"two.sample"</span>,</span>
+<span id="cb13-6"><a href=""></a>             <span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
      Two-sample t test power calculation 
@@ -824,7 +804,7 @@ NOTE: n is number in *each* group</code></pre>
 <section id="remember-this-plot" class="slide level2">
 <h2>Remember this plot?</h2>
 
-<img data-src="lec-12-power_MH_files/figure-revealjs/unnamed-chunk-10-1.png" alt="A scatterplot with the x-axis labeled Adequate aerobic activity (%) and the y-axis labeled Obesity (%); the dots follow roughly a downward line" width="960" class="r-stretch"></section>
+<img data-src="lec-12-power_MH_files/figure-revealjs/unnamed-chunk-9-1.png" alt="A scatterplot with the x-axis labeled Adequate aerobic activity (%) and the y-axis labeled Obesity (%); the dots follow roughly a downward line" width="960" class="r-stretch"></section>
 <section id="some-questions-of-interest-may-include" class="slide level2">
 <h2>Some questions of interest may include:</h2>
 <ul>
@@ -855,15 +835,15 @@ NOTE: n is number in *each* group</code></pre>
 <section id="visualizing-rho" class="slide level2">
 <h2>Visualizing <span class="math inline">\(\rho\)</span></h2>
 
-<img data-src="lec-12-power_MH_files/figure-revealjs/unnamed-chunk-11-1.png" alt="Two scatterplots side-by-side. The one on the left is titled Correlation of 0.6 and the dots are not closely grouped, but generally the y value seems to increase when the x value increases. The one on the right is titled Correlation of 1 and the dots perfectly follow the line x = y." width="960" class="r-stretch"></section>
+<img data-src="lec-12-power_MH_files/figure-revealjs/unnamed-chunk-10-1.png" alt="Two scatterplots side-by-side. The one on the left is titled Correlation of 0.6 and the dots are not closely grouped, but generally the y value seems to increase when the x value increases. The one on the right is titled Correlation of 1 and the dots perfectly follow the line x = y." width="960" class="r-stretch"></section>
 <section id="visualizing-rho-1" class="slide level2">
 <h2>Visualizing <span class="math inline">\(\rho\)</span></h2>
 
-<img data-src="lec-12-power_MH_files/figure-revealjs/unnamed-chunk-12-1.png" alt="Two scatterplots side-by-side. The one on the left is titled Correlation of -0.2 and the dots are not closely grouped, but there is a slight downward trend. The one on the right is titled Correlation of -0.8 and the dots are more closely grouped than on the left and show a clear downward trend." width="960" class="r-stretch"></section>
+<img data-src="lec-12-power_MH_files/figure-revealjs/unnamed-chunk-11-1.png" alt="Two scatterplots side-by-side. The one on the left is titled Correlation of -0.2 and the dots are not closely grouped, but there is a slight downward trend. The one on the right is titled Correlation of -0.8 and the dots are more closely grouped than on the left and show a clear downward trend." width="960" class="r-stretch"></section>
 <section id="visualizing-rho-2" class="slide level2">
 <h2>Visualizing <span class="math inline">\(\rho\)</span></h2>
 
-<img data-src="lec-12-power_MH_files/figure-revealjs/unnamed-chunk-13-1.png" alt="Two scatterplots side-by-side. The one on the left is titled Correlation of 0 and the dots are randomly scatted. The one on the right is titled Correlation of 0 and the dots follow a parabola." width="960" class="r-stretch"></section>
+<img data-src="lec-12-power_MH_files/figure-revealjs/unnamed-chunk-12-1.png" alt="Two scatterplots side-by-side. The one on the left is titled Correlation of 0 and the dots are randomly scatted. The one on the right is titled Correlation of 0 and the dots follow a parabola." width="960" class="r-stretch"></section>
 <section id="pearsons-correlation-coefficient" class="slide level2 smaller">
 <h2>Pearson’s correlation coefficient</h2>
 <p><strong>Pearson’s correlation</strong> <span class="math inline">\(r\)</span> gives and estimate of <span class="math inline">\(\rho\)</span> as follows. Assuming our observed data are the pairs <span class="math inline">\((x_1, y_1), (x_2, y_2), \ldots, (x_n, y_n)\)</span>, we can calculate <span class="math inline">\(r\)</span> as</p>
@@ -900,6 +880,10 @@ NOTE: n is number in *each* group</code></pre>
 </div>
 <p>Also, <a href="https://github.com/jumpingrivers/datasauRus">Datasaurus Dozen</a>!</p>
 </section>
+<section id="datasaurus-bakers-dozen" class="slide level2 smaller">
+<h2>Datasaurus (Baker’s Dozen)</h2>
+
+<img data-src="lec-12-power_MH_files/figure-revealjs/unnamed-chunk-13-1.png" width="960" class="r-stretch"></section>
 <section id="correlation-does-not-imply-causation" class="slide level2">
 <h2>Correlation does not imply causation</h2>
 
@@ -920,7 +904,7 @@ NOTE: n is number in *each* group</code></pre>
 <li><p>This function is in the <code>ggcorrplot</code> package.</p></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a><span class="fu">library</span>(ggcorrplot)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a><span class="fu">library</span>(ggcorrplot)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li>Let’s check out <a href="https://cran.r-project.org/web/packages/ggcorrplot/readme/README.html">some examples</a>.</li>
@@ -933,10 +917,10 @@ NOTE: n is number in *each* group</code></pre>
 <li><p><code>mtcars</code> is built <strong>into</strong> R, and I can just load the dataset</p></li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href=""></a><span class="co"># Loading the dataset mtcars</span></span>
-<span id="cb17-2"><a href=""></a><span class="fu">data</span>(mtcars)</span>
-<span id="cb17-3"><a href=""></a><span class="co">#Looking at first 5 variables for the first few observations</span></span>
-<span id="cb17-4"><a href=""></a><span class="fu">head</span>(mtcars[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a><span class="co"># Loading the dataset mtcars</span></span>
+<span id="cb16-2"><a href=""></a><span class="fu">data</span>(mtcars)</span>
+<span id="cb16-3"><a href=""></a><span class="co">#Looking at first 5 variables for the first few observations</span></span>
+<span id="cb16-4"><a href=""></a><span class="fu">head</span>(mtcars[, <span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                   mpg cyl disp  hp drat
 Mazda RX4         21.0   6  160 110 3.90
@@ -954,10 +938,10 @@ Valiant           18.1   6  225 105 2.76</code></pre>
 <li><code>mtcars</code> is a built-in R dataset, taken from the 1974 Motor Trend US magazine. It has fuel consumption and 10 aspects of automobile design/performance for 32 automobiles.</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="co"># Compute a correlation matrix</span></span>
-<span id="cb19-2"><a href=""></a><span class="fu">data</span>(mtcars)</span>
-<span id="cb19-3"><a href=""></a>corr <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">cor</span>(mtcars), <span class="dv">1</span>) <span class="co"># round to 1 decimal</span></span>
-<span id="cb19-4"><a href=""></a><span class="fu">head</span>(corr[, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a><span class="co"># Compute a correlation matrix</span></span>
+<span id="cb18-2"><a href=""></a><span class="fu">data</span>(mtcars)</span>
+<span id="cb18-3"><a href=""></a>corr <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">cor</span>(mtcars), <span class="dv">1</span>) <span class="co"># round to 1 decimal</span></span>
+<span id="cb18-4"><a href=""></a><span class="fu">head</span>(corr[, <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      mpg  cyl disp   hp drat   wt
 mpg   1.0 -0.9 -0.8 -0.8  0.7 -0.9
@@ -972,10 +956,10 @@ wt   -0.9  0.8  0.9  0.7 -0.7  1.0</code></pre>
 <section id="plotting-the-correlation-code" class="slide level2">
 <h2>Plotting the correlation: code</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a><span class="co"># Visualize the correlation matrix</span></span>
-<span id="cb21-2"><a href=""></a><span class="co"># --------------------------------</span></span>
-<span id="cb21-3"><a href=""></a><span class="co"># method = "square" (default)</span></span>
-<span id="cb21-4"><a href=""></a><span class="fu">ggcorrplot</span>(corr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href=""></a><span class="co"># Visualize the correlation matrix</span></span>
+<span id="cb20-2"><a href=""></a><span class="co"># --------------------------------</span></span>
+<span id="cb20-3"><a href=""></a><span class="co"># method = "square" (default)</span></span>
+<span id="cb20-4"><a href=""></a><span class="fu">ggcorrplot</span>(corr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="plotting-the-correlation-output" class="slide level2">
@@ -989,9 +973,9 @@ wt   -0.9  0.8  0.9  0.7 -0.7  1.0</code></pre>
 </ul>
 <p><span class="math display">\[H_0: \rho = 0 \quad \text{vs.} \quad H_A: \rho \neq 0\]</span></p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href=""></a><span class="co"># Compute a matrix of correlation p-values</span></span>
-<span id="cb22-2"><a href=""></a>p.mat <span class="ot">&lt;-</span> <span class="fu">cor_pmat</span>(mtcars)</span>
-<span id="cb22-3"><a href=""></a><span class="fu">head</span>(p.mat[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href=""></a><span class="co"># Compute a matrix of correlation p-values</span></span>
+<span id="cb21-2"><a href=""></a>p.mat <span class="ot">&lt;-</span> <span class="fu">cor_pmat</span>(mtcars)</span>
+<span id="cb21-3"><a href=""></a><span class="fu">head</span>(p.mat[, <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>])</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              mpg          cyl         disp           hp
 mpg  0.000000e+00 6.112687e-10 9.380327e-10 1.787835e-07
@@ -1006,7 +990,7 @@ wt   1.293959e-10 1.217567e-07 1.222320e-11 4.145827e-05</code></pre>
 <section id="example-code" class="slide level2">
 <h2>Example: code</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href=""></a><span class="fu">ggcorrplot</span>(p.mat)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href=""></a><span class="fu">ggcorrplot</span>(p.mat)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="lec-12-power_MH_files/figure-revealjs/unnamed-chunk-20-1.png" alt="An 11 by 11 grid as before, but with mostly white squares, with a scattering of light red and medium red squares in the upper righthand corner." width="960" class="r-stretch"></section>
@@ -1017,7 +1001,7 @@ wt   1.293959e-10 1.217567e-07 1.222320e-11 4.145827e-05</code></pre>
 <li>Along with many other types of plots.</li>
 </ul>
 </section>
-<section id="a-note-on-karl-pearson" class="slide level2">
+<section id="a-note-on-karl-pearson" class="slide level2 smaller">
 <h2>A Note on Karl Pearson</h2>
 <ul>
 <li><p>Karl Pearson was an English biostatistician who established the field of mathematical statistics as we know it today.</p></li>
