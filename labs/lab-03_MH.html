@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.9.37">
+<meta name="generator" content="quarto-1.9.38">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -68,7 +68,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="lab-03_MH_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="lab-03_MH_files/libs/quarto-html/anchor.min.js"></script>
 <link href="lab-03_MH_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="lab-03_MH_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="lab-03_MH_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="lab-03_MH_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="lab-03_MH_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="lab-03_MH_files/libs/bootstrap/bootstrap-138a6193a3bd40baf1e627da441a4734.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -136,39 +136,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li><p><code>disp</code>: Displacement (engine size)</p></li>
 </ul>
 <p>We will use these variables to explore relationships and correlations in the dataset.</p>
-</section>
-<section id="partial-correlation" class="level2">
-<h2 class="anchored" data-anchor-id="partial-correlation">Partial correlation</h2>
-<p>We can ask ourselves</p>
-<ul>
-<li><p><strong>Is higher fuel efficiency associated with lower horsepower?</strong></p></li>
-<li><p>We anticipate</p>
-<ul>
-<li>Lighter cars have higher fuel efficiency</li>
-<li>Lighter cars have lower horsepower</li>
-</ul></li>
-</ul>
-</section>
-<section id="partial-correlation-1" class="level2">
-<h2 class="anchored" data-anchor-id="partial-correlation-1">Partial correlation</h2>
-<ul>
-<li><p>Car weight could be a <strong>confounder</strong></p></li>
-<li><p>Car weight is associated with the exposure (horsepower)</p></li>
-<li><p>Car weight is associated with the outcome (fuel efficiency)</p></li>
-<li><p>If I look at the association between fuel efficiency and horsepower I might get a biased estimate</p>
-<ul>
-<li>Could look like two things are related when they aren’t</li>
-<li>Could look larger or smaller than it really is</li>
-</ul></li>
-</ul>
-</section>
-<section id="partial-correlation-2" class="level2">
-<h2 class="anchored" data-anchor-id="partial-correlation-2">Partial correlation</h2>
-<ul>
-<li><p><strong>Partial correlation</strong> is one approach</p></li>
-<li><p>Isolates the direct association, preventing misleading results caused by confounding variables</p></li>
-<li><p>Partial correlation removes age’s influence from both variables, then asks what’s left</p></li>
-</ul>
 </section>
 <section id="pearsons-correlation" class="level2">
 <h2 class="anchored" data-anchor-id="pearsons-correlation">Pearson’s correlation</h2>
@@ -251,8 +218,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Correlation matrix for mpg, hp, wt</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>corr_matrix <span class="ot">&lt;-</span> <span class="fu">cor</span>(mtcars[, <span class="fu">c</span>(<span class="st">"mpg"</span>, <span class="st">"hp"</span>, <span class="st">"wt"</span>)])</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="co"># corr_matrix &lt;- round(cor(mtcars[, c("mpg", "hp", "wt")]), 1)</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>corr_matrix</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>corr_matrix</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>           mpg         hp         wt
 mpg  1.0000000 -0.7761684 -0.8676594
@@ -264,13 +230,6 @@ wt  -0.8676594  0.6587479  1.0000000</code></pre>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Correlation plot using ggcorrplot</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorrplot</span>(corr_matrix, <span class="at">lab =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
-ℹ Please use tidy evaluation idioms with `aes()`.
-ℹ See also `vignette("ggplot2-in-packages")` for more information.
-ℹ The deprecated feature was likely used in the ggcorrplot package.
-  Please report the issue at &lt;https://github.com/kassambara/ggcorrplot/issues&gt;.</code></pre>
-</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -281,13 +240,13 @@ wt  -0.8676594  0.6587479  1.0000000</code></pre>
 </div>
 <p>Let’s look visually at that relationship between hp and wt</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatter plot between mpg and wt</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> hp, <span class="at">y =</span> wt)) <span class="sc">+</span></span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Horsepower"</span>, </span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Weight (1000 lbs)"</span>, </span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Horsepower vs. Weight"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatter plot between mpg and wt</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> hp, <span class="at">y =</span> wt)) <span class="sc">+</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Horsepower"</span>, </span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Weight (1000 lbs)"</span>, </span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Horsepower vs. Weight"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -299,8 +258,9 @@ wt  -0.8676594  0.6587479  1.0000000</code></pre>
 <p>The <code>ggcorrplot</code> package offers lots of versatility in terms of visualizing correlation matrices. See <a href="http://www.sthda.com/english/wiki/ggcorrplot-visualization-of-a-correlation-matrix-using-ggplot2">documentation here</a> for several options.</p>
 <p>For example:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorrplot</span>(corr_matrix, <span class="at">lab =</span> <span class="st">"TRUE"</span>,</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">method =</span> <span class="st">"circle"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorrplot</span>(corr_matrix, </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">lab =</span> <span class="st">"TRUE"</span>,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">method =</span> <span class="st">"circle"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -311,8 +271,9 @@ wt  -0.8676594  0.6587479  1.0000000</code></pre>
 </div>
 <p>Hmm, this would probably look better without the numbers printed. Let’s try again:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorrplot</span>(corr_matrix, <span class="at">lab =</span> <span class="st">"FALSE"</span>,</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">method =</span> <span class="st">"circle"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggcorrplot</span>(corr_matrix, </span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">lab =</span> <span class="st">"FALSE"</span>,</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">method =</span> <span class="st">"circle"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -323,11 +284,44 @@ wt  -0.8676594  0.6587479  1.0000000</code></pre>
 </div>
 <p>The correlation plot visually reinforces the relationships: darker colors and larger numbers indicate stronger correlations, whether positive or negative.</p>
 </section>
+<section id="partial-correlation" class="level2">
+<h2 class="anchored" data-anchor-id="partial-correlation">Partial correlation</h2>
+<p>We can ask ourselves</p>
+<ul>
+<li><p><strong>Is higher fuel efficiency associated with lower horsepower?</strong></p></li>
+<li><p>We anticipate</p>
+<ul>
+<li>Lighter cars have higher fuel efficiency</li>
+<li>Lighter cars have lower horsepower</li>
+</ul></li>
+</ul>
+</section>
+<section id="partial-correlation-1" class="level2">
+<h2 class="anchored" data-anchor-id="partial-correlation-1">Partial correlation</h2>
+<ul>
+<li><p>Car weight could be a <strong>confounder</strong></p></li>
+<li><p>Car weight is associated with the exposure (horsepower)</p></li>
+<li><p>Car weight is associated with the outcome (fuel efficiency)</p></li>
+<li><p>If I look at the association between fuel efficiency and horsepower I might get a biased estimate</p>
+<ul>
+<li>Could look like two things are related when they aren’t</li>
+<li>Could look larger or smaller than it really is</li>
+</ul></li>
+</ul>
+</section>
+<section id="partial-correlation-2" class="level2">
+<h2 class="anchored" data-anchor-id="partial-correlation-2">Partial correlation</h2>
+<ul>
+<li><p><strong>Partial correlation</strong> is one approach</p></li>
+<li><p>Isolates the direct association, preventing misleading results caused by confounding variables</p></li>
+<li><p>Partial correlation removes weight’s influence from both variables, then asks what’s left</p></li>
+</ul>
+</section>
 <section id="exploring-confounding" class="level2">
 <h2 class="anchored" data-anchor-id="exploring-confounding">Exploring confounding</h2>
 <p>Now, we will investigate whether <code>wt</code> (weight) could be a confounding variable influencing the relationship between <code>mpg</code> and <code>hp</code>. By using partial correlation, we can control for the effect of weight and see whether the relationship between <code>mpg</code> and <code>hp</code> changes.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pcor.test</span>(mtcars<span class="sc">$</span>mpg, mtcars<span class="sc">$</span>hp, mtcars<span class="sc">$</span>wt)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pcor.test</span>(mtcars<span class="sc">$</span>mpg, mtcars<span class="sc">$</span>hp, mtcars<span class="sc">$</span>wt)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    estimate     p.value statistic  n gp  Method
 1 -0.5469926 0.001451229 -3.518712 32  1 pearson</code></pre>
@@ -341,23 +335,31 @@ wt  -0.8676594  0.6587479  1.0000000</code></pre>
 <p>Spearman’s correlation is different from Pearson’s correlation in that it doesn’t assume a linear relationship. Instead, it measures how well the relationship between two variables can be described using a <strong>monotonic function</strong>. In a monotonic relationship, as one variable increases (or decreases), the other variable either always increases or always decreases, though not necessarily at a constant rate.</p>
 <p>Here, We’ll compute the Spearman’s correlation between <code>mpg</code> and <code>hp</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(mtcars<span class="sc">$</span>mpg, mtcars<span class="sc">$</span>hp, <span class="at">method=</span><span class="st">"spearman"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(mtcars<span class="sc">$</span>mpg, mtcars<span class="sc">$</span>hp, <span class="at">method =</span> <span class="st">"spearman"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] -0.8946646</code></pre>
 </div>
 </div>
 <p>The Spearman’s correlation between <code>mpg</code> and <code>hp</code> is approximately -0.895, which is stronger than the Pearson’s correlation. This suggests a strong negative relationship between <code>mpg</code> and <code>hp</code>, even when considering the ranks of the data, indicating a monotonic relationship.</p>
+<p>We can also use Spearman’s correlation as the method for computing partial correlation:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pcor.test</span>(mtcars<span class="sc">$</span>mpg, mtcars<span class="sc">$</span>hp, mtcars<span class="sc">$</span>wt, <span class="at">method =</span> <span class="st">"spearman"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    estimate      p.value statistic  n gp   Method
+1 -0.7105263 7.521107e-06 -5.437631 32  1 spearman</code></pre>
+</div>
+</div>
 </section>
 <section id="identifying-non-linear-relationships" class="level2">
 <h2 class="anchored" data-anchor-id="identifying-non-linear-relationships">Identifying non-linear relationships</h2>
 <p>Finally, we can create a matrix of scatterplots using the <code>ggpairs()</code> function to visualize relationships between multiple variables at once. This will help us identify potential non-linear relationships that could impact our choice of correlation methods.</p>
 <p>Note: This function is available in the <code>GGally</code> package, which you may need to install first.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(mtcars[, <span class="fu">c</span>(<span class="st">"mpg"</span>, <span class="st">"hp"</span>, <span class="st">"wt"</span>, <span class="st">"disp"</span>)], <span class="at">main =</span> <span class="st">"Scatterplot Matrix"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(mtcars[, <span class="fu">c</span>(<span class="st">"mpg"</span>, <span class="st">"hp"</span>, <span class="st">"wt"</span>, <span class="st">"disp"</span>)], <span class="at">main =</span> <span class="st">"Scatterplot Matrix"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="lab-03_MH_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="lab-03_MH_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -365,9 +367,16 @@ wt  -0.8676594  0.6587479  1.0000000</code></pre>
 <p>The scatterplot matrix shows the relationships between all pairs of variables. Most of the relationships between <code>mpg</code> and other variables appear to be linear, especially between <code>mpg</code> and <code>wt</code>. However, there may be non-linear relationships between some variables, like <code>disp</code> (displacement) and <code>wt</code>, which could be explored further.</p>
 <p>Note that we can also create the same plot using the <code>select()</code> function:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(mpg, hp, wt, disp) <span class="sc">|&gt;</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggpairs</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>mtcars <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(mpg, hp, wt, disp) <span class="sc">|&gt;</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggpairs</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="lab-03_MH_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
 </div>
 </section>
 <section id="on-your-own" class="level2">
@@ -423,16 +432,16 @@ wt  -0.8676594  0.6587479  1.0000000</code></pre>
 <p>Run the following code for a fun visualization in the <code>iris</code> dataset using faceting. Change the theme to something other than <code>theme_minimal()</code>. (See other possible <a href="https://ggplot2.tidyverse.org/reference/ggtheme.html">themes here</a>.)</p>
 <p>Comment on any relationships you see. What do you think the <code>facet_wrap(~Species)</code> command does?</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, </span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Sepal.Length, <span class="at">y =</span> Sepal.Width, <span class="at">color =</span> Species)) <span class="sc">+</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Sepal Dimensions by Species"</span>,</span>
-<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Sepal Length"</span>,</span>
-<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Sepal Width"</span>) <span class="sc">+</span></span>
-<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Species) <span class="sc">+</span></span>
-<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(iris, </span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Sepal.Length, <span class="at">y =</span> Sepal.Width, <span class="at">color =</span> Species)) <span class="sc">+</span></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>, <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Sepal Dimensions by Species"</span>,</span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Sepal Length"</span>,</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Sepal Width"</span>) <span class="sc">+</span></span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> Species) <span class="sc">+</span></span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="ai-attestation" class="level2">

@@ -46,34 +46,6 @@ The `mtcars` dataset contains data about fuel consumption and vehicle design for
 
 We will use these variables to explore relationships and correlations in the dataset.
 
-## Partial correlation
-
-We can ask ourselves
-
-- **Is higher fuel efficiency associated with lower horsepower?**
-
-- We anticipate
-  - Lighter cars have higher fuel efficiency
-  - Lighter cars have lower horsepower
-  
-## Partial correlation
-
-  - Car weight could be a **confounder** 
-  - Car weight is associated with the exposure (horsepower)
-  - Car weight is associated with the outcome (fuel efficiency)
-
-- If I look at the association between fuel efficiency and horsepower I might get a biased estimate
-  - Could look like two things are related when they aren't
-  - Could look larger or smaller than it really is
-
-## Partial correlation
-
-- **Partial correlation** is one approach 
-
-- Isolates the direct association, preventing misleading results caused by confounding variables
-
-- Partial correlation removes age's influence from both variables, then asks what's left
-
 ## Pearson's correlation
 
 First, we will compute the Pearson’s correlation coefficient between `mpg` (miles per gallon) and `hp` (horsepower). Pearson’s correlation measures the strength and direction of the linear relationship between two continuous variables.
@@ -137,13 +109,12 @@ Lastly, we’ll visualize the correlation matrix using the `ggcorrplot` package.
 ```{r echo = T, message = F}
 # Correlation matrix for mpg, hp, wt
 corr_matrix <- cor(mtcars[, c("mpg", "hp", "wt")])
-# corr_matrix <- round(cor(mtcars[, c("mpg", "hp", "wt")]), 1)
 corr_matrix
 ```
 
 The correlation matrix shows a strong negative correlation between `mpg` and both `hp` (-0.776) and `wt` (-0.868). These negative values indicate inverse relationships. The correlation between hp and wt is moderately positive (0.659).
 
-```{r}
+```{r warning = FALSE}
 # Correlation plot using ggcorrplot
 ggcorrplot(corr_matrix, lab = TRUE)
 ```
@@ -165,18 +136,48 @@ The `ggcorrplot` package offers lots of versatility in terms of visualizing corr
 For example:
 
 ```{r echo = T}
-ggcorrplot(corr_matrix, lab = "TRUE",
+ggcorrplot(corr_matrix, 
+           lab = "TRUE",
            method = "circle")
 ```
 
 Hmm, this would probably look better without the numbers printed. Let's try again:
 
 ```{r}
-ggcorrplot(corr_matrix, lab = "FALSE",
+ggcorrplot(corr_matrix, 
+           lab = "FALSE",
            method = "circle")
 ```
 
 The correlation plot visually reinforces the relationships: darker colors and larger numbers indicate stronger correlations, whether positive or negative.
+
+## Partial correlation
+
+We can ask ourselves
+
+- **Is higher fuel efficiency associated with lower horsepower?**
+
+- We anticipate
+  - Lighter cars have higher fuel efficiency
+  - Lighter cars have lower horsepower
+  
+## Partial correlation
+
+  - Car weight could be a **confounder** 
+  - Car weight is associated with the exposure (horsepower)
+  - Car weight is associated with the outcome (fuel efficiency)
+
+- If I look at the association between fuel efficiency and horsepower I might get a biased estimate
+  - Could look like two things are related when they aren't
+  - Could look larger or smaller than it really is
+
+## Partial correlation
+
+- **Partial correlation** is one approach 
+
+- Isolates the direct association, preventing misleading results caused by confounding variables
+
+- Partial correlation removes weight's influence from both variables, then asks what's left
 
 ## Exploring confounding
 
@@ -197,10 +198,18 @@ Spearman’s correlation is different from Pearson’s correlation in that it do
 Here, We’ll compute the Spearman’s correlation between `mpg` and `hp`.
 
 ```{r}
-cor(mtcars$mpg, mtcars$hp, method="spearman")
+cor(mtcars$mpg, mtcars$hp, method = "spearman")
 ```
 
 The Spearman’s correlation between `mpg` and `hp` is approximately -0.895, which is stronger than the Pearson’s correlation. This suggests a strong negative relationship between `mpg` and `hp`, even when considering the ranks of the data, indicating a monotonic relationship.
+
+We can also use Spearman's correlation as the method for computing partial correlation:
+
+```{r}
+
+pcor.test(mtcars$mpg, mtcars$hp, mtcars$wt, method = "spearman")
+
+```
 
 
 ## Identifying non-linear relationships
@@ -218,7 +227,6 @@ The scatterplot matrix shows the relationships between all pairs of variables. M
 Note that we can also create the same plot using the `select()` function: 
 ```{r}
 #| echo: true
-#| eval: false
 mtcars |>
   dplyr::select(mpg, hp, wt, disp) |>
   ggpairs()
