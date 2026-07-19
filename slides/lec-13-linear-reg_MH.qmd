@@ -16,6 +16,8 @@ execute:
 
 - HW 13 due **tomorrow** by 11:59 PM
 
+- The final for this class will be on Monday, July 27th in this room, starting at 8:00 AM. More details and info about the exam will be posted tomorrow!
+
 ## Revisiting lab from Friday
 
 - In lab Friday we talked about two additional concepts
@@ -71,6 +73,9 @@ Spearman Correlation
 cor(x, y, method = "spearman")
 ```
 
+## Application Exercise
+
+There is a template for Application Exercise 5 on Canvas. Working in pairs, start with Question 1 (we'll return to the other questions later in the lecture).
 
 ## Introduction to linear regression
 
@@ -158,6 +163,33 @@ cdc |>
   geom_smooth(method = "lm", se = T) 
 ```
 
+## Review slope-intercept form of a line {.smaller}
+
+Recall the slope-intercept form of a line, $y=mx+b$.
+
+-   $b$ is the y-intercept, or where the line crosses the y-axis
+
+    -   It is the predicted value of $y$ when $x = 0$
+
+-   $m$ is the slope
+
+    -   Which tells us the **predicted increase** in $y$ when $x$ **changes by 1 unit**
+
+## Review: formula of a line
+
+::: callout-tip
+
+## Review
+
+Consider the line $y=3x+1$. 
+
+- What value does $y$ take when $x=0$?
+
+- As $x$ increases by 1 unit, how much do we expect $y$ to increase by?
+:::
+
+-   In statistics, we often represent the **slope** with $β_1$ and the **intercept** with $β_0$, and these values are usually not known but must be estimated.
+
 ## The linear model
 
 The model is given by $y_i=β_0+β_1x_i+ϵ_i$, where
@@ -190,32 +222,23 @@ $$\sum_{i=1}^n \hat \epsilon_i^2 = \sum_{i=1}^n (y_i - \hat y_i)^2$$
 
 is minimized.
 
-## Review slope-intercept form of a line {.smaller}
+## Application Exercise
 
-Recall the slope-intercept form of a line, $y=mx+b$.
+Working your partner, start on Exercise 2 of the application exercise.
 
--   $b$ is the y-intercept, or where the line crosses the y-axis
+## Linear regression in R
 
-    -   It is the predicted value of $y$ when $x = 0$
+- We use the function `lm()` to run a linear regression in R.
 
--   $m$ is the slope
+- This function is built-in to base R, so you don't need to install a package or load a library to use it.
 
-    -   Which tells us the **predicted increase** in $y$ when $x$ **changes by 1 unit**
+- The first argument is the model, with the outcome to the left of the `~` and the predictor to its right.
 
-## Review: formula of a line
+```{r echo = T, eval = F}
 
-::: callout-tip
+lm(Obesity ~ Exercise, data = cdc)
 
-## Review
-
-Consider the line $y=3x+1$. 
-
-- What value does $y$ take when $x=0$?
-
-- As $x$ increases by 1 unit, how much do we expect $y$ to increase by?
-:::
-
--   In statistics, we often represent the **slope** with $β_1$ and the **intercept** with $β_0$, and these values are usually not known but must be estimated.
+```
 
 ## Model output {.smaller}
 
@@ -231,7 +254,15 @@ summary(fit)
 - Gives us the `tidy()` function, which converts messy `lm()` output into a clean, organized data frame
 - Much easier to read and work with than the default `summary()` output
 
-## A neater way: kableExtra
+```{r}
+#| echo: TRUE
+
+library(tidymodels)
+
+tidy(fit)
+```
+
+## An even neater way: kableExtra
 
 - **kableExtra** is an R package for turning raw R output into clean, readable tables in your document
 - Today we're using it to format regression results so they're easier to read and interpret
@@ -241,7 +272,7 @@ summary(fit)
 
 ```{r}
 #| echo: true
-library(tidymodels)
+
 library(kableExtra)
 
 tidy(fit) |>
@@ -251,7 +282,7 @@ tidy(fit) |>
 - Can we do better?
 
 
-## Even better
+## EVEN neater
 
 ```{r}
 #| echo: true
@@ -262,17 +293,21 @@ tidy(fit) |>
 - Note: p-values are not actually 0. They are just quite small so they get rounded to zero in the table. 
 
 ::: callout-tip
-- If you include a regression model in your labs and homework, display the output with `tidy()` and `kable()` like this!
+- If you include a regression model in your homework, display the output with `tidy()` and `kable()` like this!
 :::
 
-## Intercept and slope
+## Application Exercise
 
--   The **intercept** is the estimated mean outcome when the predictor is zero (does this make sense in context?)
+With your partner, continue the application exercise by completing exercise 3. You may need to install `tidymodels` and `kableExtra`.
+
+## Interpreting intercept and slope
+
+-   The **intercept** is the estimated mean outcome when the predictor is zero 
 
 -   The **slope** is the expected change in the outcome corresponding to a **one-unit change** in the predictor
 
 
-**Slope ($\beta_1$) Interpretation**: For each percentage increase in `Exercise`, we expect the `Obesity` percentage to decrease by .48 on average
+**Slope ($\beta_1$) Interpretation**: For each percentage increase in `Exercise`, we expect the `Obesity` percentage to decrease by .49 on average
 
 ::: callout-tip
 For all interpretations, remember to **include units**!
@@ -290,7 +325,7 @@ Increasing Exercise % by one unit changes predicted Obesity % by exactly $\hat{\
 
 ## Intercept interpretation
 
-- **The technical intercept interpretation**: When zero percent of the region gets adequate `Exercise`, we would expect the percent of the region that is obese to be 54.79%. 
+- **The technical intercept interpretation**: When zero percent of the state gets adequate `Exercise`, we would expect the percent of that state that is obese to be 54.79%. 
 
 - Does it make sense to interpret the intercept here?
 
@@ -303,7 +338,7 @@ Increasing Exercise % by one unit changes predicted Obesity % by exactly $\hat{\
 
 ```{r}
 #| echo: true
-#| fig-alt: "A histogram titled Histogram of exercise, with x axis labeled Exercise and y-axis labeled frequency. There are six bins, each covering five percentage points from 35 to 65. The distribution appears normal."
+#| fig-alt: "A histogram ittled Histogram of exercise, with x axis labeled Exercise and y-axis labeled frequency. There are six bins, each covering five percentage points from 35 to 65. The distribution appears normal."
 hist(cdc$Exercise)
 ```
 
@@ -315,18 +350,6 @@ min(cdc$Exercise)
 ```
 
 - Since the predictor (`Exercise`) does not feasibly take on values equal to zero (and we also checked that the lowest value in the dataset is 37.4%), we should not interpret the intercept. 
-
-## Model assumptions {.smaller}
-
-Assumptions of the model $y_i = \beta_0 + \beta_1 x_1 + \epsilon_i$ include:
-
--   The outcomes $y_i$ are independent. This is violated if our study contains repeated outcome measures on an individual, if siblings are enrolled, etc.
-
--   A linear relationship holds (though we can relax this to some extent)
-
--   For a specified value of $x$, which is measured without error, $y_i∼N(β_0+β_1x_i,σ^2)$. Note that this implies $ϵ_i∼N(0,σ^2)$.
-
--   The variance $σ^2$ is constant across all values of $x$; this is called **homogeneity of variance**
 
 ## Hypothesis testing {.smaller}
 
@@ -377,21 +400,19 @@ $$\hat y_i = 54.79 - 0.49 (50) $$
 
 We would predict an obesity percentage of approximately 30%. Note the importance of getting the units correct.
 
-## Return to the assumptions of linear regression {.smaller}
+## Model assumptions {.smaller}
 
-::: callout-tip
+Assumptions of the model $y_i = \beta_0 + \beta_1 x_1 + \epsilon_i$ include:
 
-## Review 
+-   The outcomes $y_i$ are independent. This is violated if our study contains repeated outcome measures on an individual, if siblings are enrolled, etc.
 
-1.  Independent observations
+-   A linear relationship holds (though we can relax this to some extent)
 
-2.  Linear relationship between predictor and response
+-   For a specified value of $x$, which is measured without error, $y_i∼N(β_0+β_1x_i,σ^2)$. Note that this implies $ϵ_i∼N(0,σ^2)$.
 
-3.  Conditional on predictor(s), the response follows a normal distribution (normally distributed residuals)
+-   The variance $σ^2$ is constant across all values of $x$; this is called **homogeneity of variance**
 
-4.  Equal variances (homogeneity of variance in the residuals)
-
-:::
+## Checking our assumptions
 
 - How can we check the assumptions to ensure they are met? 
 
@@ -423,7 +444,7 @@ We just have to think through this one, unfortunately.
 
 -   To check equal variances and linearity, we can use a plot of the residuals $\hat ϵ_i$ by the predicted (or fitted) values $\hat y_i$.
 
--   We expect to see evenly-spaced dots along the x axis (equal variances), with symmetrically distributed observations around the y axis (linearity). Patterns or trends are evidence something is wrong. (Drawing on next slide.)
+-   We expect to see evenly-spaced dots along the x-axis (equal variances), with symmetrically distributed observations around the x-axis (linearity). Patterns or trends are evidence something is wrong.
 
 ## Regression diagnostics: equal variances
 
@@ -454,6 +475,7 @@ df_hetero |> ggplot(aes(x = fitted, y = residuals)) +
 ## Regression diagnostics: equal variances
 ```{r}
 #| fig-alt: "A scatterplot with x-axis labeled Fitted and y-axis labeled Residuals. There is a dashed red line at y=0, and the x-axis ranges from 1 to 10. The points of the scatterplot form a parabola."
+#| echo: false
 # --- Plot 2: Violates linearity (curved/quadratic pattern) ---
 residuals_nonlinear <- -1.5 * (fitted_vals - 5.5)^2 + 10 + rnorm(n, sd = 5)
 residuals_nonlinear <- residuals_nonlinear - mean(residuals_nonlinear)
@@ -534,3 +556,21 @@ hist(fit$residuals)
 ## Next class
 
 - Multiple regression
+
+- A professor from the BIOS department is going to be coming to observe class, so try to be on time!
+
+## Exam 2
+
+- Like with Exam 1, you will have the opportunity to meet with me and discuss the questions you missed points on to get 25% of those points back.
+
+- You can come to my office hours today between 11 and 1, Wednesdays between 1 and 3, or schedule a time to meet with me before Friday of this week.
+
+- There will not be a chance to get points back in this way on the final exam. 
+
+## Exam 2 -- ANOVA degrees of freedom
+
+- Question 5 on the exam was about an ANOVA, and one sub-question was asking about the degrees of freedom for this test.
+
+- For an ANOVA, the numerator degrees of freedom (the first row in the test results) is equal to the number of groups minus 1.
+
+- The denominator degrees of freedom is equal to the **total number** of samples across all groups, minus the number of groups.

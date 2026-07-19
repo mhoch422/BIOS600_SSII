@@ -1,0 +1,143 @@
+---
+title: "AE 05: Anscombe's Quartet and Linear Regression"
+format: html
+warning: FALSE
+message: FALSE
+---
+
+```{r}
+library(tidyverse)
+```
+
+In this application exercise, you will investigate the two types of correlation we've discussed so far, and learn to plot lines with the form y = mx + b.
+
+## Exercise 1: Anscombe's Quartet
+
+The following code chunk will create a dataframe for each of the four datasets in Anscombe's Quartet.
+
+```{r}
+
+aq_1 <- data.frame(x = c(10.0, 8.0, 13.0, 9.0, 11.0, 14.0, 6.0, 4.0, 12.0,
+                         7.0, 5.0),
+                   y = c(8.04, 6.95, 7.58, 8.81, 8.33, 9.96, 7.24, 4.26, 
+                         10.84, 4.82, 5.68))
+
+aq_2 <- data.frame(x = c(10.0, 8.0, 13.0, 9.0, 11.0, 14.0, 6.0, 4.0, 12.0,
+                         7.0, 5.0),
+                   y = c(9.14, 8.14, 8.74, 8.77, 9.26, 8.10, 6.13, 3.10, 9.13,
+                         7.26, 4.74))
+
+aq_3 <- data.frame(x = c(10.0, 8.0, 13.0, 9.0, 11.0, 14.0, 6.0, 4.0, 12.0,
+                         7.0, 5.0),
+                   y = c(7.46, 6.77, 12.74, 7.11, 7.81, 8.84, 6.08, 5.39,
+                         8.15, 6.42, 5.73))
+
+aq_4 <- data.frame(x = c(8.0, 8.0, 8.0, 8.0, 8.0, 8.0, 8.0, 19.0, 8.0,
+                         8.0, 8.0),
+                   y = c(6.58, 5.76, 7.71, 8.84, 8.47, 7.04, 5.25, 12.50,
+                         5.56, 7.91, 6.89))
+```
+
+a. For the dataset `aq_1`, calculate the Pearson and Spearman correlations. 
+
+```{r}
+
+## Use cor() with different method options to calculate the two correlations here
+
+```
+
+What do you notice about the two correlations? What does this tell you about the relationship between `x` and `y`?
+
+Now, use `ggplot()` to create a scatterplot of the `aq_1` data.
+
+```{r}
+
+
+
+```
+
+Looking at the scatterplot, do your correlation results make sense?
+
+b. Now, you will recreate part (a) using one of the other three datasets.
+
+```{r}
+
+## Use cor() with different method options to calculate the two correlations here
+
+```
+
+What do you notice about the two correlations? What does this tell you about the relationship between `x` and `y`?
+
+Now, use `ggplot()` to create a scatterplot of the dataset you chose.
+
+```{r}
+
+
+
+```
+
+Looking at the scatterplot, do your correlation results make sense?
+
+## Exercise 2: Plotting lines in `R`
+
+The following code chunk will generate a set of twenty pairs $(x_i, y_i)$, where the line of best fit is $y = 2 + 1.5x$. We add a random error term when calculating y so that the two variables are not perfectly correlated.
+
+```{r}
+
+set.seed(2026)
+
+x <- seq(0, 8, length.out = 20)
+
+y <- 2 + 1.5 * x + rnorm(20, mean = 0, sd = 2)
+
+example <- cbind(x, y)
+
+ggplot(example, aes(x = x, y = y)) +
+  geom_point()
+
+```
+
+Because we know that the true model for this dataset has $\beta_0 = 2$ and $\beta_1$ = 1.5, we can add the best fit line to the plot above manually using the layer `geom_abline()`, which draws a line given intercept and slope terms.
+
+```{r}
+
+ggplot(example, aes(x = x, y = y)) +
+  geom_point() +
+  geom_abline(aes(intercept = 2, slope = 1.5, color = "red"))
+
+```
+
+We can compare the estimated linear fit using `geom_smooth()`, as shown in the lecture slides:
+
+```{r}
+
+ggplot(example, aes(x = x, y = y)) +
+  geom_point() +
+  geom_abline(aes(intercept = 2, slope = 1.5, color = "red")) +
+  geom_smooth(method = "lm", color = "blue", se = F)
+
+```
+
+For this exercise, generate your own dataset with slope and intercept of your choosing, and recreate the final plot with the true line and the estimated line.
+
+```{r}
+
+## Generate data set -- don't forget to set your seed!
+
+## Create your plot -- have fun with the line colors!
+
+
+```
+
+## Exercise 3: Linear Regression with Anscombe's Quartet
+
+Using `lm()`, as well as `tidy()` and `kable()`, run the regression `y ~ x` for the `aq_1` and `aq_2` datasets. Round our results to 2 decimal places.
+
+```{r}
+library(tidymodels)
+library(kableExtra)
+
+
+```
+
+What do you notice about the regression results for these two datasets?

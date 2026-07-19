@@ -6,8 +6,8 @@
 <script src="lec-13-linear-reg_MH_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="lec-13-linear-reg_MH_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="lec-13-linear-reg_MH_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="lec-13-linear-reg_MH_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.37">
+<link href="lec-13-linear-reg_MH_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
 
   <title>Lecture 13: Introduction to linear regression</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -208,6 +208,7 @@
 <ul>
 <li><p>Lab 3 due <strong>tonight</strong> by 11:59 PM</p></li>
 <li><p>HW 13 due <strong>tomorrow</strong> by 11:59 PM</p></li>
+<li><p>The final for this class will be on Monday, July 27th in this room, starting at 8:00 AM. More details and info about the exam will be posted tomorrow!</p></li>
 </ul>
 </section>
 <section id="revisiting-lab-from-friday" class="slide level2">
@@ -252,6 +253,10 @@
 <pre><code>[1] 0.9695302</code></pre>
 </div>
 </div>
+</section>
+<section id="application-exercise" class="slide level2">
+<h2>Application Exercise</h2>
+<p>There is a template for Application Exercise 5 on Canvas. Working in pairs, start with Question 1 (we’ll return to the other questions later in the lecture).</p>
 </section>
 <section id="introduction-to-linear-regression" class="slide level2">
 <h2>Introduction to linear regression</h2>
@@ -311,28 +316,6 @@
 <span id="cb5-7"><a href=""></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> T) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="the-linear-model" class="slide level2">
-<h2>The linear model</h2>
-<p>The model is given by <span class="math inline">\(y_i=β_0+β_1x_i+ϵ_i\)</span>, where</p>
-<ul>
-<li><p><span class="math inline">\(y_i\)</span> is the outcome (dependent variable) of interest</p></li>
-<li><p><span class="math inline">\(\beta_0\)</span> is the intercept parameter</p></li>
-<li><p><span class="math inline">\(\beta_1\)</span> is the slope parameter</p></li>
-<li><p><span class="math inline">\(x_i\)</span> is the predictor variable</p></li>
-<li><p><span class="math inline">\(\epsilon_i\)</span> is the error (like <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, it is <strong>not observed</strong>)</p></li>
-</ul>
-<p>The <span class="math inline">\(i\)</span> is an index of observations. So, each observation of the outcome is related to an observation of that individual’s value of the predictor.</p>
-</section>
-<section id="the-least-squares-model" class="slide level2 smaller">
-<h2>The least squares model</h2>
-<p>Fitted line equation:</p>
-<p><span class="math display">\[\hat y_i = \hat \beta_0 +\hat \beta_1 x_i\]</span></p>
-<p>Residual:</p>
-<p><span class="math display">\[\hat \epsilon_i = y_i - (\hat \beta_0 +\hat \beta_1 x_i) = y_i - \hat y_i\]</span></p>
-<p>Least squares selects <span class="math inline">\(\hat β_0\)</span> and <span class="math inline">\(\hat β_1\)</span> such that the <strong>error sum of squares</strong></p>
-<p><span class="math display">\[\sum_{i=1}^n \hat \epsilon_i^2 = \sum_{i=1}^n (y_i - \hat y_i)^2\]</span></p>
-<p>is minimized.</p>
-</section>
 <section id="review-slope-intercept-form-of-a-line" class="slide level2 smaller">
 <h2>Review slope-intercept form of a line</h2>
 <p>Recall the slope-intercept form of a line, <span class="math inline">\(y=mx+b\)</span>.</p>
@@ -370,11 +353,48 @@
 <li>In statistics, we often represent the <strong>slope</strong> with <span class="math inline">\(β_1\)</span> and the <strong>intercept</strong> with <span class="math inline">\(β_0\)</span>, and these values are usually not known but must be estimated.</li>
 </ul>
 </section>
+<section id="the-linear-model" class="slide level2">
+<h2>The linear model</h2>
+<p>The model is given by <span class="math inline">\(y_i=β_0+β_1x_i+ϵ_i\)</span>, where</p>
+<ul>
+<li><p><span class="math inline">\(y_i\)</span> is the outcome (dependent variable) of interest</p></li>
+<li><p><span class="math inline">\(\beta_0\)</span> is the intercept parameter</p></li>
+<li><p><span class="math inline">\(\beta_1\)</span> is the slope parameter</p></li>
+<li><p><span class="math inline">\(x_i\)</span> is the predictor variable</p></li>
+<li><p><span class="math inline">\(\epsilon_i\)</span> is the error (like <span class="math inline">\(\beta_0\)</span> and <span class="math inline">\(\beta_1\)</span>, it is <strong>not observed</strong>)</p></li>
+</ul>
+<p>The <span class="math inline">\(i\)</span> is an index of observations. So, each observation of the outcome is related to an observation of that individual’s value of the predictor.</p>
+</section>
+<section id="the-least-squares-model" class="slide level2 smaller">
+<h2>The least squares model</h2>
+<p>Fitted line equation:</p>
+<p><span class="math display">\[\hat y_i = \hat \beta_0 +\hat \beta_1 x_i\]</span></p>
+<p>Residual:</p>
+<p><span class="math display">\[\hat \epsilon_i = y_i - (\hat \beta_0 +\hat \beta_1 x_i) = y_i - \hat y_i\]</span></p>
+<p>Least squares selects <span class="math inline">\(\hat β_0\)</span> and <span class="math inline">\(\hat β_1\)</span> such that the <strong>error sum of squares</strong></p>
+<p><span class="math display">\[\sum_{i=1}^n \hat \epsilon_i^2 = \sum_{i=1}^n (y_i - \hat y_i)^2\]</span></p>
+<p>is minimized.</p>
+</section>
+<section id="application-exercise-1" class="slide level2">
+<h2>Application Exercise</h2>
+<p>Working your partner, start on Exercise 2 of the application exercise.</p>
+</section>
+<section id="linear-regression-in-r" class="slide level2">
+<h2>Linear regression in R</h2>
+<ul>
+<li><p>We use the function <code>lm()</code> to run a linear regression in R.</p></li>
+<li><p>This function is built-in to base R, so you don’t need to install a package or load a library to use it.</p></li>
+<li><p>The first argument is the model, with the outcome to the left of the <code>~</code> and the predictor to its right.</p></li>
+</ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="fu">lm</span>(Obesity <span class="sc">~</span> Exercise, <span class="at">data =</span> cdc)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
 <section id="model-output" class="slide level2 smaller">
 <h2>Model output</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Obesity <span class="sc">~</span> Exercise, <span class="at">data =</span> cdc)</span>
-<span id="cb6-2"><a href=""></a><span class="fu">summary</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Obesity <span class="sc">~</span> Exercise, <span class="at">data =</span> cdc)</span>
+<span id="cb7-2"><a href=""></a><span class="fu">summary</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -405,9 +425,21 @@ F-statistic: 59.25 on 1 and 48 DF,  p-value: 6.336e-10</code></pre>
 <li>Gives us the <code>tidy()</code> function, which converts messy <code>lm()</code> output into a clean, organized data frame</li>
 <li>Much easier to read and work with than the default <code>summary()</code> output</li>
 </ul>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb9-2"><a href=""></a></span>
+<span id="cb9-3"><a href=""></a><span class="fu">tidy</span>(fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 5
+  term        estimate std.error statistic  p.value
+  &lt;chr&gt;          &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 (Intercept)   54.8      3.25       16.9  8.21e-22
+2 Exercise      -0.490    0.0636     -7.70 6.34e-10</code></pre>
+</div>
+</div>
 </section>
-<section id="a-neater-way-kableextra" class="slide level2">
-<h2>A neater way: kableExtra</h2>
+<section id="an-even-neater-way-kableextra" class="slide level2">
+<h2>An even neater way: kableExtra</h2>
 <ul>
 <li><strong>kableExtra</strong> is an R package for turning raw R output into clean, readable tables in your document</li>
 <li>Today we’re using it to format regression results so they’re easier to read and interpret</li>
@@ -417,11 +449,10 @@ F-statistic: 59.25 on 1 and 48 DF,  p-value: 6.336e-10</code></pre>
 <section id="a-neater-way" class="slide level2">
 <h2>A neater way</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a><span class="fu">library</span>(tidymodels)</span>
-<span id="cb8-2"><a href=""></a><span class="fu">library</span>(kableExtra)</span>
-<span id="cb8-3"><a href=""></a></span>
-<span id="cb8-4"><a href=""></a><span class="fu">tidy</span>(fit) <span class="sc">|&gt;</span></span>
-<span id="cb8-5"><a href=""></a>  <span class="fu">kable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb11-2"><a href=""></a></span>
+<span id="cb11-3"><a href=""></a><span class="fu">tidy</span>(fit) <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href=""></a>  <span class="fu">kable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
@@ -456,11 +487,11 @@ F-statistic: 59.25 on 1 and 48 DF,  p-value: 6.336e-10</code></pre>
 <li>Can we do better?</li>
 </ul>
 </section>
-<section id="even-better" class="slide level2">
-<h2>Even better</h2>
+<section id="even-neater" class="slide level2">
+<h2>EVEN neater</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a><span class="fu">tidy</span>(fit) <span class="sc">|&gt;</span></span>
-<span id="cb9-2"><a href=""></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>) <span class="co"># round to 3 digits</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a><span class="fu">tidy</span>(fit) <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href=""></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>) <span class="co"># round to 3 digits</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
@@ -504,19 +535,23 @@ F-statistic: 59.25 on 1 and 48 DF,  p-value: 6.336e-10</code></pre>
 </div>
 <div class="callout-content">
 <ul>
-<li>If you include a regression model in your labs and homework, display the output with <code>tidy()</code> and <code>kable()</code> like this!</li>
+<li>If you include a regression model in your homework, display the output with <code>tidy()</code> and <code>kable()</code> like this!</li>
 </ul>
 </div>
 </div>
 </div>
 </section>
-<section id="intercept-and-slope" class="slide level2">
-<h2>Intercept and slope</h2>
+<section id="application-exercise-2" class="slide level2">
+<h2>Application Exercise</h2>
+<p>With your partner, continue the application exercise by completing exercise 3. You may need to install <code>tidymodels</code> and <code>kableExtra</code>.</p>
+</section>
+<section id="interpreting-intercept-and-slope" class="slide level2">
+<h2>Interpreting intercept and slope</h2>
 <ul>
-<li><p>The <strong>intercept</strong> is the estimated mean outcome when the predictor is zero (does this make sense in context?)</p></li>
+<li><p>The <strong>intercept</strong> is the estimated mean outcome when the predictor is zero</p></li>
 <li><p>The <strong>slope</strong> is the expected change in the outcome corresponding to a <strong>one-unit change</strong> in the predictor</p></li>
 </ul>
-<p><strong>Slope (<span class="math inline">\(\beta_1\)</span>) Interpretation</strong>: For each percentage increase in <code>Exercise</code>, we expect the <code>Obesity</code> percentage to decrease by .48 on average</p>
+<p><strong>Slope (<span class="math inline">\(\beta_1\)</span>) Interpretation</strong>: For each percentage increase in <code>Exercise</code>, we expect the <code>Obesity</code> percentage to decrease by .49 on average</p>
 <div class="callout callout-tip callout-titled callout-style-default">
 <div class="callout-body">
 <div class="callout-title">
@@ -544,7 +579,7 @@ F-statistic: 59.25 on 1 and 48 DF,  p-value: 6.336e-10</code></pre>
 <section id="intercept-interpretation" class="slide level2">
 <h2>Intercept interpretation</h2>
 <ul>
-<li><p><strong>The technical intercept interpretation</strong>: When zero percent of the region gets adequate <code>Exercise</code>, we would expect the percent of the region that is obese to be 54.79%.</p></li>
+<li><p><strong>The technical intercept interpretation</strong>: When zero percent of the state gets adequate <code>Exercise</code>, we would expect the percent of that state that is obese to be 54.79%.</p></li>
 <li><p>Does it make sense to interpret the intercept here?</p></li>
 <li><p>Only interpret the intercept in a regression model if:</p>
 <ul>
@@ -556,30 +591,20 @@ F-statistic: 59.25 on 1 and 48 DF,  p-value: 6.336e-10</code></pre>
 <section id="lets-check" class="slide level2">
 <h2>Let’s check</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a><span class="fu">hist</span>(cdc<span class="sc">$</span>Exercise)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="fu">hist</span>(cdc<span class="sc">$</span>Exercise)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="lec-13-linear-reg_MH_files/figure-revealjs/unnamed-chunk-12-1.png" alt="A histogram titled Histogram of exercise, with x axis labeled Exercise and y-axis labeled frequency. There are six bins, each covering five percentage points from 35 to 65. The distribution appears normal." width="960" class="r-stretch"></section>
+<img data-src="lec-13-linear-reg_MH_files/figure-revealjs/unnamed-chunk-14-1.png" alt="A histogram ittled Histogram of exercise, with x axis labeled Exercise and y-axis labeled frequency. There are six bins, each covering five percentage points from 35 to 65. The distribution appears normal." width="960" class="r-stretch"></section>
 <section id="lets-check-1" class="slide level2">
 <h2>Let’s check</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">min</span>(cdc<span class="sc">$</span>Exercise)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href=""></a><span class="fu">min</span>(cdc<span class="sc">$</span>Exercise)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 37.4</code></pre>
 </div>
 </div>
 <ul>
 <li>Since the predictor (<code>Exercise</code>) does not feasibly take on values equal to zero (and we also checked that the lowest value in the dataset is 37.4%), we should not interpret the intercept.</li>
-</ul>
-</section>
-<section id="model-assumptions" class="slide level2 smaller">
-<h2>Model assumptions</h2>
-<p>Assumptions of the model <span class="math inline">\(y_i = \beta_0 + \beta_1 x_1 + \epsilon_i\)</span> include:</p>
-<ul>
-<li><p>The outcomes <span class="math inline">\(y_i\)</span> are independent. This is violated if our study contains repeated outcome measures on an individual, if siblings are enrolled, etc.</p></li>
-<li><p>A linear relationship holds (though we can relax this to some extent)</p></li>
-<li><p>For a specified value of <span class="math inline">\(x\)</span>, which is measured without error, <span class="math inline">\(y_i∼N(β_0+β_1x_i,σ^2)\)</span>. Note that this implies <span class="math inline">\(ϵ_i∼N(0,σ^2)\)</span>.</p></li>
-<li><p>The variance <span class="math inline">\(σ^2\)</span> is constant across all values of <span class="math inline">\(x\)</span>; this is called <strong>homogeneity of variance</strong></p></li>
 </ul>
 </section>
 <section id="hypothesis-testing" class="slide level2 smaller">
@@ -637,7 +662,7 @@ F-statistic: 59.25 on 1 and 48 DF,  p-value: 6.336e-10</code></pre>
 <section id="some-additional-output" class="slide level2 smaller">
 <h2>Some additional output</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a><span class="fu">summary</span>(fit)<span class="sc">$</span>r.squared</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a><span class="fu">summary</span>(fit)<span class="sc">$</span>r.squared</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.55243</code></pre>
 </div>
@@ -665,26 +690,18 @@ F-statistic: 59.25 on 1 and 48 DF,  p-value: 6.336e-10</code></pre>
 <p><span class="math display">\[\hat y_i = 54.79 - 0.49 (50) \]</span></p>
 <p>We would predict an obesity percentage of approximately 30%. Note the importance of getting the units correct.</p>
 </section>
-<section id="return-to-the-assumptions-of-linear-regression" class="slide level2 smaller">
-<h2>Return to the assumptions of linear regression</h2>
-<div class="callout callout-tip callout-titled callout-style-default">
-<div class="callout-body">
-<div class="callout-title">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<p><strong>Review</strong></p>
-</div>
-<div class="callout-content">
-<ol type="1">
-<li><p>Independent observations</p></li>
-<li><p>Linear relationship between predictor and response</p></li>
-<li><p>Conditional on predictor(s), the response follows a normal distribution (normally distributed residuals)</p></li>
-<li><p>Equal variances (homogeneity of variance in the residuals)</p></li>
-</ol>
-</div>
-</div>
-</div>
+<section id="model-assumptions" class="slide level2 smaller">
+<h2>Model assumptions</h2>
+<p>Assumptions of the model <span class="math inline">\(y_i = \beta_0 + \beta_1 x_1 + \epsilon_i\)</span> include:</p>
+<ul>
+<li><p>The outcomes <span class="math inline">\(y_i\)</span> are independent. This is violated if our study contains repeated outcome measures on an individual, if siblings are enrolled, etc.</p></li>
+<li><p>A linear relationship holds (though we can relax this to some extent)</p></li>
+<li><p>For a specified value of <span class="math inline">\(x\)</span>, which is measured without error, <span class="math inline">\(y_i∼N(β_0+β_1x_i,σ^2)\)</span>. Note that this implies <span class="math inline">\(ϵ_i∼N(0,σ^2)\)</span>.</p></li>
+<li><p>The variance <span class="math inline">\(σ^2\)</span> is constant across all values of <span class="math inline">\(x\)</span>; this is called <strong>homogeneity of variance</strong></p></li>
+</ul>
+</section>
+<section id="checking-our-assumptions" class="slide level2">
+<h2>Checking our assumptions</h2>
 <ul>
 <li><p>How can we check the assumptions to ensure they are met?</p></li>
 <li><p>We can do so by “<strong>running regression diagnostics</strong>” - which means checking the assumptions within our regression model.</p></li>
@@ -722,21 +739,21 @@ F-statistic: 59.25 on 1 and 48 DF,  p-value: 6.336e-10</code></pre>
 <h2>Regression diagnostics: equal variance; linearity</h2>
 <ul>
 <li><p>To check equal variances and linearity, we can use a plot of the residuals <span class="math inline">\(\hat ϵ_i\)</span> by the predicted (or fitted) values <span class="math inline">\(\hat y_i\)</span>.</p></li>
-<li><p>We expect to see evenly-spaced dots along the x axis (equal variances), with symmetrically distributed observations around the y axis (linearity). Patterns or trends are evidence something is wrong. (Drawing on next slide.)</p></li>
+<li><p>We expect to see evenly-spaced dots along the x-axis (equal variances), with symmetrically distributed observations around the x-axis (linearity). Patterns or trends are evidence something is wrong.</p></li>
 </ul>
 </section>
 <section id="regression-diagnostics-equal-variances" class="slide level2">
 <h2>Regression diagnostics: equal variances</h2>
 
-<img data-src="lec-13-linear-reg_MH_files/figure-revealjs/unnamed-chunk-16-1.png" alt="A scatterplot with x-axis labeled Fitted and y-axis labeled Residuals. There is a dashed red line at y=0, and the x-axis ranges from 1 to 10. The points of the scatterplot are closer to the dashed line for lower x values and spread out further for higher x-values." width="960" class="r-stretch"></section>
+<img data-src="lec-13-linear-reg_MH_files/figure-revealjs/unnamed-chunk-18-1.png" alt="A scatterplot with x-axis labeled Fitted and y-axis labeled Residuals. There is a dashed red line at y=0, and the x-axis ranges from 1 to 10. The points of the scatterplot are closer to the dashed line for lower x values and spread out further for higher x-values." width="960" class="r-stretch"></section>
 <section id="regression-diagnostics-equal-variances-1" class="slide level2">
 <h2>Regression diagnostics: equal variances</h2>
 
-<img data-src="lec-13-linear-reg_MH_files/figure-revealjs/unnamed-chunk-17-1.png" alt="A scatterplot with x-axis labeled Fitted and y-axis labeled Residuals. There is a dashed red line at y=0, and the x-axis ranges from 1 to 10. The points of the scatterplot form a parabola." width="960" class="r-stretch"></section>
+<img data-src="lec-13-linear-reg_MH_files/figure-revealjs/unnamed-chunk-19-1.png" alt="A scatterplot with x-axis labeled Fitted and y-axis labeled Residuals. There is a dashed red line at y=0, and the x-axis ranges from 1 to 10. The points of the scatterplot form a parabola." width="960" class="r-stretch"></section>
 <section id="regression-diagnostic-equal-variances" class="slide level2">
 <h2>Regression diagnostic: equal variances</h2>
 
-<img data-src="lec-13-linear-reg_MH_files/figure-revealjs/unnamed-chunk-18-1.png" alt="A scatterplot with x-axis labeled Fitted and y-axis labeled Residuals. There is a dashed red line at y=0, and the x-axis ranges from 1 to 10. The points of the scatterplot are equally split above and below the dashed line for all x values." width="960" class="r-stretch"></section>
+<img data-src="lec-13-linear-reg_MH_files/figure-revealjs/unnamed-chunk-20-1.png" alt="A scatterplot with x-axis labeled Fitted and y-axis labeled Residuals. There is a dashed red line at y=0, and the x-axis ranges from 1 to 10. The points of the scatterplot are equally split above and below the dashed line for all x values." width="960" class="r-stretch"></section>
 <section id="regression-diagnostics-normality-of-errors" class="slide level2">
 <h2>Regression diagnostics: normality of errors</h2>
 <ul>
@@ -746,20 +763,20 @@ F-statistic: 59.25 on 1 and 48 DF,  p-value: 6.336e-10</code></pre>
 <section id="checking-assumptions-for-our-model" class="slide level2">
 <h2>Checking assumptions for our model…</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Obesity <span class="sc">~</span> Exercise, <span class="at">data =</span> cdc)</span>
-<span id="cb15-2"><a href=""></a><span class="fu">plot</span>(fit<span class="sc">$</span>fitted.values, fit<span class="sc">$</span>residuals)</span>
-<span id="cb15-3"><a href=""></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>,<span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Obesity <span class="sc">~</span> Exercise, <span class="at">data =</span> cdc)</span>
+<span id="cb18-2"><a href=""></a><span class="fu">plot</span>(fit<span class="sc">$</span>fitted.values, fit<span class="sc">$</span>residuals)</span>
+<span id="cb18-3"><a href=""></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>,<span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="lec-13-linear-reg_MH_files/figure-revealjs/unnamed-chunk-20-1.png" alt="A scatterplot with x-axis labeled fitted and y-axis labeled residuals, with a dashed black line at y = 0. The points are generally equally above and below the dashed line." width="960" class="r-stretch"></section>
+<img data-src="lec-13-linear-reg_MH_files/figure-revealjs/unnamed-chunk-22-1.png" alt="A scatterplot with x-axis labeled fitted and y-axis labeled residuals, with a dashed black line at y = 0. The points are generally equally above and below the dashed line." width="960" class="r-stretch"></section>
 <section id="checking-assumptions-for-our-model-1" class="slide level2">
 <h2>Checking assumptions for our model…</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href=""></a><span class="co"># check normality of residuals</span></span>
-<span id="cb16-2"><a href=""></a><span class="fu">hist</span>(fit<span class="sc">$</span>residuals)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href=""></a><span class="co"># check normality of residuals</span></span>
+<span id="cb19-2"><a href=""></a><span class="fu">hist</span>(fit<span class="sc">$</span>residuals)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
-<img data-src="lec-13-linear-reg_MH_files/figure-revealjs/unnamed-chunk-21-1.png" alt="A histogram with x-axis labeled Residuals and y-axis labeled Frequency. The distribution appears normal." width="960" class="r-stretch"></section>
+<img data-src="lec-13-linear-reg_MH_files/figure-revealjs/unnamed-chunk-23-1.png" alt="A histogram with x-axis labeled Residuals and y-axis labeled Frequency. The distribution appears normal." width="960" class="r-stretch"></section>
 <section id="recap" class="slide level2">
 <h2>Recap</h2>
 <ul>
@@ -773,7 +790,24 @@ F-statistic: 59.25 on 1 and 48 DF,  p-value: 6.336e-10</code></pre>
 <section id="next-class" class="slide level2">
 <h2>Next class</h2>
 <ul>
-<li>Multiple regression</li>
+<li><p>Multiple regression</p></li>
+<li><p>A professor from the BIOS department is going to be coming to observe class, so try to be on time!</p></li>
+</ul>
+</section>
+<section id="exam-2" class="slide level2">
+<h2>Exam 2</h2>
+<ul>
+<li><p>Like with Exam 1, you will have the opportunity to meet with me and discuss the questions you missed points on to get 25% of those points back.</p></li>
+<li><p>You can come to my office hours today between 11 and 1, Wednesdays between 1 and 3, or schedule a time to meet with me before Friday of this week.</p></li>
+<li><p>There will not be a chance to get points back in this way on the final exam.</p></li>
+</ul>
+</section>
+<section id="exam-2-anova-degrees-of-freedom" class="slide level2">
+<h2>Exam 2 – ANOVA degrees of freedom</h2>
+<ul>
+<li><p>Question 5 on the exam was about an ANOVA, and one sub-question was asking about the degrees of freedom for this test.</p></li>
+<li><p>For an ANOVA, the numerator degrees of freedom (the first row in the test results) is equal to the number of groups minus 1.</p></li>
+<li><p>The denominator degrees of freedom is equal to the <strong>total number</strong> of samples across all groups, minus the number of groups.</p></li>
 </ul>
 
 </section>
