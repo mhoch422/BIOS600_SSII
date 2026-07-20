@@ -8,11 +8,13 @@ format: html
 
 ## Announcements
 
-- HW 13 due **tonight**
+- HW 13 due **tonight** by 11:59 PM.
 
-- HW 14 due **tomorrow**
+- HW 14 due **tomorrow** by 11:59 PM.
 
-- Thursday's lecture will be review for the final exam, which is **July 27th**
+- Thursday's lecture will be review for the final exam, which is **July 27th**.
+
+- Please come to my office hours or make an appointment to go over Exam 2 for points back if you want to!
 
 ## Reading
 
@@ -22,6 +24,8 @@ format: html
 
 ## Overview 
 
+- Regression Assumptions
+
 - Regression with multiple explanatory variables
 
 - Interpreting categorical variables, plus releveling factors
@@ -30,7 +34,177 @@ format: html
 
 - Checking for multicollinearity
 
-## Computational setup
+## Yesterday's Model
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(tidyverse)
+cdc <- read.csv("https://aggreenbean.github.io/Bios600/labs/data/cdc_cleaned.csv")
+```
+
+Recall that yesterday we were talking about the model that predicts a state's obesity % by using its Exercise %. We can write this out formally as 
+
+$$Obesity_i = \beta_0 + \beta_1 Exercise_i + \epsilon_i.$$
+
+And the fitted model was 
+
+$$\widehat{Obesity}_i = 54.79 - 0.49 Exercise_i.$$
+
+## Hypothesis Testing {.smaller}
+
+- For a simple linear model, we are interested in hypothesis tests/inference on the slope parameter $\beta_1$. 
+
+- This is because what we are testing for is the presence of a _linear_ association between our outcome (Obesity %) and our predictor (Exercise %).
+
+- Our null hypothesis is $H_0: \beta_1 = 0$ and our alternative is $H_A: \beta_1 \neq 0$.
+
+- In words, our null hypothesis is that there is no linear association between a state's exercise % and that state's obesity %; our alternative is that there is a linear association between these two variables.
+
+## Model assumptions {.smaller}
+
+Assumptions of the model $y_i = \beta_0 + \beta_1 x_1 + \epsilon_i$ include:
+
+-   The outcomes $y_i$ are independent. This is violated if our study contains repeated outcome measures on an individual, if siblings are enrolled, etc.
+
+-   A linear relationship holds (though we can relax this to some extent)
+
+-   For a specified value of $x$, which is measured without error, $y_i∼N(β_0+β_1x_i,σ^2)$. Note that this implies $ϵ_i∼N(0,σ^2)$.
+
+-   The variance $σ^2$ is constant across all values of $x$; this is called **homogeneity of variance**
+
+## Checking our assumptions
+
+- How can we check the assumptions to ensure they are met? 
+
+- We can do so by "**running regression diagnostics**" - which means checking the assumptions within our regression model. 
+
+## Regression diagnostics: independence {.smaller}
+
+We just have to think through this one, unfortunately.
+
+- The **independence assumption** means that each observation provides *unique information* — no observation should influence another.
+
+- In other words, the residuals (errors) should not be correlated with each other.
+
+::: callout-tip
+
+## Common violations of independence
+- Repeated measurements on the same subject over time  
+  (e.g., daily blood pressure readings for the same patient)
+  
+- Clustered or grouped data  
+  (e.g., patients within the same hospital, students within a classroom)
+  
+- Time-series data  
+  (e.g., monthly pollution levels, daily step counts)
+
+:::
+
+## Regression diagnostics: equal variance; linearity
+
+-   To check equal variances and linearity, we can use a plot of the residuals $\hat ϵ_i$ by the predicted (or fitted) values $\hat y_i$.
+
+-   We expect to see evenly-spaced dots along the x-axis (equal variances), with symmetrically distributed observations around the x-axis (linearity). Patterns or trends are evidence something is wrong.
+
+## Regression diagnostics: equal variances/linearity
+
+```{r}
+#| echo: false
+#| eval: true
+#| fig-alt: "A scatterplot with x-axis labeled Fitted and y-axis labeled Residuals. There is a dashed red line at y=0, and the x-axis ranges from 1 to 10. The points of the scatterplot are closer to the dashed line for lower x values and spread out further for higher x-values."
+library(ggplot2)
+set.seed(42)
+
+n <- 100
+fitted_vals <- seq(1, 10, length.out = n)
+
+# --- Plot 1: Non-equal variance (funnel shape) ---
+residuals_hetero <- rnorm(n, mean = 0, sd = 0.3 * fitted_vals)
+
+df_hetero <- data.frame(fitted = fitted_vals, residuals = residuals_hetero)
+
+df_hetero |> ggplot(aes(x = fitted, y = residuals)) +
+  geom_point(shape = 16, alpha = 0.6, size = 3) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "darkred") +
+  geom_vline(xintercept = mean(fitted_vals), color = "darkred", linewidth = 1) +
+  labs(x = expression(hat(y)[i] ~ "(Fitted)"),
+    y = expression(hat(epsilon)[i] ~ "(Residuals)")
+  ) +
+  theme_minimal()
+```
+## Regression diagnostics: equal variances/linearity
+```{r}
+#| fig-alt: "A scatterplot with x-axis labeled Fitted and y-axis labeled Residuals. There is a dashed red line at y=0, and the x-axis ranges from 1 to 10. The points of the scatterplot form a parabola."
+#| echo: false
+# --- Plot 2: Violates linearity (curved/quadratic pattern) ---
+residuals_nonlinear <- -1.5 * (fitted_vals - 5.5)^2 + 10 + rnorm(n, sd = 5)
+residuals_nonlinear <- residuals_nonlinear - mean(residuals_nonlinear)
+
+df_nonlinear <- data.frame(fitted = fitted_vals, residuals = residuals_nonlinear)
+
+df_nonlinear |> ggplot(aes(x = fitted, y = residuals)) +
+  geom_point(shape = 16, alpha = 0.6, size = 3) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "darkred") +
+  labs(
+    x = expression(hat(y)[i] ~ "(Fitted)"),
+    y = expression(hat(epsilon)[i] ~ "(Residuals)")
+  ) +
+  theme_minimal()
+```
+
+## Regression diagnostic: equal variances/linearity
+
+```{r}
+#| echo: false
+#| eval: true
+#| fig-alt: "A scatterplot with x-axis labeled Fitted and y-axis labeled Residuals. There is a dashed red line at y=0, and the x-axis ranges from 1 to 10. The points of the scatterplot are equally split above and below the dashed line for all x values."
+# --- Plot 3: Equal variance (looks good!) ---
+residuals_homo <- rnorm(n, mean = 0, sd = 1.5)
+
+df_homo <- data.frame(fitted = fitted_vals, residuals = residuals_homo)
+
+df_homo |> ggplot(aes(x = fitted, y = residuals)) +
+  geom_point(shape = 16, alpha = 0.6, size = 3) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "darkred") +
+  labs(
+    x = expression(hat(y)[i] ~ "(Fitted)"),
+    y = expression(hat(epsilon)[i] ~ "(Residuals)")
+  ) +
+  theme_minimal()
+```
+## Regression diagnostics: normality of errors
+
+-   Use a histogram of the residuals to check normality. There are more advanced methods and plots, but we won't talk about them here
+
+## Checking assumptions for our model...
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+cdc <- read.csv("https://karamccor.github.io/b6002/labs/data/cdc_cleaned.csv")
+```
+
+```{r echo = T}
+#| fig-alt: "A scatterplot with x-axis labeled fitted and y-axis labeled residuals, with a dashed black line at y = 0. The points are generally equally above and below the dashed line."
+fit <- lm(Obesity ~ Exercise, data = cdc)
+plot(fit$fitted.values, fit$residuals)
+abline(h = 0,lty = 2)
+```
+
+## Checking assumptions for our model...
+
+```{r}
+#| echo: true
+#| fig-alt: "A histogram with x-axis labeled Residuals and y-axis labeled Frequency. The distribution appears normal."
+# check normality of residuals
+hist(fit$residuals)
+```
+
+## Computational setup for multiple linear regression
 
 ```{r}
 #| echo: true
@@ -42,9 +216,9 @@ library(kableExtra)
 library(car)
 ```
 
-## Back to Lab 02 {.smaller}
+## Back to Lab 1 {.smaller}
 
-In Lab 2 we examined the regression of obesity percentage on adequate exercise percentage.
+In Lab 1 we examined the regression of obesity percentage on adequate exercise percentage.
 
 ```{r}
 #| echo: false
@@ -79,6 +253,17 @@ Multiple regression is often used to control for confounders or predictors that 
 
 -   We are looking at relationships while **holding others constant** - for instance, we know that exercise percentage and HDI category might be correlated. Perhaps any associations between obesity and exercise percentage we see are actually driven by HDI category.
 
+```{r}
+#| echo: FALSE
+
+ggplot(data = cdc, aes(x = HDI, y = Obesity)) + 
+  geom_boxplot() + 
+  labs(title = "Adult Obesity (%) by State HDI", 
+       x = "Human Development Index (HDI)", y = "Adult Obesity (%)") +
+  theme_bw()
+
+```
+
 ## Multiple regression
 
 -   By fitting a multiple linear regression model, we can look at associations between obesity and exercise percentage **while holding HDI constant** (that is, at each possible value of HDI, what is the "remaining relationship" between exercise and obesity percentage?).
@@ -105,7 +290,7 @@ $$y_i = \beta_0 + \beta_1 x_{1i} + \beta_2 x_{2i} + \cdots + \beta_p x_{pi} + \e
 
 -   $\epsilon_i$ is the error (like the $\beta$s, it is not observed)
 
-Assumptions are essentially the same as in simple linear regression.
+Assumptions are essentially the same as in simple linear regression, and we evaluate them in the same way.
 
 ## Multiple regression
 
@@ -130,7 +315,7 @@ summary(model)
 ```
 
 
-## Multiple regression: kable
+## Multiple regression: tidymodels + kable
 
 ```{r}
 #| echo: true
@@ -138,7 +323,7 @@ tidy(model) |>
   kable(digits = 3)
 ```
 
-How might we interpret these parameter estimates? (watch out for the scale!)
+How might we interpret these parameter estimates? (watch out for the units!)
 
 ## Interpretation
 
@@ -181,7 +366,7 @@ In this case, the p-value was lower than the pre-specified significance cut-off.
 
 We might also test multiple parameters at once (for instance, all the slopes):
 
--   $H_0: \beta_1 = \beta_2 = 0$ vs. $H_1:$ at least one of the $\beta_k$ is not 0. (variable has a linear association with exercise %)
+-   $H_0: \beta_1 = \beta_2 = 0$ vs. $H_1:$ at least one of the $\beta_k$ is not 0. (variable has a linear association with exercise % and/or smoking %)
 
 This is given by an F test (much like ANOVA!) with numerator df equal to the number of parameters being tested (here, the number of slopes, i.e. 2) and denominator df equal to $n−k$ (number of observations minus number of estimated model parameters, *including* the intercept).
 
@@ -202,9 +387,13 @@ summary(model)
 
 ## Hypotheses of interest
 
+::: {.callout-tip appearance="simple"}
+What might we conclude for the overall F test for our model, assuming $\alpha = 0.05$?
+:::
+
 **Conclusion**: In this case, the p-value (4.572e-15) was lower than the pre-specified significance cut-off. There is sufficient evidence to suggest that at least one predictor (Exercise and/or Smoking) has a non-zero linear association with obesity %.
 
-## Example: Is SBP associated with cognitive scores
+## Example: Is SBP associated with cognitive scores?
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
 library(tidyverse)
@@ -222,7 +411,7 @@ CognitiveScore <- round(82 + 0.40 * (Age - 50) + 0.00 * (SBP - 130) + rnorm(n, 0
 study <- data.frame(id = 1:n, Age, SBP, CognitiveScore)
 ```
 
-- There is reason to believe that systolic blood pressure (SBP) is associated with lower cognitive scores in older adults
+- There is reason to believe that higher systolic blood pressure (SBP) is associated with lower cognitive scores in older adults
 
 - However, both SBP and cognitive scores are associated with age
 
@@ -272,26 +461,6 @@ study_age <- lm(CognitiveScore ~ SBP + Age,
 tidy(study_age) |>
   kable(digits = 3)
 ```
-
-
-## Multiple Regression in Real Life
-
-::: callout-tip
-
-Based on [this paper](https://bmcmedinformdecismak.biomedcentral.com/articles/10.1186/s12911-022-01884-9?utm_source=chatgpt.com), answer the following questions:
-
-1. In 1-2 sentences, describe the goal of this study/analysis.
-
-2. What was the outcome variable?
-
-3. How many independent variables did they use in their multiple regression model?
-
-4. In Table 4, what was the F-value and p-value? What is your conclusion?
-
-5. Which four predictor variables most significantly influenced the outcome?
-
-:::
-
 
 ## Confidence intervals
 
@@ -590,7 +759,8 @@ So,
 
 - When Smoking = 50%, slope = -0.358 + 0.003(50) = -0.208 (still negative association, but smaller in magnitude).
 
-**However**: The interaction term is not significant. So we should remove the interaction term and just use the model with main effects only. 
+**However**: The interaction term is not significant. So we should remove the interaction term and just use the model with main effects only (indicated by p-value associated with its coefficient). 
+
 
 ## The math behind it {.smaller}
 
@@ -642,7 +812,7 @@ A **significant overall F test with no significant individual variable test** is
 
 ## Checking VIF {.smaller}
 
-- The common way to check for multicollinearity is through VIF values. VIF values indicate the extent of multicollinearity.
+- The common way to check for multicollinearity is through Variance Inflation Factor (VIF) values. VIF values indicate the extent of multicollinearity.
 
 - A VIF value of 1 suggests no correlation with other predictors.
 
@@ -776,6 +946,25 @@ vif_values
 <!-- ``` -->
 
 <!-- - Note that you may need to include `row.names = F` so that R does not create an additional column of row numbers. -->
+
+## Multiple Regression in Real Life
+
+::: callout-tip
+
+Based on [this paper](https://bmcmedinformdecismak.biomedcentral.com/articles/10.1186/s12911-022-01884-9?utm_source=chatgpt.com), answer the following questions:
+
+1. In 1-2 sentences, describe the goal of this study/analysis.
+
+2. What was the outcome variable?
+
+3. How many independent variables did they use in their multiple regression model?
+
+4. In Table 4, what was the F-value and p-value? What is your conclusion?
+
+5. Which four predictor variables most significantly influenced the outcome?
+
+:::
+
 
 ## Recap
 

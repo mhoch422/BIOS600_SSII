@@ -357,7 +357,7 @@ min(cdc$Exercise)
 
 ## Hypothesis testing {.smaller}
 
--   The primary hypothesis test of interest is usually $H_0:β_1=0$ (There is no association between exercise and obesity percentage) versus $H_1:β_1≠0$ (there is an association between exercise and obesity percentage.)
+-   The primary hypothesis test of interest is usually $H_0:β_1=0$ (There is no linear association between exercise and obesity percentage) versus $H_1:β_1≠0$ (there is a linear association between exercise and obesity percentage.)
 
 -   Under the null hypothesis, we can use a t-test to test this
       - Same logic, same mechanics as the t-tests we've already seen — testing how likely is it see an estimate of $\beta_1$ this extreme or more extreme under the $H_{0}: \beta_1=0$

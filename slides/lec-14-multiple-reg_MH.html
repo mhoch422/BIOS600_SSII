@@ -6,8 +6,8 @@
 <script src="lec-14-multiple-reg_MH_files/libs/quarto-html/tippy.umd.min.js"></script>
 <link href="lec-14-multiple-reg_MH_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="lec-14-multiple-reg_MH_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="lec-14-multiple-reg_MH_files/libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.9.37">
+<link href="lec-14-multiple-reg_MH_files/libs/quarto-html/quarto-syntax-highlighting-15634bcf2e68342d4ad2dfa704d543f6.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.38">
 
   <title>Lecture 14: Multiple Linear Regression &amp; Collinearity</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -206,9 +206,10 @@
 <section id="announcements" class="slide level2">
 <h2>Announcements</h2>
 <ul>
-<li><p>HW 13 due <strong>tonight</strong></p></li>
-<li><p>HW 14 due <strong>tomorrow</strong></p></li>
+<li><p>HW 13 due <strong>tonight</strong> by 11:59 PM.</p></li>
+<li><p>HW 14 due <strong>tomorrow</strong> by 11:59</p></li>
 <li><p>Thursday’s lecture will be review for the final exam, which is <strong>July 27th</strong></p></li>
+<li><p>Please come to my office hours or make an appointment to go over Exam 2 for points back if you want to!</p></li>
 </ul>
 </section>
 <section id="reading" class="slide level2">
@@ -221,26 +222,130 @@
 <section id="overview" class="slide level2">
 <h2>Overview</h2>
 <ul>
+<li><p>Regression diagnostics</p></li>
 <li><p>Regression with multiple explanatory variables</p></li>
 <li><p>Interpreting categorical variables, plus releveling factors</p></li>
 <li><p>Interactions &amp; how to interpret interaction terms</p></li>
 <li><p>Checking for multicollinearity</p></li>
 </ul>
 </section>
-<section id="computational-setup" class="slide level2">
-<h2>Computational setup</h2>
-<div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-2"><a href=""></a><span class="fu">library</span>(tidymodels)</span>
-<span id="cb1-3"><a href=""></a><span class="fu">library</span>(kableExtra)</span>
-<span id="cb1-4"><a href=""></a><span class="fu">library</span>(car)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section id="yesterdays-model" class="slide level2">
+<h2>Yesterday’s Model</h2>
+<p>Recall that yesterday we were talking about the model that predicts a state’s obesity % by using its Exercise %. We can write this out formally as</p>
+<p><span class="math display">\[Obesity_i = \beta_0 + \beta_1 Exercise_i + \epsilon_i.\]</span></p>
+<p>And the fitted model was</p>
+<p><span class="math display">\[\widehat{Obesity}_i = 54.79 - 0.49 Exercise_i.\]</span></p>
+</section>
+<section id="hypothesis-testing" class="slide level2 smaller">
+<h2>Hypothesis Testing</h2>
+<ul>
+<li><p>For a simple linear model, we are interested in hypothesis tests/inference on the slope parameter <span class="math inline">\(\beta_1\)</span>.</p></li>
+<li><p>This is because what we are testing for is the presence of a <em>linear</em> association between our outcome (Obesity %) and our predictor (Exercise %).</p></li>
+<li><p>Our null hypothesis is <span class="math inline">\(H_0: \beta_1 = 0\)</span> and our alternative is <span class="math inline">\(H_A: \beta_1 \neq 0\)</span>.</p></li>
+<li><p>In words, our null hypothesis is that there is no linear association between a state’s exercise % and that state’s obesity %; our alternative is that there is a linear association between these two variables.</p></li>
+</ul>
+</section>
+<section id="model-assumptions" class="slide level2 smaller">
+<h2>Model assumptions</h2>
+<p>Assumptions of the model <span class="math inline">\(y_i = \beta_0 + \beta_1 x_1 + \epsilon_i\)</span> include:</p>
+<ul>
+<li><p>The outcomes <span class="math inline">\(y_i\)</span> are independent. This is violated if our study contains repeated outcome measures on an individual, if siblings are enrolled, etc.</p></li>
+<li><p>A linear relationship holds (though we can relax this to some extent)</p></li>
+<li><p>For a specified value of <span class="math inline">\(x\)</span>, which is measured without error, <span class="math inline">\(y_i∼N(β_0+β_1x_i,σ^2)\)</span>. Note that this implies <span class="math inline">\(ϵ_i∼N(0,σ^2)\)</span>.</p></li>
+<li><p>The variance <span class="math inline">\(σ^2\)</span> is constant across all values of <span class="math inline">\(x\)</span>; this is called <strong>homogeneity of variance</strong></p></li>
+</ul>
+</section>
+<section id="checking-our-assumptions" class="slide level2">
+<h2>Checking our assumptions</h2>
+<ul>
+<li><p>How can we check the assumptions to ensure they are met?</p></li>
+<li><p>We can do so by “<strong>running regression diagnostics</strong>” - which means checking the assumptions within our regression model.</p></li>
+</ul>
+</section>
+<section id="regression-diagnostics-independence" class="slide level2 smaller">
+<h2>Regression diagnostics: independence</h2>
+<p>We just have to think through this one, unfortunately.</p>
+<ul>
+<li><p>The <strong>independence assumption</strong> means that each observation provides <em>unique information</em> — no observation should influence another.</p></li>
+<li><p>In other words, the residuals (errors) should not be correlated with each other.</p></li>
+</ul>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Common violations of independence</strong></p>
+</div>
+<div class="callout-content">
+<ul>
+<li><p>Repeated measurements on the same subject over time<br>
+(e.g., daily blood pressure readings for the same patient)</p></li>
+<li><p>Clustered or grouped data<br>
+(e.g., patients within the same hospital, students within a classroom)</p></li>
+<li><p>Time-series data<br>
+(e.g., monthly pollution levels, daily step counts)</p></li>
+</ul>
+</div>
+</div>
 </div>
 </section>
-<section id="back-to-lab-02" class="slide level2 smaller">
-<h2>Back to Lab 02</h2>
-<p>In Lab 2 we examined the regression of obesity percentage on adequate exercise percentage.</p>
+<section id="regression-diagnostics-equal-variance-linearity" class="slide level2">
+<h2>Regression diagnostics: equal variance; linearity</h2>
+<ul>
+<li><p>To check equal variances and linearity, we can use a plot of the residuals <span class="math inline">\(\hat ϵ_i\)</span> by the predicted (or fitted) values <span class="math inline">\(\hat y_i\)</span>.</p></li>
+<li><p>We expect to see evenly-spaced dots along the x-axis (equal variances), with symmetrically distributed observations around the x-axis (linearity). Patterns or trends are evidence something is wrong.</p></li>
+</ul>
+</section>
+<section id="regression-diagnostics-equal-varianceslinearity" class="slide level2">
+<h2>Regression diagnostics: equal variances/linearity</h2>
 
-<img data-src="lec-14-multiple-reg_MH_files/figure-revealjs/unnamed-chunk-2-1.png" alt="A scatterplot with x-axis titled Obesity and y-axis titled Exercise. The dots follow a downward trend generally." width="960" class="r-stretch"><p>Do we think this is the only factor that can help us predict obesity percentage?</p>
+<img data-src="lec-14-multiple-reg_MH_files/figure-revealjs/unnamed-chunk-2-1.png" alt="A scatterplot with x-axis labeled Fitted and y-axis labeled Residuals. There is a dashed red line at y=0, and the x-axis ranges from 1 to 10. The points of the scatterplot are closer to the dashed line for lower x values and spread out further for higher x-values." width="960" class="r-stretch"></section>
+<section id="regression-diagnostics-equal-varianceslinearity-1" class="slide level2">
+<h2>Regression diagnostics: equal variances/linearity</h2>
+
+<img data-src="lec-14-multiple-reg_MH_files/figure-revealjs/unnamed-chunk-3-1.png" alt="A scatterplot with x-axis labeled Fitted and y-axis labeled Residuals. There is a dashed red line at y=0, and the x-axis ranges from 1 to 10. The points of the scatterplot form a parabola." width="960" class="r-stretch"></section>
+<section id="regression-diagnostic-equal-varianceslinearity" class="slide level2">
+<h2>Regression diagnostic: equal variances/linearity</h2>
+
+<img data-src="lec-14-multiple-reg_MH_files/figure-revealjs/unnamed-chunk-4-1.png" alt="A scatterplot with x-axis labeled Fitted and y-axis labeled Residuals. There is a dashed red line at y=0, and the x-axis ranges from 1 to 10. The points of the scatterplot are equally split above and below the dashed line for all x values." width="960" class="r-stretch"></section>
+<section id="regression-diagnostics-normality-of-errors" class="slide level2">
+<h2>Regression diagnostics: normality of errors</h2>
+<ul>
+<li>Use a histogram of the residuals to check normality. There are more advanced methods and plots, but we won’t talk about them here</li>
+</ul>
+</section>
+<section id="checking-assumptions-for-our-model" class="slide level2">
+<h2>Checking assumptions for our model…</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a>fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(Obesity <span class="sc">~</span> Exercise, <span class="at">data =</span> cdc)</span>
+<span id="cb1-2"><a href=""></a><span class="fu">plot</span>(fit<span class="sc">$</span>fitted.values, fit<span class="sc">$</span>residuals)</span>
+<span id="cb1-3"><a href=""></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>,<span class="at">lty =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="lec-14-multiple-reg_MH_files/figure-revealjs/unnamed-chunk-6-1.png" alt="A scatterplot with x-axis labeled fitted and y-axis labeled residuals, with a dashed black line at y = 0. The points are generally equally above and below the dashed line." width="960" class="r-stretch"></section>
+<section id="checking-assumptions-for-our-model-1" class="slide level2">
+<h2>Checking assumptions for our model…</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a><span class="co"># check normality of residuals</span></span>
+<span id="cb2-2"><a href=""></a><span class="fu">hist</span>(fit<span class="sc">$</span>residuals)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+
+</div>
+<img data-src="lec-14-multiple-reg_MH_files/figure-revealjs/unnamed-chunk-7-1.png" alt="A histogram with x-axis labeled Residuals and y-axis labeled Frequency. The distribution appears normal." width="960" class="r-stretch"></section>
+<section id="computational-setup-for-multiple-linear-regression" class="slide level2">
+<h2>Computational setup for multiple linear regression</h2>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb3-2"><a href=""></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb3-3"><a href=""></a><span class="fu">library</span>(kableExtra)</span>
+<span id="cb3-4"><a href=""></a><span class="fu">library</span>(car)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</section>
+<section id="back-to-lab-1" class="slide level2 smaller">
+<h2>Back to Lab 1</h2>
+<p>In Lab 1 we examined the regression of obesity percentage on adequate exercise percentage.</p>
+
+<img data-src="lec-14-multiple-reg_MH_files/figure-revealjs/unnamed-chunk-9-1.png" alt="A scatterplot with x-axis titled Obesity and y-axis titled Exercise. The dots follow a downward trend generally." width="960" class="r-stretch"><p>Do we think this is the only factor that can help us predict obesity percentage?</p>
 </section>
 <section id="multiple-regression" class="slide level2 smaller">
 <h2>Multiple regression</h2>
@@ -254,13 +359,14 @@
 <li><p>If you also knew that state’s HDI category, you might be able to do even better!</p></li>
 </ul>
 </section>
-<section id="multiple-regression-1" class="slide level2">
+<section id="multiple-regression-1" class="slide level2 smaller">
 <h2>Multiple regression</h2>
 <ul>
 <li><p>Importantly, accounting for multiple predictors allows us to address potential confounding.</p></li>
 <li><p>We are looking at relationships while <strong>holding others constant</strong> - for instance, we know that exercise percentage and HDI category might be correlated. Perhaps any associations between obesity and exercise percentage we see are actually driven by HDI category.</p></li>
 </ul>
-</section>
+
+<img data-src="lec-14-multiple-reg_MH_files/figure-revealjs/unnamed-chunk-10-1.png" width="960" class="r-stretch"></section>
 <section id="multiple-regression-2" class="slide level2">
 <h2>Multiple regression</h2>
 <ul>
@@ -282,7 +388,7 @@
 <li><p><span class="math inline">\(x_{1i}, x_{2i}, \cdots, x_{pi}\)</span> are predictor variables</p></li>
 <li><p><span class="math inline">\(\epsilon_i\)</span> is the error (like the <span class="math inline">\(\beta\)</span>s, it is not observed)</p></li>
 </ul>
-<p>Assumptions are essentially the same as in simple linear regression.</p>
+<p>Assumptions are essentially the same as in simple linear regression, and we evaluate them in the same way.</p>
 </section>
 <section id="multiple-regression-4" class="slide level2">
 <h2>Multiple regression</h2>
@@ -307,8 +413,8 @@
 <section id="multiple-regression-5" class="slide level2 smaller">
 <h2>Multiple regression</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href=""></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Obesity <span class="sc">~</span> Exercise <span class="sc">+</span> Smoking, <span class="at">data =</span> cdc)</span>
-<span id="cb2-2"><a href=""></a><span class="fu">summary</span>(model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a>model <span class="ot">&lt;-</span> <span class="fu">lm</span>(Obesity <span class="sc">~</span> Exercise <span class="sc">+</span> Smoking, <span class="at">data =</span> cdc)</span>
+<span id="cb4-2"><a href=""></a><span class="fu">summary</span>(model)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -332,11 +438,11 @@ F-statistic: 72.28 on 2 and 47 DF,  p-value: 4.572e-15</code></pre>
 </div>
 </div>
 </section>
-<section id="multiple-regression-kable" class="slide level2">
-<h2>Multiple regression: kable</h2>
+<section id="multiple-regression-tidymodels-kable" class="slide level2">
+<h2>Multiple regression: tidymodels + kable</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href=""></a><span class="fu">tidy</span>(model) <span class="sc">|&gt;</span></span>
-<span id="cb4-2"><a href=""></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="fu">tidy</span>(model) <span class="sc">|&gt;</span></span>
+<span id="cb6-2"><a href=""></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
@@ -374,7 +480,7 @@ F-statistic: 72.28 on 2 and 47 DF,  p-value: 4.572e-15</code></pre>
 </table>
 </div>
 </div>
-<p>How might we interpret these parameter estimates? (watch out for the scale!)</p>
+<p>How might we interpret these parameter estimates? (watch out for the units!)</p>
 </section>
 <section id="interpretation" class="slide level2">
 <h2>Interpretation</h2>
@@ -453,13 +559,15 @@ F-statistic: 72.28 on 2 and 47 DF,  p-value: 4.572e-15</code></pre>
 </table>
 </div>
 </div>
+<div class="fragment">
 <p>In this case, the p-value was lower than the pre-specified significance cut-off. There is sufficient evidence to suggest that, <strong>controlling for smoking %</strong>, there is a non-zero linear association between exercise % and obesity % by state.</p>
+</div>
 </section>
 <section id="hypotheses-of-interest-2" class="slide level2">
 <h2>Hypotheses of interest</h2>
 <p>We might also test multiple parameters at once (for instance, all the slopes):</p>
 <ul>
-<li><span class="math inline">\(H_0: \beta_1 = \beta_2 = 0\)</span> vs.&nbsp;<span class="math inline">\(H_1:\)</span> at least one of the <span class="math inline">\(\beta_k\)</span> is not 0. (variable has a linear association with exercise %)</li>
+<li><span class="math inline">\(H_0: \beta_1 = \beta_2 = 0\)</span> vs.&nbsp;<span class="math inline">\(H_1:\)</span> at least one of the <span class="math inline">\(\beta_k\)</span> is not 0. (variable has a linear association with exercise % and/or smoking %)</li>
 </ul>
 <p>This is given by an F test (much like ANOVA!) with numerator df equal to the number of parameters being tested (here, the number of slopes, i.e.&nbsp;2) and denominator df equal to <span class="math inline">\(n−k\)</span> (number of observations minus number of estimated model parameters, <em>including</em> the intercept).</p>
 <div class="callout callout-tip callout-style-simple">
@@ -502,12 +610,22 @@ F-statistic: 72.28 on 2 and 47 DF,  p-value: 4.572e-15</code></pre>
 </section>
 <section id="hypotheses-of-interest-3" class="slide level2">
 <h2>Hypotheses of interest</h2>
+<div class="callout callout-tip callout-style-simple">
+<div class="callout-body">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-content">
+<p>What might we conclude for the overall F test for our model, assuming <span class="math inline">\(\alpha = 0.05\)</span>?</p>
+</div>
+</div>
+</div>
 <p><strong>Conclusion</strong>: In this case, the p-value (4.572e-15) was lower than the pre-specified significance cut-off. There is sufficient evidence to suggest that at least one predictor (Exercise and/or Smoking) has a non-zero linear association with obesity %.</p>
 </section>
 <section id="example-is-sbp-associated-with-cognitive-scores" class="slide level2">
 <h2>Example: Is SBP associated with cognitive scores</h2>
 <ul>
-<li><p>There is reason to believe that systolic blood pressure (SBP) is associated with lower cognitive scores in older adults</p></li>
+<li><p>There is reason to believe that higher systolic blood pressure (SBP) is associated with lower cognitive scores in older adults</p></li>
 <li><p>However, both SBP and cognitive scores are associated with age</p></li>
 <li><p>Let’s look at the results of running this model: <span class="math display">\[CognitiveScore_i = \beta_0 + \beta_1 SBP_i + \varepsilon_i\]</span></p></li>
 </ul>
@@ -572,10 +690,12 @@ CognitiveScore 0.4082618      1.0000000 0.4830672
 Age            0.6637731      0.4830672 1.0000000</code></pre>
 </div>
 </div>
+<div class="fragment">
 <ul>
 <li><p>We see that age is correlated to both of our other variables!</p></li>
 <li><p>Let’s look at this model: <span class="math display">\[CognitiveScore_i = \beta_0 + \beta_1 SBP_i + \beta_2 Age_i + \varepsilon_i\]</span></p></li>
 </ul>
+</div>
 </section>
 <section id="example-confounding-1" class="slide level2">
 <h2>Example: Confounding</h2>
@@ -706,9 +826,9 @@ Age            0.6637731      0.4830672 1.0000000</code></pre>
 <section id="interpretation-of-dummy-variables-1" class="slide level2">
 <h2>Interpretation of dummy variables</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Obesity <span class="sc">~</span> HDI, <span class="at">data =</span> cdc)</span>
-<span id="cb7-2"><a href=""></a><span class="fu">tidy</span>(fit2) <span class="sc">|&gt;</span></span>
-<span id="cb7-3"><a href=""></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a>fit2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Obesity <span class="sc">~</span> HDI, <span class="at">data =</span> cdc)</span>
+<span id="cb9-2"><a href=""></a><span class="fu">tidy</span>(fit2) <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href=""></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
@@ -754,8 +874,8 @@ Age            0.6637731      0.4830672 1.0000000</code></pre>
 <li>Wait a minute! R automatically assigned the lowest level of HDI as the reference level. Let’s see how we can change the reference level:</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href=""></a>cdc_new <span class="ot">&lt;-</span> cdc <span class="sc">|&gt;</span></span>
-<span id="cb8-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">HDI_relevel =</span> <span class="fu">fct_relevel</span>(HDI, <span class="st">"Top ten"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a>cdc_new <span class="ot">&lt;-</span> cdc <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href=""></a>  <span class="fu">mutate</span>(<span class="at">HDI_relevel =</span> <span class="fu">fct_relevel</span>(HDI, <span class="st">"Top ten"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li><p>This reorders the factor levels so that “<code>Top ten</code>” becomes the first (reference) level.</p></li>
@@ -806,10 +926,10 @@ Age            0.6637731      0.4830672 1.0000000</code></pre>
 <section id="interpretation-of-dummy-variables-2" class="slide level2">
 <h2>Interpretation of dummy variables</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a>fit3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Obesity <span class="sc">~</span> Exercise <span class="sc">+</span> HDI_relevel, </span>
-<span id="cb9-2"><a href=""></a>           <span class="at">data =</span> cdc_new)</span>
-<span id="cb9-3"><a href=""></a><span class="fu">tidy</span>(fit3) <span class="sc">|&gt;</span></span>
-<span id="cb9-4"><a href=""></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a>fit3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Obesity <span class="sc">~</span> Exercise <span class="sc">+</span> HDI_relevel, </span>
+<span id="cb11-2"><a href=""></a>           <span class="at">data =</span> cdc_new)</span>
+<span id="cb11-3"><a href=""></a><span class="fu">tidy</span>(fit3) <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href=""></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
@@ -907,7 +1027,7 @@ FBG_i = \beta_0 + \beta_1 (BMI_i)(Female_i)
 <section id="association-between-bmi-and-fasting-blood-glucose-fbg-ignoring-gender" class="slide level2">
 <h2>Association between BMI and fasting blood glucose (FBG), ignoring gender</h2>
 
-<img data-src="lec-14-multiple-reg_MH_files/figure-revealjs/unnamed-chunk-15-1.png" alt="A scatterplot with x-axis labeled BMI and y-axis labeled Fasting Blood Glucose. The dots seem to have a slight upward trend, and a blue line with a positive slope is superimposed over the dots." width="960" class="r-stretch"></section>
+<img data-src="lec-14-multiple-reg_MH_files/figure-revealjs/unnamed-chunk-23-1.png" alt="A scatterplot with x-axis labeled BMI and y-axis labeled Fasting Blood Glucose. The dots seem to have a slight upward trend, and a blue line with a positive slope is superimposed over the dots." width="960" class="r-stretch"></section>
 <section id="association-between-bmi-and-fasting-blood-glucose-fbg-ignoring-gender-1" class="slide level2">
 <h2>Association between BMI and fasting blood glucose (FBG), ignoring gender</h2>
 <div class="cell">
@@ -986,7 +1106,7 @@ FBG_i = \beta_0 + \beta_1 (BMI_i)(Female_i)
 <section id="now-lets-look-again" class="slide level2">
 <h2>Now let’s look again</h2>
 
-<img data-src="lec-14-multiple-reg_MH_files/figure-revealjs/unnamed-chunk-18-1.png" alt="A scatterplot with x-axis labeled BMI and y-axis labeled Fasting Blood Glucose. The dots are colored red for male and blue for female. The blue dots seem to have higher y-values than the red dots, and this difference is larger for higher x-values." width="960" class="r-stretch"></section>
+<img data-src="lec-14-multiple-reg_MH_files/figure-revealjs/unnamed-chunk-26-1.png" alt="A scatterplot with x-axis labeled BMI and y-axis labeled Fasting Blood Glucose. The dots are colored red for male and blue for female. The blue dots seem to have higher y-values than the red dots, and this difference is larger for higher x-values." width="960" class="r-stretch"></section>
 <section id="association-between-bmi-and-fasting-blood-glucose-fbg-with-interaction" class="slide level2">
 <h2>Association between BMI and fasting blood glucose (FBG), with interaction</h2>
 <div class="cell">
@@ -1038,7 +1158,7 @@ FBG_i = \beta_0 + \beta_1 (BMI_i)(Female_i)
 <section id="association-between-bmi-and-fasting-blood-glucose-fbg-with-interaction-1" class="slide level2">
 <h2>Association between BMI and fasting blood glucose (FBG), with interaction</h2>
 
-<img data-src="lec-14-multiple-reg_MH_files/figure-revealjs/unnamed-chunk-20-1.png" alt="A scatterplot with x-axis labeled BMI and y-axis labeled Fasting Blood Glucose. The dots are colored red for male and blue for female. The blue dots seem to have higher y-values than the red dots, and this difference is larger for higher x-values. A red line with a positive slope and a blue line with a steeper positive slope are superimposed over the dots." width="960" class="r-stretch"></section>
+<img data-src="lec-14-multiple-reg_MH_files/figure-revealjs/unnamed-chunk-28-1.png" alt="A scatterplot with x-axis labeled BMI and y-axis labeled Fasting Blood Glucose. The dots are colored red for male and blue for female. The blue dots seem to have higher y-values than the red dots, and this difference is larger for higher x-values. A red line with a positive slope and a blue line with a steeper positive slope are superimposed over the dots." width="960" class="r-stretch"></section>
 <section id="association-between-bmi-and-fasting-blood-glucose-fbg-with-interaction-2" class="slide level2">
 <h2>Association between BMI and fasting blood glucose (FBG), with interaction</h2>
 <ul>
@@ -1071,12 +1191,12 @@ FBG_i = \beta_0 + \beta_1 (BMI_i)(Female_i)
 <section id="interactions-model" class="slide level2 smaller">
 <h2>Interactions model</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a>fit_int <span class="ot">&lt;-</span> <span class="fu">lm</span>(Obesity <span class="sc">~</span> Exercise <span class="sc">+</span> </span>
-<span id="cb10-2"><a href=""></a>                Smoking <span class="sc">+</span> </span>
-<span id="cb10-3"><a href=""></a>                Exercise<span class="sc">*</span>Smoking, </span>
-<span id="cb10-4"><a href=""></a>                   <span class="at">data =</span> cdc)</span>
-<span id="cb10-5"><a href=""></a><span class="fu">tidy</span>(fit_int) <span class="sc">|&gt;</span></span>
-<span id="cb10-6"><a href=""></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a>fit_int <span class="ot">&lt;-</span> <span class="fu">lm</span>(Obesity <span class="sc">~</span> Exercise <span class="sc">+</span> </span>
+<span id="cb12-2"><a href=""></a>                Smoking <span class="sc">+</span> </span>
+<span id="cb12-3"><a href=""></a>                Exercise<span class="sc">*</span>Smoking, </span>
+<span id="cb12-4"><a href=""></a>                   <span class="at">data =</span> cdc)</span>
+<span id="cb12-5"><a href=""></a><span class="fu">tidy</span>(fit_int) <span class="sc">|&gt;</span></span>
+<span id="cb12-6"><a href=""></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top">
 <thead>
@@ -1130,7 +1250,7 @@ FBG_i = \beta_0 + \beta_1 (BMI_i)(Female_i)
 <li><p>When Smoking = 0%, the slope of Exercise is -0.358 (exercise is assoc. w/ lower obesity).</p></li>
 <li><p>When Smoking = 50%, slope = -0.358 + 0.003(50) = -0.208 (still negative association, but smaller in magnitude).</p></li>
 </ul>
-<p><strong>However</strong>: The interaction term is not significant. So we should remove the interaction term and just use the model with main effects only.</p>
+<p><strong>However</strong>: The interaction term is not significant. So we should remove the interaction term and just use the model with main effects only (indicated by p-value associated with its coefficient).</p>
 </section>
 <section id="the-math-behind-it" class="slide level2 smaller">
 <h2>The math behind it</h2>
@@ -1184,7 +1304,7 @@ FBG_i = \beta_0 + \beta_1 (BMI_i)(Female_i)
 <section id="checking-vif" class="slide level2 smaller">
 <h2>Checking VIF</h2>
 <ul>
-<li><p>The common way to check for multicollinearity is through VIF values. VIF values indicate the extent of multicollinearity.</p></li>
+<li><p>The common way to check for multicollinearity is through Variance Inflation Factors (VIF) values. VIF values indicate the extent of multicollinearity.</p></li>
 <li><p>A VIF value of 1 suggests no correlation with other predictors.</p></li>
 <li><p>Values between 1 and 5 generally indicate moderate correlation.</p></li>
 <li><p>Values above 5 (or sometimes 10, depending on the context) are often considered problematic, indicating severe multicollinearity and potential issues with coefficient stability and interpretation.</p></li>
@@ -1196,10 +1316,10 @@ FBG_i = \beta_0 + \beta_1 (BMI_i)(Female_i)
 <li>Let’s say we had the following model:</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a>fit4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Obesity <span class="sc">~</span> Exercise <span class="sc">+</span> Smoking <span class="sc">+</span> Over65, </span>
-<span id="cb11-2"><a href=""></a>           <span class="at">data =</span> cdc)</span>
-<span id="cb11-3"><a href=""></a>vif_values <span class="ot">&lt;-</span> <span class="fu">vif</span>(fit4) <span class="co"># car package</span></span>
-<span id="cb11-4"><a href=""></a>vif_values</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a>fit4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Obesity <span class="sc">~</span> Exercise <span class="sc">+</span> Smoking <span class="sc">+</span> Over65, </span>
+<span id="cb13-2"><a href=""></a>           <span class="at">data =</span> cdc)</span>
+<span id="cb13-3"><a href=""></a>vif_values <span class="ot">&lt;-</span> <span class="fu">vif</span>(fit4) <span class="co"># car package</span></span>
+<span id="cb13-4"><a href=""></a>vif_values</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Exercise  Smoking   Over65 
 1.420894 1.541720 1.123272 </code></pre>
@@ -1287,6 +1407,29 @@ FBG_i = \beta_0 + \beta_1 (BMI_i)(Female_i)
 <!-- # do not create a column of row names -->
 <!-- ``` -->
 <!-- - Note that you may need to include `row.names = F` so that R does not create an additional column of row numbers. -->
+</section>
+<section id="multiple-regression-in-real-life-1" class="slide level2">
+<h2>Multiple Regression in Real Life</h2>
+<div class="callout callout-tip callout-titled callout-style-default">
+<div class="callout-body">
+<div class="callout-title">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<p><strong>Tip</strong></p>
+</div>
+<div class="callout-content">
+<p>Based on <a href="https://bmcmedinformdecismak.biomedcentral.com/articles/10.1186/s12911-022-01884-9?utm_source=chatgpt.com">this paper</a>, answer the following questions:</p>
+<ol type="1">
+<li><p>In 1-2 sentences, describe the goal of this study/analysis.</p></li>
+<li><p>What was the outcome variable?</p></li>
+<li><p>How many independent variables did they use in their multiple regression model?</p></li>
+<li><p>In Table 4, what was the F-value and p-value? What is your conclusion?</p></li>
+<li><p>Which four predictor variables most significantly influenced the outcome?</p></li>
+</ol>
+</div>
+</div>
+</div>
 </section>
 <section id="recap" class="slide level2">
 <h2>Recap</h2>

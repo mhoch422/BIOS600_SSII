@@ -124,8 +124,20 @@ For this exercise, generate your own dataset with slope and intercept of your ch
 
 ## Generate data set -- don't forget to set your seed!
 
+set.seed(105)
+
+x <- seq(0, 10, length.out = 25)
+
+y <- 12 + 4 * x + rnorm(25, mean = 0, sd = 2)
+
+example <- cbind(x, y)
+
 ## Create your plot -- have fun with the line colors!
 
+ggplot(example, aes(x = x, y = y)) +
+  geom_point() +
+  geom_abline(aes(intercept = 12, slope = 4), color = "green") +
+  geom_smooth(method = "lm", color = "pink", se = F)
 
 ```
 
@@ -137,6 +149,15 @@ Using `lm()`, as well as `tidy()` and `kable()`, run the regression `y ~ x` for 
 library(tidymodels)
 library(kableExtra)
 
+fit_aq1 <- lm(aq_1$y ~ aq_1$x)
+
+tidy(fit_aq1) |>
+  kable(digits = 2)
+
+fit_aq2 <- lm(aq_2$y ~ aq_2$x)
+
+tidy(fit_aq2) |>
+  kable(digits = 2)
 
 ```
 
