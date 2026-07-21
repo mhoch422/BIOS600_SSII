@@ -10,13 +10,25 @@ execute:
   freeze: auto
 ---
 
-## Announcements
+## Announcements {.smaller}
 
 - HW 14 due **tonight** 
 
 - HW 15 due **tomorrow**
 
 - Class tomorrow will be review for the final exam!
+
+- Hand in Application Exercise 3 if you haven't already, and you can resubmit if you lost points on your first submission.
+
+- Make an appointment or come to my office hours this afternoon to go over your Exam 2 for points back!
+
+## Course Evaluations
+
+You should have access to the evaluation for this class through Canvas, or through an email from the course evaluation team.
+
+\vspace{2cm}
+
+This feedback is helpful, both to the Biostatistics Department as it evaluates whether to keep offering this as a summer course, and to me, so that I can learn what parts of class worked well and improve as an instructor going forward.
 
 ## Overview
 

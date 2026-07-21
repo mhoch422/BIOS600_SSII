@@ -15,7 +15,7 @@ format: html
 
 - The questions may be mostly short answer and one set of true/false questions - although maybe one or two multiple choice
 
-- To prepare, review the definitions, concepts, and examples in the lectures. Review all lab assignments, homework assignments, and AEs listed above. With each question, ask yourself "Why?" Why does this matter? Why might this concept be helpful when doing biostatistics in the real world? Can I explain this question to someone else who does not have statistics experience?
+- To prepare, review the definitions, concepts, and examples in the lectures. Review all homework assignments and the lab assignment listed above. With each question, ask yourself "Why?" Why does this matter? Why might this concept be helpful when doing biostatistics in the real world? Can I explain this question to someone else who does not have statistics experience?
 
 - Code, Applied and Conceptual will be mixed in across all questions 
 
@@ -25,6 +25,6 @@ format: html
 
 - A topics list is available as `final-topics`.
 
-- I will prepare a set of review questions for us to complete in class on Thursday July 23. We will go over these together and you will have access to the solutions after class. 
+- We will review in class on Thursday, July 23.
 
-- I will post additional problems to work this week for you to try on your own
+- Additionally, there are two sets of review questions on Canvas, and I'll post the solutions to those after class on Thursday.
