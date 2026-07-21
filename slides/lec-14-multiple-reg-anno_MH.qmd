@@ -327,13 +327,13 @@ How might we interpret these parameter estimates? (watch out for the units!)
 
 ## Interpretation
 
--   **Interpreting $\hat{\beta_1}$**: For every one percent increase of adults who participated in at least 2.5 hours of aerobic activity per week, we expect the percent of adults who are obese to decrease by .308 of a percentage point on average, **holding Smoking constant**.
+-   **Interpreting $\hat{\beta_1}$**: For every one percent increase of adults who participated in at least 2.5 hours of aerobic activity per week, we expect the percent of adults who are obese to decrease by .309 of a percentage point on average, **holding Smoking constant**.
 
 ::: callout-tip
 
 ## Your turn
 
-Use the interpretation above to write out an interpretation of $\hat{\beta_2}$. Recall that the `Smoking` variable is defined as percent of adults in region who smoked at least one cigarette in the past month.
+Use the interpretation above to write out an interpretation of $\hat{\beta_2}$. Recall that the `Smoking` variable is defined as percent of adults in the state who smoked at least one cigarette in the past month.
 
 :::
 
@@ -393,6 +393,28 @@ What might we conclude for the overall F test for our model, assuming $\alpha = 
 
 **Conclusion**: In this case, the p-value (4.572e-15) was lower than the pre-specified significance cut-off. There is sufficient evidence to suggest that at least one predictor (Exercise and/or Smoking) has a non-zero linear association with obesity %.
 
+## Confidence intervals
+
+For individual predictors, we can also use the standard error estimate to construct confidence intervals. These intervals are constructed using a critical value from a t distribution:
+
+::: poll
+$$(\hat \beta_k - t^*_{1-\alpha/2; n-k} \times SE(\hat \beta_k), \hat \beta_k + t^*_{1-\alpha/2; n-k} \times SE(\hat \beta_k))$$
+:::
+
+For instance, $SE (\hat \beta_1)=0.06$. Thus, we have that a 95% confidence interval for $β_1$ is (-0.43, -0.19). If we were to interpret this interval, it would have to be conditionally on the other variables in the model.
+
+## R-squared {.smaller}
+
+-   In our model, $R^2=0.7546$, suggesting that about 75% of the variability in obesity percentage can be explained by our model.
+
+-   However, $R^2$ can never decrease when variables are added to a model, even if they are useless.
+
+-   Thus, we can use **adjusted** $R^2 \leq R^2$, where the adjustment is made to account for the number of predictors.
+
+-   The **adjusted** $R^2$ incorporates a penalty for each additional variable in a model, so that the adjusted $R^2$ will go down if a new variable does not improve prediction much, and it will go up if the new variable does improve prediction, conditional on the other variables already in the model.
+
+-   With that said, $R^2$ or adj. $R^2$ should never be used as the only reasons to select variables for your model - you must rely on scientific knowledge and context!
+
 ## Example: Is SBP associated with cognitive scores?
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
@@ -411,7 +433,7 @@ CognitiveScore <- round(82 + 0.40 * (Age - 50) + 0.00 * (SBP - 130) + rnorm(n, 0
 study <- data.frame(id = 1:n, Age, SBP, CognitiveScore)
 ```
 
-- There is reason to believe that higher systolic blood pressure (SBP) is associated with lower cognitive scores in older adults
+- There is reason to believe that higher systolic blood pressure (SBP) is associated with higher cognitive scores in older adults
 
 - However, both SBP and cognitive scores are associated with age
 
@@ -462,27 +484,7 @@ tidy(study_age) |>
   kable(digits = 3)
 ```
 
-## Confidence intervals
 
-For individual predictors, we can also use the standard error estimate to construct confidence intervals. These intervals are constructed using a critical value from a t distribution:
-
-::: poll
-$$(\hat \beta_k - t^*_{1-\alpha/2; n-k} \times SE(\hat \beta_k), \hat \beta_k + t^*_{1-\alpha/2; n-k} \times SE(\hat \beta_k))$$
-:::
-
-For instance, $SE (\hat \beta_1)=0.06$. Thus, we have that a 95% confidence interval for $β_1$ is (-0.43, -0.19). If we were to interpret this interval, it would have to be conditionally on the other variables in the model.
-
-## R-squared {.smaller}
-
--   In our model, $R^2=0.7546$, suggesting that about 75% of the variability in obesity percentage can be explained by our model.
-
--   However, $R^2$ can never decrease when variables are added to a model, even if they are useless.
-
--   Thus, we can use **adjusted** $R^2 \leq R^2$, where the adjustment is made to account for the number of predictors.
-
--   The **adjusted** $R^2$ incorporates a penalty for each additional variable in a model, so that the adjusted $R^2$ will go down if a new variable does not improve prediction much, and it will go up if the new variable does improve prediction, conditional on the other variables already in the model.
-
--   With that said, $R^2$ or adj. $R^2$ should never be used as the only reasons to select variables for your model - you must rely on scientific knowledge and context!
 
 ## Categorical predictors {.smaller}
 
@@ -583,8 +585,8 @@ $$FBG_i = \beta_0 + \beta_1 Female_i + \beta_2 BMI_i$$
   - Association is in the same direction (e.g. positive/negative) but the association is stronger in magnitude depending on the value of the effect modifier (e.g. association is positive for males and females, but stronger association for females)
   - Association is in one direction for certain values but the opposite direction depending on other values of the effect modifier (e.g. association is positive for males but negative for females)
   - Association is present for certain values of the effect modifier, but no association is seen for other values (e.g. association is positive for males but no evidence of association for females)
-  
-## Interactions/Effect Modification
+
+## Interactions/Effect Modification {.smaller}
 
 - To model a case of effect modification - when the relationship between one predictor and the outcome depends on the value of another predictor variable, we create an **interaction term**.
 
@@ -600,14 +602,13 @@ $$
 
 - With interaction terms in the model
   - Difference between females and males in FBG, holding BMI constant, is no longer given by $\beta_1$
-  - $\beta_2$ no longer represents the change in FBG associated with a 1 $kg/m^{2}$ change in BMI, holding sex constant
+  - $\beta_2$ no longer represents the change in FBG in mg/dL associated with a 1 $kg/m^{2}$ change in BMI, holding sex constant
 
 $$FBG_i = \beta_0 + \beta_1 Female_i + \beta_2 BMI_i + \beta_3 (BMI_i)(Female_i)$$
 
 - But how can I get an estimate for how they are associated? 
 
 ```{r}
-#| echo: FALSE
 #| label: simulate-data
 #| include: false
 
@@ -630,9 +631,6 @@ dat <- tibble(
 ## Association between BMI and fasting blood glucose (FBG), ignoring gender
 
 ```{r}
-#| echo: FALSE
-#| message: FALSE
-#| warning: FALSE
 #| fig-alt: "A scatterplot with x-axis labeled BMI and y-axis labeled Fasting Blood Glucose. The dots seem to have a slight upward trend, and a blue line with a positive slope is superimposed over the dots."
 library(ggplot2)
 
@@ -641,22 +639,21 @@ ggplot(dat, aes(x = bmi, y = fbg)) +
   geom_smooth(method = "lm", se = FALSE) +
   labs(
     x = "BMI (kg/m²)",
-    y = "Fasting Blood Glucose (FBG)"
+    y = "Fasting Blood Glucose (FBG) (mg/dL)"
   )
 ```
 
 ## Association between BMI and fasting blood glucose (FBG), ignoring gender
 
 ```{r}
-#| echo: FALSE
 mod1 <- lm(fbg ~ bmi, data=dat)
 tidy(mod1) |>
   kable(digits=3)
 ```
+
 ## Association between BMI and fasting blood glucose (FBG), controlling for gender
 
 ```{r}
-#| echo: FALSE
 mod1 <- lm(fbg ~ bmi + gender, data=dat)
 tidy(mod1) |>
   kable(digits=3)
@@ -665,25 +662,23 @@ tidy(mod1) |>
 ## Now let's look again
 
 ```{r}
-#| echo: FALSE
-#| message: FALSE
-#| warning: FALSE
-#| fig-alt: "A scatterplot with x-axis labeled BMI and y-axis labeled Fasting Blood Glucose. The dots are colored red for male and blue for female. The blue dots seem to have higher y-values than the red dots, and this difference is larger for higher x-values."
+#| fig-alt: "A scatterplot with x-axis labeled BMI and y-axis labeled Fasting Blood Glucose. The dots are colored red for male and blue for female. The blue dots seem to have higher y-values than the red dots, and this difference is larger for higher x-values. There are two lines with the same slope; the blue line is higher than the red by about 20 mg/dL."
 library(ggplot2)
 
 ggplot(dat, aes(x = bmi, y = fbg, color = gender)) +
   geom_point(alpha = 0.6) +
+  geom_abline(slope = 2.938, intercept = 53.746+19.571, color = "turquoise3", weight = 5) +
+  geom_abline(slope = 2.938, intercept = 53.746, color = "indianred3", weight = 5) +
   labs(
     x = "BMI (kg/m²)",
-    y = "Fasting Blood Glucose (FBG)",
+    y = "Fasting Blood Glucose (FBG) (mg/dL)",
     color = "Gender"
   )
 ```
 
-## Association between BMI and fasting blood glucose (FBG), with interaction
+## Association between BMI and fasting blood glucose (FBG), with interaction  {.smaller}
 
 ```{r}
-#| echo: FALSE
 mod1 <- lm(fbg ~ bmi + gender + bmi*gender, data=dat)
 tidy(mod1) |>
   kable(digits=3)
@@ -692,8 +687,6 @@ tidy(mod1) |>
 
 ```{r}
 #| fig-alt: "A scatterplot with x-axis labeled BMI and y-axis labeled Fasting Blood Glucose. The dots are colored red for male and blue for female. The blue dots seem to have higher y-values than the red dots, and this difference is larger for higher x-values. A red line with a positive slope and a blue line with a steeper positive slope are superimposed over the dots."
-#| echo: FALSE
-#| warning: FALSE
 library(ggplot2)
 
 ggplot(dat, aes(x = bmi, y = fbg, color = gender)) +
@@ -701,7 +694,7 @@ ggplot(dat, aes(x = bmi, y = fbg, color = gender)) +
   geom_smooth(method = "lm", se = FALSE) +
   labs(
     x = "BMI (kg/m²)",
-    y = "Fasting Blood Glucose (FBG)",
+    y = "Fasting Blood Glucose (FBG) (mg/dL)",
     color = "Gender"
   )
 ```

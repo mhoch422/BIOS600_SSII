@@ -331,13 +331,13 @@ How might we interpret these parameter estimates? (watch out for the units!)
 
 ## Interpretation
 
--   **Interpreting $\hat{\beta_1}$**: For every one percent increase of adults who participated in at least 2.5 hours of aerobic activity per week, we expect the percent of adults who are obese to decrease by .308 of a percentage point on average, **holding Smoking constant**.
+-   **Interpreting $\hat{\beta_1}$**: For every one percent increase of adults who participated in at least 2.5 hours of aerobic activity per week, we expect the percent of adults who are obese to decrease by .309 of a percentage point on average, **holding Smoking constant**.
 
 ::: callout-tip
 
 ## Your turn
 
-Use the interpretation above to write out an interpretation of $\hat{\beta_2}$. Recall that the `Smoking` variable is defined as percent of adults in region who smoked at least one cigarette in the past month.
+Use the interpretation above to write out an interpretation of $\hat{\beta_2}$. Recall that the `Smoking` variable is defined as percent of adults in the state who smoked at least one cigarette in the past month.
 
 :::
 
@@ -367,7 +367,7 @@ tidy(model) |>
 
 In this case, the p-value was lower than the pre-specified significance cut-off. There is sufficient evidence to suggest that, **controlling for smoking %**, there is a non-zero linear association between exercise % and obesity % by state.
 
-## Hypotheses of interest
+## Hypotheses of interest {.smaller}
 
 We might also test multiple parameters at once (for instance, all the slopes):
 
@@ -397,6 +397,28 @@ What might we conclude for the overall F test for our model, assuming $\alpha = 
 
 **Conclusion**: In this case, the p-value (4.572e-15) was lower than the pre-specified significance cut-off. There is sufficient evidence to suggest that at least one predictor (Exercise and/or Smoking) has a non-zero linear association with obesity %.
 
+## Confidence intervals
+
+For individual predictors, we can also use the standard error estimate to construct confidence intervals. These intervals are constructed using a critical value from a t distribution:
+
+::: poll
+$$(\hat \beta_k - t^*_{1-\alpha/2; n-k} \times SE(\hat \beta_k), \hat \beta_k + t^*_{1-\alpha/2; n-k} \times SE(\hat \beta_k))$$
+:::
+
+For instance, $SE (\hat \beta_1)=0.06$. Thus, we have that a 95% confidence interval for $β_1$ is (-0.43, -0.19). If we were to interpret this interval, it would have to be conditionally on the other variables in the model.
+
+## R-squared {.smaller}
+
+-   In our model, $R^2=0.7546$, suggesting that about 75% of the variability in obesity percentage can be explained by our model.
+
+-   However, $R^2$ can never decrease when variables are added to a model, even if they are useless.
+
+-   Thus, we can use **adjusted** $R^2 \leq R^2$, where the adjustment is made to account for the number of predictors.
+
+-   The **adjusted** $R^2$ incorporates a penalty for each additional variable in a model, so that the adjusted $R^2$ will go down if a new variable does not improve prediction much, and it will go up if the new variable does improve prediction, conditional on the other variables already in the model.
+
+-   With that said, $R^2$ or adj. $R^2$ should never be used as the only reasons to select variables for your model - you must rely on scientific knowledge and context!
+
 ## Example: Is SBP associated with cognitive scores
 
 ```{r, echo=FALSE, warning=FALSE, message=FALSE}
@@ -415,7 +437,7 @@ CognitiveScore <- round(82 + 0.40 * (Age - 50) + 0.00 * (SBP - 130) + rnorm(n, 0
 study <- data.frame(id = 1:n, Age, SBP, CognitiveScore)
 ```
 
-- There is reason to believe that higher systolic blood pressure (SBP) is associated with lower cognitive scores in older adults
+- There is reason to believe that higher systolic blood pressure (SBP) is associated with higher cognitive scores in older adults
 
 - However, both SBP and cognitive scores are associated with age
 
@@ -465,47 +487,6 @@ tidy(study_age) |>
   kable(digits = 3)
 ```
 
-
-## Multiple Regression in Real Life
-
-::: callout-tip
-
-Based on [this paper](https://bmcmedinformdecismak.biomedcentral.com/articles/10.1186/s12911-022-01884-9?utm_source=chatgpt.com), answer the following questions:
-
-1. In 1-2 sentences, describe the goal of this study/analysis.
-
-2. What was the outcome variable?
-
-3. How many independent variables did they use in their multiple regression model?
-
-4. In Table 4, what was the F-value and p-value? What is your conclusion?
-
-5. Which four predictor variables most significantly influenced the outcome?
-
-:::
-
-
-## Confidence intervals
-
-For individual predictors, we can also use the standard error estimate to construct confidence intervals. These intervals are constructed using a critical value from a t distribution:
-
-::: poll
-$$(\hat \beta_k - t^*_{1-\alpha/2; n-k} \times SE(\hat \beta_k), \hat \beta_k + t^*_{1-\alpha/2; n-k} \times SE(\hat \beta_k))$$
-:::
-
-For instance, $SE (\hat \beta_1)=0.06$. Thus, we have that a 95% confidence interval for $β_1$ is (-0.43, -0.19). If we were to interpret this interval, it would have to be conditionally on the other variables in the model.
-
-## R-squared {.smaller}
-
--   In our model, $R^2=0.7546$, suggesting that about 75% of the variability in obesity percentage can be explained by our model.
-
--   However, $R^2$ can never decrease when variables are added to a model, even if they are useless.
-
--   Thus, we can use **adjusted** $R^2 \leq R^2$, where the adjustment is made to account for the number of predictors.
-
--   The **adjusted** $R^2$ incorporates a penalty for each additional variable in a model, so that the adjusted $R^2$ will go down if a new variable does not improve prediction much, and it will go up if the new variable does improve prediction, conditional on the other variables already in the model.
-
--   With that said, $R^2$ or adj. $R^2$ should never be used as the only reasons to select variables for your model - you must rely on scientific knowledge and context!
 
 ## Categorical predictors {.smaller}
 
@@ -566,7 +547,7 @@ cdc_new <- cdc |>
 
 - Now, when we run the regression, the model will automatically use `Top ten` as the baseline. 
 
-## Re-running the model
+## Re-running the model {.smaller}
 
 ```{r}
 fit2_relevel <- lm(Obesity ~ HDI_relevel, 
@@ -576,7 +557,7 @@ tidy(fit2_relevel) |>
 ```
 
 
-## Interpretation of dummy variables
+## Interpretation of dummy variables {.smaller}
 
 ```{r echo = T}
 fit3 <- lm(Obesity ~ Exercise + HDI_relevel, 
@@ -589,7 +570,7 @@ How would you interpret these estimates?
 
 ## Interactions/Effect Modification
 
-- What if I am interested in seeing if sex and BMI (kg/m2) are associated with fasting blood glucose levels (FBG)?
+- What if I am interested in seeing if sex and BMI (kg/m2) are associated with fasting blood glucose levels (FBG) (mg/dL)?
 
 - I might consider the following model:
 
@@ -606,7 +587,7 @@ $$FBG_i = \beta_0 + \beta_1 Female_i + \beta_2 BMI_i$$
   - Association is in one direction for certain values but the opposite direction depending on other values of the effect modifier (e.g. association is positive for males but negative for females)
   - Association is present for certain values of the effect modifier, but no association is seen for other values (e.g. association is positive for males but no evidence of association for females)
   
-## Interactions/Effect Modification
+## Interactions/Effect Modification {.smaller}
 
 - To model a case of effect modification - when the relationship between one predictor and the outcome depends on the value of another predictor variable, we create an **interaction term**.
 
@@ -622,7 +603,7 @@ $$
 
 - With interaction terms in the model
   - Difference between females and males in FBG, holding BMI constant, is no longer given by $\beta_1$
-  - $\beta_2$ no longer represents the change in FBG associated with a 1 $kg/m^{2}$ change in BMI, holding sex constant
+  - $\beta_2$ no longer represents the change in FBG in mg/dL associated with a 1 $kg/m^{2}$ change in BMI, holding sex constant
 
 $$FBG_i = \beta_0 + \beta_1 Female_i + \beta_2 BMI_i + \beta_3 (BMI_i)(Female_i)$$
 
@@ -659,7 +640,7 @@ ggplot(dat, aes(x = bmi, y = fbg)) +
   geom_smooth(method = "lm", se = FALSE) +
   labs(
     x = "BMI (kg/m²)",
-    y = "Fasting Blood Glucose (FBG)"
+    y = "Fasting Blood Glucose (FBG) (mg/dL)"
   )
 ```
 
@@ -670,6 +651,7 @@ mod1 <- lm(fbg ~ bmi, data=dat)
 tidy(mod1) |>
   kable(digits=3)
 ```
+
 ## Association between BMI and fasting blood glucose (FBG), controlling for gender
 
 ```{r}
@@ -681,19 +663,21 @@ tidy(mod1) |>
 ## Now let's look again
 
 ```{r}
-#| fig-alt: "A scatterplot with x-axis labeled BMI and y-axis labeled Fasting Blood Glucose. The dots are colored red for male and blue for female. The blue dots seem to have higher y-values than the red dots, and this difference is larger for higher x-values."
+#| fig-alt: "A scatterplot with x-axis labeled BMI and y-axis labeled Fasting Blood Glucose. The dots are colored red for male and blue for female. The blue dots seem to have higher y-values than the red dots, and this difference is larger for higher x-values. There are two lines with the same slope; the blue line is higher than the red by about 20 mg/dL."
 library(ggplot2)
 
 ggplot(dat, aes(x = bmi, y = fbg, color = gender)) +
   geom_point(alpha = 0.6) +
+  geom_abline(slope = 2.938, intercept = 53.746+19.571, color = "turquoise3", weight = 5) +
+  geom_abline(slope = 2.938, intercept = 53.746, color = "indianred3", weight = 5) +
   labs(
     x = "BMI (kg/m²)",
-    y = "Fasting Blood Glucose (FBG)",
+    y = "Fasting Blood Glucose (FBG) (mg/dL)",
     color = "Gender"
   )
 ```
 
-## Association between BMI and fasting blood glucose (FBG), with interaction
+## Association between BMI and fasting blood glucose (FBG), with interaction  {.smaller}
 
 ```{r}
 mod1 <- lm(fbg ~ bmi + gender + bmi*gender, data=dat)
@@ -711,7 +695,7 @@ ggplot(dat, aes(x = bmi, y = fbg, color = gender)) +
   geom_smooth(method = "lm", se = FALSE) +
   labs(
     x = "BMI (kg/m²)",
-    y = "Fasting Blood Glucose (FBG)",
+    y = "Fasting Blood Glucose (FBG) (mg/dL)",
     color = "Gender"
   )
 ```
@@ -722,12 +706,20 @@ ggplot(dat, aes(x = bmi, y = fbg, color = gender)) +
 
 -  For males, $Female_i=0$,
 
+$$FBG_i = \beta_0 + \beta_2 BMI_i$$
+
+$$\widehat{FBG}_i = 77.40 + 2.057BMI_i$$
+
 
 ## Association between BMI and fasting blood glucose (FBG), with interaction
   
 - $$FBG_i = \beta_0 + \beta_1 Female_i + \beta_2 BMI_i + \beta_3 (BMI_i)(Female_i)$$
 
-- For females, $Female_i=1$
+- For females, $Female_i=1$,
+
+$$FBG_i = (\beta_0 + \beta_1) + (\beta_2 + \beta_3)(BMI_i)$$
+
+$$\widehat{FBG}_i = 49.821 + 3.811BMI_i$$
 
 ## Interactions {.smaller}
 
@@ -803,7 +795,7 @@ Take a few minutes to review the math in small groups.
 
 -   One common problem in multiple regression is **multicollinearity**, which occurs when multiple highly correlated variables are used as predictors.
 
-- **Collinearity** simply refers to two variables behind highly correlated.
+- **Collinearity** simply refers to two variables being highly correlated.
 
 -   In this case, the model can **become unstable** (often seen as standard errors that get huge and lead to huge confidence interval estimates), and it can be difficult to assess the relationships of the predictors.
 

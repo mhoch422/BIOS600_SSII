@@ -470,7 +470,7 @@ F-statistic: 72.28 on 2 and 47 DF,  p-value: 4.572e-15</code></pre>
 <section id="interpretation" class="level2">
 <h2 class="anchored" data-anchor-id="interpretation">Interpretation</h2>
 <ul>
-<li><strong>Interpreting <span class="math inline">\(\hat{\beta_1}\)</span></strong>: For every one percent increase of adults who participated in at least 2.5 hours of aerobic activity per week, we expect the percent of adults who are obese to decrease by .308 of a percentage point on average, <strong>holding Smoking constant</strong>.</li>
+<li><strong>Interpreting <span class="math inline">\(\hat{\beta_1}\)</span></strong>: For every one percent increase of adults who participated in at least 2.5 hours of aerobic activity per week, we expect the percent of adults who are obese to decrease by .309 of a percentage point on average, <strong>holding Smoking constant</strong>.</li>
 </ul>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -482,7 +482,7 @@ F-statistic: 72.28 on 2 and 47 DF,  p-value: 4.572e-15</code></pre>
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Use the interpretation above to write out an interpretation of <span class="math inline">\(\hat{\beta_2}\)</span>. Recall that the <code>Smoking</code> variable is defined as percent of adults in region who smoked at least one cigarette in the past month.</p>
+<p>Use the interpretation above to write out an interpretation of <span class="math inline">\(\hat{\beta_2}\)</span>. Recall that the <code>Smoking</code> variable is defined as percent of adults in the state who smoked at least one cigarette in the past month.</p>
 </div>
 </div>
 </section>
@@ -605,10 +605,28 @@ F-statistic: 72.28 on 2 and 47 DF,  p-value: 4.572e-15</code></pre>
 </div>
 <p><strong>Conclusion</strong>: In this case, the p-value (4.572e-15) was lower than the pre-specified significance cut-off. There is sufficient evidence to suggest that at least one predictor (Exercise and/or Smoking) has a non-zero linear association with obesity %.</p>
 </section>
+<section id="confidence-intervals" class="level2">
+<h2 class="anchored" data-anchor-id="confidence-intervals">Confidence intervals</h2>
+<p>For individual predictors, we can also use the standard error estimate to construct confidence intervals. These intervals are constructed using a critical value from a t distribution:</p>
+<div class="poll">
+<p><span class="math display">\[(\hat \beta_k - t^*_{1-\alpha/2; n-k} \times SE(\hat \beta_k), \hat \beta_k + t^*_{1-\alpha/2; n-k} \times SE(\hat \beta_k))\]</span></p>
+</div>
+<p>For instance, <span class="math inline">\(SE (\hat \beta_1)=0.06\)</span>. Thus, we have that a 95% confidence interval for <span class="math inline">\(β_1\)</span> is (-0.43, -0.19). If we were to interpret this interval, it would have to be conditionally on the other variables in the model.</p>
+</section>
+<section id="r-squared" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="r-squared">R-squared</h2>
+<ul>
+<li><p>In our model, <span class="math inline">\(R^2=0.7546\)</span>, suggesting that about 75% of the variability in obesity percentage can be explained by our model.</p></li>
+<li><p>However, <span class="math inline">\(R^2\)</span> can never decrease when variables are added to a model, even if they are useless.</p></li>
+<li><p>Thus, we can use <strong>adjusted</strong> <span class="math inline">\(R^2 \leq R^2\)</span>, where the adjustment is made to account for the number of predictors.</p></li>
+<li><p>The <strong>adjusted</strong> <span class="math inline">\(R^2\)</span> incorporates a penalty for each additional variable in a model, so that the adjusted <span class="math inline">\(R^2\)</span> will go down if a new variable does not improve prediction much, and it will go up if the new variable does improve prediction, conditional on the other variables already in the model.</p></li>
+<li><p>With that said, <span class="math inline">\(R^2\)</span> or adj. <span class="math inline">\(R^2\)</span> should never be used as the only reasons to select variables for your model - you must rely on scientific knowledge and context!</p></li>
+</ul>
+</section>
 <section id="example-is-sbp-associated-with-cognitive-scores" class="level2">
 <h2 class="anchored" data-anchor-id="example-is-sbp-associated-with-cognitive-scores">Example: Is SBP associated with cognitive scores?</h2>
 <ul>
-<li><p>There is reason to believe that higher systolic blood pressure (SBP) is associated with lower cognitive scores in older adults</p></li>
+<li><p>There is reason to believe that higher systolic blood pressure (SBP) is associated with higher cognitive scores in older adults</p></li>
 <li><p>However, both SBP and cognitive scores are associated with age</p></li>
 <li><p>Let’s look at the results of running this model: <span class="math display">\[CognitiveScore_i = \beta_0 + \beta_1 SBP_i + \varepsilon_i\]</span></p></li>
 </ul>
@@ -731,24 +749,6 @@ Age            0.6637731      0.4830672 1.0000000</code></pre>
 </table>
 </div>
 </div>
-</section>
-<section id="confidence-intervals" class="level2">
-<h2 class="anchored" data-anchor-id="confidence-intervals">Confidence intervals</h2>
-<p>For individual predictors, we can also use the standard error estimate to construct confidence intervals. These intervals are constructed using a critical value from a t distribution:</p>
-<div class="poll">
-<p><span class="math display">\[(\hat \beta_k - t^*_{1-\alpha/2; n-k} \times SE(\hat \beta_k), \hat \beta_k + t^*_{1-\alpha/2; n-k} \times SE(\hat \beta_k))\]</span></p>
-</div>
-<p>For instance, <span class="math inline">\(SE (\hat \beta_1)=0.06\)</span>. Thus, we have that a 95% confidence interval for <span class="math inline">\(β_1\)</span> is (-0.43, -0.19). If we were to interpret this interval, it would have to be conditionally on the other variables in the model.</p>
-</section>
-<section id="r-squared" class="level2 smaller">
-<h2 class="smaller anchored" data-anchor-id="r-squared">R-squared</h2>
-<ul>
-<li><p>In our model, <span class="math inline">\(R^2=0.7546\)</span>, suggesting that about 75% of the variability in obesity percentage can be explained by our model.</p></li>
-<li><p>However, <span class="math inline">\(R^2\)</span> can never decrease when variables are added to a model, even if they are useless.</p></li>
-<li><p>Thus, we can use <strong>adjusted</strong> <span class="math inline">\(R^2 \leq R^2\)</span>, where the adjustment is made to account for the number of predictors.</p></li>
-<li><p>The <strong>adjusted</strong> <span class="math inline">\(R^2\)</span> incorporates a penalty for each additional variable in a model, so that the adjusted <span class="math inline">\(R^2\)</span> will go down if a new variable does not improve prediction much, and it will go up if the new variable does improve prediction, conditional on the other variables already in the model.</p></li>
-<li><p>With that said, <span class="math inline">\(R^2\)</span> or adj. <span class="math inline">\(R^2\)</span> should never be used as the only reasons to select variables for your model - you must rely on scientific knowledge and context!</p></li>
-</ul>
 </section>
 <section id="categorical-predictors" class="level2 smaller">
 <h2 class="smaller anchored" data-anchor-id="categorical-predictors">Categorical predictors</h2>
@@ -957,8 +957,8 @@ Age            0.6637731      0.4830672 1.0000000</code></pre>
 </ul></li>
 </ul>
 </section>
-<section id="interactionseffect-modification-2" class="level2">
-<h2 class="anchored" data-anchor-id="interactionseffect-modification-2">Interactions/Effect Modification</h2>
+<section id="interactionseffect-modification-2" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="interactionseffect-modification-2">Interactions/Effect Modification</h2>
 <ul>
 <li><p>To model a case of effect modification - when the relationship between one predictor and the outcome depends on the value of another predictor variable, we create an <strong>interaction term</strong>.</p></li>
 <li><p>This is created simply by multiplying two predictors <span class="math inline">\(x_1\)</span> and <span class="math inline">\(x_2\)</span> to create a new predictor, <span class="math inline">\(x_1x_2\)</span>. When interaction terms are in a model, interpretations can become tricky.</p></li>
@@ -974,7 +974,7 @@ FBG_i = \beta_0 + \beta_1 (BMI_i)(Female_i)
 <li>With interaction terms in the model
 <ul>
 <li>Difference between females and males in FBG, holding BMI constant, is no longer given by <span class="math inline">\(\beta_1\)</span></li>
-<li><span class="math inline">\(\beta_2\)</span> no longer represents the change in FBG associated with a 1 <span class="math inline">\(kg/m^{2}\)</span> change in BMI, holding sex constant</li>
+<li><span class="math inline">\(\beta_2\)</span> no longer represents the change in FBG in mg/dL associated with a 1 <span class="math inline">\(kg/m^{2}\)</span> change in BMI, holding sex constant</li>
 </ul></li>
 </ul>
 <p><span class="math display">\[FBG_i = \beta_0 + \beta_1 Female_i + \beta_2 BMI_i + \beta_3 (BMI_i)(Female_i)\]</span></p>
@@ -985,6 +985,18 @@ FBG_i = \beta_0 + \beta_1 (BMI_i)(Female_i)
 <section id="association-between-bmi-and-fasting-blood-glucose-fbg-ignoring-gender" class="level2">
 <h2 class="anchored" data-anchor-id="association-between-bmi-and-fasting-blood-glucose-fbg-ignoring-gender">Association between BMI and fasting blood glucose (FBG), ignoring gender</h2>
 <div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="at">x =</span> bmi, <span class="at">y =</span> fbg)) <span class="sc">+</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"BMI (kg/m²)"</span>,</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Fasting Blood Glucose (FBG) (mg/dL)"</span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -997,6 +1009,9 @@ FBG_i = \beta_0 + \beta_1 (BMI_i)(Female_i)
 <section id="association-between-bmi-and-fasting-blood-glucose-fbg-ignoring-gender-1" class="level2">
 <h2 class="anchored" data-anchor-id="association-between-bmi-and-fasting-blood-glucose-fbg-ignoring-gender-1">Association between BMI and fasting blood glucose (FBG), ignoring gender</h2>
 <div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(fbg <span class="sc">~</span> bmi, <span class="at">data=</span>dat)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(mod1) <span class="sc">|&gt;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits=</span><span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -1031,6 +1046,9 @@ FBG_i = \beta_0 + \beta_1 (BMI_i)(Female_i)
 <section id="association-between-bmi-and-fasting-blood-glucose-fbg-controlling-for-gender" class="level2">
 <h2 class="anchored" data-anchor-id="association-between-bmi-and-fasting-blood-glucose-fbg-controlling-for-gender">Association between BMI and fasting blood glucose (FBG), controlling for gender</h2>
 <div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(fbg <span class="sc">~</span> bmi <span class="sc">+</span> gender, <span class="at">data=</span>dat)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(mod1) <span class="sc">|&gt;</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits=</span><span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -1072,18 +1090,40 @@ FBG_i = \beta_0 + \beta_1 (BMI_i)(Female_i)
 <section id="now-lets-look-again" class="level2">
 <h2 class="anchored" data-anchor-id="now-lets-look-again">Now let’s look again</h2>
 <div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="at">x =</span> bmi, <span class="at">y =</span> fbg, <span class="at">color =</span> gender)) <span class="sc">+</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="fl">2.938</span>, <span class="at">intercept =</span> <span class="fl">53.746+19.571</span>, <span class="at">color =</span> <span class="st">"turquoise3"</span>, <span class="at">weight =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_abline</span>(<span class="at">slope =</span> <span class="fl">2.938</span>, <span class="at">intercept =</span> <span class="fl">53.746</span>, <span class="at">color =</span> <span class="st">"indianred3"</span>, <span class="at">weight =</span> <span class="dv">5</span>) <span class="sc">+</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"BMI (kg/m²)"</span>,</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Fasting Blood Glucose (FBG) (mg/dL)"</span>,</span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Gender"</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in geom_abline(slope = 2.938, intercept = 53.746 + 19.571, color =
+"turquoise3", : Ignoring unknown parameters: `weight`</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in geom_abline(slope = 2.938, intercept = 53.746, color = "indianred3",
+: Ignoring unknown parameters: `weight`</code></pre>
+</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="lec-14-multiple-reg-anno_MH_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" alt="A scatterplot with x-axis labeled BMI and y-axis labeled Fasting Blood Glucose. The dots are colored red for male and blue for female. The blue dots seem to have higher y-values than the red dots, and this difference is larger for higher x-values." width="672"></p>
+<p><img src="lec-14-multiple-reg-anno_MH_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" alt="A scatterplot with x-axis labeled BMI and y-axis labeled Fasting Blood Glucose. The dots are colored red for male and blue for female. The blue dots seem to have higher y-values than the red dots, and this difference is larger for higher x-values. There are two lines with the same slope; the blue line is higher than the red by about 20 mg/dL." width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="association-between-bmi-and-fasting-blood-glucose-fbg-with-interaction" class="level2">
-<h2 class="anchored" data-anchor-id="association-between-bmi-and-fasting-blood-glucose-fbg-with-interaction">Association between BMI and fasting blood glucose (FBG), with interaction</h2>
+<section id="association-between-bmi-and-fasting-blood-glucose-fbg-with-interaction" class="level2 smaller">
+<h2 class="smaller anchored" data-anchor-id="association-between-bmi-and-fasting-blood-glucose-fbg-with-interaction">Association between BMI and fasting blood glucose (FBG), with interaction</h2>
 <div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(fbg <span class="sc">~</span> bmi <span class="sc">+</span> gender <span class="sc">+</span> bmi<span class="sc">*</span>gender, <span class="at">data=</span>dat)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(mod1) <span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits=</span><span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -1132,6 +1172,19 @@ FBG_i = \beta_0 + \beta_1 (BMI_i)(Female_i)
 <section id="association-between-bmi-and-fasting-blood-glucose-fbg-with-interaction-1" class="level2">
 <h2 class="anchored" data-anchor-id="association-between-bmi-and-fasting-blood-glucose-fbg-with-interaction-1">Association between BMI and fasting blood glucose (FBG), with interaction</h2>
 <div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(dat, <span class="fu">aes</span>(<span class="at">x =</span> bmi, <span class="at">y =</span> fbg, <span class="at">color =</span> gender)) <span class="sc">+</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"BMI (kg/m²)"</span>,</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Fasting Blood Glucose (FBG) (mg/dL)"</span>,</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">color =</span> <span class="st">"Gender"</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1173,12 +1226,12 @@ FBG_i = \beta_0 + \beta_1 (BMI_i)(Female_i)
 <section id="interactions-model" class="level2 smaller">
 <h2 class="smaller anchored" data-anchor-id="interactions-model">Interactions model</h2>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>fit_int <span class="ot">&lt;-</span> <span class="fu">lm</span>(Obesity <span class="sc">~</span> Exercise <span class="sc">+</span> </span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>                Smoking <span class="sc">+</span> </span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>                Exercise<span class="sc">*</span>Smoking, </span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> cdc)</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(fit_int) <span class="sc">|&gt;</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>fit_int <span class="ot">&lt;-</span> <span class="fu">lm</span>(Obesity <span class="sc">~</span> Exercise <span class="sc">+</span> </span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>                Smoking <span class="sc">+</span> </span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>                Exercise<span class="sc">*</span>Smoking, </span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">data =</span> cdc)</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tidy</span>(fit_int) <span class="sc">|&gt;</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -1298,10 +1351,10 @@ FBG_i = \beta_0 + \beta_1 (BMI_i)(Female_i)
 <li>Let’s say we had the following model:</li>
 </ul>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>fit4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Obesity <span class="sc">~</span> Exercise <span class="sc">+</span> Smoking <span class="sc">+</span> Over65, </span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> cdc)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>vif_values <span class="ot">&lt;-</span> <span class="fu">vif</span>(fit4) <span class="co"># car package</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>vif_values</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>fit4 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Obesity <span class="sc">~</span> Exercise <span class="sc">+</span> Smoking <span class="sc">+</span> Over65, </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> cdc)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>vif_values <span class="ot">&lt;-</span> <span class="fu">vif</span>(fit4) <span class="co"># car package</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>vif_values</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Exercise  Smoking   Over65 
 1.420894 1.541720 1.123272 </code></pre>
