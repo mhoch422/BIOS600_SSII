@@ -5,7 +5,7 @@ format: html
 
 ## Material covered
 
-- Lectures 16-21, Labs 7-8, AE 5-6
+- Lectures 13-15, Lab 3
 
 - No formula sheet will be provided; all questions can be answered without one.
 
@@ -27,8 +27,6 @@ format: html
 
 - What does "tidy format" mean for a dataset?
 
-- `glance()` and `augment()`
-
 - What does the double colon specify? (e.g. `dplyr::select()`) 
 
 - `lm()`. How to fit a linear regression model?
@@ -42,7 +40,7 @@ format: html
 
 ## Conceptual and Applied
 
-- Knowing common tests or models given the type of predictor and type of outcome ('When to choose what method' at the beginning of Lec 21). 
+- Knowing common tests or models given the type of predictor and type of outcome
 
 - Is correlation between X with Y the same as correlation between Y and X? What about the linear regression of Y on X versus the linear regression of X on Y? 
 - Correlation coefficient $\rho$: what type of relationship does it describe? Know the range and how to interpret positive/negative/zero values. Which statistic can we use to estimate $\rho$? (How to do this in `R`?)
@@ -82,7 +80,7 @@ format: html
 
 - In logistic regression, how do you interpret the estimated coefficients in terms of odds? How do you predict log-odds for a new observation given the estimated model coefficients?
 
-- How do you interpret the p-value for a single interaction term (like examples from Lecture 19)
+- How do you interpret the p-value for a single interaction term 
 
 - How to predict a new value based on estimated coefficients from a logistic regression model? (e.g. writing out an expression) What does this value represent for this individual? 
 

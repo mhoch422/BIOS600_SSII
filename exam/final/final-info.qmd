@@ -3,15 +3,13 @@ title: "Final Exam Info"
 format: html
 ---
 
-- Exam 02 will take place in-person on Tuesday, May 5 from 8:00 AM to 11:00 AM. This exam is an opportunity to demonstrate what you've learned in the course, primarily on content **since the last exam** (but not completely excluding material you learned previously - it's difficult to completely separate out certain topics as they build on each other).  
-
-- If your last name starts with A-K you will be in McGavran-Greenberg Hall 2301, if your last name starts with L-Z you will be in this classroom (same rooms as last exam)
+- The final exam will take place in-person on Monday, July 27 from 8:00 AM to 11:00 AM. This exam is an opportunity to demonstrate what you've learned in the course, primarily on content **since the last exam** (but not completely excluding material you learned previously - it's difficult to completely separate out certain topics as they build on each other).  
 
 - The exam will be closed-book. 
 
 - You should bring something to write with. Nothing else is permitted (i.e. calculators not permitted, cheat sheets not permitted.)
 
-- Content covered: Lectures 16-21, Labs 7-8, AE 5-6. 
+- Content covered: Lectures 13-15, Lab 3
 
 ## Types of questions
 
@@ -27,6 +25,6 @@ format: html
 
 - A topics list is available as `final-topics`.
 
-- I will prepare a set of review questions for us to complete in class on Thursday April 23. We will go over these together and you will have access to the solutions after class. 
+- I will prepare a set of review questions for us to complete in class on Thursday July 23. We will go over these together and you will have access to the solutions after class. 
 
 - I will post additional problems to work this week for you to try on your own
