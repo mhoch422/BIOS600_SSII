@@ -34,9 +34,13 @@ library(kableExtra)
 Run the following code to simulate the dataset. 
 
 ```{r}
-set.seed(9745)
+set.seed(9745) # set seed for reproducibility
 
-n <- 200
+n <- 200   # total number of observations in the data set
+
+
+# randomly draw from a normal, a poisson, and a bernoulli distribution to 
+# create the data for the predictors
 
 air_quality <- rnorm(n, mean = 50, sd = 10)      # continuous predictor
 trees <- rpois(n, lambda = 30)                   # count predictor
@@ -47,8 +51,12 @@ wetland <- rbinom(n, size = 1, prob = 0.4)       # binary predictor
 log_odds <- -7 + 0.05 * air_quality + 0.04 * trees + 1 * wetland
 prob <- exp(log_odds) / (1 + exp(log_odds))
 
+# use the true probability for each sample in the data set to generate whether
+# or not the rare bird is present
 bird_presence <- rbinom(n, size = 1, prob = prob)
 
+
+# create the dataset to be used in the logistic regression
 env_data <- data.frame(
   bird_presence,
   air_quality,
@@ -61,7 +69,7 @@ head(env_data)
 
 ## Exercise 1
 
-Fit a logistic regression model predicting bird presence from air quality, trees, and whether the side was a wetland. Display the coefficient estimates table using `kable()`, rounding to 3 digits.
+Fit a logistic regression model predicting bird presence from air quality, trees, and whether the site was a wetland. Display the coefficient estimates table using `kable()`, rounding to 3 digits.
 
 ## Exercise 2
 

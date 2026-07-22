@@ -625,7 +625,7 @@ tidy(fit3) |>
 
 - With the interaction term in the model: 
 
-Individuals smoking 20-29 cigarettes per day have exp$(\hat \beta_{cigs20-29})$=exp(1.15) times the odds of having bladder cancer compared to individuals smoking 0 cigarettes per day, **when the other predictor (NAT2) is 0**
+Individuals smoking 20-29 cigarettes per day have exp$(\hat \beta_{cigs20-29})$=exp(0.86) times the odds of having bladder cancer compared to individuals smoking 0 cigarettes per day, **when the other predictor (NAT2) is 0**
 
 ## Interaction terms 
 
