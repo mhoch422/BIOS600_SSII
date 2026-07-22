@@ -14,6 +14,10 @@ format: html
 
 - Class tomorrow will be review for the final exam!
 
+- Hand in Application Exercise 3 if you haven't already, and you can resubmit if you lost points on your first submission.
+
+- Make an appointment or come to my office hours this afternoon to go over your Exam 2 for points back!
+
 ## Overview
 
 - Review of Linear Regression 

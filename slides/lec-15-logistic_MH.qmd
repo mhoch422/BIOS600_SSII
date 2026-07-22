@@ -24,11 +24,10 @@ execute:
 
 ## Course Evaluations
 
-You should have access to the evaluation for this class through Canvas, or through an email from the course evaluation team.
+- You should have access to the evaluation for this class through Canvas, or through an email from the course evaluation team.
 
-\vspace{2cm}
 
-This feedback is helpful, both to the Biostatistics Department as it evaluates whether to keep offering this as a summer course, and to me, so that I can learn what parts of class worked well and improve as an instructor going forward.
+- This feedback is helpful, both to the Biostatistics Department as it evaluates whether to keep offering this as a summer course, and to me, so that I can learn what parts of class worked well and improve as an instructor going forward.
 
 ## Overview
 
@@ -96,7 +95,8 @@ tidy(fit_int) |>
 
 ## Should you remove it?
 
-### Let’s say you’re analyzing a randomized trial  
+ Let’s say you’re analyzing a randomized trial 
+ 
   - Preventive therapy for cardiovascular disease  
   - You included a **treatment × sex** interaction term
   - P-value for the interaction term was 0.83
@@ -209,7 +209,7 @@ ggplot(model, aes(x = .fitted, y = .resid)) +
        ylab = "Residuals")
 ```
 
-## From probabilities to log odds
+## From probabilities to log odds {.smaller}
 
 -   Suppose the probability of an event is $p$.
 
