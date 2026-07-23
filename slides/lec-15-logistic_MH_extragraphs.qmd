@@ -1,0 +1,142 @@
+---
+title: "Lecture 15: Logistic regression"
+subtitle: "BIOS 600 - Summer Session II 2026"
+institute: "UNC - Chapel Hill"
+logo: "images/logo_600.png"
+format: html
+---
+
+## Announcements {.smaller}
+
+- HW 15 due **tonight** 
+
+- Hand in Application Exercise 3 if you haven't already, and you can resubmit if you lost points on your first submission.
+
+- Make an appointment to go over your Exam 2 for points back!
+
+- Fill out your course evaluation by tomorrow please; if the response rate gets to 80% everyone in the class will have one point added to their final exam score.
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(tidymodels)
+library(kableExtra)
+library(MASS)
+library(randomForestSRC) # for pbc data
+data(pbc, package = "randomForestSRC")
+cdc <- read.csv("https://karamccor.github.io/b6002/labs/data/cdc_cleaned.csv")
+
+cdc <- cdc |>
+  mutate(over65_bin = as.numeric(Over65 > 14.834))
+```
+
+## Predictions with two categorical variables
+
+Suppose we use our `cdc` dataset and create a new variable called `over65_bin`, which equals 1 if a state has an above-average population over 65 and 0 otherwise. We might want to run the following model:
+
+$$CVDeathRate_i = \beta_0 + \beta_1(HDI == Middle)_i + \beta_2(HDI == TopTen)_i$$
+$$+ \beta_3(over65\_bin == 1)_i.$$
+
+```{r}
+#| echo: FALSE
+
+
+fit_death <- lm(CVDeathRate ~ HDI + over65_bin, 
+                data = cdc)
+
+tidy(fit_death) |>
+  kable(digits = 2)
+
+```
+
+Our fitted model is then
+
+$$\widehat{CVDeathRate}_i = 209.54 - 42.14(HDI == Middle)_i - 62.50(HDI == TopTen)_i$$
+$$- 6.56(over65\_bin == 1)_i.$$
+
+The graph of this would look like this:
+
+```{r}
+#| echo: FALSE
+
+
+ggplot(cdc) +
+  geom_hline(yintercept = 209.54, color = "coral1") +
+  annotate("text", label = "Bottom 10 HDI, Below-average 65+ Population", 
+           x = 20, y = 213, size = 2.5) +
+  geom_hline(yintercept = 209.54-6.56, color = "coral3") +
+  annotate("text", label = "Bottom 10 HDI, Above-average 65+ Population", 
+           x = 20, y = 206, size = 2.5) +
+  geom_hline(yintercept = 209.54 - 42.14, color = "darkslategray2") +
+  annotate("text", label = "Middle HDI, Below-average 65+ Population", 
+           x = 20, y = 170, size = 2.5) +
+  geom_hline(yintercept = 209.54 - 42.14 - 6.56, color = "darkslategray4") +
+  annotate("text", label = "Middle 10 HDI, Above-average 65+ Population", 
+           x = 20, y = 163, size = 2.5) +
+  geom_hline(yintercept = 209.54 - 62.50, color = "darkorchid2") +
+  annotate("text", label = "Top 10 HDI, Below-average 65+ Population", 
+           x = 20, y = 150, size = 2.5) +
+  geom_hline(yintercept = 209.54 - 62.50 - 6.56, color = "darkorchid4") +
+  annotate("text", label = "Top 10 HDI, Above-average 65+ Population", 
+           x = 20, y = 143, size = 2.5) +
+  coord_cartesian(ylim = c(115, 215), xlim = c(15, 22)) +
+  theme_light()
+
+
+```
+
+Now suppose we want to include an interaction term between HDI category and `over65_bin`. Now our model looks like:
+
+$$CVDeathRate_i = \beta_0 + \beta_1(HDI == Middle)_i + \beta_2(HDI == TopTen)_i $$
+$$+ \beta_3(over65\_bin == 1)_i + \beta_4(HDI == Middle)_i(over65\_bin == 1)_i $$
+$$+ \beta_5(HDI == TopTen)_i(over65\_bin== 1)_i.$$
+
+```{r}
+#| echo: FALSE
+
+fit_death_int <- lm(CVDeathRate ~ HDI + over65_bin + HDI*over65_bin, 
+                data = cdc)
+
+tidy(fit_death_int) |>
+  kable(digits = 2)
+
+```
+
+Our fitted model is then
+
+$$\widehat{CVDeathRate}_i = 221.10 - 56.18(HDI == Middle)_i - 75.55(HDI == TopTen)_i$$
+$$- 25.82(over65\_bin == 1)_i + 24.23(HDI == Middle)_i(over65\_bin == 1)_i$$
+$$ + 22.99(HDI == TopTen)_i(over65\_bin == 1)_i.$$
+
+The graph of this would look like this:
+
+```{r}
+#| echo: FALSE
+
+ggplot(cdc) +
+  geom_hline(yintercept = 221.10, color = "coral1") +
+  annotate("text", label = "Bottom 10 HDI, Below-average 65+ Population", 
+           x = 20, y = 225, size = 2.5) +
+  geom_hline(yintercept = 221.10 - 25.82, color = "coral3") +
+  annotate("text", label = "Bottom 10 HDI, Above-average 65+ Population", 
+           x = 20, y = 199, size = 2.5) +
+  geom_hline(yintercept = 221.10 - 56.18, color = "darkslategray2") +
+  annotate("text", label = "Middle HDI, Below-average 65+ Population", 
+           x = 20, y = 168, size = 2.5) +
+  geom_hline(yintercept = 221.10 - 56.18 - 25.82 + 24.23, color = "darkslategray4") +
+  annotate("text", label = "Middle 10 HDI, Above-average 65+ Population", 
+           x = 20, y = 160, size = 2.5) +
+  geom_hline(yintercept = 221.10 - 75.55, color = "darkorchid2") +
+  annotate("text", label = "Top 10 HDI, Below-average 65+ Population", 
+           x = 20, y = 149, size = 2.5) +
+  geom_hline(yintercept = 221.10 - 75.55 - 25.82 + 22.99, color = "darkorchid4") +
+  annotate("text", label = "Top 10 HDI, Above-average 65+ Population", 
+           x = 20, y = 140, size = 2.5) +
+  coord_cartesian(ylim = c(100, 250), xlim = c(15, 22)) +
+  theme_light()
+
+
+```
