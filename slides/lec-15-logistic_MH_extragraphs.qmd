@@ -33,7 +33,7 @@ cdc <- cdc |>
   mutate(over65_bin = as.numeric(Over65 > 14.834))
 ```
 
-## Predictions with two categorical variables
+## Interactions with two categorical variables
 
 Suppose we use our `cdc` dataset and create a new variable called `over65_bin`, which equals 1 if a state has an above-average population over 65 and 0 otherwise. We might want to run the following model:
 
